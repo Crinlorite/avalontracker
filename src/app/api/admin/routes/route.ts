@@ -20,16 +20,13 @@ export async function GET() {
   const routes = await prisma.route.findMany({
     include: {
       clan: {
-        select: {
-          id: true,
-          name: true,
-        },
+        select: { id: true, name: true },
       },
       createdBy: {
-        select: {
-          id: true,
-          displayName: true,
-        },
+        select: { id: true, displayName: true },
+      },
+      hops: {
+        orderBy: { order: "asc" },
       },
     },
     orderBy: { createdAt: "desc" },

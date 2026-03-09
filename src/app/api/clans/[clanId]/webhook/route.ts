@@ -76,6 +76,9 @@ export async function POST(
       createdBy: {
         select: { displayName: true },
       },
+      hops: {
+        orderBy: { order: "asc" },
+      },
     },
   });
 
@@ -90,17 +93,27 @@ export async function POST(
     );
   }
 
+  if (route.hops.length === 0) {
+    return NextResponse.json(
+      { error: "La ruta no tiene puertas" },
+      { status: 400 }
+    );
+  }
+
   try {
     await sendRouteToDiscord(route.clan.discordWebhookUrl, {
-      entryZone: route.entryZone,
-      exitZone: route.exitZone,
-      portalSize: route.portalSize,
-      expiresAt: route.expiresAt.toISOString(),
+      hops: route.hops.map((hop) => ({
+        fromZone: hop.fromZone,
+        toZone: hop.toZone,
+        portalSize: hop.portalSize,
+        expiresAt: hop.expiresAt.toISOString(),
+        status: hop.status,
+      })),
       createdBy: route.createdBy.displayName || "Desconocido",
       status: route.status,
     });
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Error al enviar a Discord" },
       { status: 500 }

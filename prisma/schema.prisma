@@ -139,22 +139,34 @@ model InviteCode {
 model Route {
   id           String      @id @default(cuid())
   clanId       String
-  entryZone    String
-  exitZone     String
-  portalSize   Int
   createdById  String
   createdAt    DateTime    @default(now())
-  expiresAt    DateTime
   status       RouteStatus @default(ACTIVE)
   disabledById String?
   disabledAt   DateTime?
 
-  clan       Clan  @relation(fields: [clanId], references: [id], onDelete: Cascade)
-  createdBy  User  @relation("RouteCreator", fields: [createdById], references: [id])
-  disabledBy User? @relation("RouteDisabler", fields: [disabledById], references: [id])
+  clan       Clan       @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  createdBy  User       @relation("RouteCreator", fields: [createdById], references: [id])
+  disabledBy User?      @relation("RouteDisabler", fields: [disabledById], references: [id])
+  hops       RouteHop[]
 
   @@index([clanId, status])
-  @@index([expiresAt])
+}
+
+model RouteHop {
+  id         Int         @id @default(autoincrement())
+  routeId    String
+  order      Int
+  fromZone   String
+  toZone     String
+  portalSize Int
+  expiresAt  DateTime
+  status     RouteStatus @default(ACTIVE)
+
+  route Route @relation(fields: [routeId], references: [id], onDelete: Cascade)
+
+  @@index([routeId])
+  @@index([expiresAt, status])
 }
 
 model AuditLog {

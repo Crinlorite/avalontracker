@@ -2,6 +2,7 @@ import { createServer } from "http";
 import next from "next";
 import { Server as SocketIOServer } from "socket.io";
 import { PrismaClient } from "./src/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "0.0.0.0";
@@ -10,7 +11,8 @@ const port = parseInt(process.env.PORT || "3000", 10);
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+const prisma = new PrismaClient({ adapter });
 
 let io: SocketIOServer;
 
@@ -50,39 +52,60 @@ app.prepare().then(() => {
     });
   });
 
-  // Check for expired routes every 30 seconds
+  // Check for expired hops every 30 seconds
   setInterval(async () => {
     try {
-      const expiredRoutes = await prisma.route.findMany({
+      const expiredHops = await prisma.routeHop.findMany({
         where: {
           expiresAt: { lt: new Date() },
           status: "ACTIVE",
         },
+        include: {
+          route: {
+            select: { clanId: true, id: true },
+          },
+        },
       });
 
-      if (expiredRoutes.length > 0) {
-        await prisma.route.updateMany({
+      if (expiredHops.length > 0) {
+        await prisma.routeHop.updateMany({
           where: {
-            id: { in: expiredRoutes.map((r) => r.id) },
+            id: { in: expiredHops.map((h) => h.id) },
           },
           data: {
             status: "EXPIRED",
           },
         });
 
-        // Emit route-expired event to each clan room
-        for (const route of expiredRoutes) {
-          emitToClan(route.clanId, "route-expired", {
-            routeId: route.id,
-            entryZone: route.entryZone,
-            exitZone: route.exitZone,
+        // Check if any routes now have ALL hops expired → mark route as expired
+        const routeIds = [...new Set(expiredHops.map((h) => h.route.id))];
+        for (const routeId of routeIds) {
+          const activeHops = await prisma.routeHop.count({
+            where: { routeId, status: "ACTIVE" },
+          });
+
+          if (activeHops === 0) {
+            await prisma.route.update({
+              where: { id: routeId },
+              data: { status: "EXPIRED" },
+            });
+          }
+        }
+
+        // Emit events per clan
+        const clanIds = [...new Set(expiredHops.map((h) => h.route.clanId))];
+        for (const clanId of clanIds) {
+          emitToClan(clanId, "route-expired", {
+            hopIds: expiredHops
+              .filter((h) => h.route.clanId === clanId)
+              .map((h) => h.id),
           });
         }
 
-        console.log(`Expired ${expiredRoutes.length} routes`);
+        console.log(`Expired ${expiredHops.length} hops`);
       }
     } catch (error) {
-      console.error("Error checking expired routes:", error);
+      console.error("Error checking expired hops:", error);
     }
   }, 30_000);
 

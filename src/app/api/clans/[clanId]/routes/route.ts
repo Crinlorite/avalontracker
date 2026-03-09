@@ -3,7 +3,6 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { requireClanMember } from "@/lib/permissions";
 import { logAudit } from "@/lib/audit";
-import { RouteStatus } from "@/generated/prisma/client";
 
 export async function GET(
   request: Request,
@@ -26,7 +25,7 @@ export async function GET(
   const status = searchParams.get("status");
 
   const where: Record<string, unknown> = { clanId };
-  if (status && Object.values(RouteStatus).includes(status as RouteStatus)) {
+  if (status && ["ACTIVE", "EXPIRED", "DISABLED"].includes(status)) {
     where.status = status;
   }
 
@@ -34,16 +33,23 @@ export async function GET(
     where,
     include: {
       createdBy: {
-        select: {
-          id: true,
-          displayName: true,
-        },
+        select: { id: true, displayName: true },
+      },
+      hops: {
+        orderBy: { order: "asc" },
       },
     },
     orderBy: { createdAt: "desc" },
   });
 
   return NextResponse.json(routes);
+}
+
+interface HopInput {
+  fromZone: string;
+  toZone: string;
+  portalSize: number;
+  expiresAt: string;
 }
 
 export async function POST(
@@ -64,27 +70,60 @@ export async function POST(
   }
 
   const body = await request.json();
-  const { entryZone, exitZone, portalSize, expiresAt } = body;
+  const { hops } = body as { hops: HopInput[] };
 
-  if (!entryZone || !exitZone || !portalSize || !expiresAt) {
+  if (!hops || !Array.isArray(hops) || hops.length === 0) {
     return NextResponse.json(
-      { error: "entryZone, exitZone, portalSize y expiresAt son requeridos" },
+      { error: "Se requiere al menos un salto" },
       { status: 400 }
     );
+  }
+
+  if (hops.length > 12) {
+    return NextResponse.json(
+      { error: "Máximo 12 saltos por ruta" },
+      { status: 400 }
+    );
+  }
+
+  for (let i = 0; i < hops.length; i++) {
+    const hop = hops[i];
+    if (!hop.fromZone || !hop.toZone || !hop.portalSize || !hop.expiresAt) {
+      return NextResponse.json(
+        { error: `Salto ${i + 1}: todos los campos son requeridos` },
+        { status: 400 }
+      );
+    }
+    // Validate chain continuity
+    if (i > 0 && hops[i - 1].toZone !== hop.fromZone) {
+      return NextResponse.json(
+        { error: `Salto ${i + 1}: la zona de entrada debe coincidir con la salida del salto anterior` },
+        { status: 400 }
+      );
+    }
   }
 
   const route = await prisma.route.create({
     data: {
       clanId,
       createdById: session.user.id,
-      entryZone,
-      exitZone,
-      portalSize,
-      expiresAt: new Date(expiresAt),
+      hops: {
+        create: hops.map((hop, index) => ({
+          order: index,
+          fromZone: hop.fromZone.trim(),
+          toZone: hop.toZone.trim(),
+          portalSize: hop.portalSize,
+          expiresAt: new Date(hop.expiresAt),
+        })),
+      },
+    },
+    include: {
+      hops: { orderBy: { order: "asc" } },
     },
   });
 
-  await logAudit(clanId, session.user.id, "ROUTE_CREATE", route.id, { entryZone, exitZone, portalSize });
+  const zones = [hops[0].fromZone, ...hops.map((h) => h.toZone)].join(" → ");
+  await logAudit(clanId, session.user.id, "ROUTE_CREATE", route.id, { zones, hopCount: hops.length });
 
   return NextResponse.json(route, { status: 201 });
 }

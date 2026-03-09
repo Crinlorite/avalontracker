@@ -1,8 +1,13 @@
-interface RouteInfo {
-  entryZone: string;
-  exitZone: string;
+interface HopInfo {
+  fromZone: string;
+  toZone: string;
   portalSize: number;
   expiresAt: string;
+  status: string;
+}
+
+interface RouteInfo {
+  hops: HopInfo[];
   createdBy: string;
   status: string;
 }
@@ -11,43 +16,38 @@ export async function sendRouteToDiscord(
   webhookUrl: string,
   route: RouteInfo
 ) {
-  const expiresDate = new Date(route.expiresAt);
-  const discordTimestamp = Math.floor(expiresDate.getTime() / 1000);
-
   const color =
     route.status === "ACTIVE"
-      ? 0x22c55e // verde
+      ? 0x22c55e
       : route.status === "DISABLED"
-        ? 0xef4444 // rojo
-        : 0x6b7280; // gris
+        ? 0xef4444
+        : 0x6b7280;
+
+  const zones = [route.hops[0].fromZone, ...route.hops.map((h) => h.toZone)];
+  const title = zones.join(" → ");
+
+  const fields = route.hops.map((hop, i) => {
+    const expiresDate = new Date(hop.expiresAt);
+    const discordTimestamp = Math.floor(expiresDate.getTime() / 1000);
+    return {
+      name: `Puerta ${i + 1}: ${hop.fromZone} → ${hop.toZone}`,
+      value: `Portal: **${hop.portalSize}p** | Expira: <t:${discordTimestamp}:R>`,
+      inline: false,
+    };
+  });
+
+  fields.push({
+    name: "Registrado por",
+    value: route.createdBy,
+    inline: true,
+  });
 
   const embed = {
-    title: `🗺️ ${route.entryZone} → ${route.exitZone}`,
+    title: `🗺️ ${title}`,
     color,
-    fields: [
-      {
-        name: "Portal",
-        value: `${route.portalSize} personas`,
-        inline: true,
-      },
-      {
-        name: "Estado",
-        value: route.status,
-        inline: true,
-      },
-      {
-        name: "Expira",
-        value: `<t:${discordTimestamp}:R>`,
-        inline: true,
-      },
-      {
-        name: "Registrado por",
-        value: route.createdBy,
-        inline: true,
-      },
-    ],
+    fields,
     footer: {
-      text: "Avalon Tracker",
+      text: `Avalon Tracker | ${route.hops.length} ${route.hops.length === 1 ? "puerta" : "puertas"}`,
     },
     timestamp: new Date().toISOString(),
   };
