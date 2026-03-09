@@ -49,18 +49,27 @@ export async function PATCH(
 
   const { clanId } = await params;
 
-  try {
-    await requireRole(session.user.id, clanId, ClanRole.OWNER);
-  } catch {
-    return NextResponse.json({ error: "Solo el OWNER puede modificar el clan" }, { status: 403 });
-  }
-
   const body = await request.json();
-  const { name, settings } = body;
+  const { name, discordWebhookUrl } = body;
+
+  // Cambiar nombre requiere OWNER, webhook requiere OFFICER+
+  if (name) {
+    try {
+      await requireRole(session.user.id, clanId, ClanRole.OWNER);
+    } catch {
+      return NextResponse.json({ error: "Solo el OWNER puede cambiar el nombre" }, { status: 403 });
+    }
+  } else {
+    try {
+      await requireRole(session.user.id, clanId, ClanRole.OFFICER);
+    } catch {
+      return NextResponse.json({ error: "Se requiere rol OFFICER o superior" }, { status: 403 });
+    }
+  }
 
   const updateData: Record<string, unknown> = {};
   if (name) updateData.name = name.trim();
-  if (settings) updateData.settings = settings;
+  if (discordWebhookUrl !== undefined) updateData.discordWebhookUrl = discordWebhookUrl || null;
 
   const clan = await prisma.clan.update({
     where: { id: clanId },
