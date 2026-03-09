@@ -1,0 +1,9768 @@
+[
+  {
+    "name": "Cases-Ugumlos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "large",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "large",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Casitos-Alieam",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "large",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "BLUE",
+        "size": "large",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Casitos-Atinaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "BLUE",
+        "size": "large",
+        "count": 1
+      },
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GOLD",
+        "size": "large",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Casos-Aiagsum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "large",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "BLUE",
+        "size": "large",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_GROUP",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Casos-Aximam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Casos-Ayosrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Casos-Uruxtum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 6
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Cebitos-Aeaylum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Cebos-Avemlum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Ceres-Iooinum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Ceros-Aeaylum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Cetitos-Aiayrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Cetitos-Avixnum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 7
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Cetitos-Aximam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Cetos-Obaelos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Cieites-Ugumlos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Cieitos-Avioaum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Cieitos-Ayosrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Cieitos-Obaelos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Cieitos-Otatrom",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 6
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Cieos-Atatlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 5
+      }
+    ]
+  },
+  {
+    "name": "Cilitos-Opodam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Cilos-Avioaum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Cilos-Ofailos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Cilos-Otatrom",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 6
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Conitos-Ofailos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Conitos-Oxaeaum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Conitos-Uruxtum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 6
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Conos-Avaelum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 8
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Coritos-Avemlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Coros-Aiayrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Coros-Alieam",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Coros-Atinaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Coues-Exakrom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 8
+      }
+    ]
+  },
+  {
+    "name": "Couos-Ayayaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Couos-Opodam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Curites-Exakrom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 8
+      }
+    ]
+  },
+  {
+    "name": "Curitos-Ayayaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Curos-Avulsum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Cuyites-Iooinum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Cynitos-Aiagsum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Cynitos-Atatlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 5
+      }
+    ]
+  },
+  {
+    "name": "Cynos-Avixnum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 7
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Cynos-Oxaeaum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fasites-Azazsum",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 7
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Fasitos-Atezsum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Fasitos-Oleraum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fasitos-Oyuctum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fasos-Ayiotum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Febites-Opavun",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Febos-Acalun",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Ferites-Ohohtum",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 6
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Feritos-Enomaum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Feritos-Osinsum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Feros-Oyuctum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fetos-Aiaylos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "name": "Fiees-Ohohtum",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 6
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Fieites-Unavtum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Fieos-Aiuttum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Files-Azazsum",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 7
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Files-Izizaum",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Filites-Izohun",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Filitos-Uzazlum",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Filos-Abalam",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Firitos-Alodrom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Firos-Aiavam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Firos-Enomaum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Firos-Ezatam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 4
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Firos-Osinsum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fones-Opavun",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fonitos-Amaurom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fonos-Aiugsum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Fonos-Oleraum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Foritos-Aiaylos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "name": "Foros-Egoisum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Foros-Uzazlum",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Foues-Aeaosum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fouitos-Aiattum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Fouos-Agosaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fouos-Amaurom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Furitos-Aiavam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Fuyes-Izohun",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Fuyitos-Acalun",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fuyitos-Ayiotum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Fynes-Unavtum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Fynites-Aeaosum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Fynitos-Abalam",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "name": "Fynitos-Aiugsum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fynitos-Egoisum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Fynitos-Ezatam",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 4
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Hasitos-Avaolum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Hasitos-Umayaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hasos-Agoitum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hasos-Ayousum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Hasos-Inayaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hasos-Iuimaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hasos-Osuorom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hebes-Ouaylos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 8
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Hebites-Exemrom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Hebitos-Atontum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hebos-Ulamsum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Heritos-Inayaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Heros-Atoyam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Hetitos-Iuaerom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 6
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Hiles-Izizaum",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hilites-Ugumtum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 8
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Hilitos-Aiigaum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hilitos-Osuorom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hiros-Exozlos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Hiros-Iuaerom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 6
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Honites-Izizaum",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Honos-Oyezam",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Honos-Umayaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Horos-Ohenlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hurites-Ieatun",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hurites-Ouaylos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 8
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Huritos-Iuimaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 5
+      }
+    ]
+  },
+  {
+    "name": "Huritos-Oiaelos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 9
+      }
+    ]
+  },
+  {
+    "name": "Huros-Atontum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Huyes-Ogozlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Huyitos-Agoitum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Huyitos-Ohenlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Huyos-Eyoztum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Huyos-Uxeulum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 8
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hynes-Exemrom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Hynes-Ieatun",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hynites-Ogozlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hynitos-Atoyam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Hynitos-Ayousum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Hynitos-Ulamsum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Hynos-Oiaelos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 9
+      }
+    ]
+  },
+  {
+    "name": "Oasitos-Aoeuam",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oasos-Eraerom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 4
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oasos-Uromlum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oebitos-Eraerom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 4
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oebitos-Oyozam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Oeritos-Ecunsum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 4
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Oeritos-Oyexlos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 4
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oetos-Ofailos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "name": "Oetos-Oyexlos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 4
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oieitos-Ixakaum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 4
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oieos-Umiutum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oires-Oloblum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oiritos-Eramtum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Oiros-Alaiam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Oonitos-Umiutum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Ooros-Ataltum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Ooros-Ecunsum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oures-Araosum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Ouritos-Ataltum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Ouritos-Ofailos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "name": "Ouyos-Aoeuam",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oynites-Oloblum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oynitos-Uromlum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Oynos-Eramtum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Oynos-Oyozam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Pasos-Avosam",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Pebos-Avosrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Peritos-Avosam",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Peritos-Oconun",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Peros-Aiataum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Petitos-Amayam",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "name": "Petitos-Avosrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Petos-Aietam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 4
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Pieos-Eterrom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Pieos-Ofairom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Pilitos-Eterrom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Pirites-Unatam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Piritos-Ofavam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Piritos-Opabrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 4
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Ponitos-Aiayrom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 4
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Poros-Aiayrom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "name": "Poros-Oconun",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Poues-Unatam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Pouitos-Ofairom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Pures-Ouozlum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Puros-Amayam",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "name": "Puros-Ofavam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Puyitos-Aiataum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Pynites-Ouozlum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Pynitos-Aietam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 4
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Pynos-Opabrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 4
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Qiient-Al-Nusom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Al-Qinsis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Al-Vynsis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Et-Nusas",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Et-Qinsum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-In-Viesis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Nutis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Oc-Odetum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Qi-Nusom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Qi-Odesas",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Sa-Odetis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Si-Odesum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Si-Tertum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiient-Tersom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiitun-Duosum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiitun-Et-Vietis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Qiitun-Vietis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Quaent-Al-Nusis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Quaent-Al-Viesom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Quaent-Al-Vynsum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Quaent-In-Nusis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Quaent-In-Odesum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Quaent-Qintis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Quaent-Tersis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Quatun-Et-Nusas",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Quatun-Nusas",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Quatun-Odetum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Sases-Aoarsum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Sases-Avuotum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Sasitos-Umogaum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Sasos-Egeylos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Sasos-Oiozlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Sebos-Avoirom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 8
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Sebos-Oyohun",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Sebos-Ugersum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Secent-AI-Odetis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Secent-Al-Duosom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Secent-al-tersum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Secent-Et-Odesis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Secent-Et-Vyntum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Secent-Nutum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Secent-Odesom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Secent-Qi-Qinsom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Secent-Sa-Odesis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Secent-Viesum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Secent-Vyntum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Sectun-In-Odesis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Sectun-in-Vyntis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Sectun-Qinsom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Sectun-Tersas",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Seritos-Egeylos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Seritos-Onaytum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Setent-Al-Vietis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Setent-Et-Nusum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Setent-Et-Qintis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Setent-Nusum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Setent-Qintis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Setent-Vietis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Setitos-Obobrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Setos-Avamsum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Settun-AL-Nusis",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Settun-Al-Odetum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Settun-In-Odetum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Settun-Odetum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Settun-Tersom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Sieos-Ofugtum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Silitos-Abizaum",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Silos-Apenlum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Siritos-Avoirom",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 8
+      }
+    ]
+  },
+  {
+    "name": "Siritos-Oyohun",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Siros-Obobrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Siros-Ofurlos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Sonitos-Ayailos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 7
+      }
+    ]
+  },
+  {
+    "name": "Soritos-Aiaitum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Soritos-Apenlum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Soritos-Avamsum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "name": "Soros-Axaesum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 7
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Soues-Uzurtum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Souitos-Oiozlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Souos-Availos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Souos-Ososlos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "name": "Suyites-Uzurtum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Suyitos-Ofugtum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Suyitos-Oyarlos",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Suyos-Onaytum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Synites-Aoarsum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Synitos-Availos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 3
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Synitos-Ofurlos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Synitos-Ososlos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "name": "Synos-Ayailos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Synos-Oyarlos",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Tasitos-Obayam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Tasitos-Ulaurom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 8
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Tasos-Iriglos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Tebitos-Odoxlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Teros-Auiusum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Tetitos-Ayoslum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Tetos-Igaelum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 7
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Tetos-Ulaurom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 8
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Tieitos-Ouultum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 4
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Tieos-Ayoslum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Tilitos-Ataglos",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 9
+      }
+    ]
+  },
+  {
+    "name": "Tiros-Odoxlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Tiros-Ouultum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 4
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Tonitos-Igurlum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Toritos-Iriglos",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Touos-Ataglos",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 9
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Touos-Uoemtum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Tuyitos-Aboysum",
+    "type": "AVALON",
+    "tier": 8,
+    "resources": [
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Tuyitos-Auiusum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Tynos-Atatlos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Tynos-Eyexrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Tynos-Uxavrom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "name": "Xases-Oxoulum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 5
+      }
+    ]
+  },
+  {
+    "name": "Xasos-Aeoilos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Xasos-Oneulum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Xebitos-Oyogam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Xebos-Emimsum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 4
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Xebos-Exostum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Xerites-Oxoulum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Xetitos-Emimsum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "name": "Xetos-Obursum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Xiles-Aiavlum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Xilitos-Aoemaum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 4
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Xilos-Osayam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Xiros-Aiairom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Xoritos-Aiairom",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": []
+  },
+  {
+    "name": "Xoritos-Exostum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "WOOD",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Xoritos-Osayam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "name": "Xouitos-Aeoilos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 3
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "name": "Xuros-Eyoztum",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 6
+      },
+      {
+        "type": "FIBER",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Xuyitos-Aioblos",
+    "type": "AVALON",
+    "tier": 4,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 6
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Xynitos-Obursum",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "HIDE",
+        "size": "small",
+        "count": 5
+      },
+      {
+        "type": "ORE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "name": "Xynos-Oyogam",
+    "type": "AVALON",
+    "tier": 6,
+    "resources": [
+      {
+        "type": "STONE",
+        "size": "small",
+        "count": 1
+      }
+    ],
+    "chests": [
+      {
+        "type": "GOLD",
+        "size": "small",
+        "count": 1
+      },
+      {
+        "type": "BLUE",
+        "size": "small",
+        "count": 2
+      },
+      {
+        "type": "GREEN",
+        "size": "small",
+        "count": 2
+      }
+    ],
+    "dungeons": [
+      {
+        "type": "DUNGEON_SOLO",
+        "size": "small",
+        "count": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,10594 @@
+[
+  {
+    "name": "Swamp Cross",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tharcal Fissure",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mushroom Cave",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mushroom Cave",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fishy Business",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fishy Business",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stone Wars",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stone Wars",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cairn Darg",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Gwan Gorge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Malag Crevasse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Creag Morr",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cairn Camain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cairn Glascore",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pen Gent",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pen Garn",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Crose Gorge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Birken Fell",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Eldon Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lewsdon Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Blackthorn Quarry",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Haytor",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Brent Knoll",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mase Knoll",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Croker Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Goffers Knoll",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Vixen Tor",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Prospector's Hope",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Steelhide Meadow",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Longmarch Meadow",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lazygrass Plain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Snapshaft Trough",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drywater Meadow",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Parchthroat Plain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deadvein Gully",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Roastcorpse Steppe",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Kindlegrass Steppe",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ferndell",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Wyre Forest",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stagbourne",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Murkweald",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Longtimber Glen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Birchcopse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Willow Wood",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oakcopse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Rowanwood",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Larchroad",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pen Kerrig",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Slimehag",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bonepool Marsh",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Spectral Sump",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Willowsigh Marsh",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stumprot Swamp",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Dusklight Fen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Dewleaf Fen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stinkhag",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chillhag",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Slowtree Plain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smoothfloor Cleft",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Gutras Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mardale",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Wispwhisper Marsh",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Curlew Fen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Saddle Tor",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Windripple Fen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mawar Gorge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Russerdell",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bryn Gorge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cairn Gorm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lumber Lunacy",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Preaching to the Dead",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Preaching to the Dead",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bowscale Fell",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cairn Fidair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Creag Garr",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Nightcreak Marsh",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fractured Ground",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cracked Earth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Redlake",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Yew Wood",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Highbole Glen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hornbeam Wood",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Steppe Cross",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Highland Cross",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Haldon Tor",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lumber Lunacy",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Martlock",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fort Sterling",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Forest Cross",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mountain Cross",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Thetford",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sleetwater Basin",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lymhurst",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Camlann",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Astolat",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Curious Excavation",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lurking Underneath",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bridgewatch",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Rock Adit",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sabertooth Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Swamp Burrow",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ore Adit",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Forest Burrow",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Underway",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Caerleon",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Runnel Sink",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Inis Mon",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Three Sisters",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "A Fistful of Silver",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cedarcopse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bellever Tor",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pen Uchaf",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Shiftshadow Expanse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Caerleon Market",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bank of Caerleon",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Eternal Battle",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lurking Underneath",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Arena1",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Arena2",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Arena",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Preaching to the Dead",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bank of Thetford",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Thetford Market",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bank of Lymhurst",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lymhurst Market",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bank of Bridgewatch",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bridgewatch Market",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bank of Martlock",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Martlock Market",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bank of Fort Sterling",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fort Sterling Market",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Eternal Battle",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fishy Business",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lumber Lunacy",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mushroom Cave",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lurking Underneath",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stone Wars",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Three Sisters",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "A Fistful Of Silver",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "In the Raven's Claws",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "In the Raven's Claws",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Farmland Skirmish",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "HomeTerritory Skirmish",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Resource Skirmish",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Resource Skirmish",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Resource Skirmish 2",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Crystal Realm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Crystal Realm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Lighthouse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Forgotten Woods",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mountain Fort",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Cove",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Caerleon Market",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Northstrand Dunes",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Northstrand Beach",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Scuttlesink Mouth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deepwood Dell",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitebank Stream",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitebank Shore",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitebank Cross",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitebank Wall",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Meltwater Bog",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitebank Descent",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitebank Ridge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Timberslope Dell",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deepwood Pines",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Frostpeak Vista",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Frostpeak Ascent",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Floatshoal Fissure",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Floatshoal Bight",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Darkseep Core",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Meltwater Delta",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Meltwater Sump",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Skysand Plateau",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Everwinter Crossing",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Everwinter Plain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Everwinter Gorge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Scuttlesink Marsh",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Brambleshore Hinterlands",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Shaleheath Steep",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Everwinter Reach",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Everwinter Peak",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Everwinter Passage",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Everwinter Expanse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Everwinter Incline",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneslip Passage",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitecap Cave",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Scuttlesink Pools",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Timbertop Dale",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Timbertop Wood",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Timbertop Escarp",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Shaleheath Hills",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Everwinter Shores",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Wetgrave Bog",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Wetgrave Swale",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Wetgrave Marsh",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Timberslope Grove",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Timberslope Bridge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Swiftsands Plain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drybasin Riverbed",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Swiftsands Basin",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Swiftsands Chaparral",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Skylake Bridge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Greenshore Bay",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Flatrock Cliffs",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Skullmarsh Lower",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Skullmarsh Upper",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Greenshore Peninsula",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Giantweald Dale",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Watchwood Precipice",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Watchwood Grove",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Giantweald Woods",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Watchwood Lakeside",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Watchwood Bluffs",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Giantweald Edge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Slakesands Canyon",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drybasin Oasis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Slakesands Mesa",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Flatrock Plateau",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Munten Rise",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Munten Tundra",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Munten Fell",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Steep",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Lake",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Dale",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Strand",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Glade",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Enclave",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Pass",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Levee",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Cliffs",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Isle",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Hillock",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Glacierbreak Summit",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drownfield Course",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Widemoor Shore",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Widemoor Pool",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Willowshade Wetlands",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Widemoor Estuary",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Widemoor Hills",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drownfield Wetland",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Widemoor End",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Willowshade Pools",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Widemoor Woods",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Willowshade Hills",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Timberscar Dell",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Timberscar Copse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drytop Riverbed",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drytop Pillars",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stalagmite Adit",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drownfield Mire",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drownfield Fen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drownfield Slough",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drownfield Rut",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drownfield Quag",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Meltwater Channel",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drownfield Sink",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deadpine Forest",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Skysand Ridge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Citadel of Ash",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Glacierfall Passage",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitepeak Ascent",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Glacierfall Canyon",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Everwinter Gap",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Glacierfall Cross",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Glacierfall Valley",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitepeak Spring",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Glacierfall Pass",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitepeak Tundra",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Springsump Basin",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Springsump Wetland",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Springsump Melt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Southgrove Escarp",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Southgrove Copse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Southgrove Thicket",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Dryvein Cross",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sunstrand Shoal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sunstrand Delta",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Dryvein Plain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Farshore Esker",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Dryvein Oasis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sunstrand Dunes",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Farshore Heath",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sunstrand Quicksands",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Battlebrae Peaks",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stonelake Fields",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stonelake Hillock",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stonemouth Southbluff",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Frostspring Passage",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Frostspring Volcano",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitewall Ridge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitewall Pass",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Runnelvein Slough",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Runnelvein Bog",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Runnelvein Sink",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Giantweald Copse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deepwood Gorge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Giantweald Roots",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deepwood Copse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Giantweald Glade",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Eye of the Forest",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Eldersleep",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Skylake Hinterlands",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Thunderrock Draw",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Floatshoal Floe",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Iceburn Firth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Flammog Fork",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Iceburn Peaks",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Flammog Valley",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Iceburn Cliffs",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Iceburn Tundra",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Flammog Desolation",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Glacierfall Fissure",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Driprock Tunnel",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Shale Underway",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Rut",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Crosscut Skip",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Widemoor Delta",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Willowshade Mire",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Willowshade Lake",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Willowshade Icemarsh",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Widemoor Flats",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Willowshade Sink",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Widemoor Fen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Twinchannel Narrows",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Unhallowed Cloister",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Westweald Thicket",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Driftwood Glen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Westweald Shore",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandmount Strand",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bleachskull Steppe",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandmount Esker",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandrift Steppe",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandrift Prairie",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandrift Coast",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandrift Shore",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Farshore Bay",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bleachskull Desert",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandrift Expanse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Farshore Lagoon",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandmount Desert",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandrift Dunes",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Farshore Drylands",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandrift Fringe",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Farshore Cape",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandmount Ascent",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Braemore Upland",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Windgrass Border",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Windgrass Gully",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Windgrass Rill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Windgrass Precipice",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Braemore Lowland",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Windgrass Fields",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Windgrass Coast",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Highstone Mound",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Avalanche Ravine",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Frostbite Chasm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Frostseep Ravine",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Frostbite Mountain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Frostseep Crevasse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Longfen Marsh",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mudfoot Sump",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mudfoot Mounds",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Longfen Veins",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deathreach Priory",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Greenhollow Vale",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Greenhollow Copse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Highstone Plains",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Battlebrae Flatland",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Highstone Grassland",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Gravemound Brim",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Gravemound Hills",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Gravemound Slope",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Battlebrae Meadow",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Windgrass Terrace",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Gravemound Knoll",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Gravemound Cliffs",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Highstone Loch",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Redtree Enclave",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deathcap Channel",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Glowmire Grotto",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lurkers' Hollow",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Middlemurk Path",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Craglight Cavern",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deathwisp Sink",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deathwisp Bog",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sunkenbough Woods",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Black Monastery",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sunkenbough Spring",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Rivercopse Crossing",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Driftwood Vale",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hightree Borderlands",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Rivercopse Curve",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Driftwood Hollow",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Rivercopse Path",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Darkbough Snag",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Rivercopse Fount",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sunfang Ravine",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sunfang Approach",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Parchsand Cliffs",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sunfang Cliffs",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sunfang Wasteland",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Wailing Bulwark",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sunfang Dawn",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Parchsand Drought",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Murdergulch Cross",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Murdergulch Gap",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Razorrock Passage",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Razorrock Valley",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Highstone Meadow",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Battlebrae Plain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Battlebrae Lake",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stonemouth Northbluff",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Thunderrock Rapids",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Razorrock Ravine",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Razorrock Edge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stonemouth Bay",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Thunderrock Ascent",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Thunderrock Upland",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Murdergulch Trail",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Razorrock Chasm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Razorrock Verge",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Razorrock Bank",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Highstone Plateau",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Battlebrae Grassland",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Murdergulch Divide",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Murdergulch Ravine",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Razorrock Gulch",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Firesink Caldera",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitecliff Peak",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Firesink Trench",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Whitecliff Expanse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Avalanche Incline",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bedrock Passage",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Everglow Deep",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Longfen Arms",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Thirstwater Steppe",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Dryvein Riverbed",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Thirstwater Waste",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Dryvein Steppe",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Dryvein End",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Thirstwater Gully",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Dryvein Confluence",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Daemonium Keep",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Nightbloom Track",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mudrock Burrow",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deathcreep Adit",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Arthur's Rest",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Merlyn's Rest",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 1",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 2",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 1",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 2",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 1",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 2",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 1",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 2",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 1",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 2",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Morgana's Rest",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ouyos-Aoeuam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Coues-Exakrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Puros-Amayam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pures-Ouozlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Soros-Axaesum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Huyos-Uxeulum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ceres-Iooinum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cetos-Obaelos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oieos-Umiutum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sebos-Avoirom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Teros-Auiusum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oebos-Ixakaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Touos-Uoemtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xasos-Aeoilos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xuros-Eyoztum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pasos-Avosam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oasos-Uromlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Casos-Uruxtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ceros-Aeaylum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xouos-Aioblos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oasos-Eraerom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tetos-Igaelum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hynos-Oiaelos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hebos-Ulamsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hiros-Iuaerom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cynos-Avixnum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conos-Avaelum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tetos-Ulaurom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oures-Araosum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hures-Ugumtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hasos-Iuimaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Foros-Egoisum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hasos-Agoitum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setos-Avamsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tonos-Obayam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Honos-Umayaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Huyes-Ogozlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Curos-Avulsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cebos-Avemlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hasos-Inayaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sasos-Egeylos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Coros-Aiayrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hiros-Exozlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tiros-Ouultum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cases-Ugumlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fynes-Unavtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fetos-Aiaylos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fouos-Agosaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Huyos-Eyoztum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Poues-Unatam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fouos-Amaurom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Suyos-Onaytum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xasos-Oneulum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oynos-Oyozam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Coros-Atinaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sasos-Oiozlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xynos-Oyogam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cynos-Oxaeaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tynos-Atatlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Firos-Enomaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hynes-Exemrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hebes-Ouaylos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Foues-Aeaosum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xilos-Osayam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Casos-Ayosrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Souos-Ososlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xebos-Emimsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oetos-Oyexlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xebos-Exostum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tynos-Eyexrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Casos-Aximam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hasos-Ayousum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fasos-Ayiotum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pebos-Avosrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sases-Avuotum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xases-Oxoulum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hieos-Avaolum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xasos-Aoemaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hasos-Osuorom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oynos-Eramtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Couos-Ayayaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Siros-Obobrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Souos-Umogaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cilos-Avioaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fonos-Aiugsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Synos-Ayailos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xiles-Aiavlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sases-Aoarsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Casos-Aiagsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tieos-Ayoslum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hieos-Aiigaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Poros-Aiayrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cilos-Ofailos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Silos-Apenlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fynos-Alodrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Firos-Ezatam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Firos-Osinsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Soues-Uzurtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ooros-Ataltum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hynes-Ieatun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fuyes-Izohun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xetos-Obursum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oetos-Ofailos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tynos-Igurlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Puros-Ofavam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setos-Aiaitum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tynos-Uxavrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Souos-Availos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sebos-Ugersum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Peros-Aiataum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pieos-Ofairom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sieos-Ofugtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tasos-Iriglos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tiros-Odoxlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xases-Ataglos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oires-Oloblum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Firos-Aiavam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Heros-Atoyam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Petos-Aietam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Touos-Ataglos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Poros-Oconun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Honos-Oyezam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fieos-Atezsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ooros-Ecunsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Coros-Alieam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Couos-Opodam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Horos-Ohenlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Files-Azazsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sasos-Abizaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fones-Opavun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fiees-Ohohtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Siros-Ofurlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oiros-Alaiam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xiros-Aiairom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Silos-Oyarlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fonos-Oleraum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fieos-Aiuttum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Filos-Abalam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Synos-Oyarlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Febos-Acalun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pieos-Eterrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Feros-Oyuctum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pynos-Opabrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Foros-Uzazlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cieos-Atatlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Huros-Atontum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tonos-Aboysum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hiles-Izizaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sebos-Oyohun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cilos-Otatrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oasitos-Aoeuam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Curites-Exakrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Petitos-Amayam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pynites-Ouozlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Suyitos-Axaesum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Honitos-Uxeulum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cuyites-Iooinum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cieitos-Obaelos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oonitos-Umiutum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Siritos-Avoirom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tuyitos-Auiusum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oieitos-Ixakaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Turitos-Uoemtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xouitos-Aeoilos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xouitos-Eyoztum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Peritos-Avosam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oynitos-Uromlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conitos-Uruxtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cebitos-Aeaylum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xuyitos-Aioblos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oebitos-Eraerom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tebitos-Igaelum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Huritos-Oiaelos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hynitos-Ulamsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hetitos-Iuaerom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cetitos-Avixnum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Casitos-Avaelum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tasitos-Ulaurom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oynites-Araosum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hilites-Ugumtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Huritos-Iuimaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fynitos-Egoisum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Huyitos-Agoitum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Soritos-Avamsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tasitos-Obayam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hasitos-Umayaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hynites-Ogozlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ceritos-Avulsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Coritos-Avemlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Heritos-Inayaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Seritos-Egeylos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cetitos-Aiayrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Heritos-Exozlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tieitos-Ouultum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cieites-Ugumlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fieites-Unavtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Foritos-Aiaylos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fynitos-Agosaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Heritos-Eyoztum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pirites-Unatam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fonitos-Amaurom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Seritos-Onaytum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xetitos-Oneulum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oebitos-Oyozam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Casitos-Atinaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Souitos-Oiozlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xebitos-Oyogam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conitos-Oxaeaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Turitos-Atatlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Feritos-Enomaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hebites-Exemrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hurites-Ouaylos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fynites-Aeaosum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xoritos-Osayam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cieitos-Ayosrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Synitos-Ososlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xetitos-Emimsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oeritos-Oyexlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xoritos-Exostum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tieitos-Eyexrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cetitos-Aximam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hynitos-Ayousum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fuyitos-Ayiotum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Petitos-Avosrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Suyites-Avuotum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xerites-Oxoulum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hasitos-Avaolum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xilitos-Aoemaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hilitos-Osuorom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oiritos-Eramtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Curitos-Ayayaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setitos-Obobrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sasitos-Umogaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cieitos-Avioaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fynitos-Aiugsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sonitos-Ayailos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xonites-Aiavlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Synites-Aoarsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cynitos-Aiagsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tetitos-Ayoslum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hilitos-Aiigaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ponitos-Aiayrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conitos-Ofailos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Soritos-Apenlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Firitos-Alodrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fynitos-Ezatam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Feritos-Osinsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Suyites-Uzurtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ouritos-Ataltum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hurites-Ieatun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Filites-Izohun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xynitos-Obursum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ouritos-Ofailos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tonitos-Igurlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Piritos-Ofavam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Soritos-Aiaitum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tonitos-Uxavrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Synitos-Availos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sasitos-Ugersum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Puyitos-Aiataum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pouitos-Ofairom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Suyitos-Ofugtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Toritos-Iriglos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tebitos-Odoxlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xurites-Ataglos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oynites-Oloblum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Furitos-Aiavam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hynitos-Atoyam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pynitos-Aietam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tilitos-Ataglos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Peritos-Oconun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hynitos-Oyezam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fasitos-Atezsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oeritos-Ecunsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Casitos-Alieam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cilitos-Opodam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Huyitos-Ohenlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fasites-Azazsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Silitos-Abizaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Febites-Opavun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Ferites-Ohohtum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Synitos-Ofurlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Oouitos-Alaiam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Xoritos-Aiairom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sasitos-Oyarlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fasitos-Oleraum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fouitos-Aiuttum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fynitos-Abalam",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Suyitos-Oyarlos",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fuyitos-Acalun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pilitos-Eterrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fasitos-Oyuctum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Piritos-Opabrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Filitos-Uzazlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cynitos-Atatlum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hebitos-Atontum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Tuyitos-Aboysum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Honites-Izizaum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Siritos-Oyohun",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cieitos-Otatrom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0038",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0039",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0042",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0044",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0045",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0048",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0049",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0050",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0051",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0052",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0053",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0054",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0008",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0009",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0010",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0011",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0012",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0013",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0014",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0015",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0016",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0017",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0018",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0019",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0020",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0021",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0022",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0023",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0024",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0025",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0026",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0027",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0028",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0029",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0030",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0031",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0032",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0033",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0034",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0035",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0036",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0037",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0040",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0041",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0043",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0046",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0047",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-Vynsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-Al-Vynsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-Tersis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-Al-Tersis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-Viesom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-Al-Viesom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quatun-Nusas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quatun-Et-Nusas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-Qintis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-Al-Qintis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quatun-Odetum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quatun-Et-Odetum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-Al-Odesum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-In-Odesum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-Al-Nusis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Quaent-In-Nusis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Tersom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-In-Tersom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Odesas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Qi-Odesas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Nutis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-In-Nutis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Vyntum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-In-Vyntum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Al-Odesum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Si-Odesum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Al-Vynsis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Qi-Vynsis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiitun-Et-Vynsom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiitun-Si-Vynsom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Al-Tersas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Qi-Tersas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiitun-Vietis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiitun-Et-Vietis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Et-Tertum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Si-Tertum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Qinsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Et-Qinsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Al-Viesis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-In-Viesis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Al-Nusom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Qi-Nusom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Et-Nusas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Si-Nusas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Et-Odetis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Sa-Odetis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-In-Odetum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Oc-Odetum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiitun-Duosum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiitun-Al-Duosum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-Al-Qinsis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Qiient-In-Qinsis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Odesom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Qi-Odesom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sectun-Tersas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sectun-Et-Tersas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Al-Odetis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Si-Odetis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Vyntum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Et-Vyntum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Viesum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Al-Viesum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Et-Odesis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Sa-Odesis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sectun-Qinsom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sectun-In-Qinsom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Al-Qinsom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Qi-Qinsom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sectun-Al-Vyntis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sectun-In-Vyntis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Nutum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Al-Nutum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Al-Tersum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-In-Tersum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sectun-In-Odesis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sectun-Oc-Odesis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Duosom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Al-Duosom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Et-Qinsas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Secent-Si-Qinsas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setent-Vietis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setent-Al-Vietis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Settun-Odetum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Settun-Et-Odetum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setent-Nusum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setent-Et-Nusum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Settun-Vynsis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Settun-Al-Vynsis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Settun-Tersom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Settun-Al-Tersom",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setent-Duosas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setent-Al-Duosas",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setent-Qintis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setent-Et-Qintis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Settun-Al-Odetum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Settun-In-Odetum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setent-Al-Qinsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Setent-In-Qinsum",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Settun-Al-Nusis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Settun-In-Nusis",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Corrupted Lair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "CrystalRealmDebug",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 3",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 3",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 3",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 3",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 3",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Champions' Realm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "VegAnimTest",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Large Crystal Realm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Plains",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Plains",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Plains",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Boneyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Boneyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Boneyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Four Bridges",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Four Bridges",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Four Bridges",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Traverse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Traverse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Traverse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Fortress",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Fortress",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Fortress",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Pit",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Pit",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Pit",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Courtyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Courtyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Courtyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Tribunal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Tribunal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Tribunal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Citadel",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Citadel",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Citadel",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Murky Fen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fog Fen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drownhorse Basin",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Slithertail Marsh",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Wanderlure Basin",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Falsestep Marsh",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Darkground Swamp",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Anklesnag Mire",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Dusktree Swamp",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Flynsdell",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pinecopse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deeproot Wood",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Aspenwood",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Spindlewood",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Owlsong Glen",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Nightbloom Forest",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Dryfield Meadow",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Sandgust Cleft",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Longshadow Plain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Flatriver Trough",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Redstone Plain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Flimmerair Steppe",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Goldshimmer Plain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Kilmar Tor",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Carns Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Brons Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Felniks Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Adrens Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Garrow Fell",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Broken Fell",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Pen Fenair",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cairn Drain",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Caulder Fissure",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cairn Cloch",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Creag Dhor",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Creag Meagir",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Domhain Chasm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Creag's Way",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chasmlight Cave",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-H-0001",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Boulder Deep",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-H-0002",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Drystone Channel",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chasmlight Cave",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "PSG-0002",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Plains",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Plains",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Plains",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Hill",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Boneyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Boneyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Boneyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Four Bridges",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Four Bridges",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Four Bridges",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Traverse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Traverse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Traverse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Fortress",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Fortress",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Fortress",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Pit",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Pit",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Pit",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Courtyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Courtyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Courtyard",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Tribunal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Tribunal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Tribunal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Citadel",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Citadel",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "The Citadel",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hallowed Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hallowed Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hallowed Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hallowed Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Crypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hallowed Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hallowed Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hallowed Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Hallowed Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Exalted Undercrypt",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deepwood Enclave",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deepwood Enclave",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Deepwood Enclave",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Trinity Hall",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Trinity Hall",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Trinity Hall",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Trinity Hall",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 4",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 4",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 4",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 4",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 4",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-MAIN-06",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-SUB-06",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "LEGACY-KEEPER-01",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "LEGACY-KEEPER-SOLO-01",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "LEGACY-UNDEAD-01",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "LEGACY-UNDEAD-02",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Heretic Cellar Network",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Thetford Portal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Lymhurst Portal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Bridgewatch Portal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Martlock Portal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Fort Sterling Portal",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "0302",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "0303",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "0304",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "1302",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "1303",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "1304",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "2302",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "2303",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "2304",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "3302",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "3303",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "3304",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "4302",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "4303",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "4304",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Crystal Realm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Crystal Realm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Heretic Cellar Network",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Heretic Cellar Network",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Heretic Cellar Network",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Heretic Cellar Network",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Crystal Realm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Crystal Realm",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Brecilien",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Brecilien",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Brecilien Bank",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Brecilien Market",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Brecilien Weald",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Brecilien Copse",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Brecilien Grove",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Brecilien Thicket",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Mists Dungeon",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 5",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 5",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 5",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 5",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 5",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "3010",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "3012-HALL-02",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 6",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 6",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 6",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 6",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 6",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-MAIN-028",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-SUB-028",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-MAIN-006",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-SUB-006",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-MAIN-009",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-SUB-009",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-MAIN-008",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-SUB-008",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Cathedral of Light",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Chambers of Truth",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Stoneroot Caverns",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-MAIN-005",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DNG-UND-01-SUB-005",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Smuggler's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 7",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 7",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 7",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 7",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 7",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Showroom Island",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Showroom Island",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Showroom Island",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Showroom Island",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Showroom Island",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Showroom Island",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Antiquarian's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Antiquarian's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Antiquarian's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Antiquarian's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Antiquarian's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Antiquarian's Den",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "DebugCreatureArena",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "1900-DynamicTest",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 8",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 8",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 8",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 8",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "Conquerors' Hall Lvl. 8",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "AVALON-LIONEL-01",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  },
+  {
+    "name": "AVALON-LIONEL-02",
+    "type": "ROYAL",
+    "tier": null,
+    "resources": null,
+    "chests": null,
+    "dungeons": null
+  }
+]
