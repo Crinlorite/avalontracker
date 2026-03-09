@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 // import Google from "next-auth/providers/google";
 // import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./prisma";
+import { authConfig } from "./auth.config";
 
 // TODO: Reemplazar Credentials por Google OAuth para produccion
 // 1. Descomentar Google provider y PrismaAdapter
@@ -11,6 +12,7 @@ import { prisma } from "./prisma";
 // 4. Ajustar callbacks
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  ...authConfig,
   // adapter: PrismaAdapter(prisma),  // Activar con Google OAuth
   session: { strategy: "jwt" },
   providers: [
