@@ -1,23 +1,79 @@
 import NextAuth from "next-auth";
-import Google from "next-auth/providers/google";
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import Credentials from "next-auth/providers/credentials";
+// import Google from "next-auth/providers/google";
+// import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./prisma";
 
+// TODO: Reemplazar Credentials por Google OAuth para produccion
+// 1. Descomentar Google provider y PrismaAdapter
+// 2. Comentar/eliminar Credentials provider
+// 3. Cambiar strategy a "database"
+// 4. Ajustar callbacks
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  // adapter: PrismaAdapter(prisma),  // Activar con Google OAuth
+  session: { strategy: "jwt" },
   providers: [
-    Google({
-      clientId: process.env.AUTH_GOOGLE_ID!,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+    Credentials({
+      name: "Password",
+      credentials: {
+        username: { label: "Usuario", type: "text" },
+        password: { label: "Contraseña", type: "password" },
+      },
+      async authorize(credentials) {
+        const password = process.env.AUTH_SIMPLE_PASSWORD;
+        if (!password) {
+          throw new Error("AUTH_SIMPLE_PASSWORD no configurada");
+        }
+
+        if (credentials?.password !== password) {
+          return null;
+        }
+
+        const username = (credentials?.username as string) || "admin";
+
+        // Buscar o crear usuario en la DB
+        let user = await prisma.user.findFirst({
+          where: { displayName: username },
+        });
+
+        if (!user) {
+          user = await prisma.user.create({
+            data: {
+              email: `${username.toLowerCase().replace(/\s+/g, ".")}@local.dev`,
+              displayName: username,
+              name: username,
+              isSuperAdmin: username === "admin",
+            },
+          });
+        }
+
+        return {
+          id: user.id,
+          name: user.displayName || user.name,
+          email: user.email,
+          image: user.image,
+        };
+      },
     }),
+    // Google({
+    //   clientId: process.env.AUTH_GOOGLE_ID!,
+    //   clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+    // }),
   ],
   callbacks: {
-    async session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user && token.id) {
+        session.user.id = token.id as string;
 
         const dbUser = await prisma.user.findUnique({
-          where: { id: user.id },
+          where: { id: session.user.id },
           select: { displayName: true, personalCode: true, isSuperAdmin: true },
         });
 
@@ -28,18 +84,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
       return session;
-    },
-    async signIn({ user, account }) {
-      if (account?.provider === "google" && user.email) {
-        const superAdminEmail = process.env.SUPER_ADMIN_EMAIL;
-        if (superAdminEmail && user.email === superAdminEmail) {
-          await prisma.user.updateMany({
-            where: { email: user.email },
-            data: { isSuperAdmin: true },
-          });
-        }
-      }
-      return true;
     },
   },
   pages: {
