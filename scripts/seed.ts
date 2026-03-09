@@ -1,8 +1,10 @@
 import { PrismaClient } from "../src/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import avalonZones from "../src/data/avalon-zones.json";
 import worldZones from "../src/data/world-zones.json";
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+const prisma = new PrismaClient({ adapter });
 
 interface ZoneData {
   name: string;
