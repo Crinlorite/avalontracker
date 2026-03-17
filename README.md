@@ -137,6 +137,49 @@ avalon-tracker/
 | PATCH | `/api/profile` | Actualizar nombre in-game | Autenticado |
 | GET | `/api/zones?q=` | Buscar zonas (autocompletado) | Autenticado |
 | GET | `/api/admin/routes` | Todas las rutas (global) | Super Admin |
+| POST | `/api/external/route` | Crear ruta completa (Loot Vigil) | API Key |
+| POST | `/api/external/zone-change` | Reportar cambio de zona (Loot Vigil) | API Key |
+
+### API Externa (Loot Vigil)
+
+Endpoints para integracion con herramientas externas que capturan datos del juego en tiempo real.
+
+**Autenticacion:** Header `x-api-key` con el valor de la variable de entorno `EXTERNAL_API_KEY`.
+
+#### POST `/api/external/route`
+
+Crea una ruta completa con todos los saltos.
+
+```json
+{
+  "clanId": "clan-id",
+  "userId": "user-id",
+  "hops": [
+    { "fromZone": "Eldon Hill", "toZone": "Qiitun-Et-Vietis", "portalSize": 7, "expiresAt": "2026-03-17T20:00:00Z" }
+  ]
+}
+```
+
+#### POST `/api/external/zone-change`
+
+Reporta un cambio de zona individual. Auto-crea zonas si no existen.
+
+```json
+{
+  "fromZoneId": "3204",
+  "toZoneId": "TNL-367",
+  "fromName": "Eldon Hill",
+  "toName": "Qiitun-Et-Vietis",
+  "fromType": "ROYAL",
+  "toType": "AVALON"
+}
+```
+
+#### Variables de entorno adicionales
+
+| Variable | Valor |
+|----------|-------|
+| `EXTERNAL_API_KEY` | Clave secreta para autenticar requests de Loot Vigil |
 
 ## Modelo de datos
 
