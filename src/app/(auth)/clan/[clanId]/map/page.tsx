@@ -264,15 +264,18 @@ export default function MapPage() {
 
   // Mouse handlers
   function handleMouseDown(e: React.MouseEvent) {
-    const rect = canvasRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
+    const canvas = canvasRef.current;
+    const rect = canvas?.getBoundingClientRect();
+    if (!rect || !canvas) return;
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const mx = (e.clientX - rect.left) * scaleX;
+    const my = (e.clientY - rect.top) * scaleY;
 
     for (const node of nodes.values()) {
       const dx = mx - node.x;
       const dy = my - node.y;
-      if (dx * dx + dy * dy < 150) {
+      if (dx * dx + dy * dy < 400) {
         if (chainMode) {
           if (!chainSource) {
             setChainSource(node.id);
@@ -291,12 +294,15 @@ export default function MapPage() {
 
   function handleMouseMove(e: React.MouseEvent) {
     if (!dragRef.current) return;
-    const rect = canvasRef.current?.getBoundingClientRect();
-    if (!rect) return;
+    const canvas = canvasRef.current;
+    const rect = canvas?.getBoundingClientRect();
+    if (!rect || !canvas) return;
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
     const node = nodes.get(dragRef.current.nodeId);
     if (!node) return;
-    node.x = e.clientX - rect.left - dragRef.current.offsetX;
-    node.y = e.clientY - rect.top - dragRef.current.offsetY;
+    node.x = (e.clientX - rect.left) * scaleX - dragRef.current.offsetX;
+    node.y = (e.clientY - rect.top) * scaleY - dragRef.current.offsetY;
   }
 
   function handleMouseUp() {
