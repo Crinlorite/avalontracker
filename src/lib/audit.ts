@@ -12,7 +12,8 @@ export type AuditAction =
   | "CODE_GENERATE"
   | "CODE_RESOLVE"
   | "WEBHOOK_UPDATE"
-  | "SETTINGS_CHANGE";
+  | "SETTINGS_CHANGE"
+  | "ROUTE_CREATE_EXTERNAL";
 
 export async function logAudit(
   clanId: string,
