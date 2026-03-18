@@ -45,7 +45,7 @@ export default function MapPage() {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [chainMode, setChainMode] = useState(false);
   const [chainSource, setChainSource] = useState<string | null>(null);
-  const [worldGraph, setWorldGraph] = useState<Record<string, { name: string; color: string; neighbors: string[]; nearestSafe: string | null; distToSafe: number | null; safeType: string | null }>>({});
+  const [worldGraph, setWorldGraph] = useState<Record<string, { name: string; color: string; neighbors: string[]; nearestSafe: string | null; distToSafe: number | null; safeType: string | null; nearestPortal: string | null; distToPortal: number | null }>>({});
   const animRef = useRef<number>(0);
   const dragRef = useRef<{ nodeId: string; offsetX: number; offsetY: number } | null>(null);
 
@@ -56,20 +56,24 @@ export default function MapPage() {
         fetch(`/api/clans/${clanId}/routes?status=ACTIVE`),
         fetch('/world-graph.json')
       ]);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let wg: Record<string, any> = {};
+      if (graphRes.ok) {
+        wg = await graphRes.json();
+        setWorldGraph(wg);
+      }
       if (routesRes.ok) {
         const data: Route[] = await routesRes.json();
         setRoutes(data);
-        buildGraph(data);
-      }
-      if (graphRes.ok) {
-        setWorldGraph(await graphRes.json());
+        buildGraph(data, wg);
       }
     }
     loadData();
   }, [clanId]);
 
-  function getZoneType(name: string): "AVALON" | "ROYAL" | "OUTLANDS" | "BLACK" | "RED" {
-    const info = worldGraph[name] || Object.values(worldGraph).find(z => z.name === name);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function getZoneType(name: string, wg: Record<string, any>): "AVALON" | "ROYAL" | "OUTLANDS" | "BLACK" | "RED" {
+    const info = wg[name] || Object.values(wg).find((z: any) => z.name === name);
     if (info?.color === 'black') return "BLACK";
     if (info?.color === 'red') return "RED";
     if (info?.color === 'avalon') return "AVALON";
@@ -77,7 +81,8 @@ export default function MapPage() {
     return "ROYAL";
   }
 
-  function buildGraph(routeData: Route[]) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function buildGraph(routeData: Route[], wg: Record<string, any>) {
     const nodeMap = new Map<string, GraphNode>();
     const edgeList: GraphEdge[] = [];
 
@@ -90,7 +95,7 @@ export default function MapPage() {
             y: 200 + Math.random() * 300,
             vx: 0,
             vy: 0,
-            type: getZoneType(hop.fromZone),
+            type: getZoneType(hop.fromZone, wg),
           });
         }
         if (!nodeMap.has(hop.toZone)) {
@@ -100,7 +105,7 @@ export default function MapPage() {
             y: 200 + Math.random() * 300,
             vx: 0,
             vy: 0,
-            type: getZoneType(hop.toZone),
+            type: getZoneType(hop.toZone, wg),
           });
         }
         edgeList.push({
@@ -358,9 +363,16 @@ export default function MapPage() {
             Conexiones: {edges.filter(e => e.source === selectedNode || e.target === selectedNode).length}
             {(() => {
               const info = worldGraph[selectedNode] || Object.values(worldGraph).find(z => z.name === selectedNode);
-              if (!info?.nearestSafe) return null;
-              const icon = info.safeType === 'city' ? '🏰' : info.safeType === 'rest' ? '⛺' : info.safeType === 'portal' ? '🌀' : '📍';
-              return <> | {icon} {info.nearestSafe} ({info.distToSafe} {info.distToSafe === 1 ? 'salto' : 'saltos'})</>;
+              if (!info) return null;
+              const parts = [];
+              if (info.nearestSafe) {
+                const icon = info.safeType === 'city' ? '🏰' : info.safeType === 'rest' ? '⛺' : info.safeType === 'portal' ? '🌀' : '📍';
+                parts.push(<span key="safe"> | {icon} {info.nearestSafe} ({info.distToSafe} {info.distToSafe === 1 ? 'salto' : 'saltos'})</span>);
+              }
+              if (info.nearestPortal && info.safeType !== 'portal') {
+                parts.push(<span key="portal"> | 🌀 {info.nearestPortal} ({info.distToPortal} {info.distToPortal === 1 ? 'salto' : 'saltos'})</span>);
+              }
+              return <>{parts}</>;
             })()}
           </p>
           <div className="mt-2 space-y-1">
