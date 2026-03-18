@@ -45,20 +45,27 @@ export default function MapPage() {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [chainMode, setChainMode] = useState(false);
   const [chainSource, setChainSource] = useState<string | null>(null);
+  const [worldGraph, setWorldGraph] = useState<Record<string, { name: string; nearestCity: string | null; distToCity: number | null }>>({});
   const animRef = useRef<number>(0);
   const dragRef = useRef<{ nodeId: string; offsetX: number; offsetY: number } | null>(null);
 
-  // Fetch routes
+  // Fetch routes and world graph
   useEffect(() => {
-    async function loadRoutes() {
-      const res = await fetch(`/api/clans/${clanId}/routes?status=ACTIVE`);
-      if (res.ok) {
-        const data: Route[] = await res.json();
+    async function loadData() {
+      const [routesRes, graphRes] = await Promise.all([
+        fetch(`/api/clans/${clanId}/routes?status=ACTIVE`),
+        fetch('/world-graph.json')
+      ]);
+      if (routesRes.ok) {
+        const data: Route[] = await routesRes.json();
         setRoutes(data);
         buildGraph(data);
       }
+      if (graphRes.ok) {
+        setWorldGraph(await graphRes.json());
+      }
     }
-    loadRoutes();
+    loadData();
   }, [clanId]);
 
   function getZoneType(name: string): "AVALON" | "ROYAL" | "OUTLANDS" {
@@ -337,15 +344,23 @@ export default function MapPage() {
           <p className="text-sm text-gray-400">
             Tipo: {nodes.get(selectedNode)?.type} |
             Conexiones: {edges.filter(e => e.source === selectedNode || e.target === selectedNode).length}
+            {worldGraph[selectedNode]?.nearestCity && (
+              <> | 🏰 {worldGraph[selectedNode].nearestCity} ({worldGraph[selectedNode].distToCity} {worldGraph[selectedNode].distToCity === 1 ? 'salto' : 'saltos'})</>
+            )}
           </p>
           <div className="mt-2 space-y-1">
             {edges
               .filter(e => e.source === selectedNode || e.target === selectedNode)
-              .map((e, i) => (
-                <div key={i} className="text-xs text-gray-500">
-                  → {e.source === selectedNode ? e.target : e.source} (portal {e.portalSize})
-                </div>
-              ))}
+              .map((e, i) => {
+                const other = e.source === selectedNode ? e.target : e.source;
+                const otherInfo = worldGraph[other];
+                return (
+                  <div key={i} className="text-xs text-gray-500">
+                    → {other} (portal {e.portalSize})
+                    {otherInfo?.nearestCity && <span className="text-gray-600"> | 🏰 {otherInfo.nearestCity} ({otherInfo.distToCity})</span>}
+                  </div>
+                );
+              })}
           </div>
         </div>
       )}
