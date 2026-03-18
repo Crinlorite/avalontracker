@@ -68,9 +68,12 @@ export default function MapPage() {
     loadData();
   }, [clanId]);
 
-  function getZoneType(name: string): "AVALON" | "ROYAL" | "OUTLANDS" {
-    if (name.startsWith("TNL-") || name.includes("Avalon") || /^[A-Z][a-z]+-[A-Z]/.test(name)) return "AVALON";
-    if (name.startsWith("BLACKBANK") || name.includes("Outlands")) return "OUTLANDS";
+  function getZoneType(name: string): "AVALON" | "ROYAL" | "OUTLANDS" | "BLACK" | "RED" {
+    const info = worldGraph[name] || Object.values(worldGraph).find(z => z.name === name);
+    if (info?.color === 'black') return "BLACK";
+    if (info?.color === 'red') return "RED";
+    if (info?.color === 'avalon') return "AVALON";
+    if (name.startsWith("TNL-") || /^[A-Z][a-z]+-[A-Z]/.test(name)) return "AVALON";
     return "ROYAL";
   }
 
@@ -223,10 +226,12 @@ export default function MapPage() {
 
     // Draw nodes
     for (const node of nodes.values()) {
-      const colors = {
+      const colors: Record<string, { fill: string; stroke: string; text: string }> = {
         AVALON: { fill: "#7c3aed", stroke: "#a78bfa", text: "#e9d5ff" },
         ROYAL: { fill: "#2563eb", stroke: "#60a5fa", text: "#bfdbfe" },
-        OUTLANDS: { fill: "#dc2626", stroke: "#f87171", text: "#fecaca" },
+        BLACK: { fill: "#1f2937", stroke: "#6b7280", text: "#d1d5db" },
+        RED: { fill: "#dc2626", stroke: "#f87171", text: "#fecaca" },
+        OUTLANDS: { fill: "#1f2937", stroke: "#6b7280", text: "#d1d5db" },
       };
       const c = colors[node.type];
       const isSelected = node.id === selectedNode;
@@ -328,7 +333,8 @@ export default function MapPage() {
       <div className="flex gap-3 text-xs text-gray-500">
         <span className="flex items-center gap-1"><span className="inline-block h-3 w-3 rounded-full bg-violet-600"></span> Avalon</span>
         <span className="flex items-center gap-1"><span className="inline-block h-3 w-3 rounded-full bg-blue-600"></span> Royal</span>
-        <span className="flex items-center gap-1"><span className="inline-block h-3 w-3 rounded-full bg-red-600"></span> Outlands</span>
+        <span className="flex items-center gap-1"><span className="inline-block h-3 w-3 rounded-full bg-red-600"></span> Roja</span>
+        <span className="flex items-center gap-1"><span className="inline-block h-3 w-3 rounded-full bg-gray-700"></span> Negra</span>
       </div>
 
       <div className="rounded-lg border border-gray-800 bg-gray-950 p-2">
@@ -350,9 +356,12 @@ export default function MapPage() {
           <p className="text-sm text-gray-400">
             Tipo: {nodes.get(selectedNode)?.type} |
             Conexiones: {edges.filter(e => e.source === selectedNode || e.target === selectedNode).length}
-            {worldGraph[selectedNode]?.nearestCity && (
-              <> | 🏰 {worldGraph[selectedNode].nearestCity} ({worldGraph[selectedNode].distToCity} {worldGraph[selectedNode].distToCity === 1 ? 'salto' : 'saltos'})</>
-            )}
+            {(() => {
+              const info = worldGraph[selectedNode] || Object.values(worldGraph).find(z => z.name === selectedNode);
+              if (!info?.nearestSafe) return null;
+              const icon = info.safeType === 'city' ? '🏰' : info.safeType === 'rest' ? '⛺' : info.safeType === 'portal' ? '🌀' : '📍';
+              return <> | {icon} {info.nearestSafe} ({info.distToSafe} {info.distToSafe === 1 ? 'salto' : 'saltos'})</>;
+            })()}
           </p>
           <div className="mt-2 space-y-1">
             {edges
