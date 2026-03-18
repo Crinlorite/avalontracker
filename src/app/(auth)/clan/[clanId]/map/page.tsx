@@ -24,7 +24,7 @@ interface GraphNode {
   y: number;
   vx: number;
   vy: number;
-  type: "AVALON" | "ROYAL" | "OUTLANDS";
+  type: "AVALON" | "ROYAL" | "OUTLANDS" | "BLACK" | "RED";
 }
 
 interface GraphEdge {
@@ -45,7 +45,7 @@ export default function MapPage() {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [chainMode, setChainMode] = useState(false);
   const [chainSource, setChainSource] = useState<string | null>(null);
-  const [worldGraph, setWorldGraph] = useState<Record<string, { name: string; nearestCity: string | null; distToCity: number | null }>>({});
+  const [worldGraph, setWorldGraph] = useState<Record<string, { name: string; color: string; neighbors: string[]; nearestSafe: string | null; distToSafe: number | null; safeType: string | null }>>({});
   const animRef = useRef<number>(0);
   const dragRef = useRef<{ nodeId: string; offsetX: number; offsetY: number } | null>(null);
 
@@ -372,7 +372,7 @@ export default function MapPage() {
                 return (
                   <div key={i} className="text-xs text-gray-500">
                     → {other} (portal {e.portalSize})
-                    {otherInfo?.nearestCity && <span className="text-gray-600"> | 🏰 {otherInfo.nearestCity} ({otherInfo.distToCity})</span>}
+                    {otherInfo?.nearestSafe && <span className="text-gray-600"> | {otherInfo.safeType === 'city' ? '🏰' : otherInfo.safeType === 'rest' ? '⛺' : '🌀'} {otherInfo.nearestSafe} ({otherInfo.distToSafe})</span>}
                   </div>
                 );
               })}
