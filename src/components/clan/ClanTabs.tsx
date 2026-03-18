@@ -5,6 +5,7 @@ import Link from "next/link";
 
 const tabs = [
   { label: "Rutas", path: "" },
+  { label: "Mapa", path: "/map" },
   { label: "Miembros", path: "/members" },
   { label: "Configuración", path: "/settings" },
   { label: "Auditoría", path: "/audit" },
