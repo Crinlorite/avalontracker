@@ -8,12 +8,14 @@ import toast from "react-hot-toast";
 import { mutate as globalMutate } from "swr";
 import { CreateRouteModal } from "./CreateRouteModal";
 import { AppendHopModal } from "./AppendHopModal";
+import { MergeRoutesModal } from "./MergeRoutesModal";
 import { useParams } from "next/navigation";
 
 export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole: AppRole | null }) {
   const { clanId } = useParams() as { clanId: string };
   const [showCreate, setShowCreate] = useState(false);
   const [appendTo, setAppendTo] = useState<RouteView | null>(null);
+  const [mergeInto, setMergeInto] = useState<RouteView | null>(null);
   const [pushingId, setPushingId] = useState<string | null>(null);
 
   async function disable(routeId: string, version: number) {
@@ -50,6 +52,7 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
 
   const canEdit = canCreate(myRole);
   const canDel = canDelete(myRole);
+  const canMerge = canDel; // Merge requiere EDITOR+ (borra la ruta source).
   const hasActions = canEdit || canDel;
 
   return (
@@ -124,6 +127,15 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
                               + Hop
                             </button>
                           )}
+                          {canMerge && routes.length > 1 && (
+                            <button
+                              onClick={() => setMergeInto(r)}
+                              className="rounded bg-slate-700 px-2 py-1 text-xs text-white hover:bg-slate-600"
+                              title="Fusionar otra ruta dentro de esta"
+                            >
+                              ⛓ Fusionar
+                            </button>
+                          )}
                           {canEdit && (
                             <button onClick={() => disable(r.id, r.version)} className="text-xs text-yellow-400 hover:text-yellow-300">
                               Disable
@@ -152,6 +164,15 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
           route={appendTo}
           onClose={() => setAppendTo(null)}
           onAdded={() => setAppendTo(null)}
+        />
+      )}
+      {mergeInto && (
+        <MergeRoutesModal
+          clanId={clanId}
+          targetRoute={mergeInto}
+          candidateRoutes={routes.filter((r) => r.id !== mergeInto.id)}
+          onClose={() => setMergeInto(null)}
+          onMerged={() => setMergeInto(null)}
         />
       )}
     </div>
