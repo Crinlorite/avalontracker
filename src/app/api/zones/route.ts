@@ -17,11 +17,30 @@ export async function GET(request: Request) {
   const q = (url.searchParams.get("q") ?? "").trim();
   if (q.length < 1) return NextResponse.json([]);
 
-  const zones = await prisma.zone.findMany({
-    where: { name: { contains: q, mode: "insensitive" } },
-    take: 20,
-    orderBy: [{ type: "asc" }, { name: "asc" }],
-    select: { id: true, name: true, type: true, tier: true, hasHideout: true, isRest: true, isCapital: true },
+  const select = { id: true, name: true, type: true, tier: true, hasHideout: true, isRest: true, isCapital: true };
+
+  // 1) Prefix matches primero (autocompletado natural — "brid" → Bridgewatch).
+  const prefixMatches = await prisma.zone.findMany({
+    where: { name: { startsWith: q, mode: "insensitive" } },
+    take: 15,
+    orderBy: { name: "asc" },
+    select,
   });
-  return NextResponse.json(zones);
+
+  // 2) Substring matches rellenando el resto, excluyendo lo que ya salió como prefix.
+  const prefixIds = prefixMatches.map((z) => z.id);
+  const remaining = 30 - prefixMatches.length;
+  const substringMatches = remaining > 0
+    ? await prisma.zone.findMany({
+        where: {
+          name: { contains: q, mode: "insensitive" },
+          id: { notIn: prefixIds },
+        },
+        take: remaining,
+        orderBy: { name: "asc" },
+        select,
+      })
+    : [];
+
+  return NextResponse.json([...prefixMatches, ...substringMatches]);
 }
