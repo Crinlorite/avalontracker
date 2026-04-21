@@ -23,7 +23,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const avatar = (profile as { avatar?: string })?.avatar ?? null;
       const globalNickname = (profile as { global_name?: string })?.global_name ?? null;
 
-      const isSuperAdmin = superAdminIds().includes(discordId);
+      const adminIds = superAdminIds();
+      const isSuperAdmin = adminIds.includes(discordId);
+      logger.info(
+        { discordId, adminIdsCount: adminIds.length, adminIdsSample: adminIds.map(s => s.slice(0, 4) + "..."), isSuperAdmin },
+        "signIn: super admin resolution"
+      );
 
       await prisma.user.upsert({
         where: { discordId },
@@ -93,11 +98,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
 
-    async session({ session, token }) {
-      if (typeof token.id === "string") session.user.id = token.id;
-      if (typeof token.discordId === "string") (session.user as unknown as Record<string, unknown>).discordId = token.discordId;
-      (session.user as unknown as Record<string, unknown>).isSuperAdmin = Boolean(token.isSuperAdmin);
-      return session;
-    },
+    // session callback vive en auth.config.ts (Edge-safe) y se hereda
+    // aquí via ...authConfig.callbacks — así el middleware Edge puede
+    // ver session.user.isSuperAdmin.
   },
 });
