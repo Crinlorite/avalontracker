@@ -7,11 +7,14 @@ import { canCreate, canDelete } from "@/lib/role-ui";
 import toast from "react-hot-toast";
 import { mutate as globalMutate } from "swr";
 import { CreateRouteModal } from "./CreateRouteModal";
+import { AppendHopModal } from "./AppendHopModal";
 import { useParams } from "next/navigation";
 
 export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole: AppRole | null }) {
   const { clanId } = useParams() as { clanId: string };
   const [showCreate, setShowCreate] = useState(false);
+  const [appendTo, setAppendTo] = useState<RouteView | null>(null);
+  const [pushingId, setPushingId] = useState<string | null>(null);
 
   async function disable(routeId: string, version: number) {
     const res = await fetch(`/api/clans/${clanId}/routes/${routeId}`, {
@@ -31,11 +34,29 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
     else toast.error("Error");
   }
 
+  async function pushToDiscord(routeId: string) {
+    setPushingId(routeId);
+    try {
+      const res = await fetch(`/api/clans/${clanId}/routes/${routeId}/discord-push`, { method: "POST" });
+      const body = await res.json().catch(() => ({}));
+      if (res.ok) toast.success("Enviada a Discord");
+      else toast.error(body?.error?.message ?? "Error enviando a Discord");
+    } catch {
+      toast.error("Error de red");
+    } finally {
+      setPushingId(null);
+    }
+  }
+
+  const canEdit = canCreate(myRole);
+  const canDel = canDelete(myRole);
+  const hasActions = canEdit || canDel;
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-white">Rutas ({routes.length})</h1>
-        {canCreate(myRole) && (
+        {canEdit && (
           <button onClick={() => setShowCreate(true)} className="rounded bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">+ Nueva</button>
         )}
       </div>
@@ -50,13 +71,14 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
                 <th className="px-3 py-2 text-left text-xs uppercase text-slate-400">Cadena</th>
                 <th className="px-3 py-2 text-left text-xs uppercase text-slate-400">Creada por</th>
                 <th className="px-3 py-2 text-left text-xs uppercase text-slate-400">Próximo vencimiento</th>
-                {(canCreate(myRole) || canDelete(myRole)) && <th />}
+                {hasActions && <th className="px-3 py-2 text-right text-xs uppercase text-slate-400">Acciones</th>}
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
               {routes.map((r) => {
                 const nextExpiry = r.hops.filter((h) => h.status === "ACTIVE").sort((a, b) => new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime())[0];
                 const mins = nextExpiry ? minutesLeft(nextExpiry.expiresAt) : -1;
+                const canAppend = canEdit && r.hops.length < 12;
                 return (
                   <tr key={r.id} className="align-top">
                     <td className="px-3 py-3">
@@ -80,10 +102,39 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
                         </span>
                       ) : <span className="text-slate-500">—</span>}
                     </td>
-                    {(canCreate(myRole) || canDelete(myRole)) && (
+                    {hasActions && (
                       <td className="px-3 py-3 text-right">
-                        {canCreate(myRole) && <button onClick={() => disable(r.id, r.version)} className="mr-2 text-xs text-yellow-400 hover:text-yellow-300">Disable</button>}
-                        {canDelete(myRole) && <button onClick={() => del(r.id)} className="text-xs text-red-400 hover:text-red-300">Borrar</button>}
+                        <div className="flex flex-wrap items-center justify-end gap-2">
+                          {canEdit && (
+                            <button
+                              onClick={() => pushToDiscord(r.id)}
+                              disabled={pushingId === r.id}
+                              className="rounded bg-indigo-600/80 px-2 py-1 text-xs text-white hover:bg-indigo-500 disabled:opacity-50"
+                              title="Enviar ruta al canal Discord del clan"
+                            >
+                              {pushingId === r.id ? "…" : "📨 Discord"}
+                            </button>
+                          )}
+                          {canAppend && (
+                            <button
+                              onClick={() => setAppendTo(r)}
+                              className="rounded bg-slate-700 px-2 py-1 text-xs text-white hover:bg-slate-600"
+                              title="Añadir hop al final de la ruta"
+                            >
+                              + Hop
+                            </button>
+                          )}
+                          {canEdit && (
+                            <button onClick={() => disable(r.id, r.version)} className="text-xs text-yellow-400 hover:text-yellow-300">
+                              Disable
+                            </button>
+                          )}
+                          {canDel && (
+                            <button onClick={() => del(r.id)} className="text-xs text-red-400 hover:text-red-300">
+                              Borrar
+                            </button>
+                          )}
+                        </div>
                       </td>
                     )}
                   </tr>
@@ -95,6 +146,14 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
       )}
 
       {showCreate && <CreateRouteModal clanId={clanId} onClose={() => setShowCreate(false)} onCreated={() => setShowCreate(false)} />}
+      {appendTo && (
+        <AppendHopModal
+          clanId={clanId}
+          route={appendTo}
+          onClose={() => setAppendTo(null)}
+          onAdded={() => setAppendTo(null)}
+        />
+      )}
     </div>
   );
 }
