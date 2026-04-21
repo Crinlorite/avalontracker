@@ -1,269 +1,146 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
+import { useClan } from "@/hooks/useClan";
+import { RoleMappingEditor } from "@/components/clan/RoleMappingEditor";
 
-export default function ClanSettingsPage() {
-  const params = useParams();
+export default function SettingsPage() {
+  const { clanId } = useParams() as { clanId: string };
   const router = useRouter();
-  const clanId = params.clanId as string;
-  const { data: session } = useSession();
-  const [clanName, setClanName] = useState("");
-  const [webhookUrl, setWebhookUrl] = useState("");
-  const [savingName, setSavingName] = useState(false);
-  const [savingWebhook, setSavingWebhook] = useState(false);
-  const [testingWebhook, setTestingWebhook] = useState(false);
-  const [deleting, setDeleting] = useState(false);
-  const [myRole, setMyRole] = useState<string>("MEMBER");
-  const [message, setMessage] = useState<{
-    type: "success" | "error";
-    text: string;
-  } | null>(null);
+  const { clan, mutate } = useClan(clanId);
+  const [name, setName] = useState("");
+  const [webhook, setWebhook] = useState("");
+  const [anchorSearch, setAnchorSearch] = useState("");
+  const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    async function fetchClan() {
-      try {
-        const res = await fetch(`/api/clans/${clanId}`);
-        if (res.ok) {
-          const data = await res.json();
-          setClanName(data.name);
-          setWebhookUrl(data.discordWebhookUrl || "");
-        }
-      } catch {
-        /* empty */
-      }
-    }
+  if (!clan) return <div className="text-slate-400">Cargando…</div>;
 
-    async function fetchRole() {
-      try {
-        const res = await fetch(`/api/clans/${clanId}/members`);
-        if (res.ok) {
-          const members = await res.json();
-          const me = members.find(
-            (m: { userId: string }) => m.userId === session?.user?.id
-          );
-          if (me) setMyRole(me.role);
-        }
-      } catch {
-        /* empty */
-      }
-    }
-
-    fetchClan();
-    if (session?.user?.id) fetchRole();
-  }, [clanId, session?.user?.id]);
-
-  const isOwner = myRole === "OWNER";
-  const isOfficerPlus = myRole === "OWNER" || myRole === "OFFICER";
-
-  async function handleSaveName(e: React.FormEvent) {
-    e.preventDefault();
-    setSavingName(true);
-    setMessage(null);
-
+  async function save(patch: Record<string, unknown>) {
+    setSaving(true);
     try {
       const res = await fetch(`/api/clans/${clanId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: clanName }),
+        body: JSON.stringify(patch),
       });
-
-      if (res.ok) {
-        setMessage({
-          type: "success",
-          text: "Nombre del clan actualizado",
-        });
-      } else {
-        const data = await res.json();
-        setMessage({ type: "error", text: data.error || "Error al guardar" });
-      }
-    } catch {
-      setMessage({ type: "error", text: "Error de conexión" });
+      if (!res.ok) throw new Error("Error al guardar");
+      toast.success("Guardado");
+      mutate();
+    } catch (e: unknown) {
+      toast.error(e instanceof Error ? e.message : "Error");
     } finally {
-      setSavingName(false);
+      setSaving(false);
     }
   }
 
-  async function handleSaveWebhook(e: React.FormEvent) {
-    e.preventDefault();
-    setSavingWebhook(true);
-    setMessage(null);
-
-    try {
-      const res = await fetch(`/api/clans/${clanId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ discordWebhookUrl: webhookUrl }),
-      });
-
-      if (res.ok) {
-        setMessage({ type: "success", text: "Webhook actualizado" });
-      } else {
-        const data = await res.json();
-        setMessage({ type: "error", text: data.error || "Error al guardar" });
-      }
-    } catch {
-      setMessage({ type: "error", text: "Error de conexión" });
-    } finally {
-      setSavingWebhook(false);
-    }
+  async function testWebhook() {
+    const res = await fetch(`/api/clans/${clanId}/webhook-test`, { method: "POST" });
+    const body = await res.json().catch(() => ({}));
+    if (res.ok) toast.success("Mensaje enviado a Discord");
+    else toast.error(body?.error?.message ?? "Error en webhook");
   }
 
-  async function handleTestWebhook() {
-    setTestingWebhook(true);
-    setMessage(null);
-
-    try {
-      const res = await fetch(`/api/clans/${clanId}/webhook/test`, {
-        method: "POST",
-      });
-
-      if (res.ok) {
-        setMessage({
-          type: "success",
-          text: "Mensaje de prueba enviado a Discord",
-        });
-      } else {
-        const data = await res.json();
-        setMessage({
-          type: "error",
-          text: data.error || "Error al enviar prueba",
-        });
-      }
-    } catch {
-      setMessage({ type: "error", text: "Error de conexión" });
-    } finally {
-      setTestingWebhook(false);
-    }
-  }
-
-  async function handleDeleteClan() {
-    if (
-      !confirm(
-        "¿Estás seguro de eliminar este clan? Esta acción no se puede deshacer."
-      )
-    )
-      return;
-
-    setDeleting(true);
-    try {
-      const res = await fetch(`/api/clans/${clanId}`, {
-        method: "DELETE",
-      });
-
-      if (res.ok) {
-        router.push("/dashboard");
-      } else {
-        const data = await res.json();
-        alert(data.error || "Error al eliminar");
-      }
-    } catch {
-      alert("Error de conexión");
-    } finally {
-      setDeleting(false);
-    }
-  }
-
-  if (!isOfficerPlus) {
-    return (
-      <div className="rounded-lg border border-gray-800 bg-gray-900 p-8 text-center">
-        <p className="text-gray-400">
-          No tienes permisos para acceder a la configuración del clan.
-        </p>
-      </div>
-    );
+  async function deleteClan() {
+    if (!confirm(`Escribe el nombre exacto (${clan?.name}) para confirmar`)) return;
+    const res = await fetch(`/api/clans/${clanId}`, { method: "DELETE" });
+    if (res.ok) { toast.success("Clan eliminado"); router.push("/dashboard"); }
+    else toast.error("Error al borrar");
   }
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-white">Configuración</h2>
+    <div className="max-w-2xl space-y-8">
+      <h1 className="text-2xl font-bold text-white">Configuración de {clan.name}</h1>
 
-      {message && (
-        <div
-          className={`rounded-lg border p-4 text-sm ${
-            message.type === "success"
-              ? "border-green-600/30 bg-green-900/20 text-green-300"
-              : "border-red-600/30 bg-red-900/20 text-red-300"
-          }`}
-        >
-          {message.text}
-        </div>
-      )}
-
-      {isOwner && (
-        <div className="rounded-lg border border-gray-800 bg-gray-900 p-6 shadow-lg">
-          <h3 className="mb-4 text-lg font-semibold text-white">
-            Nombre del clan
-          </h3>
-          <form onSubmit={handleSaveName} className="flex gap-3">
-            <input
-              type="text"
-              value={clanName}
-              onChange={(e) => setClanName(e.target.value)}
-              className="flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2.5 text-white placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-            />
-            <button
-              type="submit"
-              disabled={savingName}
-              className="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-indigo-500 disabled:opacity-50"
-            >
-              {savingName ? "Guardando..." : "Guardar"}
-            </button>
-          </form>
-        </div>
-      )}
-
-      <div className="rounded-lg border border-gray-800 bg-gray-900 p-6 shadow-lg">
-        <h3 className="mb-4 text-lg font-semibold text-white">
-          Webhook de Discord
-        </h3>
-        <form onSubmit={handleSaveWebhook} className="space-y-3">
-          <input
-            type="url"
-            value={webhookUrl}
-            onChange={(e) => setWebhookUrl(e.target.value)}
-            placeholder="https://discord.com/api/webhooks/..."
-            className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2.5 text-white placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-          />
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              disabled={savingWebhook}
-              className="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-indigo-500 disabled:opacity-50"
-            >
-              {savingWebhook ? "Guardando..." : "Guardar webhook"}
-            </button>
-            <button
-              type="button"
-              onClick={handleTestWebhook}
-              disabled={testingWebhook || !webhookUrl}
-              className="rounded-lg bg-gray-700 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-600 disabled:opacity-50"
-            >
-              {testingWebhook ? "Enviando..." : "Probar"}
-            </button>
+      <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
+        <h2 className="mb-4 text-lg font-semibold text-white">Identidad</h2>
+        <div className="space-y-4">
+          <label className="block">
+            <span className="text-sm text-slate-300">Nombre</span>
+            <div className="mt-1 flex gap-2">
+              <input defaultValue={clan.name} onChange={(e) => setName(e.target.value)} className="flex-1 rounded border border-slate-700 bg-slate-950 px-3 py-2 text-white" />
+              <button disabled={!name || saving} onClick={() => save({ name })} className="rounded bg-indigo-600 px-3 py-2 text-sm text-white disabled:opacity-50">Guardar</button>
+            </div>
+          </label>
+          <div>
+            <span className="text-sm text-slate-300">Guild Discord</span>
+            <div className="mt-1 rounded border border-slate-700 bg-slate-950 px-3 py-2">
+              <div className="text-white">{clan.discordGuildName}</div>
+              <div className="font-mono text-xs text-slate-500">{clan.discordGuildId}</div>
+            </div>
           </div>
-        </form>
-      </div>
-
-      {isOwner && (
-        <div className="rounded-lg border border-red-900/50 bg-red-950/20 p-6 shadow-lg">
-          <h3 className="mb-2 text-lg font-semibold text-red-400">
-            Zona de peligro
-          </h3>
-          <p className="mb-4 text-sm text-gray-400">
-            Eliminar el clan borrará todas las rutas, miembros y configuraciones
-            de forma permanente.
-          </p>
-          <button
-            onClick={handleDeleteClan}
-            disabled={deleting}
-            className="rounded-lg bg-red-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red-500 disabled:opacity-50"
-          >
-            {deleting ? "Eliminando..." : "Eliminar clan"}
-          </button>
         </div>
-      )}
+      </section>
+
+      <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
+        <h2 className="mb-4 text-lg font-semibold text-white">Webhook Discord</h2>
+        <div className="space-y-3">
+          <input
+            defaultValue={clan.discordWebhookUrl ?? ""}
+            onChange={(e) => setWebhook(e.target.value)}
+            placeholder="https://discord.com/api/webhooks/…"
+            className="w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-sm text-white"
+          />
+          <div className="flex gap-2">
+            <button disabled={saving} onClick={() => save({ discordWebhookUrl: webhook || null })} className="rounded bg-indigo-600 px-3 py-2 text-sm text-white">Guardar</button>
+            <button disabled={!clan.discordWebhookUrl} onClick={testWebhook} className="rounded border border-slate-700 px-3 py-2 text-sm text-slate-200 disabled:opacity-50">Probar</button>
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
+        <h2 className="mb-4 text-lg font-semibold text-white">Zona anchor (centro del grafo)</h2>
+        <AnchorPicker clanId={clanId} currentAnchorId={clan.anchorZoneId} onUpdated={() => mutate()} />
+      </section>
+
+      <section>
+        <h2 className="mb-4 text-lg font-semibold text-white">Mapeo de roles Discord</h2>
+        <RoleMappingEditor clanId={clanId} />
+      </section>
+
+      <section className="rounded-xl border border-red-900/50 bg-red-950/30 p-6">
+        <h2 className="mb-2 text-lg font-semibold text-red-200">Zona peligrosa</h2>
+        <p className="mb-3 text-sm text-red-300">Eliminar el clan borra todas sus rutas, miembros y mappings. No se puede deshacer.</p>
+        <button onClick={deleteClan} className="rounded bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-500">Eliminar clan</button>
+      </section>
+    </div>
+  );
+}
+
+function AnchorPicker({ clanId, currentAnchorId, onUpdated }: { clanId: string; currentAnchorId: number | null; onUpdated: () => void }) {
+  const [search, setSearch] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  async function pick(zoneId: number | null) {
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/clans/${clanId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ anchorZoneId: zoneId }),
+      });
+      if (!res.ok) throw new Error("Error");
+      toast.success("Anchor actualizado");
+      onUpdated();
+    } catch (e: unknown) {
+      toast.error(e instanceof Error ? e.message : "Error");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  // Simplified inline search: link to members-style selector would be cleaner;
+  // dejamos picker simple: quitarlo o introducir ID manual.
+  return (
+    <div className="space-y-2">
+      <div className="text-sm text-slate-400">Zona anchor actual: {currentAnchorId ?? "sin configurar"}</div>
+      <div className="flex gap-2">
+        <input type="number" placeholder="Zone ID (de /api/zones?q=)" value={search} onChange={(e) => setSearch(e.target.value)}
+          className="flex-1 rounded border border-slate-700 bg-slate-950 px-3 py-2 text-white" />
+        <button disabled={saving || !search} onClick={() => pick(Number(search))} className="rounded bg-indigo-600 px-3 py-2 text-sm text-white disabled:opacity-50">Fijar</button>
+        <button disabled={saving || !currentAnchorId} onClick={() => pick(null)} className="rounded border border-slate-700 px-3 py-2 text-sm text-slate-200 disabled:opacity-50">Quitar</button>
+      </div>
+      <p className="text-xs text-slate-500">El selector pro vendrá con ZoneAutocomplete en una fase posterior.</p>
     </div>
   );
 }

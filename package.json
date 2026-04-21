@@ -8,32 +8,48 @@
     "start": "next start",
     "start:prod": "node server.js",
     "seed": "npx prisma db seed",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "mock-bot": "tsx scripts/mock-vigil-bot.ts",
+    "seed:zones": "tsx scripts/seed-zones.ts",
+    "seed:graph": "tsx scripts/import-world-graph.ts",
+    "precompute": "tsx scripts/precompute-routing.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
+    "@xyflow/react": "^12.10.2",
     "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "lru-cache": "^10.4.3",
     "next": "16.1.6",
     "next-auth": "^5.0.0-beta.30",
     "pg": "^8.20.0",
+    "pino": "^10.3.1",
+    "pino-http": "^11.0.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-hot-toast": "^2.6.0",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3",
+    "swr": "^2.4.1",
     "tsx": "^4.21.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/express": "^5.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/ui": "^3.2.4",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "prisma": "^7.4.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }

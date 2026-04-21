@@ -1,63 +1,84 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { logAudit } from "@/lib/audit";
-import { ClanRole } from "@/generated/prisma/client";
+import { fetchGuildHealth } from "@/lib/vigil-bot-client";
+import { apiError, internalError } from "@/lib/api-error";
+import { logger } from "@/lib/logger";
+
+const createSchema = z.object({
+  name: z.string().min(3).max(40),
+  discordGuildId: z.string().regex(/^\d{17,20}$/),
+  discordGuildName: z.string().min(1).max(100),
+  discordGuildIcon: z.string().nullable().optional(),
+});
 
 export async function GET() {
   const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
+  if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
 
-  const memberships = await prisma.clanMember.findMany({
-    where: { userId: session.user.id },
+  const clans = await prisma.clan.findMany({
+    where: { members: { some: { userId: session.user.id, appRole: { not: null } } } },
     include: {
-      clan: true,
+      members: { where: { userId: session.user.id }, select: { appRole: true } },
     },
+    orderBy: { createdAt: "desc" },
   });
 
-  const clans = memberships.map((m) => ({
-    ...m.clan,
-    role: m.role,
-  }));
-
-  return NextResponse.json(clans);
+  return NextResponse.json(
+    clans.map((c) => ({
+      id: c.id,
+      name: c.name,
+      discordGuildName: c.discordGuildName,
+      discordGuildIcon: c.discordGuildIcon,
+      myRole: c.members[0]?.appRole ?? null,
+      memberCount: undefined,
+    }))
+  );
 }
 
 export async function POST(request: Request) {
   const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
+  if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
 
-  const body = await request.json();
-  const { name } = body;
+  try {
+    const body = await request.json();
+    const parsed = createSchema.safeParse(body);
+    if (!parsed.success) {
+      return apiError("VALIDATION_ERROR", 400, "Datos inválidos", {
+        issues: parsed.error.issues,
+      });
+    }
 
-  if (!name || typeof name !== "string" || name.trim().length === 0) {
-    return NextResponse.json(
-      { error: "El nombre del clan es requerido" },
-      { status: 400 }
-    );
-  }
+    const health = await fetchGuildHealth(parsed.data.discordGuildId);
+    if (!health.installed) {
+      return apiError("VALIDATION_ERROR", 400,
+        "Vigil Bot no está instalado en este guild. Instálalo antes de crear el clan.");
+    }
 
-  const clan = await prisma.clan.create({
-    data: {
-      name: name.trim(),
-      createdById: session.user.id,
-      members: {
-        create: {
-          userId: session.user.id,
-          role: ClanRole.OWNER,
-        },
+    const clan = await prisma.clan.create({
+      data: {
+        name: parsed.data.name,
+        discordGuildId: parsed.data.discordGuildId,
+        discordGuildName: parsed.data.discordGuildName,
+        discordGuildIcon: parsed.data.discordGuildIcon ?? null,
+        botInstalled: true,
+        createdById: session.user.id,
       },
-    },
-    include: {
-      members: true,
-    },
-  });
+    });
 
-  await logAudit(clan.id, session.user.id, "CLAN_CREATE", undefined, { name: clan.name });
+    await prisma.auditLog.create({
+      data: {
+        clanId: clan.id,
+        userId: session.user.id,
+        action: "CLAN_CREATE",
+        details: { name: clan.name, guildId: clan.discordGuildId },
+      },
+    });
 
-  return NextResponse.json(clan, { status: 201 });
+    return NextResponse.json(clan, { status: 201 });
+  } catch (err) {
+    logger.error({ err }, "POST /api/clans failed");
+    return internalError(err);
+  }
 }

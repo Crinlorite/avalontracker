@@ -465,7 +465,7 @@ GET  /users/:discordId/clans
   (el bot necesita acceso read-only a la misma BD o una réplica de mappings)
 
 GET  /guilds/:guildId/member/:discordId
-  → 200 { nickname, avatar, joinedAt, roleIds, computedAppRole }
+  → 200 { nickname, avatar, joinedAt, discordRoleIds, computedAppRole }
 
 POST /guilds/:guildId/message
   body: { channelId, content, embed? }

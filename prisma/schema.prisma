@@ -1,16 +1,21 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "esm"
+  runtime      = "nodejs"
+  previewFeatures = ["queryCompiler", "driverAdapters"]
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-enum ClanRole {
-  OWNER
-  OFFICER
-  MEMBER
+// ============ Enums ============
+
+enum ZoneType {
+  AVALON
+  ROYAL
+  OUTLANDS
 }
 
 enum RouteStatus {
@@ -19,17 +24,21 @@ enum RouteStatus {
   DISABLED
 }
 
-enum InviteCodeStatus {
-  PENDING
-  USED
+enum RouteHopStatus {
+  ACTIVE
   EXPIRED
+  COLLAPSED
+  WATCHED
 }
 
-enum ZoneType {
-  AVALON
-  ROYAL
-  OUTLANDS
+enum AppRole {
+  VIEWER
+  CONTRIBUTOR
+  EDITOR
+  ADMIN
 }
+
+// ============ Auth (NextAuth) ============
 
 model Account {
   id                String  @id @default(cuid())
@@ -37,16 +46,14 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@unique([provider, providerAccountId])
 }
 
@@ -55,119 +62,196 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
   identifier String
-  token      String   @unique
+  token      String
   expires    DateTime
-
   @@unique([identifier, token])
 }
 
-model User {
-  id            String    @id @default(cuid())
-  googleId      String?   @unique
-  email         String    @unique
-  name          String?
-  displayName   String?
-  image         String?
-  personalCode  String?   @unique
-  isSuperAdmin  Boolean   @default(false)
-  emailVerified DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+// ============ User ============
 
-  accounts        Account[]
-  sessions        Session[]
-  clanMemberships ClanMember[]
-  createdClans    Clan[]         @relation("ClanCreator")
-  createdRoutes   Route[]        @relation("RouteCreator")
-  disabledRoutes  Route[]        @relation("RouteDisabler")
-  inviteCodes     InviteCode[]
-  auditLogs       AuditLog[]
+model User {
+  id               String       @id @default(cuid())
+  discordId        String       @unique
+  discordUsername  String
+  discordAvatar    String?
+  globalNickname   String?
+  email            String       @unique
+  displayName      String?
+  image            String?
+  isSuperAdmin     Boolean      @default(false)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  accounts         Account[]
+  sessions         Session[]
+  clansCreated     Clan[]       @relation("ClanCreator")
+  clanMembers      ClanMember[]
+  routesCreated    Route[]      @relation("RouteCreator")
+  routesDisabled   Route[]      @relation("RouteDisabler")
+  hopStatusSet     RouteHop[]   @relation("HopStatusSetter")
+  auditLogs        AuditLog[]
 }
 
-model Clan {
-  id                String       @id @default(cuid())
-  name              String       @unique
-  discordWebhookUrl String?
-  createdById       String
-  createdAt         DateTime     @default(now())
+// ============ Clan ============
 
-  createdBy   User         @relation("ClanCreator", fields: [createdById], references: [id])
-  members     ClanMember[]
-  routes      Route[]
-  auditLogs   AuditLog[]
-  inviteCodes InviteCode[]
+model Clan {
+  id                 String             @id @default(cuid())
+  name               String             @unique
+  discordGuildId     String             @unique
+  discordGuildName   String
+  discordGuildIcon   String?
+  discordWebhookUrl  String?
+  anchorZoneId       Int?
+  botInstalled       Boolean            @default(false)
+  tier               String?
+  createdById        String
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  createdBy          User               @relation("ClanCreator", fields: [createdById], references: [id])
+  anchorZone         Zone?              @relation("ClanAnchor", fields: [anchorZoneId], references: [id])
+  members            ClanMember[]
+  routes             Route[]
+  auditLogs          AuditLog[]
+  roleMappings       ClanRoleMapping[]
+}
+
+model ClanRoleMapping {
+  id               Int      @id @default(autoincrement())
+  clanId           String
+  discordRoleId    String
+  discordRoleName  String
+  appRole          AppRole
+  createdAt        DateTime @default(now())
+
+  clan             Clan     @relation(fields: [clanId], references: [id], onDelete: Cascade)
+
+  @@unique([clanId, discordRoleId])
+  @@index([clanId])
 }
 
 model ClanMember {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   userId      String
   clanId      String
-  role        ClanRole @default(MEMBER)
-  joinedAt    DateTime @default(now())
-  invitedById String?
+  appRole     AppRole?
+  roleSource  String?
+  lastSyncAt  DateTime?
+  joinedAt    DateTime  @default(now())
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  clan Clan @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clan        Clan      @relation(fields: [clanId], references: [id], onDelete: Cascade)
 
   @@unique([userId, clanId])
   @@index([clanId])
 }
 
-model InviteCode {
-  id        String           @id @default(cuid())
-  code      String           @unique
-  userId    String
-  clanId    String?
-  status    InviteCodeStatus @default(PENDING)
-  usedAt    DateTime?
-  expiresAt DateTime
-  createdAt DateTime         @default(now())
+// ============ Zone + world graph ============
 
-  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  clan Clan? @relation(fields: [clanId], references: [id])
+model Zone {
+  id           Int              @id @default(autoincrement())
+  name         String           @unique
+  type         ZoneType
+  tier         Int?
+  hasHideout   Boolean          @default(false)
+  hasDungeon   Boolean          @default(false)
+  isRest       Boolean          @default(false)
+  isCapital    Boolean          @default(false)
+  rawData      Json?
 
-  @@index([code])
-  @@index([userId])
+  connectionsFrom   ZoneConnection[] @relation("ConnectionFrom")
+  connectionsTo     ZoneConnection[] @relation("ConnectionTo")
+  routingFrom       ZoneRouting?     @relation("RoutingFrom")
+  routingRoyalRef   ZoneRouting[]    @relation("RoutingRoyal")
+  routingRestRef    ZoneRouting[]    @relation("RoutingRest")
+  clanAnchorFor     Clan[]           @relation("ClanAnchor")
+  hopsFrom          RouteHop[]       @relation("HopFrom")
+  hopsTo            RouteHop[]       @relation("HopTo")
+
+  @@index([name])
+  @@index([type])
+  @@index([tier])
 }
 
-model Route {
-  id           String      @id @default(cuid())
-  clanId       String
-  createdById  String
-  createdAt    DateTime    @default(now())
-  status       RouteStatus @default(ACTIVE)
-  disabledById String?
-  disabledAt   DateTime?
+model ZoneConnection {
+  id             Int      @id @default(autoincrement())
+  fromZoneId     Int
+  toZoneId       Int
+  connectionType String
 
-  clan       Clan       @relation(fields: [clanId], references: [id], onDelete: Cascade)
-  createdBy  User       @relation("RouteCreator", fields: [createdById], references: [id])
-  disabledBy User?      @relation("RouteDisabler", fields: [disabledById], references: [id])
-  hops       RouteHop[]
+  fromZone       Zone     @relation("ConnectionFrom", fields: [fromZoneId], references: [id])
+  toZone         Zone     @relation("ConnectionTo",   fields: [toZoneId],   references: [id])
+
+  @@unique([fromZoneId, toZoneId])
+  @@index([fromZoneId])
+}
+
+model ZoneRouting {
+  zoneId              Int      @id
+  nearestRoyalZoneId  Int?
+  hopsToRoyal         Int?
+  nearestRestZoneId   Int?
+  hopsToRest          Int?
+  computedAt          DateTime @default(now())
+
+  zone                Zone     @relation("RoutingFrom", fields: [zoneId],             references: [id])
+  nearestRoyal        Zone?    @relation("RoutingRoyal", fields: [nearestRoyalZoneId], references: [id])
+  nearestRest         Zone?    @relation("RoutingRest",  fields: [nearestRestZoneId],  references: [id])
+}
+
+// ============ Routes ============
+
+model Route {
+  id            String        @id @default(cuid())
+  clanId        String
+  createdById   String
+  disabledById  String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  disabledAt    DateTime?
+  status        RouteStatus   @default(ACTIVE)
+  notes         String?
+  version       Int           @default(1)
+
+  clan          Clan          @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  createdBy     User          @relation("RouteCreator",  fields: [createdById],  references: [id])
+  disabledBy    User?         @relation("RouteDisabler", fields: [disabledById], references: [id])
+  hops          RouteHop[]
 
   @@index([clanId, status])
+  @@index([updatedAt])
 }
 
 model RouteHop {
-  id         Int         @id @default(autoincrement())
-  routeId    String
-  order      Int
-  fromZone   String
-  toZone     String
-  portalSize Int
-  expiresAt  DateTime
-  status     RouteStatus @default(ACTIVE)
+  id             Int             @id @default(autoincrement())
+  routeId        String
+  order          Int
+  fromZoneId     Int
+  toZoneId       Int
+  portalSize     Int
+  expiresAt      DateTime
+  status         RouteHopStatus  @default(ACTIVE)
+  statusNote     String?
+  statusSetById  String?
+  statusSetAt    DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 
-  route Route @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  route          Route           @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  fromZone       Zone            @relation("HopFrom",         fields: [fromZoneId],    references: [id])
+  toZone         Zone            @relation("HopTo",           fields: [toZoneId],      references: [id])
+  statusSetBy    User?           @relation("HopStatusSetter", fields: [statusSetById], references: [id])
 
   @@index([routeId])
   @@index([expiresAt, status])
 }
+
+// ============ Audit ============
 
 model AuditLog {
   id        Int      @id @default(autoincrement())
@@ -178,21 +262,8 @@ model AuditLog {
   details   Json?
   createdAt DateTime @default(now())
 
-  clan Clan @relation(fields: [clanId], references: [id], onDelete: Cascade)
-  user User @relation(fields: [userId], references: [id])
+  clan      Clan     @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
 
   @@index([clanId, createdAt(sort: Desc)])
-}
-
-model Zone {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  type      ZoneType
-  tier      Int?
-  resources Json?
-  chests    Json?
-  dungeons  Json?
-
-  @@index([name])
-  @@index([type])
 }

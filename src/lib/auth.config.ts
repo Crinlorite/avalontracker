@@ -1,25 +1,19 @@
 import type { NextAuthConfig } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import Discord from "next-auth/providers/discord";
 
-// Auth config sin Prisma - usado por el middleware (Edge runtime)
-export const authConfig: NextAuthConfig = {
+export const authConfig = {
   providers: [
-    Credentials({
-      name: "Password",
-      credentials: {
-        username: { label: "Usuario", type: "text" },
-        password: { label: "Contraseña", type: "password" },
-      },
-      // authorize se define en auth.ts completo, no aquí
-      authorize: () => null,
+    Discord({
+      clientId: process.env.DISCORD_CLIENT_ID,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET,
+      authorization: { params: { scope: "identify email" } },
     }),
   ],
-  pages: {
-    signIn: "/",
-  },
+  pages: { signIn: "/" },
+  session: { strategy: "jwt" },
   callbacks: {
     authorized({ auth }) {
       return !!auth?.user;
     },
   },
-};
+} satisfies NextAuthConfig;
