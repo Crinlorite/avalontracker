@@ -1,0 +1,95 @@
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
+import { apiError, internalError } from "@/lib/api-error";
+
+const appendSchema = z.object({
+  fromZone: z.string().min(1),
+  toZone: z.string().min(1),
+  portalSize: z.union([z.literal(7), z.literal(20), z.literal(40)]),
+  expiresAt: z.string().datetime(),
+  allowBrokenChain: z.boolean().optional(),
+});
+
+type RouteParams = { params: Promise<{ clanId: string; routeId: string }> };
+
+// POST /api/clans/:clanId/routes/:routeId/hops — añadir hop al final de la cadena.
+export async function POST(request: Request, { params }: RouteParams) {
+  const session = await auth();
+  if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
+  const { clanId, routeId } = await params;
+
+  try {
+    await requireRoleOrSuperAdminRead(session.user.id, clanId, "CONTRIBUTOR", "WRITE");
+  } catch (e) {
+    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
+    return internalError(e);
+  }
+
+  const parsed = appendSchema.safeParse(await request.json().catch(() => null));
+  if (!parsed.success) {
+    return apiError("VALIDATION_ERROR", 400, "Datos inválidos", { issues: parsed.error.issues });
+  }
+
+  const route = await prisma.route.findFirst({
+    where: { id: routeId, clanId },
+    include: { hops: { orderBy: { order: "desc" }, take: 1, include: { toZone: true } } },
+  });
+  if (!route) return apiError("NOT_FOUND", 404, "Ruta no encontrada");
+  if (route.hops.length >= 12) return apiError("VALIDATION_ERROR", 400, "Una ruta no puede tener más de 12 hops");
+
+  // Validar continuidad — el nuevo hop.fromZone debe ser igual al último hop.toZone.
+  const lastHop = route.hops[0];
+  if (lastHop && !parsed.data.allowBrokenChain && parsed.data.fromZone !== lastHop.toZone.name) {
+    return apiError(
+      "VALIDATION_ERROR",
+      400,
+      `Cadena no continua. El último hop termina en "${lastHop.toZone.name}", este empieza en "${parsed.data.fromZone}". Envía con allowBrokenChain=true para forzar.`
+    );
+  }
+
+  // Resolver zone IDs
+  const [fromZoneRow, toZoneRow] = await Promise.all([
+    prisma.zone.findUnique({ where: { name: parsed.data.fromZone }, select: { id: true } }),
+    prisma.zone.findUnique({ where: { name: parsed.data.toZone }, select: { id: true } }),
+  ]);
+  if (!fromZoneRow) return apiError("VALIDATION_ERROR", 400, `Zona desconocida: ${parsed.data.fromZone}`);
+  if (!toZoneRow) return apiError("VALIDATION_ERROR", 400, `Zona desconocida: ${parsed.data.toZone}`);
+
+  const nextOrder = lastHop ? lastHop.order + 1 : 0;
+
+  const hop = await prisma.routeHop.create({
+    data: {
+      routeId,
+      order: nextOrder,
+      fromZoneId: fromZoneRow.id,
+      toZoneId: toZoneRow.id,
+      portalSize: parsed.data.portalSize,
+      expiresAt: new Date(parsed.data.expiresAt),
+    },
+    include: { fromZone: true, toZone: true },
+  });
+
+  // Bump version para optimistic concurrency, resucitar si estaba EXPIRED.
+  await prisma.route.update({
+    where: { id: routeId },
+    data: {
+      version: { increment: 1 },
+      status: route.status === "EXPIRED" ? "ACTIVE" : route.status,
+    },
+  });
+
+  await prisma.auditLog.create({
+    data: {
+      clanId,
+      userId: session.user.id,
+      targetId: String(hop.id),
+      action: "ROUTE_UPDATE",
+      details: { appendedHop: { from: parsed.data.fromZone, to: parsed.data.toZone, portalSize: parsed.data.portalSize } },
+    },
+  });
+
+  return NextResponse.json(hop, { status: 201 });
+}
