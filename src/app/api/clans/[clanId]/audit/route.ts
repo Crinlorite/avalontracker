@@ -1,59 +1,37 @@
+// src/app/api/clans/[clanId]/audit/route.ts
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireRole } from "@/lib/permissions";
-import { ClanRole } from "@/generated/prisma/client";
+import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
+import { apiError, internalError } from "@/lib/api-error";
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ clanId: string }> }
-) {
+type RouteParams = { params: Promise<{ clanId: string }> };
+
+export async function GET(request: Request, { params }: RouteParams) {
   const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
-
+  if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const { clanId } = await params;
-
   try {
-    await requireRole(session.user.id, clanId, ClanRole.OFFICER);
-  } catch {
-    return NextResponse.json(
-      { error: "Se requiere rol OFFICER o superior" },
-      { status: 403 }
-    );
+    await requireRoleOrSuperAdminRead(session.user.id, clanId, "ADMIN", "GET");
+  } catch (e) {
+    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin acceso", e.extra);
+    return internalError(e);
   }
 
-  const { searchParams } = new URL(request.url);
-  const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
-  const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") || "50", 10)));
+  const url = new URL(request.url);
+  const page = Math.max(1, Number(url.searchParams.get("page") ?? "1"));
+  const limit = Math.min(100, Math.max(1, Number(url.searchParams.get("limit") ?? "50")));
   const skip = (page - 1) * limit;
 
-  const [logs, total] = await Promise.all([
+  const [data, total] = await Promise.all([
     prisma.auditLog.findMany({
       where: { clanId },
-      include: {
-        user: {
-          select: {
-            id: true,
-            displayName: true,
-          },
-        },
-      },
+      include: { user: { select: { id: true, discordUsername: true, displayName: true, globalNickname: true } } },
       orderBy: { createdAt: "desc" },
-      skip,
-      take: limit,
+      skip, take: limit,
     }),
     prisma.auditLog.count({ where: { clanId } }),
   ]);
 
-  return NextResponse.json({
-    data: logs,
-    pagination: {
-      page,
-      limit,
-      total,
-      totalPages: Math.ceil(total / limit),
-    },
-  });
+  return NextResponse.json({ data, pagination: { page, limit, total, totalPages: Math.ceil(total / limit) } });
 }

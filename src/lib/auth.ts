@@ -1,94 +1,103 @@
 import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-// import Google from "next-auth/providers/google";
-// import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "./prisma";
-import { authConfig } from "./auth.config";
+import { authConfig } from "@/lib/auth.config";
+import { prisma } from "@/lib/prisma";
+import { fetchUserClans } from "@/lib/vigil-bot-client";
+import { logger } from "@/lib/logger";
 
-// TODO: Reemplazar Credentials por Google OAuth para produccion
-// 1. Descomentar Google provider y PrismaAdapter
-// 2. Comentar/eliminar Credentials provider
-// 3. Cambiar strategy a "database"
-// 4. Ajustar callbacks
+function superAdminIds(): string[] {
+  return (process.env.SUPER_ADMIN_DISCORD_IDS ?? "")
+    .split(",")
+    .map(s => s.trim())
+    .filter(Boolean);
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
-  // adapter: PrismaAdapter(prisma),  // Activar con Google OAuth
-  session: { strategy: "jwt" },
-  providers: [
-    Credentials({
-      name: "Password",
-      credentials: {
-        username: { label: "Usuario", type: "text" },
-        password: { label: "Contraseña", type: "password" },
-      },
-      async authorize(credentials) {
-        const password = process.env.AUTH_SIMPLE_PASSWORD;
-        if (!password) {
-          throw new Error("AUTH_SIMPLE_PASSWORD no configurada");
-        }
-
-        if (credentials?.password !== password) {
-          return null;
-        }
-
-        const username = (credentials?.username as string) || "admin";
-
-        // Buscar o crear usuario en la DB
-        let user = await prisma.user.findFirst({
-          where: { displayName: username },
-        });
-
-        if (!user) {
-          user = await prisma.user.create({
-            data: {
-              email: `${username.toLowerCase().replace(/\s+/g, ".")}@local.dev`,
-              displayName: username,
-              name: username,
-              isSuperAdmin: username === "admin",
-            },
-          });
-        }
-
-        return {
-          id: user.id,
-          name: user.displayName || user.name,
-          email: user.email,
-          image: user.image,
-        };
-      },
-    }),
-    // Google({
-    //   clientId: process.env.AUTH_GOOGLE_ID!,
-    //   clientSecret: process.env.AUTH_GOOGLE_SECRET!,
-    // }),
-  ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
+    ...authConfig.callbacks,
+
+    async signIn({ user, profile, account }) {
+      if (account?.provider !== "discord") return false;
+      const discordId = account.providerAccountId;
+      const username = (profile as { username?: string })?.username ?? user.name ?? "unknown";
+      const avatar = (profile as { avatar?: string })?.avatar ?? null;
+      const globalNickname = (profile as { global_name?: string })?.global_name ?? null;
+
+      const isSuperAdmin = superAdminIds().includes(discordId);
+
+      await prisma.user.upsert({
+        where: { discordId },
+        create: {
+          discordId,
+          discordUsername: username,
+          discordAvatar: avatar,
+          globalNickname,
+          email: user.email ?? `${discordId}@discord.local`,
+          image: user.image ?? null,
+          isSuperAdmin,
+        },
+        update: {
+          discordUsername: username,
+          discordAvatar: avatar,
+          globalNickname,
+          email: user.email ?? `${discordId}@discord.local`,
+          image: user.image ?? null,
+          isSuperAdmin,
+        },
+      });
+      return true;
+    },
+
+    async jwt({ token, account, profile, trigger }) {
+      if (account?.provider === "discord") {
+        token.discordId = account.providerAccountId;
       }
+      if (!token.discordId && typeof token.sub === "string") {
+        token.discordId = token.sub;
+      }
+      if (!token.id && token.discordId) {
+        const u = await prisma.user.findUnique({ where: { discordId: token.discordId as string } });
+        if (u) {
+          token.id = u.id;
+          token.isSuperAdmin = u.isSuperAdmin;
+        }
+      }
+
+      if (trigger === "signIn" && token.discordId) {
+        try {
+          const clans = await fetchUserClans(token.discordId as string);
+          for (const c of clans) {
+            const clan = await prisma.clan.findUnique({ where: { discordGuildId: c.guildId } });
+            if (!clan || typeof token.id !== "string") continue;
+            await prisma.clanMember.upsert({
+              where: { userId_clanId: { userId: token.id, clanId: clan.id } },
+              create: {
+                userId: token.id,
+                clanId: clan.id,
+                appRole: c.computedAppRole,
+                roleSource: `discord:${c.discordRoleIds.join(",")}`,
+                lastSyncAt: new Date(),
+              },
+              update: {
+                appRole: c.computedAppRole,
+                roleSource: `discord:${c.discordRoleIds.join(",")}`,
+                lastSyncAt: new Date(),
+              },
+            });
+          }
+        } catch (err) {
+          logger.warn({ err }, "vigil bot unavailable during signIn; user logged in without clan sync");
+        }
+      }
+
       return token;
     },
+
     async session({ session, token }) {
-      if (session.user && token.id) {
-        session.user.id = token.id as string;
-
-        const dbUser = await prisma.user.findUnique({
-          where: { id: session.user.id },
-          select: { displayName: true, personalCode: true, isSuperAdmin: true },
-        });
-
-        if (dbUser) {
-          session.user.displayName = dbUser.displayName;
-          session.user.personalCode = dbUser.personalCode;
-          session.user.isSuperAdmin = dbUser.isSuperAdmin;
-        }
-      }
+      if (typeof token.id === "string") session.user.id = token.id;
+      if (typeof token.discordId === "string") (session.user as unknown as Record<string, unknown>).discordId = token.discordId;
+      (session.user as unknown as Record<string, unknown>).isSuperAdmin = Boolean(token.isSuperAdmin);
       return session;
     },
-  },
-  pages: {
-    signIn: "/",
   },
 });

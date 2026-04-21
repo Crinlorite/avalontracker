@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import SessionProvider from "@/components/providers/SessionProvider";
+import { SWRProvider } from "@/components/providers/SWRProvider";
+import { ToastProvider } from "@/components/providers/ToastProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -38,7 +40,12 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-gray-950 text-white antialiased min-h-screen`}
       >
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <SWRProvider>
+            {children}
+            <ToastProvider />
+          </SWRProvider>
+        </SessionProvider>
       </body>
     </html>
   );

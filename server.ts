@@ -3,6 +3,11 @@ import next from "next";
 import { Server as SocketIOServer } from "socket.io";
 import { PrismaClient } from "./src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { getToken } from "next-auth/jwt";
+import pinoHttp from "pino-http";
+import { logger } from "./src/lib/logger";
+
+const httpLogger = pinoHttp({ logger });
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "0.0.0.0";
@@ -24,32 +29,50 @@ export function emitToClan(clanId: string, event: string, data: unknown) {
 
 app.prepare().then(() => {
   const httpServer = createServer((req, res) => {
+    httpLogger(req, res);
     handle(req, res);
   });
 
   io = new SocketIOServer(httpServer, {
     cors: {
-      origin: "*",
-      methods: ["GET", "POST"],
+      origin: process.env.AUTH_URL ?? "http://localhost:3000",
+      credentials: true,
     },
+  });
+
+  io.use(async (socket, next) => {
+    try {
+      const req = socket.request as unknown as { headers: Record<string, string> };
+      const token = await getToken({
+        req: req as never,
+        secret: process.env.AUTH_SECRET!,
+        salt: "authjs.session-token",
+      });
+      if (!token?.id) return next(new Error("unauthorized"));
+      (socket.data as { userId: string }).userId = token.id as string;
+      next();
+    } catch {
+      next(new Error("unauthorized"));
+    }
   });
 
   io.on("connection", (socket) => {
     console.log(`Socket connected: ${socket.id}`);
 
-    socket.on("join-clan", (clanId: string) => {
+    socket.on("join-clan", async (clanId: string) => {
+      const userId = (socket.data as { userId?: string }).userId;
+      if (!userId) return;
+      const membership = await prisma.clanMember.findUnique({
+        where: { userId_clanId: { userId, clanId } },
+        select: { appRole: true },
+      });
+      const user = await prisma.user.findUnique({ where: { id: userId }, select: { isSuperAdmin: true } });
+      if (!membership?.appRole && !user?.isSuperAdmin) return;
       socket.join(`clan:${clanId}`);
-      console.log(`Socket ${socket.id} joined clan:${clanId}`);
     });
 
-    socket.on("leave-clan", (clanId: string) => {
-      socket.leave(`clan:${clanId}`);
-      console.log(`Socket ${socket.id} left clan:${clanId}`);
-    });
-
-    socket.on("disconnect", () => {
-      console.log(`Socket disconnected: ${socket.id}`);
-    });
+    socket.on("leave-clan", (clanId: string) => socket.leave(`clan:${clanId}`));
+    socket.on("disconnect", () => console.log(`Socket disconnected: ${socket.id}`));
   });
 
   // Check for expired hops every 30 seconds

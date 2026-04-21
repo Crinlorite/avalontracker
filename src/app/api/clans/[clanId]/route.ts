@@ -1,108 +1,83 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireClanMember, requireRole } from "@/lib/permissions";
-import { logAudit } from "@/lib/audit";
-import { ClanRole } from "@/generated/prisma/client";
+import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
+import { apiError, internalError } from "@/lib/api-error";
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ clanId: string }> }
-) {
+const patchSchema = z.object({
+  name: z.string().min(3).max(40).optional(),
+  discordWebhookUrl: z.string().url().nullable().optional(),
+  anchorZoneId: z.number().int().positive().nullable().optional(),
+}).strict();
+
+type RouteParams = { params: Promise<{ clanId: string }> };
+
+export async function GET(_req: Request, { params }: RouteParams) {
   const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
-
+  if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const { clanId } = await params;
 
   try {
-    await requireClanMember(session.user.id, clanId);
-  } catch {
-    return NextResponse.json({ error: "No eres miembro de este clan" }, { status: 403 });
+    await requireRoleOrSuperAdminRead(session.user.id, clanId, "VIEWER", "GET");
+  } catch (e) {
+    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin acceso", e.extra);
+    return internalError(e);
   }
 
   const clan = await prisma.clan.findUnique({
     where: { id: clanId },
-    include: {
-      _count: {
-        select: { members: true },
-      },
-    },
+    include: { _count: { select: { members: true, routes: true } } },
   });
-
-  if (!clan) {
-    return NextResponse.json({ error: "Clan no encontrado" }, { status: 404 });
-  }
-
+  if (!clan) return apiError("NOT_FOUND", 404, "Clan no encontrado");
   return NextResponse.json(clan);
 }
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: Promise<{ clanId: string }> }
-) {
+export async function PATCH(request: Request, { params }: RouteParams) {
   const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
-
-  const { clanId } = await params;
-
-  const body = await request.json();
-  const { name, discordWebhookUrl } = body;
-
-  // Cambiar nombre requiere OWNER, webhook requiere OFFICER+
-  if (name) {
-    try {
-      await requireRole(session.user.id, clanId, ClanRole.OWNER);
-    } catch {
-      return NextResponse.json({ error: "Solo el OWNER puede cambiar el nombre" }, { status: 403 });
-    }
-  } else {
-    try {
-      await requireRole(session.user.id, clanId, ClanRole.OFFICER);
-    } catch {
-      return NextResponse.json({ error: "Se requiere rol OFFICER o superior" }, { status: 403 });
-    }
-  }
-
-  const updateData: Record<string, unknown> = {};
-  if (name) updateData.name = name.trim();
-  if (discordWebhookUrl !== undefined) updateData.discordWebhookUrl = discordWebhookUrl || null;
-
-  const clan = await prisma.clan.update({
-    where: { id: clanId },
-    data: updateData,
-  });
-
-  await logAudit(clanId, session.user.id, "SETTINGS_CHANGE", undefined, updateData);
-
-  return NextResponse.json(clan);
-}
-
-export async function DELETE(
-  request: Request,
-  { params }: { params: Promise<{ clanId: string }> }
-) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
-
+  if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const { clanId } = await params;
 
   try {
-    await requireRole(session.user.id, clanId, ClanRole.OWNER);
-  } catch {
-    return NextResponse.json({ error: "Solo el OWNER puede eliminar el clan" }, { status: 403 });
+    await requireRoleOrSuperAdminRead(session.user.id, clanId, "ADMIN", "WRITE");
+  } catch (e) {
+    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
+    return internalError(e);
   }
 
-  await prisma.clan.delete({
+  const body = await request.json().catch(() => null);
+  const parsed = patchSchema.safeParse(body);
+  if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Datos inválidos", { issues: parsed.error.issues });
+
+  const clan = await prisma.clan.update({
     where: { id: clanId },
+    data: parsed.data,
   });
 
-  await logAudit(clanId, session.user.id, "SETTINGS_CHANGE");
+  await prisma.auditLog.create({
+    data: {
+      clanId,
+      userId: session.user.id,
+      action: "SETTINGS_CHANGE",
+      details: parsed.data as object,
+    },
+  });
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json(clan);
+}
+
+export async function DELETE(_req: Request, { params }: RouteParams) {
+  const session = await auth();
+  if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
+  const { clanId } = await params;
+
+  try {
+    await requireRoleOrSuperAdminRead(session.user.id, clanId, "ADMIN", "WRITE");
+  } catch (e) {
+    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
+    return internalError(e);
+  }
+
+  await prisma.clan.delete({ where: { id: clanId } });
+  return new NextResponse(null, { status: 204 });
 }

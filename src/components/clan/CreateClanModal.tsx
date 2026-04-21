@@ -1,105 +1,64 @@
 "use client";
-
 import { useState } from "react";
+import toast from "react-hot-toast";
 
-interface CreateClanModalProps {
-  onClose: () => void;
-  onCreated: () => void;
-}
-
-export default function CreateClanModal({
-  onClose,
-  onCreated,
-}: CreateClanModalProps) {
+export function CreateClanModal({ onClose, onCreated }: { onClose: () => void; onCreated: () => void }) {
   const [name, setName] = useState("");
+  const [guildId, setGuildId] = useState("");
+  const [guildName, setGuildName] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
-
-    if (!name.trim()) {
-      setError("El nombre del clan es requerido");
-      return;
-    }
-
     setSubmitting(true);
-
     try {
       const res = await fetch("/api/clans", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim() }),
+        body: JSON.stringify({ name, discordGuildId: guildId, discordGuildName: guildName }),
       });
-
-      if (res.ok) {
-        onCreated();
-      } else {
-        const data = await res.json();
-        setError(data.error || "Error al crear el clan");
-      }
-    } catch {
-      setError("Error de conexión");
+      const body = await res.json();
+      if (!res.ok) throw new Error(body?.error?.message ?? "Error al crear clan");
+      toast.success("Clan creado");
+      onCreated();
+    } catch (e: unknown) {
+      toast.error(e instanceof Error ? e.message : "Error");
     } finally {
       setSubmitting(false);
     }
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-      <div className="w-full max-w-md rounded-xl border border-gray-800 bg-gray-900 shadow-2xl">
-        <div className="flex items-center justify-between border-b border-gray-800 px-6 py-4">
-          <h2 className="text-lg font-semibold text-white">Crear Clan</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 transition-colors hover:text-white"
-          >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={onClose}>
+      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className="w-full max-w-md space-y-4 rounded-xl border border-slate-700 bg-slate-900 p-6">
+        <h2 className="text-xl font-bold text-white">Crear nuevo clan</h2>
+        <p className="text-xs text-slate-400">Vigil Bot debe estar instalado en el servidor Discord antes de crear el clan.</p>
+
+        <label className="block">
+          <span className="text-sm text-slate-300">Nombre del clan</span>
+          <input value={name} onChange={(e) => setName(e.target.value)} required minLength={3} maxLength={40}
+            className="mt-1 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-white" />
+        </label>
+
+        <label className="block">
+          <span className="text-sm text-slate-300">Discord Guild ID</span>
+          <input value={guildId} onChange={(e) => setGuildId(e.target.value)} required pattern="\d{17,20}" placeholder="Click derecho en el servidor → Copiar ID"
+            className="mt-1 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 font-mono text-white" />
+        </label>
+
+        <label className="block">
+          <span className="text-sm text-slate-300">Nombre del servidor Discord</span>
+          <input value={guildName} onChange={(e) => setGuildName(e.target.value)} required minLength={1} maxLength={100}
+            className="mt-1 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-white" />
+        </label>
+
+        <div className="flex justify-end gap-2">
+          <button type="button" onClick={onClose} className="rounded-md border border-slate-700 px-4 py-2 text-sm text-slate-300 hover:bg-slate-800">Cancelar</button>
+          <button type="submit" disabled={submitting} className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-50">
+            {submitting ? "Creando…" : "Crear"}
           </button>
         </div>
-
-        <form onSubmit={handleSubmit} className="space-y-5 p-6">
-          {error && (
-            <div className="rounded-lg border border-red-600/30 bg-red-900/20 p-3 text-sm text-red-300">
-              {error}
-            </div>
-          )}
-
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-300">
-              Nombre del clan
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Ej: Los Caballeros de Avalon"
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2.5 text-white placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-              autoFocus
-            />
-          </div>
-
-          <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 rounded-lg bg-gray-800 px-4 py-2.5 text-sm font-medium text-gray-300 transition-colors hover:bg-gray-700"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="flex-1 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-indigo-500 disabled:opacity-50"
-            >
-              {submitting ? "Creando..." : "Crear"}
-            </button>
-          </div>
-        </form>
-      </div>
+      </form>
     </div>
   );
 }

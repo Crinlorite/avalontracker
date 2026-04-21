@@ -1,5 +1,2 @@
-import LandingLogin from "@/components/landing/LandingLogin";
-
-export default function Home() {
-  return <LandingLogin />;
-}
+import { LandingLoginDiscord } from "@/components/auth/LandingLoginDiscord";
+export default function HomePage() { return <LandingLoginDiscord />; }

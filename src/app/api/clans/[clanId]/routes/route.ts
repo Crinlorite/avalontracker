@@ -1,129 +1,112 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireClanMember } from "@/lib/permissions";
-import { logAudit } from "@/lib/audit";
+import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
+import { apiError, internalError } from "@/lib/api-error";
+import { consumeToken, createLimiter } from "@/lib/rate-limit";
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ clanId: string }> }
-) {
+const createLim = createLimiter({ windowMs: 60_000, max: 20 });
+
+const hopSchema = z.object({
+  fromZone: z.string().min(1),
+  toZone: z.string().min(1),
+  portalSize: z.union([z.literal(7), z.literal(20), z.literal(40)]),
+  expiresAt: z.string().datetime(),
+});
+
+const createSchema = z.object({
+  hops: z.array(hopSchema).min(1).max(12),
+  notes: z.string().max(200).optional(),
+}).refine((d) => d.hops.every((h, i) => i === 0 || h.fromZone === d.hops[i - 1].toZone), {
+  message: "Cadena no continua",
+  path: ["hops"],
+});
+
+type RouteParams = { params: Promise<{ clanId: string }> };
+
+export async function GET(request: Request, { params }: RouteParams) {
   const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
-
+  if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const { clanId } = await params;
-
   try {
-    await requireClanMember(session.user.id, clanId);
-  } catch {
-    return NextResponse.json({ error: "No eres miembro de este clan" }, { status: 403 });
+    await requireRoleOrSuperAdminRead(session.user.id, clanId, "VIEWER", "GET");
+  } catch (e) {
+    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin acceso", e.extra);
+    return internalError(e);
   }
 
-  const { searchParams } = new URL(request.url);
-  const status = searchParams.get("status");
+  const url = new URL(request.url);
+  const since = url.searchParams.get("since");
+  const status = url.searchParams.get("status") as "ACTIVE" | "EXPIRED" | "DISABLED" | "ALL" | null;
 
   const where: Record<string, unknown> = { clanId };
-  if (status && ["ACTIVE", "EXPIRED", "DISABLED"].includes(status)) {
-    where.status = status;
-  }
+  if (status && status !== "ALL") where.status = status;
+  else if (!status) where.status = "ACTIVE";
+  if (since) where.updatedAt = { gt: new Date(since) };
 
   const routes = await prisma.route.findMany({
     where,
     include: {
-      createdBy: {
-        select: { id: true, displayName: true },
-      },
-      hops: {
-        orderBy: { order: "asc" },
-      },
+      hops: { orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } },
+      createdBy: { select: { id: true, discordUsername: true, globalNickname: true, displayName: true, discordAvatar: true } },
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: { updatedAt: "desc" },
   });
 
-  return NextResponse.json(routes);
+  const now = new Date().toISOString();
+  return NextResponse.json({ routes, now });
 }
 
-interface HopInput {
-  fromZone: string;
-  toZone: string;
-  portalSize: number;
-  expiresAt: string;
-}
-
-export async function POST(
-  request: Request,
-  { params }: { params: Promise<{ clanId: string }> }
-) {
+export async function POST(request: Request, { params }: RouteParams) {
   const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
-
+  if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const { clanId } = await params;
-
   try {
-    await requireClanMember(session.user.id, clanId);
-  } catch {
-    return NextResponse.json({ error: "No eres miembro de este clan" }, { status: 403 });
+    await requireRoleOrSuperAdminRead(session.user.id, clanId, "CONTRIBUTOR", "WRITE");
+  } catch (e) {
+    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
+    return internalError(e);
   }
 
-  const body = await request.json();
-  const { hops } = body as { hops: HopInput[] };
+  const rl = consumeToken(createLim, session.user.id);
+  if (!rl.ok) return apiError("RATE_LIMITED", 429, "Demasiadas rutas creadas", { retryAfterMs: rl.retryAfterMs });
 
-  if (!hops || !Array.isArray(hops) || hops.length === 0) {
-    return NextResponse.json(
-      { error: "Se requiere al menos un salto" },
-      { status: 400 }
-    );
-  }
+  const parsed = createSchema.safeParse(await request.json().catch(() => null));
+  if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Datos inválidos", { issues: parsed.error.issues });
 
-  if (hops.length > 12) {
-    return NextResponse.json(
-      { error: "Máximo 12 saltos por ruta" },
-      { status: 400 }
-    );
-  }
-
-  for (let i = 0; i < hops.length; i++) {
-    const hop = hops[i];
-    if (!hop.fromZone || !hop.toZone || !hop.portalSize || !hop.expiresAt) {
-      return NextResponse.json(
-        { error: `Salto ${i + 1}: todos los campos son requeridos` },
-        { status: 400 }
-      );
-    }
-    // Validate chain continuity
-    if (i > 0 && hops[i - 1].toZone !== hop.fromZone) {
-      return NextResponse.json(
-        { error: `Salto ${i + 1}: la zona de entrada debe coincidir con la salida del salto anterior` },
-        { status: 400 }
-      );
-    }
+  const zoneNames = new Set<string>();
+  for (const h of parsed.data.hops) { zoneNames.add(h.fromZone); zoneNames.add(h.toZone); }
+  const zones = await prisma.zone.findMany({ where: { name: { in: [...zoneNames] } } });
+  const byName = new Map(zones.map((z) => [z.name, z.id]));
+  for (const n of zoneNames) if (!byName.has(n)) {
+    return apiError("VALIDATION_ERROR", 400, `Zona desconocida: ${n}`);
   }
 
   const route = await prisma.route.create({
     data: {
       clanId,
       createdById: session.user.id,
+      notes: parsed.data.notes ?? null,
       hops: {
-        create: hops.map((hop, index) => ({
-          order: index,
-          fromZone: hop.fromZone.trim(),
-          toZone: hop.toZone.trim(),
-          portalSize: hop.portalSize,
-          expiresAt: new Date(hop.expiresAt),
+        create: parsed.data.hops.map((h, i) => ({
+          order: i,
+          fromZoneId: byName.get(h.fromZone)!,
+          toZoneId: byName.get(h.toZone)!,
+          portalSize: h.portalSize,
+          expiresAt: new Date(h.expiresAt),
         })),
       },
     },
-    include: {
-      hops: { orderBy: { order: "asc" } },
-    },
+    include: { hops: { orderBy: { order: "asc" } } },
   });
 
-  const zones = [hops[0].fromZone, ...hops.map((h) => h.toZone)].join(" → ");
-  await logAudit(clanId, session.user.id, "ROUTE_CREATE", route.id, { zones, hopCount: hops.length });
+  await prisma.auditLog.create({
+    data: {
+      clanId, userId: session.user.id, action: "ROUTE_CREATE", targetId: route.id,
+      details: { hopCount: parsed.data.hops.length },
+    },
+  });
 
   return NextResponse.json(route, { status: 201 });
 }
