@@ -1,8 +1,22 @@
 import useSWR from "swr";
 
+export type ClanAnchorZone = {
+  id: number;
+  name: string;
+  type: "AVALON" | "ROYAL" | "OUTLANDS";
+  tier: number | null;
+};
+
 export type ClanDetail = {
-  id: string; name: string; discordGuildId: string; discordGuildName: string; discordGuildIcon: string | null;
-  discordWebhookUrl: string | null; anchorZoneId: number | null; botInstalled: boolean;
+  id: string;
+  name: string;
+  discordGuildId: string;
+  discordGuildName: string;
+  discordGuildIcon: string | null;
+  discordWebhookUrl: string | null;
+  anchorZoneId: number | null;
+  anchorZone: ClanAnchorZone | null;
+  botInstalled: boolean;
   _count?: { members: number; routes: number };
 };
 
