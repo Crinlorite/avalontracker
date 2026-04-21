@@ -22,9 +22,14 @@ ENV NODE_ENV=production
 ENV DATABASE_URL=""
 ENV AUTH_SECRET=""
 ENV AUTH_URL=""
-ENV AUTH_SIMPLE_PASSWORD=""
+ENV AUTH_TRUST_HOST="true"
 ENV NEXT_PUBLIC_APP_URL=""
-ENV SUPER_ADMIN_EMAIL=""
+ENV DISCORD_CLIENT_ID=""
+ENV DISCORD_CLIENT_SECRET=""
+ENV VIGIL_BOT_API_URL=""
+ENV VIGIL_BOT_SHARED_SECRET=""
+ENV SUPER_ADMIN_DISCORD_IDS=""
+ENV PRISMA_CLIENT_POOL_SIZE="5"
 
 # Copy standalone output from Next.js
 COPY --from=builder /app/.next/standalone ./
@@ -41,4 +46,6 @@ COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "npx prisma db push --accept-data-loss && npx tsx scripts/seed-zones.ts && npx tsx scripts/import-world-graph.ts && npx tsx scripts/precompute-routing.ts && node server.js"]
+# Primer deploy: --force-reset drops y recrea la BD (big-bang, sin users reales).
+# TODO: quitar --force-reset después del primer deploy exitoso para evitar wipe en redeploys futuros.
+CMD ["sh", "-c", "npx prisma db push --force-reset --accept-data-loss && npx tsx scripts/seed-zones.ts && npx tsx scripts/import-world-graph.ts && npx tsx scripts/precompute-routing.ts && node server.js"]
