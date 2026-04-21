@@ -27,7 +27,10 @@ export async function GET(_req: Request, { params }: RouteParams) {
 
   const clan = await prisma.clan.findUnique({
     where: { id: clanId },
-    include: { _count: { select: { members: true, routes: true } } },
+    include: {
+      _count: { select: { members: true, routes: true } },
+      anchorZone: { select: { id: true, name: true, type: true, tier: true } },
+    },
   });
   if (!clan) return apiError("NOT_FOUND", 404, "Clan no encontrado");
   return NextResponse.json(clan);

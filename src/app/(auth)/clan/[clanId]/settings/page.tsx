@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useClan } from "@/hooks/useClan";
+import { useClan, type ClanAnchorZone } from "@/hooks/useClan";
 import { RoleMappingEditor } from "@/components/clan/RoleMappingEditor";
+import { ZoneAutocomplete } from "@/components/zones/ZoneAutocomplete";
 
 export default function SettingsPage() {
   const { clanId } = useParams() as { clanId: string };
@@ -90,7 +91,7 @@ export default function SettingsPage() {
 
       <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
         <h2 className="mb-4 text-lg font-semibold text-white">Zona anchor (centro del grafo)</h2>
-        <AnchorPicker clanId={clanId} currentAnchorId={clan.anchorZoneId} onUpdated={() => mutate()} />
+        <AnchorPicker clanId={clanId} currentAnchor={clan.anchorZone ?? null} onUpdated={() => mutate()} />
       </section>
 
       <section>
@@ -107,11 +108,21 @@ export default function SettingsPage() {
   );
 }
 
-function AnchorPicker({ clanId, currentAnchorId, onUpdated }: { clanId: string; currentAnchorId: number | null; onUpdated: () => void }) {
-  const [search, setSearch] = useState("");
+function AnchorPicker({
+  clanId, currentAnchor, onUpdated,
+}: { clanId: string; currentAnchor: ClanAnchorZone | null; onUpdated: () => void }) {
+  const [zoneName, setZoneName] = useState("");
   const [saving, setSaving] = useState(false);
 
-  async function pick(zoneId: number | null) {
+  async function resolveZoneIdByName(name: string): Promise<number | null> {
+    const res = await fetch(`/api/zones?q=${encodeURIComponent(name)}`);
+    if (!res.ok) return null;
+    const zones = (await res.json()) as Array<{ id: number; name: string }>;
+    const exact = zones.find((z) => z.name.toLowerCase() === name.toLowerCase());
+    return exact?.id ?? null;
+  }
+
+  async function save(zoneId: number | null) {
     setSaving(true);
     try {
       const res = await fetch(`/api/clans/${clanId}`, {
@@ -119,8 +130,9 @@ function AnchorPicker({ clanId, currentAnchorId, onUpdated }: { clanId: string; 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ anchorZoneId: zoneId }),
       });
-      if (!res.ok) throw new Error("Error");
-      toast.success("Anchor actualizado");
+      if (!res.ok) throw new Error("Error al guardar");
+      toast.success(zoneId ? "Anchor actualizado" : "Anchor quitado");
+      setZoneName("");
       onUpdated();
     } catch (e: unknown) {
       toast.error(e instanceof Error ? e.message : "Error");
@@ -129,18 +141,65 @@ function AnchorPicker({ clanId, currentAnchorId, onUpdated }: { clanId: string; 
     }
   }
 
-  // Simplified inline search: link to members-style selector would be cleaner;
-  // dejamos picker simple: quitarlo o introducir ID manual.
+  async function setAnchorFromName() {
+    const trimmed = zoneName.trim();
+    if (!trimmed) return toast.error("Escribe el nombre de una zona");
+    const zoneId = await resolveZoneIdByName(trimmed);
+    if (!zoneId) return toast.error(`No encuentro una zona llamada "${trimmed}". Usa el autocompletado y selecciona una sugerencia.`);
+    await save(zoneId);
+  }
+
   return (
-    <div className="space-y-2">
-      <div className="text-sm text-slate-400">Zona anchor actual: {currentAnchorId ?? "sin configurar"}</div>
-      <div className="flex gap-2">
-        <input type="number" placeholder="Zone ID (de /api/zones?q=)" value={search} onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 rounded border border-slate-700 bg-slate-950 px-3 py-2 text-white" />
-        <button disabled={saving || !search} onClick={() => pick(Number(search))} className="rounded bg-indigo-600 px-3 py-2 text-sm text-white disabled:opacity-50">Fijar</button>
-        <button disabled={saving || !currentAnchorId} onClick={() => pick(null)} className="rounded border border-slate-700 px-3 py-2 text-sm text-slate-200 disabled:opacity-50">Quitar</button>
+    <div className="space-y-3">
+      <div className="rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm">
+        <span className="text-slate-400">Anchor actual:</span>{" "}
+        {currentAnchor ? (
+          <span className="text-white">
+            {currentAnchor.name}
+            <span className="ml-2 rounded bg-slate-700 px-1.5 py-0.5 text-[10px] uppercase text-slate-200">{currentAnchor.type}</span>
+            {currentAnchor.tier != null && (
+              <span className="ml-1 rounded bg-slate-700 px-1.5 py-0.5 text-[10px] text-slate-200">T{currentAnchor.tier}</span>
+            )}
+          </span>
+        ) : (
+          <span className="italic text-slate-500">Sin configurar (el grafo centrará en la primera ruta activa)</span>
+        )}
       </div>
-      <p className="text-xs text-slate-500">El selector pro vendrá con ZoneAutocomplete en una fase posterior.</p>
+
+      <div>
+        <span className="text-xs text-slate-400">Nueva zona anchor</span>
+        <div className="mt-1 flex gap-2">
+          <div className="flex-1">
+            <ZoneAutocomplete
+              value={zoneName}
+              onChange={setZoneName}
+              placeholder="Escribe el nombre del HO, ciudad, etc. (p. ej. Bridgewatch)"
+              disabled={saving}
+            />
+          </div>
+          <button
+            type="button"
+            disabled={saving || !zoneName.trim()}
+            onClick={setAnchorFromName}
+            className="rounded bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-50"
+          >
+            Fijar
+          </button>
+          {currentAnchor && (
+            <button
+              type="button"
+              disabled={saving}
+              onClick={() => save(null)}
+              className="rounded border border-slate-700 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 disabled:opacity-50"
+            >
+              Quitar
+            </button>
+          )}
+        </div>
+        <p className="mt-2 text-xs text-slate-500">
+          Típicamente el HO Avalon del clan o la zona negra desde donde salen la mayoría de rutas. Es el nodo central del grafo.
+        </p>
+      </div>
     </div>
   );
 }
