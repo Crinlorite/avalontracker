@@ -87,8 +87,24 @@ export async function getUserRoleInClan(
       "@/lib/vigil-bot-client"
     )) as { fetchUserRoleFromBot: typeof FetchUserRoleFromBot };
     const botResult = await fetchUserRoleFromBot(clan.discordGuildId, user.discordId);
+
+    // Si el bot devuelve computedAppRole=null (no hay mappings aplicables),
+    // NO degradar un appRole existente (p.ej. bootstrap del creador que es
+    // ADMIN sin Discord mapping todavía, o una asignación manual previa).
+    // Solo se revoca el acceso vía webhook explícito MEMBER_LEFT.
+    const existing = await prisma.clanMember.findUnique({
+      where: { userId_clanId: { userId, clanId } },
+      select: { appRole: true, roleSource: true },
+    });
+
+    const nextAppRole: AppRole | null =
+      botResult.computedAppRole ?? existing?.appRole ?? null;
+    const nextRoleSource = botResult.computedAppRole
+      ? `discord:${botResult.discordRoleIds.join(",")}`
+      : (existing?.roleSource ?? null);
+
     const fresh: CachedRole = {
-      appRole: botResult.computedAppRole,
+      appRole: nextAppRole,
       stale: false,
       syncedAt: new Date(),
     };
@@ -97,13 +113,13 @@ export async function getUserRoleInClan(
       create: {
         userId,
         clanId,
-        appRole: fresh.appRole,
-        roleSource: `discord:${botResult.discordRoleIds.join(",")}`,
+        appRole: nextAppRole,
+        roleSource: nextRoleSource,
         lastSyncAt: fresh.syncedAt,
       },
       update: {
-        appRole: fresh.appRole,
-        roleSource: `discord:${botResult.discordRoleIds.join(",")}`,
+        appRole: nextAppRole,
+        roleSource: nextRoleSource,
         lastSyncAt: fresh.syncedAt,
       },
     });

@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { fetchGuildHealth } from "@/lib/vigil-bot-client";
 import { apiError, internalError } from "@/lib/api-error";
 import { logger } from "@/lib/logger";
+import { Prisma } from "@/generated/prisma/client";
 
 const createSchema = z.object({
   name: z.string().min(3).max(40),
@@ -56,28 +57,69 @@ export async function POST(request: Request) {
         "Vigil Bot no está instalado en este guild. Instálalo antes de crear el clan.");
     }
 
-    const clan = await prisma.clan.create({
-      data: {
-        name: parsed.data.name,
-        discordGuildId: parsed.data.discordGuildId,
-        discordGuildName: parsed.data.discordGuildName,
-        discordGuildIcon: parsed.data.discordGuildIcon ?? null,
-        botInstalled: true,
-        createdById: session.user.id,
+    // Pre-check amigable: ya existe un clan para este guild o con este nombre
+    const existing = await prisma.clan.findFirst({
+      where: {
+        OR: [
+          { discordGuildId: parsed.data.discordGuildId },
+          { name: parsed.data.name },
+        ],
       },
+      select: { id: true, name: true, discordGuildId: true },
     });
+    if (existing) {
+      const reason = existing.discordGuildId === parsed.data.discordGuildId
+        ? "Este guild Discord ya tiene un clan registrado."
+        : "Ya existe un clan con ese nombre.";
+      return apiError("VALIDATION_ERROR", 400, reason, { existingClanId: existing.id });
+    }
 
-    await prisma.auditLog.create({
-      data: {
-        clanId: clan.id,
-        userId: session.user.id,
-        action: "CLAN_CREATE",
-        details: { name: clan.name, guildId: clan.discordGuildId },
-      },
+    // Transacción: crear clan + asignar creador como ADMIN + audit.
+    // Si algún paso falla, ninguno se persiste.
+    const clan = await prisma.$transaction(async (tx) => {
+      const created = await tx.clan.create({
+        data: {
+          name: parsed.data.name,
+          discordGuildId: parsed.data.discordGuildId,
+          discordGuildName: parsed.data.discordGuildName,
+          discordGuildIcon: parsed.data.discordGuildIcon ?? null,
+          botInstalled: true,
+          createdById: session.user.id,
+        },
+      });
+
+      // El creador se auto-asigna como ADMIN del clan (bootstrap).
+      // A partir de aquí, role mappings Discord tomarán el relevo para otros miembros.
+      await tx.clanMember.create({
+        data: {
+          userId: session.user.id,
+          clanId: created.id,
+          appRole: "ADMIN",
+          roleSource: "bootstrap:creator",
+          lastSyncAt: new Date(),
+        },
+      });
+
+      await tx.auditLog.create({
+        data: {
+          clanId: created.id,
+          userId: session.user.id,
+          action: "CLAN_CREATE",
+          details: { name: created.name, guildId: created.discordGuildId, bootstrappedAs: "ADMIN" },
+        },
+      });
+
+      return created;
     });
 
     return NextResponse.json(clan, { status: 201 });
   } catch (err) {
+    // P2002: UNIQUE constraint. Fallback si el pre-check no capturó (race condition).
+    if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
+      const target = (err.meta?.target as string[] | undefined)?.join(", ") ?? "campo único";
+      return apiError("VALIDATION_ERROR", 400,
+        `Ya existe un clan con ese ${target}.`);
+    }
     logger.error({ err }, "POST /api/clans failed");
     return internalError(err);
   }
