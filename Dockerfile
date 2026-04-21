@@ -46,6 +46,8 @@ COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 3000
 
-# Primer deploy: --force-reset drops y recrea la BD (big-bang, sin users reales).
-# TODO: quitar --force-reset después del primer deploy exitoso para evitar wipe en redeploys futuros.
-CMD ["sh", "-c", "npx prisma db push --force-reset --accept-data-loss && npx tsx scripts/seed-zones.ts && npx tsx scripts/import-world-graph.ts && npx tsx scripts/precompute-routing.ts && node server.js"]
+# db push sin --force-reset: schema estable, no wipear BD en cada redeploy.
+# Si en algún momento hay cambios incompatibles de schema (drop de columnas
+# con data, etc.), Prisma pedirá --accept-data-loss o añadir manualmente
+# --force-reset temporalmente para esa migración puntual.
+CMD ["sh", "-c", "npx prisma db push --accept-data-loss && npx tsx scripts/seed-zones.ts && npx tsx scripts/import-world-graph.ts && npx tsx scripts/precompute-routing.ts && node server.js"]
