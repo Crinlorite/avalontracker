@@ -72,20 +72,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           const clans = await fetchUserClans(token.discordId as string);
           for (const c of clans) {
-            const clan = await prisma.clan.findUnique({ where: { discordGuildId: c.guildId } });
+            const clan = await prisma.clan.findUnique({
+              where: { discordGuildId: c.guildId },
+              select: { id: true, createdById: true },
+            });
             if (!clan || typeof token.id !== "string") continue;
+            // Creador del clan siempre ADMIN (ver permissions.ts).
+            const isCreator = clan.createdById === token.id;
+            const appRole = isCreator ? "ADMIN" : c.computedAppRole;
+            const roleSource = isCreator
+              ? "creator:permanent"
+              : `discord:${c.discordRoleIds.join(",")}`;
             await prisma.clanMember.upsert({
               where: { userId_clanId: { userId: token.id, clanId: clan.id } },
               create: {
                 userId: token.id,
                 clanId: clan.id,
-                appRole: c.computedAppRole,
-                roleSource: `discord:${c.discordRoleIds.join(",")}`,
+                appRole,
+                roleSource,
                 lastSyncAt: new Date(),
               },
               update: {
-                appRole: c.computedAppRole,
-                roleSource: `discord:${c.discordRoleIds.join(",")}`,
+                appRole,
+                roleSource,
                 lastSyncAt: new Date(),
               },
             });

@@ -74,13 +74,19 @@ export async function getUserRoleInClan(
   });
   const clan = await prisma.clan.findUnique({
     where: { id: clanId },
-    select: { discordGuildId: true },
+    select: { discordGuildId: true, createdById: true },
   });
   if (!user || !clan) {
     const miss: CachedRole = { appRole: null, stale: false, syncedAt: new Date() };
     roleCache.set(key, miss);
     return miss;
   }
+
+  // El creador del clan siempre es ADMIN — el bot no puede degradarlo
+  // aunque sus roles Discord estén mapeados a otra cosa. Evita el caso
+  // donde un master con todos los roles se demota al mapear primero
+  // los roles de abajo.
+  const isCreator = clan.createdById === userId;
 
   try {
     const { fetchUserRoleFromBot } = (await import(
@@ -97,11 +103,14 @@ export async function getUserRoleInClan(
       select: { appRole: true, roleSource: true },
     });
 
-    const nextAppRole: AppRole | null =
-      botResult.computedAppRole ?? existing?.appRole ?? null;
-    const nextRoleSource = botResult.computedAppRole
-      ? `discord:${botResult.discordRoleIds.join(",")}`
-      : (existing?.roleSource ?? null);
+    const nextAppRole: AppRole | null = isCreator
+      ? "ADMIN"
+      : (botResult.computedAppRole ?? existing?.appRole ?? null);
+    const nextRoleSource = isCreator
+      ? "creator:permanent"
+      : botResult.computedAppRole
+        ? `discord:${botResult.discordRoleIds.join(",")}`
+        : (existing?.roleSource ?? null);
 
     const fresh: CachedRole = {
       appRole: nextAppRole,

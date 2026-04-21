@@ -17,8 +17,20 @@ export async function GET(_req: Request, { params }: RouteParams) {
     return internalError(e);
   }
 
+  // Stealth super admin: un user con isSuperAdmin=true nunca aparece
+  // en el listado de miembros cuando lo consulta un no-super-admin.
+  // Solo él mismo (o otro super admin) lo ve en la lista.
+  const requester = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { isSuperAdmin: true },
+  });
+  const hideSuperAdmins = !requester?.isSuperAdmin;
+
   const members = await prisma.clanMember.findMany({
-    where: { clanId },
+    where: {
+      clanId,
+      ...(hideSuperAdmins ? { user: { isSuperAdmin: false } } : {}),
+    },
     include: {
       user: { select: { id: true, discordUsername: true, globalNickname: true, displayName: true, discordAvatar: true, discordId: true } },
     },

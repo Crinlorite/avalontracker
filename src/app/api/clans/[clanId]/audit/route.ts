@@ -23,14 +23,29 @@ export async function GET(request: Request, { params }: RouteParams) {
   const limit = Math.min(100, Math.max(1, Number(url.searchParams.get("limit") ?? "50")));
   const skip = (page - 1) * limit;
 
+  // Stealth super admin: si el que consulta NO es super admin, ocultamos
+  // entries creados por super admins. Complementa el bypass silencioso de
+  // logAudit (donde super admin no-member ya no registraba nada): aquí
+  // tapamos el caso donde el super admin sí sea miembro del clan y sus
+  // acciones legítimas se hayan registrado.
+  const requester = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { isSuperAdmin: true },
+  });
+  const hideSuperAdmins = !requester?.isSuperAdmin;
+  const whereFilter = {
+    clanId,
+    ...(hideSuperAdmins ? { user: { isSuperAdmin: false } } : {}),
+  };
+
   const [data, total] = await Promise.all([
     prisma.auditLog.findMany({
-      where: { clanId },
+      where: whereFilter,
       include: { user: { select: { id: true, discordUsername: true, displayName: true, globalNickname: true } } },
       orderBy: { createdAt: "desc" },
       skip, take: limit,
     }),
-    prisma.auditLog.count({ where: { clanId } }),
+    prisma.auditLog.count({ where: whereFilter }),
   ]);
 
   return NextResponse.json({ data, pagination: { page, limit, total, totalPages: Math.ceil(total / limit) } });
