@@ -42,6 +42,21 @@ export async function POST(request: Request) {
   const session = await auth();
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
 
+  // MITIGACIÓN TEMPORAL de seguridad: solo super admin puede crear clanes
+  // hasta que el contrato con Vigil Bot exponga un check de permisos
+  // Discord (Owner / Administrator / ManageGuild). Sin ese check, cualquier
+  // user podría reclamar el clan de un guild ajeno simplemente conociendo
+  // su Guild ID.
+  // TODO: remover este gate cuando el bot exponga /member/:discordId/permissions.
+  const requester = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { isSuperAdmin: true },
+  });
+  if (!requester?.isSuperAdmin) {
+    return apiError("INSUFFICIENT_ROLE", 403,
+      "La creación de clanes está temporalmente restringida al super admin mientras se implementa la verificación de permisos Discord. Contacta con el super admin para que cree el clan de tu guild.");
+  }
+
   try {
     const body = await request.json();
     const parsed = createSchema.safeParse(body);
