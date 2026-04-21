@@ -21,9 +21,12 @@ async function main() {
   }>;
 
   let n = 0;
+  let skipped = 0;
+
   for (const z of avalon) {
-    await prisma.zone.create({
-      data: {
+    await prisma.zone.upsert({
+      where: { name: z.name },
+      create: {
         name: z.name,
         type: "AVALON",
         tier: z.tier ?? null,
@@ -31,10 +34,20 @@ async function main() {
         isRest: Boolean(z.isRest),
         rawData: { resources: z.resources, chests: z.chests, dungeons: z.dungeons },
       },
+      update: {
+        // mantener idempotencia; no pisar si algo ya estaba (edge case de re-ejecución parcial).
+      },
     });
     if (++n % 100 === 0) console.log(`[seed-zones] ${n} avalon...`);
   }
+
   for (const z of world) {
+    // Si el mismo nombre ya existe como AVALON (duplicado entre JSONs), saltamos — Avalon manda.
+    const existing = await prisma.zone.findUnique({ where: { name: z.name }, select: { type: true } });
+    if (existing) {
+      skipped++;
+      continue;
+    }
     await prisma.zone.create({
       data: {
         name: z.name,
@@ -45,7 +58,8 @@ async function main() {
     });
     if (++n % 100 === 0) console.log(`[seed-zones] ${n} total...`);
   }
-  console.log(`[seed-zones] done, ${n} zones`);
+
+  console.log(`[seed-zones] done, ${n} zones (${skipped} world zones skipped por colisión con avalon)`);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); }).finally(() => prisma.$disconnect());
