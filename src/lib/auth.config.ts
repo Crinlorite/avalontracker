@@ -15,5 +15,19 @@ export const authConfig = {
     authorized({ auth }) {
       return !!auth?.user;
     },
+    // IMPORTANTE: este session callback vive aquí (Edge-safe, sin Prisma)
+    // para que el middleware Edge pueda leer session.user.isSuperAdmin y
+    // session.user.id desde el JWT token. Si estuviera solo en auth.ts,
+    // el middleware nunca los vería (auth.ts no corre en Edge).
+    // El jwt callback en auth.ts es el que POPULA token.isSuperAdmin —
+    // aquí solo copiamos al shape de session.
+    session({ session, token }) {
+      if (typeof token.id === "string") session.user.id = token.id;
+      if (typeof token.discordId === "string") {
+        (session.user as unknown as Record<string, unknown>).discordId = token.discordId;
+      }
+      (session.user as unknown as Record<string, unknown>).isSuperAdmin = Boolean(token.isSuperAdmin);
+      return session;
+    },
   },
 } satisfies NextAuthConfig;
