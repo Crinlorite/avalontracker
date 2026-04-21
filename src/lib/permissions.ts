@@ -161,25 +161,12 @@ export async function requireRoleOrSuperAdminRead(
   });
   if (!user) throw new PermissionError("UNAUTHORIZED", 401);
 
+  // Super admin: bypass total (GET y WRITE) en cualquier clan.
+  // Pensado para moderación: borrar orphans, limpiar mappings mal configurados,
+  // intervenir clanes problemáticos. El audit trail sigue silenciado en
+  // logAudit cuando no es miembro del clan destino — god mode silencioso.
   if (user.isSuperAdmin) {
-    if (method === "GET") {
-      return { bypass: true, role: null, stale: false };
-    }
-    const own = await getUserRoleInClan(userId, clanId);
-    if (!own.appRole) {
-      throw new PermissionError("INSUFFICIENT_ROLE", 403, {
-        required: minRole,
-        have: null,
-        superAdminWrite: true,
-      });
-    }
-    if (!hasMinRole(own.appRole, minRole)) {
-      throw new PermissionError("INSUFFICIENT_ROLE", 403, {
-        required: minRole,
-        have: own.appRole,
-      });
-    }
-    return { bypass: false, role: own.appRole, stale: own.stale };
+    return { bypass: true, role: null, stale: false };
   }
 
   const current = await getUserRoleInClan(userId, clanId);
