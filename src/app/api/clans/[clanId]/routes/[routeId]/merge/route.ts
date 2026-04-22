@@ -82,48 +82,46 @@ export async function POST(request: Request, { params }: RouteParams) {
 
   const sourceHopIds = source.hops.map((h) => h.id);
 
-  // Renumeración de órdenes.
-  let orderOps: Array<Promise<unknown>>;
-  if (parsed.data.position === "append") {
-    const baseOrder = target.hops.length;
-    orderOps = source.hops.map((h, idx) =>
-      prisma.routeHop.update({
-        where: { id: h.id },
-        data: { routeId: target.id, order: baseOrder + idx },
-      })
-    );
-  } else {
-    // prepend: primero desplazamos target.hops hacia abajo por sourceCount,
-    // luego insertamos source delante.
-    const sourceCount = source.hops.length;
-    const targetShift = target.hops.map((h) =>
-      prisma.routeHop.update({
-        where: { id: h.id },
-        data: { order: h.order + sourceCount },
-      })
-    );
-    const sourceMove = source.hops.map((h, idx) =>
-      prisma.routeHop.update({
-        where: { id: h.id },
-        data: { routeId: target.id, order: idx },
-      })
-    );
-    orderOps = [...targetShift, ...sourceMove];
-  }
-
   try {
-    await prisma.$transaction([
-      ...orderOps,
+    await prisma.$transaction(async (tx) => {
+      if (parsed.data.position === "append") {
+        const baseOrder = target.hops.length;
+        for (let idx = 0; idx < source.hops.length; idx++) {
+          const h = source.hops[idx];
+          await tx.routeHop.update({
+            where: { id: h.id },
+            data: { routeId: target.id, order: baseOrder + idx },
+          });
+        }
+      } else {
+        // prepend: primero desplazamos target.hops hacia abajo por sourceCount,
+        // luego insertamos source delante.
+        const sourceCount = source.hops.length;
+        for (const h of target.hops) {
+          await tx.routeHop.update({
+            where: { id: h.id },
+            data: { order: h.order + sourceCount },
+          });
+        }
+        for (let idx = 0; idx < source.hops.length; idx++) {
+          const h = source.hops[idx];
+          await tx.routeHop.update({
+            where: { id: h.id },
+            data: { routeId: target.id, order: idx },
+          });
+        }
+      }
+
       // Borra la ruta source (sus hops ya fueron reasignados, no hay cascade peligroso).
-      prisma.route.delete({ where: { id: source.id } }),
-      prisma.route.update({
+      await tx.route.delete({ where: { id: source.id } });
+      await tx.route.update({
         where: { id: target.id },
         data: {
           version: { increment: 1 },
           status: target.status === "EXPIRED" || source.status === "EXPIRED" ? target.status : "ACTIVE",
         },
-      }),
-      prisma.auditLog.create({
+      });
+      await tx.auditLog.create({
         data: {
           clanId,
           userId: session.user.id,
@@ -138,8 +136,8 @@ export async function POST(request: Request, { params }: RouteParams) {
             },
           },
         },
-      }),
-    ]);
+      });
+    });
   } catch (err) {
     return internalError(err);
   }
