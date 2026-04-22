@@ -17,6 +17,11 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+# Next.js standalone mira HOSTNAME para bindear el servidor; Docker lo setea al
+# container ID por defecto, lo que hace que 127.0.0.1:3000 (healthcheck) rechace
+# la conexión. Forzamos 0.0.0.0 para escuchar en todas las interfaces.
+ENV HOSTNAME=0.0.0.0
+ENV PORT=3000
 
 # Variables de entorno requeridas (Coolify las detecta y muestra en su UI)
 ENV DATABASE_URL=""
