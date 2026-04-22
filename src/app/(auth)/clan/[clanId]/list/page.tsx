@@ -3,6 +3,7 @@ import { useParams } from "next/navigation";
 import useSWR from "swr";
 import { useClanRoutes } from "@/hooks/useClanRoutes";
 import { RouteListTable } from "@/components/routes/RouteListTable";
+import { ViewToggle } from "@/components/clan/ViewToggle";
 import type { AppRole } from "@/generated/prisma/client";
 
 type MemberRow = { userId: string; appRole: AppRole | null };
@@ -15,5 +16,13 @@ export default function ClanListPage() {
   const myRole = members.find((m) => m.userId === me?.id)?.appRole ?? null;
 
   if (isLoading) return <div className="text-slate-400">Cargando…</div>;
-  return <RouteListTable routes={routes} myRole={myRole} />;
+
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-end">
+        <ViewToggle clanId={clanId} />
+      </div>
+      <RouteListTable routes={routes} myRole={myRole} />
+    </div>
+  );
 }

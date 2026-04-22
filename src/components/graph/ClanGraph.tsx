@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useEffect } from "react";
-import { ReactFlow, Background, Controls, MiniMap, type Node, type Edge, useNodesState, useEdgesState } from "@xyflow/react";
+import { ReactFlow, Background, Controls, type Node, type Edge, useNodesState, useEdgesState } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { ZoneNode } from "./ZoneNode";
 import { RouteEdge } from "./RouteEdge";
@@ -39,7 +39,31 @@ export function ClanGraph({
   }, [computed, setNodes, setEdges]);
 
   return (
-    <div className="h-[calc(100vh-140px)] w-full rounded-xl border border-slate-800">
+    <div className="clan-graph h-[calc(100vh-140px)] w-full rounded-xl border border-slate-800">
+      <style jsx global>{`
+        .clan-graph .react-flow__controls {
+          background: rgb(15, 23, 42);
+          border: 1px solid rgb(51, 65, 85);
+          border-radius: 0.5rem;
+          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .clan-graph .react-flow__controls-button {
+          background: rgb(15, 23, 42);
+          border-bottom: 1px solid rgb(51, 65, 85);
+          color: rgb(226, 232, 240);
+          fill: rgb(226, 232, 240);
+        }
+        .clan-graph .react-flow__controls-button:hover {
+          background: rgb(30, 41, 59);
+        }
+        .clan-graph .react-flow__controls-button:last-child {
+          border-bottom: none;
+        }
+        .clan-graph .react-flow__attribution {
+          background: transparent;
+          color: rgb(100, 116, 139);
+        }
+      `}</style>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -52,8 +76,7 @@ export function ClanGraph({
         proOptions={{ hideAttribution: true }}
       >
         <Background color="#334155" />
-        <Controls className="!border-slate-700 !bg-slate-900" />
-        <MiniMap nodeColor="#4b5563" maskColor="rgba(15,23,42,0.8)" />
+        <Controls showInteractive={false} />
       </ReactFlow>
     </div>
   );
