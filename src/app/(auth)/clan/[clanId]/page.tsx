@@ -22,7 +22,8 @@ export default function ClanGraphPage() {
   const { routes, isLoading } = useClanRoutes(clanId);
   const { me } = useMe();
   const { data: members = [] } = useSWR<MemberRow[]>(`/api/clans/${clanId}/members`);
-  const myRole = members.find((m) => m.userId === me?.id)?.appRole ?? null;
+  const memberRole = members.find((m) => m.userId === me?.id)?.appRole ?? null;
+  const myRole: AppRole | null = me?.isSuperAdmin ? "ADMIN" : memberRole;
 
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [showCreate, setShowCreate] = useState(false);
