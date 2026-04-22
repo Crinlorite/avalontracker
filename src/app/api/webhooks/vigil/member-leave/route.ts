@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { invalidateRoleCache } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 import { createLimiter, consumeToken } from "@/lib/rate-limit";
+import { logAudit } from "@/lib/audit";
 
 const schema = z.object({
   guildId: z.string().regex(/^\d{17,20}$/),
@@ -37,9 +38,7 @@ export async function POST(request: Request) {
     });
     invalidateRoleCache(user.id, clan.id);
 
-    await prisma.auditLog.create({
-      data: { clanId: clan.id, userId: user.id, action: "MEMBER_LEFT" },
-    });
+    await logAudit(clan.id, user.id, "MEMBER_LEFT");
     return NextResponse.json({ ok: true });
   } catch (e) {
     return internalError(e);

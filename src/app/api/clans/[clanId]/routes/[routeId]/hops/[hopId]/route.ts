@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
+import { logAudit } from "@/lib/audit";
 
 const patchSchema = z.object({
   expiresAt: z.string().datetime().optional(),
@@ -46,13 +47,13 @@ export async function PATCH(request: Request, { params }: RouteParams) {
 
   await prisma.route.update({ where: { id: routeId }, data: { version: { increment: 1 } } });
 
-  await prisma.auditLog.create({
-    data: {
-      clanId, userId: session.user.id, targetId: String(hopIdInt),
-      action: parsed.data.status !== undefined ? "HOP_STATUS_CHANGED" : "HOP_EXTENDED",
-      details: parsed.data as object,
-    },
-  });
+  await logAudit(
+    clanId,
+    session.user.id,
+    parsed.data.status !== undefined ? "HOP_STATUS_CHANGED" : "HOP_EXTENDED",
+    String(hopIdInt),
+    parsed.data as Record<string, unknown>,
+  );
 
   return NextResponse.json(updated);
 }
@@ -76,9 +77,7 @@ export async function DELETE(_req: Request, { params }: RouteParams) {
 
   await prisma.routeHop.delete({ where: { id: hopIdInt } });
   await prisma.route.update({ where: { id: routeId }, data: { version: { increment: 1 } } });
-  await prisma.auditLog.create({
-    data: { clanId, userId: session.user.id, targetId: String(hopIdInt), action: "HOP_DELETE" },
-  });
+  await logAudit(clanId, session.user.id, "HOP_DELETE", String(hopIdInt));
 
   return new NextResponse(null, { status: 204 });
 }

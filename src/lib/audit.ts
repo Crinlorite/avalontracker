@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import type { Prisma } from "@/generated/prisma/client";
+import type { Prisma, PrismaClient } from "@/generated/prisma/client";
 
 export type AuditAction =
   | "CLAN_CREATE" | "CLAN_UPDATE" | "CLAN_DELETE"
@@ -9,24 +9,22 @@ export type AuditAction =
   | "SETTINGS_CHANGE" | "ROLE_MAPPING_CHANGE" | "WEBHOOK_UPDATE"
   | "DISCORD_LOGIN_FIRST";
 
+type TxClient = Omit<PrismaClient, "$connect" | "$disconnect" | "$on" | "$transaction" | "$extends" | "$use">;
+
 export async function logAudit(
   clanId: string,
   userId: string,
   action: AuditAction,
   targetId?: string,
-  details?: Record<string, unknown>
+  details?: Record<string, unknown>,
+  tx?: TxClient,
 ): Promise<void> {
+  // Observer fantasma total: super admin nunca deja rastro, sea miembro o no.
   const user = await prisma.user.findUnique({ where: { id: userId }, select: { isSuperAdmin: true } });
-  if (user?.isSuperAdmin) {
-    const member = await prisma.clanMember.findUnique({
-      where: { userId_clanId: { userId, clanId } },
-      select: { appRole: true },
-    });
-    if (!member || member.appRole === null) {
-      return;
-    }
-  }
-  await prisma.auditLog.create({
+  if (user?.isSuperAdmin) return;
+
+  const client = tx ?? prisma;
+  await client.auditLog.create({
     data: {
       clanId,
       userId,

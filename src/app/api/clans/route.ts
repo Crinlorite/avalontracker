@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { fetchGuildHealth } from "@/lib/vigil-bot-client";
 import { apiError, internalError } from "@/lib/api-error";
 import { logger } from "@/lib/logger";
+import { logAudit } from "@/lib/audit";
 import { Prisma } from "@/generated/prisma/client";
 
 const createSchema = z.object({
@@ -106,14 +107,14 @@ export async function POST(request: Request) {
         },
       });
 
-      await tx.auditLog.create({
-        data: {
-          clanId: created.id,
-          userId: session.user.id,
-          action: "CLAN_CREATE",
-          details: { name: created.name, guildId: created.discordGuildId, bootstrappedAs: "ADMIN" },
-        },
-      });
+      await logAudit(
+        created.id,
+        session.user.id,
+        "CLAN_CREATE",
+        undefined,
+        { name: created.name, guildId: created.discordGuildId, bootstrappedAs: "ADMIN" },
+        tx,
+      );
 
       return created;
     });

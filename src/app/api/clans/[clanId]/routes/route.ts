@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
+import { logAudit } from "@/lib/audit";
 
 const createLim = createLimiter({ windowMs: 60_000, max: 20 });
 
@@ -101,12 +102,7 @@ export async function POST(request: Request, { params }: RouteParams) {
     include: { hops: { orderBy: { order: "asc" } } },
   });
 
-  await prisma.auditLog.create({
-    data: {
-      clanId, userId: session.user.id, action: "ROUTE_CREATE", targetId: route.id,
-      details: { hopCount: parsed.data.hops.length },
-    },
-  });
+  await logAudit(clanId, session.user.id, "ROUTE_CREATE", route.id, { hopCount: parsed.data.hops.length });
 
   return NextResponse.json(route, { status: 201 });
 }

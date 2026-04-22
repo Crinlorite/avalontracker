@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
+import { logAudit } from "@/lib/audit";
 
 const patchSchema = z.object({
   name: z.string().min(3).max(40).optional(),
@@ -57,14 +58,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
     data: parsed.data,
   });
 
-  await prisma.auditLog.create({
-    data: {
-      clanId,
-      userId: session.user.id,
-      action: "SETTINGS_CHANGE",
-      details: parsed.data as object,
-    },
-  });
+  await logAudit(clanId, session.user.id, "SETTINGS_CHANGE", undefined, parsed.data as Record<string, unknown>);
 
   return NextResponse.json(clan);
 }

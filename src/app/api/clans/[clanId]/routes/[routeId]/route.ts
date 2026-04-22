@@ -6,6 +6,7 @@ import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions"
 import { apiError, internalError } from "@/lib/api-error";
 import { parseIfMatch, VersionMismatchError } from "@/lib/version-check";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
+import { logAudit } from "@/lib/audit";
 
 const patchLim = createLimiter({ windowMs: 60_000, max: 60 });
 
@@ -75,13 +76,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
         version: { increment: 1 },
       },
     });
-    await prisma.auditLog.create({
-      data: {
-        clanId, userId: session.user.id, targetId: routeId,
-        action: wantsDisable ? "ROUTE_DISABLE" : "ROUTE_UPDATE",
-        details: parsed.data as object,
-      },
-    });
+    await logAudit(clanId, session.user.id, wantsDisable ? "ROUTE_DISABLE" : "ROUTE_UPDATE", routeId, parsed.data as Record<string, unknown>);
     return NextResponse.json(updated);
   } catch (err) {
     if (err instanceof VersionMismatchError) return apiError("CONFLICT", 409, "version mismatch", { currentVersion: err.currentVersion });
@@ -103,8 +98,6 @@ export async function DELETE(_req: Request, { params }: RouteParams) {
   if (!route) return apiError("NOT_FOUND", 404, "Ruta no encontrada");
 
   await prisma.route.delete({ where: { id: routeId } });
-  await prisma.auditLog.create({
-    data: { clanId, userId: session.user.id, targetId: routeId, action: "ROUTE_DELETE" },
-  });
+  await logAudit(clanId, session.user.id, "ROUTE_DELETE", routeId);
   return new NextResponse(null, { status: 204 });
 }
