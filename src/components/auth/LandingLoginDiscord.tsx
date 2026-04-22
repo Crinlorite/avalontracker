@@ -20,7 +20,16 @@ export function LandingLoginDiscord() {
           Entrar con Discord
         </button>
         <p className="mt-6 text-center text-xs text-slate-500">
-          Tu clan debe tener Vigil Bot instalado en su servidor Discord.
+          Tu clan debe tener{" "}
+          <a
+            href="https://vigil.crintech.pro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-indigo-400 underline hover:text-indigo-300"
+          >
+            Vigil Bot
+          </a>{" "}
+          instalado en su servidor Discord.
         </p>
       </div>
     </main>

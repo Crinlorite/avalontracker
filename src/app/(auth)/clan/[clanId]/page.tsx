@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
 import useSWR from "swr";
 import { useClanRoutes } from "@/hooks/useClanRoutes";
 import { useClan } from "@/hooks/useClan";
@@ -9,7 +8,9 @@ import { useMe } from "@/hooks/useMe";
 import { ClanGraph } from "@/components/graph/ClanGraph";
 import { ZoneSidePanel } from "@/components/graph/ZoneSidePanel";
 import { CreateRouteModal } from "@/components/routes/CreateRouteModal";
-import { canCreate } from "@/lib/role-ui";
+import { MergeRoutesPicker } from "@/components/routes/MergeRoutesPicker";
+import { ViewToggle } from "@/components/clan/ViewToggle";
+import { canCreate, canDelete } from "@/lib/role-ui";
 import type { AppRole } from "@/generated/prisma/client";
 
 type MemberRow = { userId: string; appRole: AppRole | null };
@@ -25,6 +26,7 @@ export default function ClanGraphPage() {
 
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [showCreate, setShowCreate] = useState(false);
+  const [showMerge, setShowMerge] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -45,17 +47,33 @@ export default function ClanGraphPage() {
       ?? null
     : null;
 
+  const canMerge = canDelete(myRole) && routes.length >= 2;
+
   return (
     <div className="relative">
-      <header className="mb-4 flex items-center justify-between">
+      <header className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-white">{clan?.name ?? "…"}</h1>
           <p className="text-xs text-slate-500">{routes.length} rutas activas · anchor: {anchorName ?? "—"}</p>
         </div>
-        <div className="flex gap-2">
-          <Link href={`/clan/${clanId}/list`} className="rounded border border-slate-700 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-800">Vista lista</Link>
+        <div className="flex flex-wrap items-center gap-2">
+          <ViewToggle clanId={clanId} />
+          {canMerge && (
+            <button
+              onClick={() => setShowMerge(true)}
+              className="rounded bg-slate-700 px-3 py-1.5 text-sm text-white hover:bg-slate-600"
+              title="Fusionar dos rutas en una sola cadena"
+            >
+              ⛓ Fusionar rutas
+            </button>
+          )}
           {canCreate(myRole) && (
-            <button onClick={() => setShowCreate(true)} className="rounded bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white">+ Nueva ruta</button>
+            <button
+              onClick={() => setShowCreate(true)}
+              className="rounded bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-500"
+            >
+              + Nueva ruta
+            </button>
           )}
         </div>
       </header>
@@ -73,6 +91,14 @@ export default function ClanGraphPage() {
       )}
 
       {showCreate && <CreateRouteModal clanId={clanId} onClose={() => setShowCreate(false)} onCreated={() => setShowCreate(false)} />}
+      {showMerge && (
+        <MergeRoutesPicker
+          clanId={clanId}
+          routes={routes}
+          onClose={() => setShowMerge(false)}
+          onMerged={() => setShowMerge(false)}
+        />
+      )}
     </div>
   );
 }
