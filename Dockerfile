@@ -51,11 +51,13 @@ COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 3000
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:3000/api/health || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=180s --retries=3 \
+  CMD wget --quiet --tries=1 --spider -T 4 http://127.0.0.1:3000/api/health || exit 1
 
 # db push sin --force-reset: schema estable, no wipear BD en cada redeploy.
 # Si en algún momento hay cambios incompatibles de schema (drop de columnas
 # con data, etc.), Prisma pedirá --accept-data-loss o añadir manualmente
 # --force-reset temporalmente para esa migración puntual.
-CMD ["sh", "-c", "npx prisma db push --accept-data-loss && npx tsx scripts/seed-zones.ts && npx tsx scripts/import-world-graph.ts && npx tsx scripts/precompute-routing.ts && node server.js"]
+# HOSTNAME/PORT explícitos inline como refuerzo a los ENV — Docker o el shell
+# pueden sobreescribirlos; aquí garantizamos que node server.js ve lo correcto.
+CMD ["sh", "-c", "npx prisma db push --accept-data-loss && npx tsx scripts/seed-zones.ts && npx tsx scripts/import-world-graph.ts && npx tsx scripts/precompute-routing.ts && HOSTNAME=0.0.0.0 PORT=3000 node server.js"]
