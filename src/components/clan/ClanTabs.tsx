@@ -2,22 +2,38 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import useSWR from "swr";
+import { useMe } from "@/hooks/useMe";
+import { canAdmin } from "@/lib/role-ui";
+import type { AppRole } from "@/generated/prisma/client";
 
-const tabs = [
+type MemberRow = { userId: string; appRole: AppRole | null };
+type Tab = { label: string; path: string; adminOnly?: boolean };
+
+const TABS: Tab[] = [
   { label: "Rutas", path: "" },
   { label: "Mapa", path: "/map" },
   { label: "Miembros", path: "/members" },
-  { label: "Configuración", path: "/settings" },
-  { label: "Auditoría", path: "/audit" },
+  { label: "Configuración", path: "/settings", adminOnly: true },
+  { label: "Auditoría", path: "/audit", adminOnly: true },
 ];
 
 export default function ClanTabs({ clanId }: { clanId: string }) {
   const pathname = usePathname();
   const basePath = `/clan/${clanId}`;
+  const { me } = useMe();
+  const { data: members = [] } = useSWR<MemberRow[]>(
+    clanId ? `/api/clans/${clanId}/members` : null
+  );
+
+  const myRole = members.find((m) => m.userId === me?.id)?.appRole ?? null;
+  const isAdmin = canAdmin(myRole) || Boolean(me?.isSuperAdmin);
+
+  const visibleTabs = TABS.filter((t) => !t.adminOnly || isAdmin);
 
   return (
     <nav className="flex gap-1 rounded-lg border border-gray-800 bg-gray-900 p-1">
-      {tabs.map((tab) => {
+      {visibleTabs.map((tab) => {
         const href = `${basePath}${tab.path}`;
         const isActive =
           tab.path === ""
