@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { requireRoleOrSuperAdminRead, PermissionError, invalidateRoleCache } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
+import { logAudit } from "@/lib/audit";
 
 const upsertSchema = z.object({
   discordRoleId: z.string().regex(/^\d{17,20}$/),
@@ -47,9 +48,7 @@ export async function POST(request: Request, { params }: RouteParams) {
     update: { appRole: parsed.data.appRole, discordRoleName: parsed.data.discordRoleName },
   });
 
-  await prisma.auditLog.create({
-    data: { clanId, userId: session.user.id, action: "ROLE_MAPPING_CHANGE", details: parsed.data as object },
-  });
+  await logAudit(clanId, session.user.id, "ROLE_MAPPING_CHANGE", undefined, parsed.data as Record<string, unknown>);
 
   const members = await prisma.clanMember.findMany({ where: { clanId }, select: { userId: true } });
   for (const m of members) invalidateRoleCache(m.userId, clanId);

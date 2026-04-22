@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
+import { logAudit } from "@/lib/audit";
 
 const mergeSchema = z.object({
   sourceRouteId: z.string().min(1),
@@ -121,22 +122,14 @@ export async function POST(request: Request, { params }: RouteParams) {
           status: target.status === "EXPIRED" || source.status === "EXPIRED" ? target.status : "ACTIVE",
         },
       });
-      await tx.auditLog.create({
-        data: {
-          clanId,
-          userId: session.user.id,
-          targetId: target.id,
-          action: "ROUTE_UPDATE",
-          details: {
-            merged: {
-              sourceRouteId: source.id,
-              sourceHopIds,
-              position: parsed.data.position,
-              resultingHops: totalHops,
-            },
-          },
+      await logAudit(clanId, session.user.id, "ROUTE_UPDATE", target.id, {
+        merged: {
+          sourceRouteId: source.id,
+          sourceHopIds,
+          position: parsed.data.position,
+          resultingHops: totalHops,
         },
-      });
+      }, tx);
     });
   } catch (err) {
     return internalError(err);

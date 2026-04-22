@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
+import { logAudit } from "@/lib/audit";
 
 const appendSchema = z.object({
   fromZone: z.string().min(1),
@@ -81,14 +82,8 @@ export async function POST(request: Request, { params }: RouteParams) {
     },
   });
 
-  await prisma.auditLog.create({
-    data: {
-      clanId,
-      userId: session.user.id,
-      targetId: String(hop.id),
-      action: "ROUTE_UPDATE",
-      details: { appendedHop: { from: parsed.data.fromZone, to: parsed.data.toZone, portalSize: parsed.data.portalSize } },
-    },
+  await logAudit(clanId, session.user.id, "ROUTE_UPDATE", String(hop.id), {
+    appendedHop: { from: parsed.data.fromZone, to: parsed.data.toZone, portalSize: parsed.data.portalSize },
   });
 
   return NextResponse.json(hop, { status: 201 });
