@@ -46,6 +46,9 @@ COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 3000
 
+HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:3000/api/health || exit 1
+
 # db push sin --force-reset: schema estable, no wipear BD en cada redeploy.
 # Si en algún momento hay cambios incompatibles de schema (drop de columnas
 # con data, etc.), Prisma pedirá --accept-data-loss o añadir manualmente
