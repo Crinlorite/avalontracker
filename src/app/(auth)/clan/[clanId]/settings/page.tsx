@@ -1,21 +1,62 @@
 "use client";
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import useSWR from "swr";
+import Link from "next/link";
 import toast from "react-hot-toast";
 import { useClan, type ClanAnchorZone } from "@/hooks/useClan";
+import { useMe } from "@/hooks/useMe";
 import { RoleMappingEditor } from "@/components/clan/RoleMappingEditor";
 import { ZoneAutocomplete } from "@/components/zones/ZoneAutocomplete";
+import { canAdmin } from "@/lib/role-ui";
+import type { AppRole } from "@/generated/prisma/client";
+
+type MemberRow = { userId: string; appRole: AppRole | null };
 
 export default function SettingsPage() {
   const { clanId } = useParams() as { clanId: string };
   const router = useRouter();
   const { clan, mutate } = useClan(clanId);
+  const { me } = useMe();
+  const { data: members = [], isLoading: membersLoading } = useSWR<MemberRow[]>(
+    clanId ? `/api/clans/${clanId}/members` : null
+  );
   const [name, setName] = useState("");
   const [webhook, setWebhook] = useState("");
   const [anchorSearch, setAnchorSearch] = useState("");
   const [saving, setSaving] = useState(false);
 
-  if (!clan) return <div className="text-slate-400">Cargando…</div>;
+  if (!clan || !me || membersLoading) return <div className="text-slate-400">Cargando…</div>;
+
+  // Gate de acceso: solo ADMIN del clan o super admin entran.
+  const myRole = members.find((m) => m.userId === me.id)?.appRole ?? null;
+  const allowed = canAdmin(myRole) || me.isSuperAdmin;
+
+  if (!allowed) {
+    return (
+      <div className="max-w-2xl space-y-4">
+        <h1 className="text-2xl font-bold text-white">Configuración de {clan.name}</h1>
+        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-8 text-center">
+          <div className="mx-auto mb-3 inline-block rounded-full bg-slate-800 px-3 py-1 text-xs uppercase text-slate-400">
+            Acceso restringido
+          </div>
+          <p className="text-slate-300">
+            La configuración del clan solo está disponible para el rol <strong>Admin</strong>.
+          </p>
+          <p className="mt-2 text-sm text-slate-500">
+            Tu rol actual en este clan:{" "}
+            <span className="text-slate-300">{myRole ?? "Sin rol"}</span>
+          </p>
+          <Link
+            href={`/clan/${clanId}`}
+            className="mt-6 inline-block rounded bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
+          >
+            Volver al grafo
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   async function save(patch: Record<string, unknown>) {
     setSaving(true);
