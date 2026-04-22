@@ -2,6 +2,8 @@
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import useSWR from "swr";
+import toast from "react-hot-toast";
+import { useMe } from "@/hooks/useMe";
 
 type AuditEntry = {
   id: number; action: string; details: Record<string, unknown> | null; createdAt: string;
@@ -21,7 +23,26 @@ const ACTION_LABELS: Record<string, string> = {
 export default function AuditPage() {
   const { clanId } = useParams() as { clanId: string };
   const [page, setPage] = useState(1);
-  const { data, error, isLoading } = useSWR<AuditResponse>(`/api/clans/${clanId}/audit?page=${page}&limit=20`);
+  const { me } = useMe();
+  const { data, error, isLoading, mutate } = useSWR<AuditResponse>(`/api/clans/${clanId}/audit?page=${page}&limit=20`);
+  const isSuper = me?.isSuperAdmin === true;
+
+  async function deleteEntry(id: number) {
+    if (!confirm("¿Borrar esta entrada de auditoría? (irreversible)")) return;
+    const res = await fetch(`/api/clans/${clanId}/audit?id=${id}`, { method: "DELETE" });
+    if (res.ok) { toast.success("Entrada borrada"); mutate(); }
+    else toast.error("Error al borrar");
+  }
+
+  async function purgeSuperAdmin() {
+    if (!confirm("¿Borrar TODAS las entradas de auditoría de super admins en este clan? (irreversible)")) return;
+    const res = await fetch(`/api/clans/${clanId}/audit?purge=all-super-admin`, { method: "DELETE" });
+    if (res.ok) {
+      const body = await res.json();
+      toast.success(`Borradas ${body.deleted} entradas`);
+      mutate();
+    } else toast.error("Error al purgar");
+  }
 
   if (error?.status === 403) {
     return <div className="rounded-lg border border-slate-800 bg-slate-900 p-8 text-center text-slate-400">Solo los Admin del clan pueden ver auditoría.</div>;
@@ -29,7 +50,18 @@ export default function AuditPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold text-white">Auditoría</h1>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h1 className="text-2xl font-bold text-white">Auditoría</h1>
+        {isSuper && (
+          <button
+            onClick={purgeSuperAdmin}
+            className="rounded bg-red-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-600"
+            title="Borrar todas las entradas creadas por super admins en este clan"
+          >
+            🗑 Purgar rastro super admin
+          </button>
+        )}
+      </div>
 
       {isLoading && <div className="text-slate-400">Cargando…</div>}
 
@@ -47,6 +79,7 @@ export default function AuditPage() {
                   <th className="px-3 py-2 text-left text-xs uppercase text-slate-400">Usuario</th>
                   <th className="px-3 py-2 text-left text-xs uppercase text-slate-400">Acción</th>
                   <th className="px-3 py-2 text-left text-xs uppercase text-slate-400">Detalles</th>
+                  {isSuper && <th className="px-3 py-2 text-right text-xs uppercase text-slate-400">•</th>}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800">
@@ -56,6 +89,17 @@ export default function AuditPage() {
                     <td className="px-3 py-2 text-white">{e.user.displayName ?? e.user.globalNickname ?? e.user.discordUsername}</td>
                     <td className="px-3 py-2 text-slate-300">{ACTION_LABELS[e.action] ?? e.action}</td>
                     <td className="px-3 py-2 font-mono text-xs text-slate-500">{e.details ? JSON.stringify(e.details) : "—"}</td>
+                    {isSuper && (
+                      <td className="px-3 py-2 text-right">
+                        <button
+                          onClick={() => deleteEntry(e.id)}
+                          className="text-xs text-red-400 hover:text-red-300"
+                          title="Borrar esta entrada"
+                        >
+                          🗑
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
