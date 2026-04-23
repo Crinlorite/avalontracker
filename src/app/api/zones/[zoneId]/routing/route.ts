@@ -14,12 +14,13 @@ export async function GET(_req: Request, { params }: RouteParams) {
 
   const r = await prisma.zoneRouting.findUnique({
     where: { zoneId: id },
-    include: { nearestRoyal: true, nearestRest: true },
+    include: { nearestRoyal: true, nearestRest: true, nearestCapital: true },
   });
-  if (!r) return NextResponse.json({ nearestRoyal: null, nearestRest: null });
+  if (!r) return NextResponse.json({ nearestRoyal: null, nearestRest: null, nearestCapital: null });
   return NextResponse.json({
-    nearestRoyal: r.nearestRoyal ? { zone: r.nearestRoyal, hops: r.hopsToRoyal } : null,
-    nearestRest:  r.nearestRest  ? { zone: r.nearestRest,  hops: r.hopsToRest  } : null,
+    nearestRoyal:   r.nearestRoyal   ? { zone: r.nearestRoyal,   hops: r.hopsToRoyal   } : null,
+    nearestRest:    r.nearestRest    ? { zone: r.nearestRest,    hops: r.hopsToRest    } : null,
+    nearestCapital: r.nearestCapital ? { zone: r.nearestCapital, hops: r.hopsToCapital } : null,
     computedAt: r.computedAt,
   });
 }

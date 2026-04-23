@@ -38,15 +38,20 @@ export function ZoneSidePanel({
         <button onClick={onClose} className="text-slate-400 hover:text-white">✕</button>
       </div>
 
-      {zone?.type === "AVALON" && (
+      {(zone?.type === "AVALON" || zone?.type === "ROYAL") && (
         <section className="mb-4 rounded border border-slate-800 bg-slate-900 p-3">
           <h3 className="mb-2 text-xs uppercase text-slate-400">Pathfinding</h3>
           {routingLoading && <div className="text-sm text-slate-500">Calculando…</div>}
           {!routingLoading && routing && (
             <div className="space-y-1 text-sm">
-              {routing.nearestRoyal ? (
-                <div>Royal más cerca: <span className="font-semibold text-white">{routing.nearestRoyal.zone.name}</span> <span className="text-slate-400">({routing.nearestRoyal.hops} hops)</span></div>
-              ) : <div className="text-slate-500">Sin salida royal calculada</div>}
+              {routing.nearestCapital ? (
+                <div>Ciudad más cerca: <span className="font-semibold text-white">{routing.nearestCapital.zone.name}</span> <span className="text-slate-400">({routing.nearestCapital.hops} hops)</span></div>
+              ) : <div className="text-slate-500">Sin ciudad cercana</div>}
+              {zone?.type === "AVALON" && (
+                routing.nearestRoyal ? (
+                  <div>Salida royal: <span className="font-semibold text-white">{routing.nearestRoyal.zone.name}</span> <span className="text-slate-400">({routing.nearestRoyal.hops} hops)</span></div>
+                ) : <div className="text-slate-500">Sin salida royal calculada</div>
+              )}
               {routing.nearestRest ? (
                 <div>Rest más cerca: <span className="font-semibold text-white">{routing.nearestRest.zone.name}</span> <span className="text-slate-400">({routing.nearestRest.hops} hops)</span></div>
               ) : <div className="text-slate-500">Sin rest cercano</div>}

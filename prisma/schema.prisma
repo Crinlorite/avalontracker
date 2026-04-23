@@ -178,6 +178,7 @@ model Zone {
   routingFrom       ZoneRouting?     @relation("RoutingFrom")
   routingRoyalRef   ZoneRouting[]    @relation("RoutingRoyal")
   routingRestRef    ZoneRouting[]    @relation("RoutingRest")
+  routingCapitalRef ZoneRouting[]    @relation("RoutingCapital")
   clanAnchorFor     Clan[]           @relation("ClanAnchor")
   hopsFrom          RouteHop[]       @relation("HopFrom")
   hopsTo            RouteHop[]       @relation("HopTo")
@@ -201,16 +202,19 @@ model ZoneConnection {
 }
 
 model ZoneRouting {
-  zoneId              Int      @id
-  nearestRoyalZoneId  Int?
-  hopsToRoyal         Int?
-  nearestRestZoneId   Int?
-  hopsToRest          Int?
-  computedAt          DateTime @default(now())
+  zoneId                Int      @id
+  nearestRoyalZoneId    Int?
+  hopsToRoyal           Int?
+  nearestRestZoneId     Int?
+  hopsToRest            Int?
+  nearestCapitalZoneId  Int?
+  hopsToCapital         Int?
+  computedAt            DateTime @default(now())
 
-  zone                Zone     @relation("RoutingFrom", fields: [zoneId],             references: [id])
-  nearestRoyal        Zone?    @relation("RoutingRoyal", fields: [nearestRoyalZoneId], references: [id])
-  nearestRest         Zone?    @relation("RoutingRest",  fields: [nearestRestZoneId],  references: [id])
+  zone                  Zone     @relation("RoutingFrom",    fields: [zoneId],                references: [id])
+  nearestRoyal          Zone?    @relation("RoutingRoyal",   fields: [nearestRoyalZoneId],    references: [id])
+  nearestRest           Zone?    @relation("RoutingRest",    fields: [nearestRestZoneId],     references: [id])
+  nearestCapital        Zone?    @relation("RoutingCapital", fields: [nearestCapitalZoneId],  references: [id])
 }
 
 // ============ Routes ============
