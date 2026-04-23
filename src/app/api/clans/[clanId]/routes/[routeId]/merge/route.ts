@@ -10,7 +10,7 @@ import { consumeToken, createLimiter } from "@/lib/rate-limit";
 const mergeLimiter = createLimiter({ windowMs: 60_000, max: 10 });
 
 const mergeSchema = z.object({
-  sourceRouteId: z.string().min(1),
+  sourceRouteId: z.string().regex(/^c[a-z0-9]{20,30}$/, "ID de ruta inválido"),
   position: z.enum(["append", "prepend"]).optional().default("append"),
   allowBrokenChain: z.boolean().optional().default(false),
 });

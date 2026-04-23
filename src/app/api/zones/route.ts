@@ -14,7 +14,7 @@ export async function GET(request: Request) {
   if (!rl.ok) return apiError("RATE_LIMITED", 429, "Demasiadas búsquedas", { retryAfterMs: rl.retryAfterMs });
 
   const url = new URL(request.url);
-  const q = (url.searchParams.get("q") ?? "").trim();
+  const q = (url.searchParams.get("q") ?? "").trim().slice(0, 50);
   if (q.length < 1) return NextResponse.json([]);
 
   const select = { id: true, name: true, type: true, tier: true, hasHideout: true, isRest: true, isCapital: true };

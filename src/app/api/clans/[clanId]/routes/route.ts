@@ -10,8 +10,8 @@ import { logAudit } from "@/lib/audit";
 const createLim = createLimiter({ windowMs: 60_000, max: 20 });
 
 const hopSchema = z.object({
-  fromZone: z.string().min(1),
-  toZone: z.string().min(1),
+  fromZone: z.string().min(1).max(100),
+  toZone: z.string().min(1).max(100),
   portalSize: z.union([z.literal(7), z.literal(20), z.literal(40)]),
   expiresAt: z.string().datetime(),
 });
@@ -53,6 +53,7 @@ export async function GET(request: Request, { params }: RouteParams) {
       createdBy: { select: { id: true, discordUsername: true, globalNickname: true, displayName: true, discordAvatar: true } },
     },
     orderBy: { updatedAt: "desc" },
+    take: 200,
   });
 
   const now = new Date().toISOString();
