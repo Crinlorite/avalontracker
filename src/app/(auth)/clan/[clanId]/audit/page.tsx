@@ -1,9 +1,18 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import useSWR from "swr";
 import toast from "react-hot-toast";
 import { useMe } from "@/hooks/useMe";
+
+// Chunk separado — solo se descarga si el user cumple el flag opcional.
+// Users normales nunca piden este bundle, así que el string del botón no
+// aparece en su bundle principal.
+const AuditCleanupButton = dynamic(
+  () => import("@/components/audit/AuditCleanupButton").then((m) => m.AuditCleanupButton),
+  { ssr: false, loading: () => null },
+);
 
 type AuditEntry = {
   id: number; action: string; details: Record<string, unknown> | null; createdAt: string;
@@ -25,23 +34,13 @@ export default function AuditPage() {
   const [page, setPage] = useState(1);
   const { me } = useMe();
   const { data, error, isLoading, mutate } = useSWR<AuditResponse>(`/api/clans/${clanId}/audit?page=${page}&limit=20`);
-  const isSuper = me?.isSuperAdmin === true;
+  const canManage = me?.isSuperAdmin === true;
 
-  async function deleteEntry(id: number) {
+  async function removeEntry(id: number) {
     if (!confirm("¿Borrar esta entrada de auditoría? (irreversible)")) return;
     const res = await fetch(`/api/clans/${clanId}/audit?id=${id}`, { method: "DELETE" });
     if (res.ok) { toast.success("Entrada borrada"); mutate(); }
     else toast.error("Error al borrar");
-  }
-
-  async function purgeSuperAdmin() {
-    if (!confirm("¿Borrar TODAS las entradas de auditoría de super admins en este clan? (irreversible)")) return;
-    const res = await fetch(`/api/clans/${clanId}/audit?purge=all-super-admin`, { method: "DELETE" });
-    if (res.ok) {
-      const body = await res.json();
-      toast.success(`Borradas ${body.deleted} entradas`);
-      mutate();
-    } else toast.error("Error al purgar");
   }
 
   if (error?.status === 403) {
@@ -52,15 +51,7 @@ export default function AuditPage() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-2xl font-bold text-white">Auditoría</h1>
-        {isSuper && (
-          <button
-            onClick={purgeSuperAdmin}
-            className="rounded bg-red-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-600"
-            title="Borrar todas las entradas creadas por super admins en este clan"
-          >
-            🗑 Purgar rastro super admin
-          </button>
-        )}
+        {canManage && <AuditCleanupButton clanId={clanId} onDone={mutate} />}
       </div>
 
       {isLoading && <div className="text-slate-400">Cargando…</div>}
@@ -79,7 +70,7 @@ export default function AuditPage() {
                   <th className="px-3 py-2 text-left text-xs uppercase text-slate-400">Usuario</th>
                   <th className="px-3 py-2 text-left text-xs uppercase text-slate-400">Acción</th>
                   <th className="px-3 py-2 text-left text-xs uppercase text-slate-400">Detalles</th>
-                  {isSuper && <th className="px-3 py-2 text-right text-xs uppercase text-slate-400">•</th>}
+                  {canManage && <th className="px-3 py-2 text-right text-xs uppercase text-slate-400">•</th>}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800">
@@ -89,10 +80,10 @@ export default function AuditPage() {
                     <td className="px-3 py-2 text-white">{e.user.displayName ?? e.user.globalNickname ?? e.user.discordUsername}</td>
                     <td className="px-3 py-2 text-slate-300">{ACTION_LABELS[e.action] ?? e.action}</td>
                     <td className="px-3 py-2 font-mono text-xs text-slate-500">{e.details ? JSON.stringify(e.details) : "—"}</td>
-                    {isSuper && (
+                    {canManage && (
                       <td className="px-3 py-2 text-right">
                         <button
-                          onClick={() => deleteEntry(e.id)}
+                          onClick={() => removeEntry(e.id)}
                           className="text-xs text-red-400 hover:text-red-300"
                           title="Borrar esta entrada"
                         >
