@@ -1,3 +1,5 @@
+import { isDiscordWebhookUrl } from "@/lib/webhook-url";
+
 interface HopInfo {
   fromZone: string;
   toZone: string;
@@ -16,6 +18,13 @@ export async function sendRouteToDiscord(
   webhookUrl: string,
   route: RouteInfo
 ) {
+  // Defensa en profundidad: si por alguna ruta de update directa a BD se
+  // hubiera saltado la validación de schema, aquí garantizamos que solo
+  // hacemos fetch a URLs reales de Discord.
+  if (!isDiscordWebhookUrl(webhookUrl)) {
+    throw new Error("Webhook URL no válida (debe ser de discord.com)");
+  }
+
   const color =
     route.status === "ACTIVE"
       ? 0x22c55e

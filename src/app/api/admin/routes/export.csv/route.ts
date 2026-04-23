@@ -5,7 +5,11 @@ import { requireSuperAdmin, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 
 function csvEscape(v: unknown): string {
-  const s = String(v ?? "");
+  let s = String(v ?? "");
+  // CSV formula injection: Excel/Sheets evalúa celdas que empiezan por
+  // = + - @ \t \r como fórmulas. Prefijamos con apóstrofo para
+  // neutralizar (la cell ya no se interpreta como fórmula).
+  if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
   if (/[",\n]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
   return s;
 }

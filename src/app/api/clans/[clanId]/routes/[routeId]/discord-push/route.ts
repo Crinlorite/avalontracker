@@ -4,6 +4,12 @@ import { prisma } from "@/lib/prisma";
 import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 import { sendRouteToDiscord } from "@/lib/discord";
+import { consumeToken, createLimiter } from "@/lib/rate-limit";
+
+// Discord rate-limita los webhooks (~5/2s) y bloquea el webhook si lo
+// pasamos. 10/min por user es holgado para uso normal y evita que un
+// usuario (o bot) tumbe el webhook del clan.
+const pushLimiter = createLimiter({ windowMs: 60_000, max: 10 });
 
 type RouteParams = { params: Promise<{ clanId: string; routeId: string }> };
 
@@ -18,6 +24,9 @@ export async function POST(_req: Request, { params }: RouteParams) {
     if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
     return internalError(e);
   }
+
+  const rl = consumeToken(pushLimiter, session.user.id);
+  if (!rl.ok) return apiError("RATE_LIMITED", 429, "Demasiadas peticiones", { retryAfterMs: rl.retryAfterMs });
 
   const clan = await prisma.clan.findUnique({
     where: { id: clanId },
