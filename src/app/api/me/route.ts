@@ -9,9 +9,8 @@ export async function GET() {
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const user = await prisma.user.findUnique({ where: { id: session.user.id } });
   if (!user) return apiError("NOT_FOUND", 404, "Usuario no encontrado");
-  // tier solo se incluye para usuarios owner — el resto recibe la respuesta
-  // sin el campo. Así nada en el bundle del cliente revela la existencia del
-  // tier privilegiado.
+  // tier solo se incluye para usuarios con flag interno — el resto recibe
+  // la respuesta sin el campo. Stealth total en el bundle del cliente.
   return NextResponse.json({
     id: user.id,
     discordId: user.discordId,
@@ -19,7 +18,7 @@ export async function GET() {
     globalNickname: user.globalNickname,
     displayName: user.displayName,
     image: user.image,
-    ...(user.isSuperAdmin ? { tier: "owner" as const } : {}),
+    ...(user.isSuperAdmin ? { tier: "alpha" as const } : {}),
   });
 }
 

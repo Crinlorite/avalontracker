@@ -25,7 +25,7 @@ export default auth((req) => {
   if (isAuth && !session?.user) return Response.redirect(new URL("/", nextUrl));
   if (path.startsWith("/admin")) {
     const tier = (session?.user as { tier?: string } | undefined)?.tier;
-    if (tier !== "owner") return Response.redirect(new URL("/dashboard", nextUrl));
+    if (tier !== "alpha") return Response.redirect(new URL("/dashboard", nextUrl));
   }
 });
 
