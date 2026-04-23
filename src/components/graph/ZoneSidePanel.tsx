@@ -29,7 +29,7 @@ export function ZoneSidePanel({
   const canCreateHere = canCreate(myRole);
 
   return (
-    <aside className="fixed right-0 top-0 z-30 flex h-full w-80 flex-col border-l border-slate-800 bg-slate-950 p-4 shadow-2xl">
+    <aside className="fixed right-0 top-0 z-30 flex h-full w-[420px] max-w-[90vw] flex-col border-l border-slate-800 bg-slate-950 p-4 shadow-2xl">
       <div className="mb-3 flex items-start justify-between">
         <div>
           <h2 className="text-lg font-bold text-white">{zoneName}</h2>
