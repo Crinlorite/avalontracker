@@ -8,7 +8,9 @@ import { useMe } from "@/hooks/useMe";
 import { ClanGraph } from "@/components/graph/ClanGraph";
 import { ZoneSidePanel } from "@/components/graph/ZoneSidePanel";
 import { CreateRouteModal } from "@/components/routes/CreateRouteModal";
+import { AppendHopModal } from "@/components/routes/AppendHopModal";
 import { MergeRoutesPicker } from "@/components/routes/MergeRoutesPicker";
+import type { RouteView } from "@/hooks/useClanRoutes";
 import { ViewToggle } from "@/components/clan/ViewToggle";
 import { canCreate, canDelete } from "@/lib/role-ui";
 import type { AppRole } from "@/generated/prisma/client";
@@ -28,6 +30,7 @@ export default function ClanGraphPage() {
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [showCreate, setShowCreate] = useState(false);
   const [showMerge, setShowMerge] = useState(false);
+  const [branchFrom, setBranchFrom] = useState<{ route: RouteView; zoneName: string } | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -87,6 +90,7 @@ export default function ClanGraphPage() {
           routes={routes}
           onClose={() => setSelectedZone(null)}
           onCreateFromHere={() => { setShowCreate(true); }}
+          onBranchFromHere={(route) => setBranchFrom({ route, zoneName: selectedZone })}
           myRole={myRole}
         />
       )}
@@ -98,6 +102,15 @@ export default function ClanGraphPage() {
           routes={routes}
           onClose={() => setShowMerge(false)}
           onMerged={() => setShowMerge(false)}
+        />
+      )}
+      {branchFrom && (
+        <AppendHopModal
+          clanId={clanId}
+          route={branchFrom.route}
+          defaultFromZone={branchFrom.zoneName}
+          onClose={() => setBranchFrom(null)}
+          onAdded={() => setBranchFrom(null)}
         />
       )}
     </div>

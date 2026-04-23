@@ -8,11 +8,20 @@ import type { RouteView } from "@/hooks/useClanRoutes";
 type PortalSize = 7 | 20 | 40;
 
 export function AppendHopModal({
-  clanId, route, onClose, onAdded,
-}: { clanId: string; route: RouteView; onClose: () => void; onAdded: () => void }) {
+  clanId, route, onClose, onAdded, defaultFromZone,
+}: {
+  clanId: string; route: RouteView; onClose: () => void; onAdded: () => void;
+  defaultFromZone?: string;
+}) {
   const sortedHops = [...route.hops].sort((a, b) => a.order - b.order);
   const lastHop = sortedHops[sortedHops.length - 1];
-  const suggestedFrom = lastHop?.toZone.name ?? "";
+  // Todos los nodos del grafo de esta ruta (zonas visitadas).
+  const graphNodes = new Set<string>();
+  for (const h of sortedHops) {
+    graphNodes.add(h.fromZone.name);
+    graphNodes.add(h.toZone.name);
+  }
+  const suggestedFrom = defaultFromZone ?? lastHop?.toZone.name ?? "";
 
   const [fromZone, setFromZone] = useState(suggestedFrom);
   const [toZone, setToZone] = useState("");
@@ -35,11 +44,13 @@ export function AppendHopModal({
 
     setSubmitting(true);
     const expiresAt = new Date(Date.now() + (hours * 60 + minutes) * 60_000).toISOString();
-    const brokenChain = lastHop && fromZone.trim() !== lastHop.toZone.name;
+    // Nueva regla: fromZone debe ser un nodo ya existente en el grafo (para
+    // ramificar libremente). Solo es "broken" si NO está en el grafo.
+    const brokenChain = lastHop && !graphNodes.has(fromZone.trim());
 
     if (brokenChain && !allowBrokenChain) {
       setSubmitting(false);
-      return toast.error(`Cadena no continua. El último hop termina en "${lastHop.toZone.name}". Marca "Permitir cadena rota" para forzar.`);
+      return toast.error(`"${fromZone.trim()}" no está en el grafo de esta ruta. Marca "Forzar conexión fuera del grafo" para añadir igualmente.`);
     }
 
     try {
@@ -69,7 +80,7 @@ export function AppendHopModal({
   }
 
   const brokenChainPreview =
-    lastHop && fromZone.trim() && fromZone.trim() !== lastHop.toZone.name;
+    lastHop && fromZone.trim() && !graphNodes.has(fromZone.trim());
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 overflow-y-auto" onClick={onClose}>
@@ -91,7 +102,7 @@ export function AppendHopModal({
           </p>
           {lastHop && (
             <p className="mt-1 text-xs text-slate-500">
-              Último hop termina en <span className="text-slate-300">{lastHop.toZone.name}</span>. El nuevo debería empezar ahí para mantener cadena continua.
+              Puedes ramificar desde <strong>cualquier zona del grafo</strong> ({graphNodes.size} nodos). El nuevo hop se añadirá como rama desde la zona que elijas en "Desde".
             </p>
           )}
         </div>
@@ -160,7 +171,7 @@ export function AppendHopModal({
               className="mt-0.5"
             />
             <span>
-              <strong>Cadena rota:</strong> el nuevo hop empieza en <code className="text-yellow-100">{fromZone}</code> pero el último termina en <code className="text-yellow-100">{lastHop?.toZone.name}</code>. Marca esta casilla para forzar (útil para agrupar portales no contiguos en una misma ruta).
+              <strong>Fuera del grafo:</strong> <code className="text-yellow-100">{fromZone}</code> no es una zona ya visitada en esta ruta. Marca esta casilla para forzar la conexión (útil si conoces un portal entre dos grafos disconnected).
             </span>
           </label>
         )}
