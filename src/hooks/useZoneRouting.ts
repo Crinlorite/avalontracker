@@ -1,8 +1,10 @@
 import useSWR from "swr";
 
+type ZoneRef = { zone: { id: number; name: string; type: string; tier: number | null }; hops: number };
 export type ZoneRouting = {
-  nearestRoyal: { zone: { id: number; name: string; type: string; tier: number | null }; hops: number } | null;
-  nearestRest:  { zone: { id: number; name: string; type: string; tier: number | null }; hops: number } | null;
+  nearestRoyal:   ZoneRef | null;
+  nearestRest:    ZoneRef | null;
+  nearestCapital: ZoneRef | null;
   computedAt?: string;
 };
 

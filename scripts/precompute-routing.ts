@@ -27,8 +27,27 @@ async function main() {
 
   const existing = await prisma.zoneRouting.count();
   const connCount = await prisma.zoneConnection.count();
-  if (existing > 0) { console.log(`[routing] already populated (${existing}), skip`); await prisma.$disconnect(); return; }
   if (connCount === 0) { console.log("[routing] no connections, skip"); await prisma.$disconnect(); return; }
+
+  // Si ya hay datos, verificamos que tengan la cobertura nueva (royal + capital).
+  // Si falta cualquiera de las dos, wipe y recompute para migrar al schema extendido.
+  if (existing > 0) {
+    const royalCovered = await prisma.zoneRouting.findFirst({
+      where: { zone: { type: "ROYAL" } },
+      select: { zoneId: true },
+    });
+    const capitalCovered = await prisma.zoneRouting.findFirst({
+      where: { nearestCapitalZoneId: { not: null } },
+      select: { zoneId: true },
+    });
+    if (royalCovered && capitalCovered) {
+      console.log(`[routing] already populated (${existing}), skip`);
+      await prisma.$disconnect();
+      return;
+    }
+    console.log(`[routing] schema upgrade detected (royal=${!!royalCovered} capital=${!!capitalCovered}), wiping and recomputing`);
+    await prisma.zoneRouting.deleteMany({});
+  }
 
   const conns = await prisma.zoneConnection.findMany({ select: { fromZoneId: true, toZoneId: true } });
   const adj = new Map<number, number[]>();
@@ -39,15 +58,22 @@ async function main() {
     adj.get(c.toZoneId)!.push(c.fromZoneId);
   }
 
-  const royals = new Set((await prisma.zone.findMany({ where: { type: "ROYAL" }, select: { id: true } })).map((z) => z.id));
-  const rests = new Set((await prisma.zone.findMany({ where: { type: "AVALON", isRest: true }, select: { id: true } })).map((z) => z.id));
-  const avalons = await prisma.zone.findMany({ where: { type: "AVALON" }, select: { id: true } });
+  const royals    = new Set((await prisma.zone.findMany({ where: { type: "ROYAL" }, select: { id: true } })).map((z) => z.id));
+  const rests     = new Set((await prisma.zone.findMany({ where: { type: "AVALON", isRest: true }, select: { id: true } })).map((z) => z.id));
+  const capitals  = new Set((await prisma.zone.findMany({ where: { isCapital: true }, select: { id: true } })).map((z) => z.id));
+  // Ahora procesamos AVALON + ROYAL para que un user en zona royal también vea
+  // "ciudad más cercana + rest" al clickar en la vista grafo.
+  const zones = await prisma.zone.findMany({
+    where: { type: { in: ["AVALON", "ROYAL"] } },
+    select: { id: true },
+  });
 
   const now = new Date();
   let n = 0;
-  for (const z of avalons) {
-    const r = bfsToTarget(z.id, royals, adj);
-    const rest = bfsToTarget(z.id, rests, adj);
+  for (const z of zones) {
+    const r        = bfsToTarget(z.id, royals, adj);
+    const rest     = bfsToTarget(z.id, rests, adj);
+    const capital  = bfsToTarget(z.id, capitals, adj);
     await prisma.zoneRouting.create({
       data: {
         zoneId: z.id,
@@ -55,12 +81,14 @@ async function main() {
         hopsToRoyal: r?.hops ?? null,
         nearestRestZoneId: rest?.targetId ?? null,
         hopsToRest: rest?.hops ?? null,
+        nearestCapitalZoneId: capital?.targetId ?? null,
+        hopsToCapital: capital?.hops ?? null,
         computedAt: now,
       },
     });
-    if (++n % 200 === 0) console.log(`[routing] ${n}/${avalons.length}`);
+    if (++n % 200 === 0) console.log(`[routing] ${n}/${zones.length}`);
   }
-  console.log(`[routing] done, ${n} zones`);
+  console.log(`[routing] done, ${n} zones (AVALON + ROYAL)`);
   await prisma.$disconnect();
 }
 
