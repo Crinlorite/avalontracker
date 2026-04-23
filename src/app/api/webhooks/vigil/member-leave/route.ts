@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
   try {
     const data = schema.parse(JSON.parse(body));
-    const fresh = verifyWebhookFreshness(data);
+    const fresh = verifyWebhookFreshness(data, { strict: true });
     if (!fresh.ok) return apiError("UNAUTHORIZED", 401, `Replay attack rejected: ${fresh.reason}`);
     const user = await prisma.user.findUnique({ where: { discordId: data.discordId } });
     const clan = await prisma.clan.findUnique({ where: { discordGuildId: data.guildId } });

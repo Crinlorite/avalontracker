@@ -30,7 +30,7 @@ export async function POST(request: Request) {
 
   try {
     const data = schema.parse(JSON.parse(body));
-    const fresh = verifyWebhookFreshness(data);
+    const fresh = verifyWebhookFreshness(data, { strict: true });
     if (!fresh.ok) return apiError("UNAUTHORIZED", 401, `Replay attack rejected: ${fresh.reason}`);
     await prisma.clan.updateMany({
       where: { discordGuildId: data.guildId },
