@@ -5,6 +5,9 @@ import { prisma } from "@/lib/prisma";
 import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 import { logAudit } from "@/lib/audit";
+import { consumeToken, createLimiter } from "@/lib/rate-limit";
+
+const hopLimiter = createLimiter({ windowMs: 60_000, max: 30 });
 
 const appendSchema = z.object({
   fromZone: z.string().min(1),
@@ -28,6 +31,9 @@ export async function POST(request: Request, { params }: RouteParams) {
     if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
     return internalError(e);
   }
+
+  const rl = consumeToken(hopLimiter, session.user.id);
+  if (!rl.ok) return apiError("RATE_LIMITED", 429, "Demasiadas peticiones", { retryAfterMs: rl.retryAfterMs });
 
   const parsed = appendSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {

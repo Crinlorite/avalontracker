@@ -11,21 +11,27 @@ export default function DashboardPage() {
   const { me } = useMe();
   const { clans, mutate } = useMyClans();
   const [showCreate, setShowCreate] = useState(false);
+  // El botón de crear clan está restringido hasta que Vigil Bot exponga la
+  // verificación de permisos Discord del owner/admin del guild. Mientras
+  // tanto solo el flag interno puede crear (fail-closed contra squatting).
+  const canCreateClan = me?.tier === "alpha";
 
   return (
     <div className="space-y-8">
       <header>
         <h1 className="text-3xl font-bold text-white">Hola, {me?.displayName ?? me?.globalNickname ?? me?.discordUsername ?? "Usuario"}</h1>
-        <p className="text-sm text-slate-400">Elige un clan para ver sus rutas o crea uno nuevo.</p>
+        <p className="text-sm text-slate-400">Elige un clan para ver sus rutas.</p>
       </header>
 
       <section>
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold text-white">Mis clanes</h2>
-          <button
-            onClick={() => setShowCreate(true)}
-            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
-          >+ Nuevo clan</button>
+          {canCreateClan && (
+            <button
+              onClick={() => setShowCreate(true)}
+              className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
+            >+ Nuevo clan</button>
+          )}
         </div>
 
         {clans.length === 0 ? (

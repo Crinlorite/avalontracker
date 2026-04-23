@@ -5,10 +5,15 @@ import { prisma } from "@/lib/prisma";
 import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 import { logAudit } from "@/lib/audit";
+import { isDiscordWebhookUrl } from "@/lib/webhook-url";
 
 const patchSchema = z.object({
   name: z.string().min(3).max(40).optional(),
-  discordWebhookUrl: z.string().url().nullable().optional(),
+  // Solo se acepta una URL de webhook Discord real — bloqueo de SSRF.
+  discordWebhookUrl: z.string()
+    .refine(isDiscordWebhookUrl, "Debe ser una URL válida de webhook Discord (discord.com/api/webhooks/...)")
+    .nullable()
+    .optional(),
   anchorZoneId: z.number().int().positive().nullable().optional(),
 }).strict();
 

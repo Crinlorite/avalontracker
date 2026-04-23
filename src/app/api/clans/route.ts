@@ -43,11 +43,21 @@ export async function POST(request: Request) {
   const session = await auth();
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
 
-  // NOTA: sin check de permisos Discord, cualquier user autenticado puede
-  // crear un clan con el guild ID de otro server (solo hace falta que el
-  // bot esté ahí). Aceptable en pre-alpha sin users reales. Cuando Vigil
-  // Bot exponga /member/:discordId/permissions, añadir el check.
-  // TODO: gate por isOwner || hasAdministrator || hasManageGuild.
+  // Fail-closed mientras Vigil Bot no exponga permisos Discord del user en el
+  // guild. Sin ese check, cualquier user autenticado podría squat clanes en
+  // guilds donde Vigil Bot esté instalado. Permitimos crear clan solo si el
+  // user tiene el flag interno (alpha).
+  // TODO: cuando Vigil Bot exponga GET /guilds/:guildId/member/:discordId/permissions
+  // (o equivalente que indique isOwner || MANAGE_GUILD || ADMINISTRATOR),
+  // sustituir este gate por la comprobación real. Eso permitirá que cualquier
+  // owner/admin de Discord cree el clan correspondiente.
+  const requester = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { isSuperAdmin: true },
+  });
+  if (!requester?.isSuperAdmin) {
+    return apiError("INSUFFICIENT_ROLE", 403, "Sin permisos");
+  }
 
   try {
     const body = await request.json();
