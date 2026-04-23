@@ -70,7 +70,7 @@ export async function DELETE(request: Request, { params }: RouteParams) {
     where: { id: session.user.id },
     select: { isSuperAdmin: true },
   });
-  if (!requester?.isSuperAdmin) return apiError("INSUFFICIENT_ROLE", 403, "Solo super admin");
+  if (!requester?.isSuperAdmin) return apiError("INSUFFICIENT_ROLE", 403, "Sin permisos");
 
   const url = new URL(request.url);
   const id = url.searchParams.get("id");
