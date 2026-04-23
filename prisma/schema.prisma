@@ -290,6 +290,7 @@ model IngestToken {
 model SnifferSession {
   userId          String    @id
   currentRouteId  String?
+  currentZoneId   Int?      // posición actual del jugador; desacopla del último hop
   lastEventAt     DateTime?
   updatedAt       DateTime  @updatedAt
 
