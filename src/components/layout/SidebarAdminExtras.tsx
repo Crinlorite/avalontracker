@@ -2,12 +2,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// Badge + enlace a administración global. Chunk separado con dynamic() —
-// usuarios normales no lo piden al servidor.
+// Badge + enlace de gestión. Chunk separado con dynamic() — usuarios sin
+// el flag interno no descargan este código.
 export function SidebarAdminBadge() {
   return (
     <div className="mt-0.5 inline-block rounded bg-yellow-600 px-1.5 py-0.5 text-[10px] font-bold uppercase text-white">
-      Owner
+      α
     </div>
   );
 }
@@ -22,7 +22,7 @@ export function SidebarAdminLink() {
         active ? "bg-indigo-600 text-white" : "text-slate-300 hover:bg-slate-900"
       }`}
     >
-      Administración
+      Panel
     </Link>
   );
 }

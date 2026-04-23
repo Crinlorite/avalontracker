@@ -29,7 +29,7 @@ export default function SettingsPage() {
   if (!clan || !me || membersLoading) return <div className="text-slate-400">Cargando…</div>;
 
   const myRole = members.find((m) => m.userId === me.id)?.appRole ?? null;
-  const allowed = canAdmin(myRole) || me.tier === "owner";
+  const allowed = canAdmin(myRole) || me.tier === "alpha";
 
   if (!allowed) {
     return (

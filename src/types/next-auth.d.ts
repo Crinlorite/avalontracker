@@ -5,10 +5,10 @@ declare module "next-auth" {
     user: {
       id: string;
       discordId: string;
-      // Opcional: solo presente para usuarios con tier "owner" (dueño del
-      // deployment). Omitido por completo para el resto — no hay rastro en
-      // el main bundle.
-      tier?: "owner";
+      // Opcional: solo se incluye para usuarios con flag interno. Cualquier
+      // valor diferente a "alpha" hoy no existe; el campo se omite en
+      // usuarios normales para no tener rastro en el bundle del cliente.
+      tier?: "alpha";
     } & DefaultSession["user"];
   }
 }
