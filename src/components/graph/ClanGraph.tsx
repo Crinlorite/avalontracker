@@ -39,7 +39,7 @@ export function ClanGraph({
   }, [computed, setNodes, setEdges]);
 
   return (
-    <div className="clan-graph h-[calc(100vh-140px)] w-full rounded-xl border border-slate-800">
+    <div className="clan-graph h-[calc(100vh-180px)] w-full rounded-xl border border-slate-800">
       <style jsx global>{`
         .clan-graph .react-flow__controls {
           background: rgb(15, 23, 42);
