@@ -4,11 +4,14 @@ import { verifySignature } from "@/lib/hmac";
 import { prisma } from "@/lib/prisma";
 import { apiError, internalError } from "@/lib/api-error";
 import { createLimiter, consumeToken } from "@/lib/rate-limit";
+import { verifyWebhookFreshness } from "@/lib/webhook-freshness";
 
 const schema = z.object({
   guildId: z.string().regex(/^\d{17,20}$/),
   newName: z.string().min(1).max(100).optional(),
-  newIcon: z.string().nullable().optional(),
+  // Hash de Discord (32 hex, opcionalmente con prefix "a_" para animados).
+  newIcon: z.string().regex(/^(a_)?[a-f0-9]{32}$/).nullable().optional(),
+  timestamp: z.string().datetime().optional(),
 });
 
 const webhookLimiter = createLimiter({ windowMs: 60_000, max: 100 });
@@ -27,6 +30,8 @@ export async function POST(request: Request) {
 
   try {
     const data = schema.parse(JSON.parse(body));
+    const fresh = verifyWebhookFreshness(data);
+    if (!fresh.ok) return apiError("UNAUTHORIZED", 401, `Replay attack rejected: ${fresh.reason}`);
     await prisma.clan.updateMany({
       where: { discordGuildId: data.guildId },
       data: {

@@ -6,12 +6,14 @@ import { invalidateRoleCache, getUserRoleInClan } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 import { logger } from "@/lib/logger";
 import { createLimiter, consumeToken } from "@/lib/rate-limit";
+import { verifyWebhookFreshness } from "@/lib/webhook-freshness";
 
 const schema = z.object({
   guildId: z.string().regex(/^\d{17,20}$/),
   discordId: z.string().regex(/^\d{17,20}$/),
-  newRoleIds: z.array(z.string()),
-  oldRoleIds: z.array(z.string()),
+  newRoleIds: z.array(z.string().regex(/^\d{17,20}$/)).max(250),
+  oldRoleIds: z.array(z.string().regex(/^\d{17,20}$/)).max(250),
+  timestamp: z.string().datetime().optional(),
 });
 
 const webhookLimiter = createLimiter({ windowMs: 60_000, max: 100 });
@@ -30,6 +32,8 @@ export async function POST(request: Request) {
 
   try {
     const data = schema.parse(JSON.parse(body));
+    const fresh = verifyWebhookFreshness(data);
+    if (!fresh.ok) return apiError("UNAUTHORIZED", 401, `Replay attack rejected: ${fresh.reason}`);
     const user = await prisma.user.findUnique({ where: { discordId: data.discordId } });
     const clan = await prisma.clan.findUnique({ where: { discordGuildId: data.guildId } });
     if (!user || !clan) return NextResponse.json({ ignored: true });

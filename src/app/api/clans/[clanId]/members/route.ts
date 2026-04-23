@@ -35,6 +35,7 @@ export async function GET(_req: Request, { params }: RouteParams) {
       user: { select: { id: true, discordUsername: true, globalNickname: true, displayName: true, discordAvatar: true, discordId: true } },
     },
     orderBy: [{ appRole: "desc" }, { joinedAt: "asc" }],
+    take: 500,
   });
 
   return NextResponse.json(members);

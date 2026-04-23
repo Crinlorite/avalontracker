@@ -24,6 +24,8 @@ export async function GET(request: Request) {
       clan: { select: { id: true, name: true } },
       hops: { orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } },
     },
+    orderBy: { updatedAt: "desc" },
+    take: 500,
   });
   return NextResponse.json(routes);
 }

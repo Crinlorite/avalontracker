@@ -35,7 +35,8 @@ export async function GET() {
 
 const createSchema = z.object({
   label: z.string().min(1).max(60),
-  targetClanId: z.string().min(1),
+  // cuid v1 (~25 chars, empieza por 'c' + base36 alphanumérico)
+  targetClanId: z.string().regex(/^c[a-z0-9]{20,30}$/, "ID de clan inválido"),
 });
 
 export async function POST(request: Request) {

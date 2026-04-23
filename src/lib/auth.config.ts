@@ -10,7 +10,15 @@ export const authConfig = {
     }),
   ],
   pages: { signIn: "/" },
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+    // Reducimos vs el default de 30 días para acortar la ventana de
+    // explotación si un token de sesión se filtra. updateAge re-emite el
+    // token cada 24h en cada request, alargando la sesión activa de un
+    // user que entra a diario sin forzar re-login frecuente.
+    maxAge: 60 * 60 * 24 * 14,
+    updateAge: 60 * 60 * 24,
+  },
   callbacks: {
     authorized({ auth }) {
       return !!auth?.user;

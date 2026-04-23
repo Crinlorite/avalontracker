@@ -10,8 +10,8 @@ import { consumeToken, createLimiter } from "@/lib/rate-limit";
 const hopLimiter = createLimiter({ windowMs: 60_000, max: 30 });
 
 const appendSchema = z.object({
-  fromZone: z.string().min(1),
-  toZone: z.string().min(1),
+  fromZone: z.string().min(1).max(100),
+  toZone: z.string().min(1).max(100),
   portalSize: z.union([z.literal(7), z.literal(20), z.literal(40)]),
   expiresAt: z.string().datetime(),
   allowBrokenChain: z.boolean().optional(),

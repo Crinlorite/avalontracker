@@ -17,6 +17,7 @@ export async function GET() {
       _count: { select: { members: true, routes: true } },
     },
     orderBy: { createdAt: "desc" },
+    take: 200,
   });
   return NextResponse.json(clans);
 }
