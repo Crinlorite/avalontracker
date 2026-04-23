@@ -1,12 +1,24 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import useSWR from "swr";
 import { roleLabel, roleBadgeColor } from "@/lib/role-ui";
 import type { AppRole } from "@/generated/prisma/client";
+
+// Chunk separado para badge + admin link: solo se carga si el user lo
+// necesita. Usuarios normales no descargan este código.
+const AdminBadge = dynamic(
+  () => import("@/components/layout/SidebarAdminExtras").then((m) => m.SidebarAdminBadge),
+  { ssr: false, loading: () => null },
+);
+const AdminLink = dynamic(
+  () => import("@/components/layout/SidebarAdminExtras").then((m) => m.SidebarAdminLink),
+  { ssr: false, loading: () => null },
+);
 
 type ClanEntry = { id: string; name: string; discordGuildIcon: string | null; myRole: AppRole | null };
 
@@ -18,7 +30,7 @@ export function Sidebar() {
 
   const avatar = session?.user?.image;
   const name = session?.user?.name ?? "Usuario";
-  const isSuperAdmin = (session?.user as { isSuperAdmin?: boolean } | undefined)?.isSuperAdmin;
+  const hasAdminAccess = (session?.user as { isSuperAdmin?: true } | undefined)?.isSuperAdmin === true;
 
   return (
     <>
@@ -45,9 +57,7 @@ export function Sidebar() {
             )}
             <div className="flex-1 overflow-hidden">
               <div className="truncate text-sm font-medium text-white">{name}</div>
-              {isSuperAdmin && (
-                <div className="mt-0.5 inline-block rounded bg-yellow-600 px-1.5 py-0.5 text-[10px] font-bold uppercase text-white">Super Admin</div>
-              )}
+              {hasAdminAccess && <AdminBadge />}
             </div>
           </div>
         )}
@@ -55,7 +65,7 @@ export function Sidebar() {
         <nav className="mb-6 flex flex-col gap-1">
           <Link href="/dashboard" className={navClass(pathname === "/dashboard")}>Dashboard</Link>
           <Link href="/profile" className={navClass(pathname === "/profile")}>Perfil</Link>
-          {isSuperAdmin && <Link href="/admin" className={navClass(pathname.startsWith("/admin"))}>Admin Global</Link>}
+          {hasAdminAccess && <AdminLink />}
         </nav>
 
         <div className="mb-2 text-xs uppercase text-slate-500">Mis clanes</div>
