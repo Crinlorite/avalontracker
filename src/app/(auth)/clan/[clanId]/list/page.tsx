@@ -15,7 +15,7 @@ export default function ClanListPage() {
   const { data: members = [] } = useSWR<MemberRow[]>(`/api/clans/${clanId}/members`);
   const { me } = useMe();
   const memberRole = members.find((m) => m.userId === me?.id)?.appRole ?? null;
-  const myRole: AppRole | null = me?.isSuperAdmin ? "ADMIN" : memberRole;
+  const myRole: AppRole | null = me?.tier === "owner" ? "ADMIN" : memberRole;
 
   if (isLoading) return <div className="text-slate-400">Cargando…</div>;
 

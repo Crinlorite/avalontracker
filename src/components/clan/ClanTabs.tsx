@@ -27,7 +27,7 @@ export default function ClanTabs({ clanId }: { clanId: string }) {
   );
 
   const myRole = members.find((m) => m.userId === me?.id)?.appRole ?? null;
-  const isAdmin = canAdmin(myRole) || Boolean(me?.isSuperAdmin);
+  const isAdmin = canAdmin(myRole) || me?.tier === "owner";
 
   const visibleTabs = TABS.filter((t) => !t.adminOnly || isAdmin);
 

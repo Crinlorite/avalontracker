@@ -34,7 +34,7 @@ export default function AuditPage() {
   const [page, setPage] = useState(1);
   const { me } = useMe();
   const { data, error, isLoading, mutate } = useSWR<AuditResponse>(`/api/clans/${clanId}/audit?page=${page}&limit=20`);
-  const canManage = me?.isSuperAdmin === true;
+  const canManage = me?.tier === "owner";
 
   async function removeEntry(id: number) {
     if (!confirm("¿Borrar esta entrada de auditoría? (irreversible)")) return;
