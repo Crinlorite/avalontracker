@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 // el flag interno no descargan este código.
 export function SidebarAdminBadge() {
   return (
-    <div className="mt-0.5 inline-block rounded bg-yellow-600 px-1.5 py-0.5 text-[10px] font-bold uppercase text-white">
+    <div className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded bg-yellow-600 text-xs font-bold leading-none text-white">
       α
     </div>
   );
