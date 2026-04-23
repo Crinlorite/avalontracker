@@ -17,6 +17,8 @@ export const translations: Record<Lang, Record<string, string>> = {
     "landing.feature.discord.body": "Roles del server Discord se traducen a permisos automáticamente. Webhook de notificaciones por canal.",
     "landing.requirement": "Tu clan necesita {vigil} instalado en su servidor Discord.",
     "landing.privacy": "Solo identify + email. Sin spam, sin anuncios.",
+    "landing.family.title": "De la misma familia",
+    "landing.family.subtitle": "Mismo equipo · mismo universo",
     "landing.footer": "Hecho por Crintech · open source-friendly",
   },
   en: {
@@ -31,6 +33,8 @@ export const translations: Record<Lang, Record<string, string>> = {
     "landing.feature.discord.body": "Discord server roles map to app permissions automatically. Webhook channel notifications.",
     "landing.requirement": "Your clan needs {vigil} installed on its Discord server.",
     "landing.privacy": "Only identify + email scope. No spam, no ads.",
+    "landing.family.title": "Related tools",
+    "landing.family.subtitle": "Same team · same universe",
     "landing.footer": "Built by Crintech · open source-friendly",
   },
 };

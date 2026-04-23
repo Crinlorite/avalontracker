@@ -2,9 +2,11 @@
 import { signIn } from "next-auth/react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
+import { SIDE_PROJECTS, type SideProject } from "@/data/sideProjects";
+import type { Lang } from "@/i18n/translations";
 
 export function LandingLoginDiscord() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-slate-950">
@@ -74,6 +76,23 @@ export function LandingLoginDiscord() {
           />
         </section>
 
+        {/* Related tools — reciprocidad de ecosistema Crintech */}
+        <section className="mt-20 w-full max-w-5xl">
+          <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2 border-b border-slate-800/80 pb-3">
+            <h2 className="text-xl font-semibold text-white">
+              {t("landing.family.title")}
+            </h2>
+            <span className="text-xs uppercase tracking-wider text-slate-500">
+              {t("landing.family.subtitle")}
+            </span>
+          </div>
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            {SIDE_PROJECTS.map((p) => (
+              <SideProjectCard key={p.id} project={p} lang={lang} />
+            ))}
+          </div>
+        </section>
+
         {/* Requisito Vigil Bot */}
         <p className="mt-12 max-w-xl text-center text-sm text-slate-400">
           {(() => {
@@ -113,5 +132,38 @@ function Feature({ icon, title, body }: { icon: string; title: string; body: str
       <h3 className="mb-2 text-lg font-semibold text-white">{title}</h3>
       <p className="text-sm leading-relaxed text-slate-400">{body}</p>
     </div>
+  );
+}
+
+function SideProjectCard({ project, lang }: { project: SideProject; lang: Lang }) {
+  const hostname = project.url.replace(/^https?:\/\//, "").replace(/\/.*/, "");
+  return (
+    <a
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative flex gap-4 rounded-xl border border-slate-800/80 bg-slate-900/40 p-5 transition-all hover:border-indigo-700/60 hover:bg-slate-900/70"
+    >
+      <div className="shrink-0 text-3xl leading-none">{project.icon}</div>
+      <div className="min-w-0 flex-1">
+        <div className="mb-2 flex flex-wrap items-center gap-2">
+          <span className="font-semibold text-white">{project.name}</span>
+          <div className="flex flex-wrap gap-1">
+            {project.tags[lang].map((tag, i) => (
+              <span
+                key={i}
+                className="rounded bg-slate-800/80 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-slate-400"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        <p className="mb-2 text-xs leading-relaxed text-slate-400">{project.desc[lang]}</p>
+        <div className="text-[11px] font-mono text-indigo-400/80 group-hover:text-indigo-300">
+          {hostname} →
+        </div>
+      </div>
+    </a>
   );
 }
