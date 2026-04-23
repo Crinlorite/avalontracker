@@ -124,3 +124,47 @@ export async function fetchMember(
     `/guilds/${encodeURIComponent(guildId)}/member/${encodeURIComponent(discordId)}`
   );
 }
+
+export type GuildPermissions = {
+  isOwner: boolean;
+  hasAdministrator: boolean;
+  hasManageGuild: boolean;
+  canRegisterClan: boolean;
+};
+
+export class GuildOrMemberNotFoundError extends Error {
+  public code = "VIGIL_NOT_FOUND" as const;
+  constructor(message: string) { super(message); }
+}
+
+// Como botFetch lanza BotUnavailableError en cualquier non-OK, hacemos un
+// fetch directo aquí para distinguir 404 (guild/member no existe — input
+// del user incorrecto) del resto (5xx — bot caído, fail-closed arriba).
+export async function fetchUserGuildPermissions(
+  guildId: string,
+  discordId: string,
+): Promise<GuildPermissions> {
+  const url = `${botUrl()}/guilds/${encodeURIComponent(guildId)}/member/${encodeURIComponent(discordId)}/permissions`;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, {
+      headers: authHeaders(),
+      signal: controller.signal,
+    });
+    if (res.status === 404) {
+      throw new GuildOrMemberNotFoundError("Guild o miembro no encontrado");
+    }
+    if (!res.ok) {
+      throw new BotUnavailableError(new Error(`HTTP ${res.status}`));
+    }
+    return (await res.json()) as GuildPermissions;
+  } catch (err) {
+    if (err instanceof GuildOrMemberNotFoundError) throw err;
+    if (err instanceof BotUnavailableError) throw err;
+    logger.warn({ err, guildId, discordId: discordId.slice(0, 4) + "..." }, "vigil bot permissions check failed");
+    throw new BotUnavailableError(err);
+  } finally {
+    clearTimeout(timer);
+  }
+}
