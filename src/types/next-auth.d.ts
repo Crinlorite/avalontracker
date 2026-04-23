@@ -5,7 +5,8 @@ declare module "next-auth" {
     user: {
       id: string;
       discordId: string;
-      isSuperAdmin: boolean;
+      // Opcional: solo presente cuando es true (stealth client-side).
+      isSuperAdmin?: true;
     } & DefaultSession["user"];
   }
 }
