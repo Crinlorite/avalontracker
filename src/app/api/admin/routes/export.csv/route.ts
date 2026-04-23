@@ -15,7 +15,7 @@ export async function GET() {
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   try { await requireSuperAdmin(session.user.id); }
   catch (e) {
-    if (e instanceof PermissionError) return apiError(e.code, e.status, "Solo super admin", e.extra);
+    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
     return internalError(e);
   }
 

@@ -14,7 +14,7 @@ async function requireSuperAdmin(userId: string): Promise<boolean> {
 export async function GET() {
   const session = await auth();
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
-  if (!(await requireSuperAdmin(session.user.id))) return apiError("INSUFFICIENT_ROLE", 403, "Solo super admin");
+  if (!(await requireSuperAdmin(session.user.id))) return apiError("INSUFFICIENT_ROLE", 403, "Sin permisos");
 
   const tokens = await prisma.ingestToken.findMany({
     where: { userId: session.user.id },
@@ -41,7 +41,7 @@ const createSchema = z.object({
 export async function POST(request: Request) {
   const session = await auth();
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
-  if (!(await requireSuperAdmin(session.user.id))) return apiError("INSUFFICIENT_ROLE", 403, "Solo super admin");
+  if (!(await requireSuperAdmin(session.user.id))) return apiError("INSUFFICIENT_ROLE", 403, "Sin permisos");
 
   const parsed = createSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Datos inválidos", { issues: parsed.error.issues });

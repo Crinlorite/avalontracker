@@ -11,7 +11,7 @@ export default function AdminMapPage() {
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-bold text-white">Grafo global (todas las rutas activas)</h1>
-      <p className="text-xs text-slate-500">{routes.length} rutas. Modo super admin: lectura silenciosa.</p>
+      <p className="text-xs text-slate-500">{routes.length} rutas.</p>
       <ClanGraph routes={routes} anchorZoneName={null} onNodeClick={() => {}} />
     </div>
   );

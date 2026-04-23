@@ -123,7 +123,7 @@ export async function POST(request: Request) {
     where: { id: auth.userId },
     select: { isSuperAdmin: true },
   });
-  if (!user?.isSuperAdmin) return apiError("INSUFFICIENT_ROLE", 403, "Solo super admin");
+  if (!user?.isSuperAdmin) return apiError("INSUFFICIENT_ROLE", 403, "Sin permisos");
 
   const rl = consumeToken(ingestLimiter, auth.tokenId);
   if (!rl.ok) return apiError("RATE_LIMITED", 429, "Demasiadas peticiones", { retryAfterMs: rl.retryAfterMs });

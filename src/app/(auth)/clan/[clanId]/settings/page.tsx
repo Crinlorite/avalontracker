@@ -28,7 +28,6 @@ export default function SettingsPage() {
 
   if (!clan || !me || membersLoading) return <div className="text-slate-400">Cargando…</div>;
 
-  // Gate de acceso: solo ADMIN del clan o super admin entran.
   const myRole = members.find((m) => m.userId === me.id)?.appRole ?? null;
   const allowed = canAdmin(myRole) || me.isSuperAdmin;
 

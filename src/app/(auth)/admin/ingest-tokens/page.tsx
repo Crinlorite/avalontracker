@@ -63,8 +63,8 @@ export default function IngestTokensPage() {
       <div>
         <h1 className="text-2xl font-bold text-white">Ingest tokens</h1>
         <p className="mt-1 text-sm text-slate-400">
-          Tokens personales para autorizar Loot Vigil (u otros sniffers) a ingestar eventos de zona. Solo super admin.
-          Una vez creado el token en claro se muestra <strong>una sola vez</strong> — cópialo a settings.json de Loot Vigil y si lo pierdes genera otro.
+          Tokens personales para autorizar clientes externos a ingestar eventos de zona.
+          Una vez creado el token en claro se muestra <strong>una sola vez</strong> — cópialo al cliente y si lo pierdes genera otro.
         </p>
       </div>
 

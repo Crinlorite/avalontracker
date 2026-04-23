@@ -14,7 +14,7 @@ async function requireSuperAdmin(userId: string): Promise<boolean> {
 export async function DELETE(_req: Request, { params }: RouteParams) {
   const session = await auth();
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
-  if (!(await requireSuperAdmin(session.user.id))) return apiError("INSUFFICIENT_ROLE", 403, "Solo super admin");
+  if (!(await requireSuperAdmin(session.user.id))) return apiError("INSUFFICIENT_ROLE", 403, "Sin permisos");
 
   const { id } = await params;
   const token = await prisma.ingestToken.findUnique({ where: { id } });
