@@ -29,7 +29,7 @@ function mapExternalToZoneType(externalType: string): ZoneType {
   return "OUTLANDS";
 }
 
-// Autoridad para "inside Avalon" = prefix del zoneId (recomendación Loot Vigil).
+// "Inside Avalon" = prefix TNL- del zoneId. Autoritativo según Loot Vigil Claude.
 function isInsideAvalon(zoneId: string): boolean {
   return zoneId.startsWith("TNL-");
 }
@@ -56,8 +56,7 @@ async function resolveZone(ref: { zoneId: string; mapName: string; zoneType: str
   });
 }
 
-// ¿El edge {fromZoneId, toZoneId} ya existe en la ruta (en cualquier dirección)?
-// Si existe, es re-traversal/backtrack — no debe crear hop duplicado.
+// ¿El edge {zoneA, zoneB} ya existe en la ruta en cualquier dirección?
 async function edgeExistsInRoute(routeId: string, zoneA: number, zoneB: number): Promise<boolean> {
   const hop = await prisma.routeHop.findFirst({
     where: {
@@ -72,6 +71,38 @@ async function edgeExistsInRoute(routeId: string, zoneA: number, zoneB: number):
   return hop !== null;
 }
 
+// ¿La zona zoneId aparece como nodo (from o to) en alguna hop de la ruta?
+async function zoneInRoute(routeId: string, zoneId: number): Promise<boolean> {
+  const hop = await prisma.routeHop.findFirst({
+    where: {
+      routeId,
+      OR: [{ fromZoneId: zoneId }, { toZoneId: zoneId }],
+    },
+    select: { id: true },
+  });
+  return hop !== null;
+}
+
+// Busca una ruta activa del user/clan que contenga la zona dada como nodo.
+// Prefiere la más recientemente actualizada.
+async function findRouteContainingZone(
+  zoneId: number,
+  clanId: string,
+  userId: string,
+): Promise<string | null> {
+  const route = await prisma.route.findFirst({
+    where: {
+      clanId,
+      createdById: userId,
+      status: "ACTIVE",
+      hops: { some: { OR: [{ fromZoneId: zoneId }, { toZoneId: zoneId }] } },
+    },
+    orderBy: { updatedAt: "desc" },
+    select: { id: true },
+  });
+  return route?.id ?? null;
+}
+
 async function nextHopOrder(routeId: string): Promise<number> {
   const last = await prisma.routeHop.findFirst({
     where: { routeId },
@@ -82,7 +113,7 @@ async function nextHopOrder(routeId: string): Promise<number> {
 }
 
 const DEFAULT_PORTAL_SIZE = 20;
-const DEFAULT_EXPIRES_MS = 2 * 60 * 60 * 1000; // 2h
+const DEFAULT_EXPIRES_MS = 2 * 60 * 60 * 1000;
 
 export async function POST(request: Request) {
   const auth = await authenticateIngest(request);
@@ -115,12 +146,37 @@ export async function POST(request: Request) {
 
     const session = await prisma.snifferSession.upsert({
       where: { userId: auth.userId },
-      create: { userId: auth.userId, lastEventAt: nowTs, currentZoneId: toZone.id },
+      create: { userId: auth.userId, lastEventAt: nowTs },
       update: { lastEventAt: nowTs },
     });
 
-    // ===== OPEN: outside → avalon =====
-    if (!fromAvalon && toAvalon) {
+    // ===== Decidir qué Route es el "target" =====
+    // Prioridad:
+    //   1. session.currentRouteId, si la zona origen ya aparece en ese grafo
+    //   2. Cualquier ruta activa del user/clan que contenga fromZone
+    //   3. Cualquier ruta activa que contenga toZone (re-entrando a un grafo ya conocido)
+    //   4. Si nada, crear nueva — solo si toAvalon (si no, noop)
+    let targetRouteId: string | null = session.currentRouteId ?? null;
+
+    if (targetRouteId) {
+      const stillValid = await zoneInRoute(targetRouteId, fromZone.id);
+      if (!stillValid) targetRouteId = null;
+    }
+
+    if (!targetRouteId) {
+      targetRouteId = await findRouteContainingZone(fromZone.id, auth.targetClanId, auth.userId);
+    }
+    if (!targetRouteId) {
+      targetRouteId = await findRouteContainingZone(toZone.id, auth.targetClanId, auth.userId);
+    }
+
+    // ===== Ningún grafo conocido + no entras a Avalon = ignorar =====
+    if (!targetRouteId && !toAvalon) {
+      return NextResponse.json({ action: "noop", reason: "no route context" }, { status: 202 });
+    }
+
+    // ===== Crear grafo nuevo (primera vez entrando a una zona no conocida) =====
+    if (!targetRouteId) {
       const route = await prisma.route.create({
         data: {
           clanId: auth.targetClanId,
@@ -142,124 +198,54 @@ export async function POST(request: Request) {
         where: { userId: auth.userId },
         data: { currentRouteId: route.id, currentZoneId: toZone.id },
       });
-      logger.info({ userId: auth.userId, routeId: route.id }, "sniffer: route opened");
+      logger.info({ userId: auth.userId, routeId: route.id }, "sniffer: new graph opened");
       return NextResponse.json({ action: "open", routeId: route.id, hopOrder: 0 }, { status: 202 });
     }
 
-    // ===== AVALON → AVALON: in-run hop =====
-    if (fromAvalon && toAvalon) {
-      // Recovery: dentro de Avalon sin ruta abierta (reinicio sniffer). Abrir.
-      if (!session.currentRouteId) {
-        const route = await prisma.route.create({
-          data: {
-            clanId: auth.targetClanId,
-            createdById: auth.userId,
-            status: "ACTIVE",
-            notes: "auto-sniffer (recovery)",
-            hops: {
-              create: {
-                order: 0,
-                fromZoneId: fromZone.id,
-                toZoneId: toZone.id,
-                portalSize: DEFAULT_PORTAL_SIZE,
-                expiresAt: new Date(Date.now() + DEFAULT_EXPIRES_MS),
-              },
-            },
-          },
-        });
-        await prisma.snifferSession.update({
-          where: { userId: auth.userId },
-          data: { currentRouteId: route.id, currentZoneId: toZone.id },
-        });
-        logger.warn({ userId: auth.userId, routeId: route.id }, "sniffer: route recovered");
-        return NextResponse.json({ action: "open", routeId: route.id, hopOrder: 0, recovered: true }, { status: 202 });
-      }
-
-      // ¿El edge ya existe en la ruta? Si sí, backtrack/re-traversal: no añadir hop.
-      const alreadyTraversed = await edgeExistsInRoute(session.currentRouteId, fromZone.id, toZone.id);
-      if (alreadyTraversed) {
-        await prisma.snifferSession.update({
-          where: { userId: auth.userId },
-          data: { currentZoneId: toZone.id },
-        });
-        logger.info(
-          { userId: auth.userId, routeId: session.currentRouteId, fromZoneId: fromZone.id, toZoneId: toZone.id },
-          "sniffer: backtrack (edge existing)",
-        );
-        return NextResponse.json({ action: "backtrack", routeId: session.currentRouteId }, { status: 202 });
-      }
-
-      const order = await nextHopOrder(session.currentRouteId);
-      await prisma.routeHop.create({
-        data: {
-          routeId: session.currentRouteId,
-          order,
-          fromZoneId: fromZone.id,
-          toZoneId: toZone.id,
-          portalSize: DEFAULT_PORTAL_SIZE,
-          expiresAt: new Date(Date.now() + DEFAULT_EXPIRES_MS),
-        },
-      });
-      await prisma.route.update({
-        where: { id: session.currentRouteId },
-        data: { version: { increment: 1 } },
-      });
+    // ===== Backtrack: edge ya existe en el grafo =====
+    const alreadyTraversed = await edgeExistsInRoute(targetRouteId, fromZone.id, toZone.id);
+    if (alreadyTraversed) {
       await prisma.snifferSession.update({
         where: { userId: auth.userId },
-        data: { currentZoneId: toZone.id },
+        data: { currentRouteId: targetRouteId, currentZoneId: toZone.id },
       });
       logger.info(
-        { userId: auth.userId, routeId: session.currentRouteId, hopOrder: order },
-        "sniffer: hop appended",
+        { userId: auth.userId, routeId: targetRouteId, fromZoneId: fromZone.id, toZoneId: toZone.id },
+        "sniffer: backtrack (edge known)",
       );
-      return NextResponse.json({ action: "append", routeId: session.currentRouteId, hopOrder: order }, { status: 202 });
+      return NextResponse.json({ action: "backtrack", routeId: targetRouteId }, { status: 202 });
     }
 
-    // ===== AVALON → OUTSIDE: CLOSE =====
-    if (fromAvalon && !toAvalon) {
-      if (!session.currentRouteId) {
-        logger.warn({ userId: auth.userId }, "sniffer: close without open, ignoring");
-        return NextResponse.json({ action: "noop", reason: "no open route" }, { status: 202 });
-      }
-
-      const alreadyTraversed = await edgeExistsInRoute(session.currentRouteId, fromZone.id, toZone.id);
-      let finalHopOrder: number | null = null;
-
-      if (!alreadyTraversed) {
-        const order = await nextHopOrder(session.currentRouteId);
-        await prisma.routeHop.create({
-          data: {
-            routeId: session.currentRouteId,
-            order,
-            fromZoneId: fromZone.id,
-            toZoneId: toZone.id,
-            portalSize: DEFAULT_PORTAL_SIZE,
-            expiresAt: new Date(Date.now() + DEFAULT_EXPIRES_MS),
-          },
-        });
-        finalHopOrder = order;
-      }
-
-      const closedRouteId = session.currentRouteId;
-      await prisma.route.update({
-        where: { id: closedRouteId },
-        data: { version: { increment: 1 } },
-      });
-      await prisma.snifferSession.update({
-        where: { userId: auth.userId },
-        data: { currentRouteId: null, currentZoneId: null },
-      });
-      logger.info(
-        { userId: auth.userId, routeId: closedRouteId, finalHopOrder },
-        finalHopOrder === null ? "sniffer: route closed (backtrack exit)" : "sniffer: route closed (new exit hop)",
-      );
-      return NextResponse.json(
-        { action: "close", routeId: closedRouteId, hopOrder: finalHopOrder },
-        { status: 202 },
-      );
-    }
-
-    return NextResponse.json({ action: "noop" }, { status: 202 });
+    // ===== Extender grafo con edge nuevo =====
+    const order = await nextHopOrder(targetRouteId);
+    await prisma.routeHop.create({
+      data: {
+        routeId: targetRouteId,
+        order,
+        fromZoneId: fromZone.id,
+        toZoneId: toZone.id,
+        portalSize: DEFAULT_PORTAL_SIZE,
+        expiresAt: new Date(Date.now() + DEFAULT_EXPIRES_MS),
+      },
+    });
+    await prisma.route.update({
+      where: { id: targetRouteId },
+      data: { version: { increment: 1 } },
+    });
+    await prisma.snifferSession.update({
+      where: { userId: auth.userId },
+      data: { currentRouteId: targetRouteId, currentZoneId: toZone.id },
+    });
+    logger.info(
+      { userId: auth.userId, routeId: targetRouteId, hopOrder: order, fromAvalon, toAvalon },
+      fromAvalon && !toAvalon
+        ? "sniffer: exit edge recorded (route stays open)"
+        : "sniffer: edge appended",
+    );
+    return NextResponse.json(
+      { action: "extend", routeId: targetRouteId, hopOrder: order },
+      { status: 202 },
+    );
   } catch (err) {
     return internalError(err);
   }
