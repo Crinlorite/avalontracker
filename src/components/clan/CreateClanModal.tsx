@@ -32,17 +32,24 @@ export function CreateClanModal({ onClose, onCreated }: { onClose: () => void; o
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={onClose}>
       <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className="w-full max-w-md space-y-4 rounded-xl border border-slate-700 bg-slate-900 p-6">
         <h2 className="text-xl font-bold text-white">Crear nuevo clan</h2>
-        <p className="text-xs text-slate-400">
-          <a
-            href="https://vigil.crintech.pro"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-indigo-400 underline hover:text-indigo-300"
-          >
-            Vigil Bot
-          </a>{" "}
-          debe estar instalado en el servidor Discord antes de crear el clan.
-        </p>
+        <div className="space-y-2 rounded border border-slate-800 bg-slate-950 p-3 text-xs text-slate-400">
+          <p>
+            <a
+              href="https://vigil.crintech.pro"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-indigo-400 underline hover:text-indigo-300"
+            >
+              Vigil Bot
+            </a>{" "}
+            debe estar instalado en el servidor Discord.
+          </p>
+          <p>
+            Solo el <strong>owner</strong> o un usuario con permiso{" "}
+            <code className="rounded bg-slate-800 px-1">Administrator</code> /{" "}
+            <code className="rounded bg-slate-800 px-1">Manage Guild</code> puede registrar el clan aquí.
+          </p>
+        </div>
 
         <label className="block">
           <span className="text-sm text-slate-300">Nombre del clan</span>
