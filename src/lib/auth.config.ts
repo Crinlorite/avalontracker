@@ -16,21 +16,19 @@ export const authConfig = {
       return !!auth?.user;
     },
     // IMPORTANTE: este session callback vive aquí (Edge-safe, sin Prisma)
-    // para que el middleware Edge pueda leer session.user.isSuperAdmin y
+    // para que el middleware Edge pueda leer session.user.tier y
     // session.user.id desde el JWT token. Si estuviera solo en auth.ts,
     // el middleware nunca los vería (auth.ts no corre en Edge).
     // El jwt callback en auth.ts es el que POPULA token.isSuperAdmin —
-    // aquí solo copiamos al shape de session.
+    // aquí traducimos al shape público: tier="owner" si el flag está, sino
+    // el campo no se incluye (stealth client-side).
     session({ session, token }) {
       if (typeof token.id === "string") session.user.id = token.id;
       if (typeof token.discordId === "string") {
         (session.user as unknown as Record<string, unknown>).discordId = token.discordId;
       }
-      // Solo exponemos el flag al client cuando es true — omitirlo cuando false
-      // evita filtrar su existencia a usuarios normales que inspeccionen
-      // session.user desde el browser (F12 / Network / useSession).
       if (token.isSuperAdmin === true) {
-        (session.user as unknown as Record<string, unknown>).isSuperAdmin = true;
+        (session.user as unknown as Record<string, unknown>).tier = "owner";
       }
       return session;
     },

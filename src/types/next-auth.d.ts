@@ -5,8 +5,10 @@ declare module "next-auth" {
     user: {
       id: string;
       discordId: string;
-      // Opcional: solo presente cuando es true (stealth client-side).
-      isSuperAdmin?: true;
+      // Opcional: solo presente para usuarios con tier "owner" (dueño del
+      // deployment). Omitido por completo para el resto — no hay rastro en
+      // el main bundle.
+      tier?: "owner";
     } & DefaultSession["user"];
   }
 }

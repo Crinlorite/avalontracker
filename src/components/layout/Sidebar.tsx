@@ -30,7 +30,7 @@ export function Sidebar() {
 
   const avatar = session?.user?.image;
   const name = session?.user?.name ?? "Usuario";
-  const hasAdminAccess = (session?.user as { isSuperAdmin?: true } | undefined)?.isSuperAdmin === true;
+  const hasAdminAccess = (session?.user as { tier?: string } | undefined)?.tier === "owner";
 
   return (
     <>

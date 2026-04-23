@@ -24,8 +24,8 @@ export default auth((req) => {
   const isAuth = path.startsWith("/clan") || path.startsWith("/admin") || path.startsWith("/profile") || path.startsWith("/dashboard");
   if (isAuth && !session?.user) return Response.redirect(new URL("/", nextUrl));
   if (path.startsWith("/admin")) {
-    const isSuperAdmin = (session?.user as { isSuperAdmin?: boolean } | undefined)?.isSuperAdmin;
-    if (!isSuperAdmin) return Response.redirect(new URL("/dashboard", nextUrl));
+    const tier = (session?.user as { tier?: string } | undefined)?.tier;
+    if (tier !== "owner") return Response.redirect(new URL("/dashboard", nextUrl));
   }
 });
 

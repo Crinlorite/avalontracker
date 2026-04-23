@@ -4,9 +4,9 @@ import type { AppRole } from "@/generated/prisma/client";
 export type Me = {
   id: string; discordId: string; discordUsername: string; globalNickname: string | null;
   displayName: string | null; image: string | null;
-  // Campo opcional: solo presente para users con el flag; el endpoint /api/me
-  // lo omite cuando es false. Comprobar con `me?.isSuperAdmin === true`.
-  isSuperAdmin?: true;
+  // Campo opcional: solo se incluye para usuarios "owner" del deployment.
+  // El endpoint /api/me omite el campo entero para el resto de usuarios.
+  tier?: "owner";
 };
 
 export function useMe() {
