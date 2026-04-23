@@ -26,7 +26,12 @@ export const authConfig = {
       if (typeof token.discordId === "string") {
         (session.user as unknown as Record<string, unknown>).discordId = token.discordId;
       }
-      (session.user as unknown as Record<string, unknown>).isSuperAdmin = Boolean(token.isSuperAdmin);
+      // Solo exponemos el flag al client cuando es true — omitirlo cuando false
+      // evita filtrar su existencia a usuarios normales que inspeccionen
+      // session.user desde el browser (F12 / Network / useSession).
+      if (token.isSuperAdmin === true) {
+        (session.user as unknown as Record<string, unknown>).isSuperAdmin = true;
+      }
       return session;
     },
   },

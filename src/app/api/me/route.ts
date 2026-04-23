@@ -9,6 +9,9 @@ export async function GET() {
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const user = await prisma.user.findUnique({ where: { id: session.user.id } });
   if (!user) return apiError("NOT_FOUND", 404, "Usuario no encontrado");
+  // isSuperAdmin solo se incluye cuando es true — omitirlo cuando false evita
+  // filtrar la existencia del rol a usuarios normales que inspeccionen la
+  // respuesta desde F12 / Network tab.
   return NextResponse.json({
     id: user.id,
     discordId: user.discordId,
@@ -16,7 +19,7 @@ export async function GET() {
     globalNickname: user.globalNickname,
     displayName: user.displayName,
     image: user.image,
-    isSuperAdmin: user.isSuperAdmin,
+    ...(user.isSuperAdmin ? { isSuperAdmin: true } : {}),
   });
 }
 
