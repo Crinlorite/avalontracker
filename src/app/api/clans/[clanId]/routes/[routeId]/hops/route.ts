@@ -36,19 +36,34 @@ export async function POST(request: Request, { params }: RouteParams) {
 
   const route = await prisma.route.findFirst({
     where: { id: routeId, clanId },
-    include: { hops: { orderBy: { order: "desc" }, take: 1, include: { toZone: true } } },
+    include: { hops: { orderBy: { order: "desc" }, take: 1 } },
   });
   if (!route) return apiError("NOT_FOUND", 404, "Ruta no encontrada");
-  if (route.hops.length >= 12) return apiError("VALIDATION_ERROR", 400, "Una ruta no puede tener más de 12 hops");
+  if (route.hops.length >= 50) return apiError("VALIDATION_ERROR", 400, "Una ruta no puede tener más de 50 hops");
 
-  // Validar continuidad — el nuevo hop.fromZone debe ser igual al último hop.toZone.
+  // Validar que fromZone es ya un nodo del grafo (fromZone o toZone en alguna
+  // hop de esta ruta) — permite ramificar libremente desde cualquier zona
+  // visitada. Si la ruta está vacía, cualquier fromZone vale (primer hop).
+  // allowBrokenChain escapa el check si quieres conectar grafos disjoints.
   const lastHop = route.hops[0];
-  if (lastHop && !parsed.data.allowBrokenChain && parsed.data.fromZone !== lastHop.toZone.name) {
-    return apiError(
-      "VALIDATION_ERROR",
-      400,
-      `Cadena no continua. El último hop termina en "${lastHop.toZone.name}", este empieza en "${parsed.data.fromZone}". Envía con allowBrokenChain=true para forzar.`
-    );
+  if (lastHop && !parsed.data.allowBrokenChain) {
+    const fromInGraph = await prisma.routeHop.findFirst({
+      where: {
+        routeId,
+        OR: [
+          { fromZone: { name: parsed.data.fromZone } },
+          { toZone: { name: parsed.data.fromZone } },
+        ],
+      },
+      select: { id: true },
+    });
+    if (!fromInGraph) {
+      return apiError(
+        "VALIDATION_ERROR",
+        400,
+        `"${parsed.data.fromZone}" no está en el grafo de esta ruta. Para conectar desde fuera usa allowBrokenChain=true.`,
+      );
+    }
   }
 
   // Resolver zone IDs

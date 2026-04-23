@@ -10,8 +10,13 @@ import type { ZoneSuggestion } from "@/hooks/useZoneSearch";
 import type { AppRole } from "@/generated/prisma/client";
 
 export function ZoneSidePanel({
-  zoneName, routes, onClose, onCreateFromHere, myRole,
-}: { zoneName: string; routes: RouteView[]; onClose: () => void; onCreateFromHere: () => void; myRole: AppRole | null }) {
+  zoneName, routes, onClose, onCreateFromHere, onBranchFromHere, myRole,
+}: {
+  zoneName: string; routes: RouteView[]; onClose: () => void;
+  onCreateFromHere: () => void;
+  onBranchFromHere?: (route: RouteView) => void;
+  myRole: AppRole | null;
+}) {
   const { clanId } = useParams() as { clanId: string };
   const { data: suggestion } = useSWR<ZoneSuggestion[]>(`/api/zones?q=${encodeURIComponent(zoneName)}`);
   const zone = (suggestion ?? []).find((z) => z.name === zoneName);
@@ -68,6 +73,15 @@ export function ZoneSidePanel({
                   ))}
                 </div>
                 {r.notes && <div className="mt-1 italic text-slate-500">{r.notes}</div>}
+                {canCreateHere && onBranchFromHere && (
+                  <button
+                    onClick={() => onBranchFromHere(r)}
+                    className="mt-2 w-full rounded border border-slate-700 bg-slate-800 px-2 py-1 text-[11px] text-slate-200 hover:bg-slate-700"
+                    title={`Añadir una rama nueva desde ${zoneName} a esta ruta`}
+                  >
+                    + Ramificar desde {zoneName}
+                  </button>
+                )}
                 {canCreateHere && (
                   <ul className="mt-2 space-y-1">
                     {r.hops.filter((h) => h.fromZone.name === zoneName || h.toZone.name === zoneName).map((h) => (
