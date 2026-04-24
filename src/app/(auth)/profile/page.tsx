@@ -55,7 +55,7 @@ export default function ProfilePage() {
       <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
         <h2 className="mb-2 text-lg font-semibold text-white">Ingest tokens</h2>
         <p className="mb-3 text-sm text-slate-400">
-          Tokens para que clientes externos (p.ej. Loot Vigil) ingesten datos en clanes donde eres ADMIN.
+          Tokens para que clientes externos ingesten datos en clanes donde eres ADMIN.
         </p>
         <Link
           href="/profile/ingest-tokens"

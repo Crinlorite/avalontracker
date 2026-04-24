@@ -66,7 +66,7 @@ export default function IngestTokensPage() {
       <div>
         <h1 className="text-2xl font-bold text-white">Ingest tokens</h1>
         <p className="mt-1 text-sm text-slate-400">
-          Tokens personales para autorizar clientes externos (p.ej. Loot Vigil) a ingestar eventos de zona
+          Tokens personales para autorizar clientes externos a ingestar eventos de zona
           en un clan donde tú eres <strong>ADMIN</strong>. El token se muestra <strong>una sola vez</strong> al
           crearse — cópialo al cliente; si lo pierdes, revoca y genera otro.
         </p>
