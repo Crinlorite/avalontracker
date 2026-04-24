@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { useMe } from "@/hooks/useMe";
 import toast from "react-hot-toast";
@@ -49,6 +50,19 @@ export default function ProfilePage() {
             <div className="font-mono text-xs text-slate-600">{me.discordId}</div>
           </div>
         </div>
+      </section>
+
+      <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
+        <h2 className="mb-2 text-lg font-semibold text-white">Ingest tokens</h2>
+        <p className="mb-3 text-sm text-slate-400">
+          Tokens para que clientes externos (p.ej. Loot Vigil) ingesten datos en clanes donde eres ADMIN.
+        </p>
+        <Link
+          href="/profile/ingest-tokens"
+          className="inline-block rounded-md bg-slate-800 px-4 py-2 text-sm text-white hover:bg-slate-700"
+        >
+          Gestionar tokens →
+        </Link>
       </section>
 
       <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
