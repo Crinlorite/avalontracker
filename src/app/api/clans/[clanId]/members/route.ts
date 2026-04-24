@@ -18,13 +18,36 @@ export async function GET(_req: Request, { params }: RouteParams) {
   }
 
   const members = await prisma.clanMember.findMany({
-    where: { clanId },
+    where: {
+      clanId,
+      // Filtramos miembros sin rol mapeado — están en el server Discord
+      // pero no les aplica ningún rol del clan. Consistente con /me/clans
+      // que tampoco los lista. Evita que el roster se ensucie con users
+      // que simplemente están en el guild sin ser "miembros activos" del
+      // clan en términos de la app.
+      appRole: { not: null },
+    },
     include: {
-      user: { select: { id: true, discordUsername: true, globalNickname: true, displayName: true, discordAvatar: true } },
+      // discordId incluido para construir avatarUrl server-side (ver más abajo).
+      // No se expone en el output — se elimina tras mapear.
+      user: { select: { id: true, discordUsername: true, globalNickname: true, displayName: true, discordAvatar: true, discordId: true } },
     },
     orderBy: [{ appRole: "desc" }, { joinedAt: "asc" }],
     take: 500,
   });
 
-  return NextResponse.json(members);
+  // Construimos el URL del avatar en el server para evitar filtrar el
+  // discordId al cliente (uso previo reconstruía la URL client-side).
+  // Fallback: avatar por defecto de Discord computado del discord snowflake
+  // (módulo 5 del bigint).
+  const payload = members.map((m) => {
+    const { user, ...rest } = m;
+    const { discordId, discordAvatar, ...userSafe } = user;
+    const avatarUrl = discordAvatar
+      ? `https://cdn.discordapp.com/avatars/${discordId}/${discordAvatar}.png?size=64`
+      : `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(discordId) % 5n)}.png`;
+    return { ...rest, user: { ...userSafe, avatarUrl } };
+  });
+
+  return NextResponse.json(payload);
 }
