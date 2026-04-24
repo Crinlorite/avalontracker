@@ -19,10 +19,6 @@ export async function logAudit(
   details?: Record<string, unknown>,
   tx?: TxClient,
 ): Promise<void> {
-  // Observer fantasma total: super admin nunca deja rastro, sea miembro o no.
-  const user = await prisma.user.findUnique({ where: { id: userId }, select: { isSuperAdmin: true } });
-  if (user?.isSuperAdmin) return;
-
   const client = tx ?? prisma;
   await client.auditLog.create({
     data: {

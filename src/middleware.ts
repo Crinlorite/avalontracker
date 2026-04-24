@@ -21,14 +21,10 @@ export default auth((req) => {
     }
   }
 
-  const isAuth = path.startsWith("/clan") || path.startsWith("/admin") || path.startsWith("/profile") || path.startsWith("/dashboard");
+  const isAuth = path.startsWith("/clan") || path.startsWith("/profile") || path.startsWith("/dashboard");
   if (isAuth && !session?.user) return Response.redirect(new URL("/", nextUrl));
-  if (path.startsWith("/admin")) {
-    const tier = (session?.user as { tier?: string } | undefined)?.tier;
-    if (tier !== "alpha") return Response.redirect(new URL("/dashboard", nextUrl));
-  }
 });
 
 export const config = {
-  matcher: ["/clan/:path*", "/admin/:path*", "/profile/:path*", "/dashboard/:path*", "/api/auth/callback/:path*"],
+  matcher: ["/clan/:path*", "/profile/:path*", "/dashboard/:path*", "/api/auth/callback/:path*"],
 };

@@ -60,34 +60,30 @@ export async function POST(request: Request) {
 
     // Verificación de permisos Discord: el user solo puede registrar el clan
     // si en ese guild es owner o tiene ADMINISTRATOR / MANAGE_GUILD.
-    // Cierra el agujero de squatting de clanes ajenos.
+    // Cierra el agujero de squatting de clanes ajenos. Sin bypass — RBAC puro.
     const requesterUser = await prisma.user.findUnique({
       where: { id: session.user.id },
-      select: { discordId: true, isSuperAdmin: true },
+      select: { discordId: true },
     });
     if (!requesterUser?.discordId) return apiError("UNAUTHORIZED", 401, "Sesión inválida");
 
-    // Bypass para el dueño del deployment — útil para crear clanes "fantasma"
-    // en guilds de testing sin necesidad de tener permisos reales en Discord.
-    if (!requesterUser.isSuperAdmin) {
-      try {
-        const perms = await fetchUserGuildPermissions(parsed.data.discordGuildId, requesterUser.discordId);
-        if (!perms.canRegisterClan) {
-          return apiError("INSUFFICIENT_ROLE", 403,
-            "No tienes permisos en ese servidor Discord (necesitas ser owner, administrator o manage guild).");
-        }
-      } catch (err) {
-        if (err instanceof GuildOrMemberNotFoundError) {
-          return apiError("VALIDATION_ERROR", 400,
-            "No eres miembro de ese servidor Discord, o el bot no lo ve.");
-        }
-        if (err instanceof BotUnavailableError) {
-          // Fail-closed: si no podemos verificar, rechazamos.
-          return apiError("STALE_DEPENDENCY", 503,
-            "No se pudo verificar permisos Discord ahora mismo. Reintenta en un momento.");
-        }
-        throw err;
+    try {
+      const perms = await fetchUserGuildPermissions(parsed.data.discordGuildId, requesterUser.discordId);
+      if (!perms.canRegisterClan) {
+        return apiError("INSUFFICIENT_ROLE", 403,
+          "No tienes permisos en ese servidor Discord (necesitas ser owner, administrator o manage guild).");
       }
+    } catch (err) {
+      if (err instanceof GuildOrMemberNotFoundError) {
+        return apiError("VALIDATION_ERROR", 400,
+          "No eres miembro de ese servidor Discord, o el bot no lo ve.");
+      }
+      if (err instanceof BotUnavailableError) {
+        // Fail-closed: si no podemos verificar, rechazamos.
+        return apiError("STALE_DEPENDENCY", 503,
+          "No se pudo verificar permisos Discord ahora mismo. Reintenta en un momento.");
+      }
+      throw err;
     }
 
     // Pre-check amigable: ya existe un clan para este guild o con este nombre
