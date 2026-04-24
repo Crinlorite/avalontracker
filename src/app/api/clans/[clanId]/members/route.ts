@@ -37,15 +37,16 @@ export async function GET(_req: Request, { params }: RouteParams) {
   });
 
   // Construimos el URL del avatar en el server para evitar filtrar el
-  // discordId al cliente (uso previo reconstruía la URL client-side).
-  // Fallback: avatar por defecto de Discord computado del discord snowflake
-  // (módulo 5 del bigint).
+  // discordId al cliente. Fallback: avatar por defecto de Discord según el
+  // algoritmo nuevo post-2023 (user_id >> 22) % 6 — usa BigInt() sin
+  // literales para compat con targets TS pre-ES2020.
   const payload = members.map((m) => {
     const { user, ...rest } = m;
     const { discordId, discordAvatar, ...userSafe } = user;
+    const defaultIdx = Number((BigInt(discordId) >> BigInt(22)) % BigInt(6));
     const avatarUrl = discordAvatar
       ? `https://cdn.discordapp.com/avatars/${discordId}/${discordAvatar}.png?size=64`
-      : `https://cdn.discordapp.com/embed/avatars/${Number(BigInt(discordId) % 5n)}.png`;
+      : `https://cdn.discordapp.com/embed/avatars/${defaultIdx}.png`;
     return { ...rest, user: { ...userSafe, avatarUrl } };
   });
 
