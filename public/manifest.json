@@ -1,0 +1,15 @@
+{
+  "name": "Avalon Tracker",
+  "short_name": "Avalon",
+  "description": "Colaborative Roads of Avalon mapping for your Albion Online clan.",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#030712",
+  "theme_color": "#4f46e5",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "48x48", "type": "image/x-icon" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
