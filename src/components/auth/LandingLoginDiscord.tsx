@@ -115,9 +115,16 @@ export function LandingLoginDiscord() {
           })()}
         </p>
 
-        {/* Footer */}
-        <footer className="mt-16 text-center text-xs text-slate-600">
-          {t("landing.footer")}
+        {/* Footer con legal */}
+        <footer className="mt-16 flex flex-col items-center gap-3 text-xs text-slate-600">
+          <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            <a href="/legal/privacy" className="hover:text-slate-400">{t("landing.footer.privacy")}</a>
+            <span aria-hidden="true" className="text-slate-800">·</span>
+            <a href="/legal/cookies" className="hover:text-slate-400">{t("landing.footer.cookies")}</a>
+            <span aria-hidden="true" className="text-slate-800">·</span>
+            <a href="/legal/aviso-legal" className="hover:text-slate-400">{t("landing.footer.legal")}</a>
+          </nav>
+          <p>{t("landing.footer")}</p>
         </footer>
       </div>
     </main>

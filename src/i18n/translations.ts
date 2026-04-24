@@ -20,6 +20,9 @@ export const translations: Record<Lang, Record<string, string>> = {
     "landing.family.title": "De la misma familia",
     "landing.family.subtitle": "Mismo equipo · mismo universo",
     "landing.footer": "Hecho por Crintech · open source-friendly",
+    "landing.footer.privacy": "Privacidad",
+    "landing.footer.cookies": "Cookies",
+    "landing.footer.legal": "Aviso legal",
   },
   en: {
     "landing.title": "Avalon Tracker",
@@ -36,5 +39,8 @@ export const translations: Record<Lang, Record<string, string>> = {
     "landing.family.title": "Related tools",
     "landing.family.subtitle": "Same team · same universe",
     "landing.footer": "Built by Crintech · open source-friendly",
+    "landing.footer.privacy": "Privacy",
+    "landing.footer.cookies": "Cookies",
+    "landing.footer.legal": "Legal notice",
   },
 };
