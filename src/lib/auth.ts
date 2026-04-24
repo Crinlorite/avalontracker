@@ -4,13 +4,6 @@ import { prisma } from "@/lib/prisma";
 import { fetchUserClans } from "@/lib/vigil-bot-client";
 import { logger } from "@/lib/logger";
 
-function superAdminIds(): string[] {
-  return (process.env.SUPER_ADMIN_DISCORD_IDS ?? "")
-    .split(",")
-    .map(s => s.trim())
-    .filter(Boolean);
-}
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
   callbacks: {
@@ -23,13 +16,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const avatar = (profile as { avatar?: string })?.avatar ?? null;
       const globalNickname = (profile as { global_name?: string })?.global_name ?? null;
 
-      const adminIds = superAdminIds();
-      const isSuperAdmin = adminIds.includes(discordId);
-      logger.info(
-        { discordId, adminIdsCount: adminIds.length, adminIdsSample: adminIds.map(s => s.slice(0, 4) + "..."), isSuperAdmin },
-        "signIn: super admin resolution"
-      );
-
       await prisma.user.upsert({
         where: { discordId },
         create: {
@@ -39,7 +25,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           globalNickname,
           email: user.email ?? `${discordId}@discord.local`,
           image: user.image ?? null,
-          isSuperAdmin,
         },
         update: {
           discordUsername: username,
@@ -47,7 +32,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           globalNickname,
           email: user.email ?? `${discordId}@discord.local`,
           image: user.image ?? null,
-          isSuperAdmin,
         },
       });
       return true;
@@ -64,7 +48,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const u = await prisma.user.findUnique({ where: { discordId: token.discordId as string } });
         if (u) {
           token.id = u.id;
-          token.isSuperAdmin = u.isSuperAdmin;
         }
       }
 
@@ -77,7 +60,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               select: { id: true, createdById: true },
             });
             if (!clan || typeof token.id !== "string") continue;
-            // Creador del clan siempre ADMIN (ver permissions.ts).
+            // Creador del clan siempre ADMIN de ese clan (ver permissions.ts).
             const isCreator = clan.createdById === token.id;
             const appRole = isCreator ? "ADMIN" : c.computedAppRole;
             const roleSource = isCreator
@@ -108,7 +91,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     // session callback vive en auth.config.ts (Edge-safe) y se hereda
-    // aquí via ...authConfig.callbacks — así el middleware Edge puede
-    // ver session.user.isSuperAdmin.
+    // aquí via ...authConfig.callbacks.
   },
 });

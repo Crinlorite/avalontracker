@@ -158,25 +158,20 @@ export class PermissionError extends Error {
   }
 }
 
+// Enforce RBAC puro: el user debe tener al menos `minRole` en el clan.
+// Nombre se mantiene por compat con imports existentes; ya no hay bypass
+// super admin — el modelo es flat.
 export async function requireRoleOrSuperAdminRead(
   userId: string,
   clanId: string,
   minRole: AppRole,
   method: "GET" | "WRITE"
-): Promise<{ bypass: boolean; role: AppRole | null; stale: boolean }> {
+): Promise<{ bypass: false; role: AppRole | null; stale: boolean }> {
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: { isSuperAdmin: true },
+    select: { id: true },
   });
   if (!user) throw new PermissionError("UNAUTHORIZED", 401);
-
-  // Super admin: bypass total (GET y WRITE) en cualquier clan.
-  // Pensado para moderación: borrar orphans, limpiar mappings mal configurados,
-  // intervenir clanes problemáticos. El audit trail sigue silenciado en
-  // logAudit cuando no es miembro del clan destino — god mode silencioso.
-  if (user.isSuperAdmin) {
-    return { bypass: true, role: null, stale: false };
-  }
 
   const current = await getUserRoleInClan(userId, clanId);
   if (current.stale && method === "WRITE") {
@@ -195,9 +190,4 @@ export async function requireRoleOrSuperAdminRead(
 export async function isClanMember(userId: string, clanId: string): Promise<boolean> {
   const role = await getUserRoleInClan(userId, clanId);
   return role.appRole !== null && !role.stale;
-}
-
-export async function requireSuperAdmin(userId: string): Promise<void> {
-  const u = await prisma.user.findUnique({ where: { id: userId }, select: { isSuperAdmin: true } });
-  if (!u?.isSuperAdmin) throw new PermissionError("INSUFFICIENT_ROLE", 403, { required: "SUPER_ADMIN" });
 }

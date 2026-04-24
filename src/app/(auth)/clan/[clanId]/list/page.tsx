@@ -20,8 +20,7 @@ export default function ClanListPage() {
   const { routes, isLoading } = useClanRoutes(clanId);
   const { data: members = [] } = useSWR<MemberRow[]>(`/api/clans/${clanId}/members`);
   const { me } = useMe();
-  const memberRole = members.find((m) => m.userId === me?.id)?.appRole ?? null;
-  const myRole: AppRole | null = me?.tier === "alpha" ? "ADMIN" : memberRole;
+  const myRole: AppRole | null = members.find((m) => m.userId === me?.id)?.appRole ?? null;
 
   const [showCreate, setShowCreate] = useState(false);
   const [showMerge, setShowMerge] = useState(false);
