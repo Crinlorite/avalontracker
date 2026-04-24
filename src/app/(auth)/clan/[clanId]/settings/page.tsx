@@ -33,7 +33,7 @@ export default function SettingsPage() {
 
   if (!allowed) {
     return (
-      <div className="max-w-2xl space-y-4">
+      <div className="space-y-4">
         <h1 className="text-2xl font-bold text-white">Configuración de {clan.name}</h1>
         <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-8 text-center">
           <div className="mx-auto mb-3 inline-block rounded-full bg-slate-800 px-3 py-1 text-xs uppercase text-slate-400">
@@ -90,7 +90,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="max-w-2xl space-y-8">
+    <div className="space-y-8">
       <h1 className="text-2xl font-bold text-white">Configuración de {clan.name}</h1>
 
       <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">

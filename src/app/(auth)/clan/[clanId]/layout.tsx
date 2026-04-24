@@ -18,7 +18,7 @@ export default async function ClanLayout({
   const { clanId } = await params;
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6">
+    <div className="space-y-6">
       <ClanTabs clanId={clanId} />
       {children}
     </div>
