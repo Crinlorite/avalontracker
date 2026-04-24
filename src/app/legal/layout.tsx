@@ -26,6 +26,13 @@ export default function LegalLayout({ children }: { children: ReactNode }) {
             <span className="font-semibold tracking-tight">Avalon Tracker</span>
           </Link>
           <div className="flex flex-wrap items-center gap-1.5">
+            <Link
+              href="/"
+              className="rounded-md px-3 py-1.5 text-sm text-slate-400 transition-colors hover:bg-slate-900 hover:text-white"
+            >
+              {lang === "es" ? "Inicio" : "Home"}
+            </Link>
+            <span aria-hidden="true" className="px-0.5 text-slate-700">|</span>
             {tabs.map((t) => {
               const active = pathname === t.href;
               return (
