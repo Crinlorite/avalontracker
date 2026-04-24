@@ -1,9 +1,13 @@
 import type { RouteView, HopView } from "@/hooks/useClanRoutes";
+import type { ClanAnchorZone } from "@/hooks/useClan";
 
-export type LayoutNode = { id: string; zoneName: string; zoneType: string; tier: number | null; hasHideout: boolean; isRest: boolean; isCapital: boolean; x: number; y: number };
+export type LayoutNode = { id: string; zoneName: string; zoneType: string; tier: number | null; hasHideout: boolean; isRest: boolean; isCapital: boolean; x: number; y: number; isAnchor?: boolean };
 export type LayoutEdge = { id: string; source: string; target: string; hop: HopView; routeId: string };
 
-export function computeLayout(routes: RouteView[], anchorZoneName: string | null): { nodes: LayoutNode[]; edges: LayoutEdge[] } {
+export function computeLayout(
+  routes: RouteView[],
+  anchor: ClanAnchorZone | null,
+): { nodes: LayoutNode[]; edges: LayoutEdge[] } {
   const nodes = new Map<string, LayoutNode>();
   const edges: LayoutEdge[] = [];
 
@@ -24,11 +28,34 @@ export function computeLayout(routes: RouteView[], anchorZoneName: string | null
     }
   }
 
+  // Inyectar el anchor como nodo — aunque no esté aún en ninguna ruta, queremos
+  // que aparezca como referencia visual desde donde el clan arrancará portales.
+  if (anchor) {
+    if (!nodes.has(anchor.name)) {
+      nodes.set(anchor.name, {
+        id: anchor.name,
+        zoneName: anchor.name,
+        zoneType: anchor.type,
+        tier: anchor.tier,
+        hasHideout: anchor.hasHideout,
+        isRest: anchor.isRest,
+        isCapital: anchor.isCapital,
+        x: 0, y: 0,
+        isAnchor: true,
+      });
+    } else {
+      // Si el anchor ya es nodo (ruta activa pasa por él), marcarlo como anchor
+      // para que el renderer le dé el realce visual.
+      const existing = nodes.get(anchor.name)!;
+      nodes.set(anchor.name, { ...existing, isAnchor: true });
+    }
+  }
+
   const list = Array.from(nodes.values());
-  const center = anchorZoneName && nodes.has(anchorZoneName) ? nodes.get(anchorZoneName)! : list[0];
+  const center = anchor && nodes.has(anchor.name) ? nodes.get(anchor.name)! : list[0];
   if (!center) return { nodes: [], edges };
 
-  // Layout radial básico: anchor al centro, resto en círculos concéntricos por distancia en edges
+  // Layout radial básico: anchor al centro, resto en círculos concéntricos por distancia en edges.
   const adj = new Map<string, Set<string>>();
   for (const e of edges) {
     adj.set(e.source, (adj.get(e.source) ?? new Set()).add(e.target));
@@ -63,7 +90,7 @@ export function computeLayout(routes: RouteView[], anchorZoneName: string | null
     });
   }
 
-  // Nodes not reachable from anchor: stack a la derecha
+  // Nodes no alcanzables desde anchor: stack a la derecha.
   let fallbackY = 0;
   for (const n of list) {
     if (!distances.has(n.id)) {

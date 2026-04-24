@@ -8,8 +8,13 @@ type HopInput = { fromZone: string; toZone: string; portalSize: 7 | 20 | 40; hou
 
 const newHop = (from = ""): HopInput => ({ fromZone: from, toZone: "", portalSize: 7, hours: 2, minutes: 0 });
 
-export function CreateRouteModal({ clanId, onClose, onCreated }: { clanId: string; onClose: () => void; onCreated: () => void }) {
-  const [hops, setHops] = useState<HopInput[]>([newHop()]);
+export function CreateRouteModal({
+  clanId, onClose, onCreated, defaultFromZone,
+}: {
+  clanId: string; onClose: () => void; onCreated: () => void;
+  defaultFromZone?: string;
+}) {
+  const [hops, setHops] = useState<HopInput[]>([newHop(defaultFromZone ?? "")]);
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
