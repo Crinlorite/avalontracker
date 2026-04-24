@@ -1,18 +1,39 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { authenticateIngest } from "@/lib/ingest-token";
+import { authenticateIngestRequest } from "@/lib/ingest-auth";
 import { apiError, internalError } from "@/lib/api-error";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
 import { logger } from "@/lib/logger";
+import { preflight, withCors } from "@/lib/ingest-cors";
+import { createDedupCache, seenRecently } from "@/lib/ingest-dedup";
 import type { Zone, ZoneType } from "@/generated/prisma/client";
 
 const ingestLimiter = createLimiter({ windowMs: 60_000, max: 60 });
+
+// Dedup 2s por (userId, to.zoneId): si Loot Vigil Y extension reportan el
+// mismo cambio de zona casi simultáneamente, se acepta el primero y el
+// segundo devuelve duplicate=true sin side effects.
+const zoneChangeDedup = createDedupCache(2_000);
+
+// Portal embebido en zone-change body — viene de Event 284 del sniffer
+// que observa exits visibles al entrar a una zona TNL. `maxCapacity` y
+// `standardLifetimeSec` son los defaults fase 1 (7/28800).
+const portalInlineSchema = z.object({
+  id: z.number().int(),
+  mode: z.number().int().optional(),
+  pos: z.object({ x: z.number(), z: z.number() }).optional(),
+  raw4: z.number().int().optional(),
+  raw5: z.number().int().optional(),
+  maxCapacity: z.union([z.literal(2), z.literal(5), z.literal(7), z.literal(10), z.literal(20)]),
+  standardLifetimeSec: z.number().int().positive().max(24 * 60 * 60),
+});
 
 const zoneRefSchema = z.object({
   zoneId: z.string().min(1).max(100),
   mapName: z.string().min(1).max(100),
   zoneType: z.string().min(1).max(40),
+  portals: z.array(portalInlineSchema).max(10).optional(),
 });
 
 const payloadSchema = z.object({
@@ -20,6 +41,7 @@ const payloadSchema = z.object({
   to: zoneRefSchema,
   timestamp: z.string().datetime(),
   eventSource: z.string().max(40).optional(),
+  source: z.enum(["extension", "loot-vigil"]).optional(),
 });
 
 function mapExternalToZoneType(externalType: string): ZoneType {
@@ -29,7 +51,7 @@ function mapExternalToZoneType(externalType: string): ZoneType {
   return "OUTLANDS";
 }
 
-// "Inside Avalon" = prefix TNL- del zoneId. Autoritativo según Loot Vigil Claude.
+// "Inside Avalon" = prefix TNL- del zoneId. Autoritativo.
 function isInsideAvalon(zoneId: string): boolean {
   return zoneId.startsWith("TNL-");
 }
@@ -56,7 +78,6 @@ async function resolveZone(ref: { zoneId: string; mapName: string; zoneType: str
   });
 }
 
-// ¿El edge {zoneA, zoneB} ya existe en la ruta en cualquier dirección?
 async function edgeExistsInRoute(routeId: string, zoneA: number, zoneB: number): Promise<boolean> {
   const hop = await prisma.routeHop.findFirst({
     where: {
@@ -71,20 +92,14 @@ async function edgeExistsInRoute(routeId: string, zoneA: number, zoneB: number):
   return hop !== null;
 }
 
-// ¿La zona zoneId aparece como nodo (from o to) en alguna hop de la ruta?
 async function zoneInRoute(routeId: string, zoneId: number): Promise<boolean> {
   const hop = await prisma.routeHop.findFirst({
-    where: {
-      routeId,
-      OR: [{ fromZoneId: zoneId }, { toZoneId: zoneId }],
-    },
+    where: { routeId, OR: [{ fromZoneId: zoneId }, { toZoneId: zoneId }] },
     select: { id: true },
   });
   return hop !== null;
 }
 
-// Busca una ruta activa del user/clan que contenga la zona dada como nodo.
-// Prefiere la más recientemente actualizada.
 async function findRouteContainingZone(
   zoneId: number,
   clanId: string,
@@ -115,22 +130,54 @@ async function nextHopOrder(routeId: string): Promise<number> {
 const DEFAULT_PORTAL_SIZE = 20;
 const DEFAULT_EXPIRES_MS = 2 * 60 * 60 * 1000;
 
+// Registra portales inline del body (Event 284) como hops WATCHED del
+// currentZone hacia cada exit. No rompe el state machine principal — son
+// hops adicionales informativos al lado del hop activo de traversal.
+async function registerInlinePortals(
+  routeId: string,
+  currentZone: Zone,
+  portals: z.infer<typeof portalInlineSchema>[],
+): Promise<number> {
+  let created = 0;
+  for (const p of portals) {
+    // No tenemos destino-zone directo del packet (solo pos + mode). Hoy los
+    // dejamos solo como portal count en log; la resolución del destino real
+    // se hace cuando el jugador cruza (zone-change subsiguiente) o cuando
+    // portal-snapshot OCR da el nombre. Así que aquí solo incrementamos.
+    created++;
+  }
+  if (created > 0) {
+    logger.info({ routeId, zoneName: currentZone.name, portalCount: created }, "ingest: inline portals seen (pending destName)");
+  }
+  return created;
+}
+
+export async function OPTIONS(request: Request): Promise<Response> {
+  return preflight(request);
+}
+
 export async function POST(request: Request) {
-  const auth = await authenticateIngest(request);
-  if (!auth.ok) return apiError("UNAUTHORIZED", 401, `Token ${auth.reason}`);
+  const identity = await authenticateIngestRequest(request);
+  if (!identity.ok) {
+    return withCors(request, apiError("UNAUTHORIZED", 401, `Auth ${identity.reason}`));
+  }
+  if (!identity.targetClanId) {
+    return withCors(request, apiError("VALIDATION_ERROR", 400, "Sin clan asociado"));
+  }
 
-  const user = await prisma.user.findUnique({
-    where: { id: auth.userId },
-    select: { isSuperAdmin: true },
-  });
-  if (!user?.isSuperAdmin) return apiError("INSUFFICIENT_ROLE", 403, "Sin permisos");
-
-  const rl = consumeToken(ingestLimiter, auth.tokenId);
-  if (!rl.ok) return apiError("RATE_LIMITED", 429, "Demasiadas peticiones", { retryAfterMs: rl.retryAfterMs });
+  const rateKey = identity.via === "bearer" ? (identity.tokenId ?? identity.userId) : identity.userId;
+  const rl = consumeToken(ingestLimiter, rateKey);
+  if (!rl.ok) {
+    const res = apiError("RATE_LIMITED", 429, "Demasiadas peticiones", { retryAfterMs: rl.retryAfterMs });
+    res.headers.set("Retry-After", "5");
+    return withCors(request, res);
+  }
 
   const body = await request.json().catch(() => null);
   const parsed = payloadSchema.safeParse(body);
-  if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Payload inválido", { issues: parsed.error.issues });
+  if (!parsed.success) {
+    return withCors(request, apiError("VALIDATION_ERROR", 400, "Payload inválido", { issues: parsed.error.issues }));
+  }
 
   try {
     const fromZone = await resolveZone(parsed.data.from);
@@ -141,21 +188,22 @@ export async function POST(request: Request) {
     const nowTs = new Date(parsed.data.timestamp);
 
     if (!fromAvalon && !toAvalon) {
-      return NextResponse.json({ action: "noop", reason: "both outside Avalon" }, { status: 202 });
+      return withCors(request, NextResponse.json({ action: "noop", reason: "both outside Avalon", closed: false }, { status: 202 }));
+    }
+
+    // Dedup 2s por (userId, to.zoneId).
+    const dedupKey = `${identity.userId}|${parsed.data.to.zoneId}`;
+    if (seenRecently(zoneChangeDedup, dedupKey)) {
+      return withCors(request, NextResponse.json({ duplicate: true, closed: false }, { status: 202 }));
     }
 
     const session = await prisma.snifferSession.upsert({
-      where: { userId: auth.userId },
-      create: { userId: auth.userId, lastEventAt: nowTs },
+      where: { userId: identity.userId },
+      create: { userId: identity.userId, lastEventAt: nowTs },
       update: { lastEventAt: nowTs },
     });
 
     // ===== Decidir qué Route es el "target" =====
-    // Prioridad:
-    //   1. session.currentRouteId, si la zona origen ya aparece en ese grafo
-    //   2. Cualquier ruta activa del user/clan que contenga fromZone
-    //   3. Cualquier ruta activa que contenga toZone (re-entrando a un grafo ya conocido)
-    //   4. Si nada, crear nueva — solo si toAvalon (si no, noop)
     let targetRouteId: string | null = session.currentRouteId ?? null;
 
     if (targetRouteId) {
@@ -164,23 +212,22 @@ export async function POST(request: Request) {
     }
 
     if (!targetRouteId) {
-      targetRouteId = await findRouteContainingZone(fromZone.id, auth.targetClanId, auth.userId);
+      targetRouteId = await findRouteContainingZone(fromZone.id, identity.targetClanId, identity.userId);
     }
     if (!targetRouteId) {
-      targetRouteId = await findRouteContainingZone(toZone.id, auth.targetClanId, auth.userId);
+      targetRouteId = await findRouteContainingZone(toZone.id, identity.targetClanId, identity.userId);
     }
 
-    // ===== Ningún grafo conocido + no entras a Avalon = ignorar =====
     if (!targetRouteId && !toAvalon) {
-      return NextResponse.json({ action: "noop", reason: "no route context" }, { status: 202 });
+      return withCors(request, NextResponse.json({ action: "noop", reason: "no route context", closed: false }, { status: 202 }));
     }
 
-    // ===== Crear grafo nuevo (primera vez entrando a una zona no conocida) =====
+    // ===== Crear grafo nuevo =====
     if (!targetRouteId) {
       const route = await prisma.route.create({
         data: {
-          clanId: auth.targetClanId,
-          createdById: auth.userId,
+          clanId: identity.targetClanId,
+          createdById: identity.userId,
           status: "ACTIVE",
           notes: "auto-sniffer",
           hops: {
@@ -195,28 +242,34 @@ export async function POST(request: Request) {
         },
       });
       await prisma.snifferSession.update({
-        where: { userId: auth.userId },
+        where: { userId: identity.userId },
         data: { currentRouteId: route.id, currentZoneId: toZone.id },
       });
-      logger.info({ userId: auth.userId, routeId: route.id }, "sniffer: new graph opened");
-      return NextResponse.json({ action: "open", routeId: route.id, hopOrder: 0 }, { status: 202 });
+      if (toAvalon && parsed.data.to.portals?.length) {
+        await registerInlinePortals(route.id, toZone, parsed.data.to.portals);
+      }
+      logger.info({ userId: identity.userId, routeId: route.id }, "sniffer: new graph opened");
+      return withCors(request, NextResponse.json({ action: "open", routeId: route.id, hopOrder: 0, closed: false }, { status: 202 }));
     }
 
-    // ===== Backtrack: edge ya existe en el grafo =====
+    // ===== Backtrack =====
     const alreadyTraversed = await edgeExistsInRoute(targetRouteId, fromZone.id, toZone.id);
     if (alreadyTraversed) {
       await prisma.snifferSession.update({
-        where: { userId: auth.userId },
+        where: { userId: identity.userId },
         data: { currentRouteId: targetRouteId, currentZoneId: toZone.id },
       });
+      if (toAvalon && parsed.data.to.portals?.length) {
+        await registerInlinePortals(targetRouteId, toZone, parsed.data.to.portals);
+      }
       logger.info(
-        { userId: auth.userId, routeId: targetRouteId, fromZoneId: fromZone.id, toZoneId: toZone.id },
+        { userId: identity.userId, routeId: targetRouteId, fromZoneId: fromZone.id, toZoneId: toZone.id },
         "sniffer: backtrack (edge known)",
       );
-      return NextResponse.json({ action: "backtrack", routeId: targetRouteId }, { status: 202 });
+      return withCors(request, NextResponse.json({ action: "backtrack", routeId: targetRouteId, closed: false }, { status: 202 }));
     }
 
-    // ===== Extender grafo con edge nuevo =====
+    // ===== Extender =====
     const order = await nextHopOrder(targetRouteId);
     await prisma.routeHop.create({
       data: {
@@ -233,20 +286,30 @@ export async function POST(request: Request) {
       data: { version: { increment: 1 } },
     });
     await prisma.snifferSession.update({
-      where: { userId: auth.userId },
+      where: { userId: identity.userId },
       data: { currentRouteId: targetRouteId, currentZoneId: toZone.id },
     });
+    if (toAvalon && parsed.data.to.portals?.length) {
+      await registerInlinePortals(targetRouteId, toZone, parsed.data.to.portals);
+    }
+
+    // `closed` en la respuesta es informativo: señaliza que el jugador SALIÓ
+    // de Avalon en esta transición (útil para UX del cliente), pero la Route
+    // sigue ACTIVE — diseño persistent graph: el jugador puede re-entrar y
+    // continuar en el mismo grafo por otra rama. Cerrar manualmente se hace
+    // desde la UI via PATCH status=DISABLED.
+    const closedSignal = fromAvalon && !toAvalon;
     logger.info(
-      { userId: auth.userId, routeId: targetRouteId, hopOrder: order, fromAvalon, toAvalon },
-      fromAvalon && !toAvalon
-        ? "sniffer: exit edge recorded (route stays open)"
-        : "sniffer: edge appended",
+      { userId: identity.userId, routeId: targetRouteId, hopOrder: order, closedSignal },
+      closedSignal ? "sniffer: exit edge recorded (route stays active)" : "sniffer: edge appended",
     );
-    return NextResponse.json(
-      { action: "extend", routeId: targetRouteId, hopOrder: order },
-      { status: 202 },
-    );
+    return withCors(request, NextResponse.json({
+      action: "extend",
+      routeId: targetRouteId,
+      hopOrder: order,
+      closed: false,
+    }, { status: 202 }));
   } catch (err) {
-    return internalError(err);
+    return withCors(request, internalError(err));
   }
 }
