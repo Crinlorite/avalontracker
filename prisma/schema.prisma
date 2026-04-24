@@ -83,7 +83,6 @@ model User {
   email            String       @unique
   displayName      String?
   image            String?
-  isSuperAdmin     Boolean      @default(false)
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 
