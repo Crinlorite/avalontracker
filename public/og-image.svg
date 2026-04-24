@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Avalon Tracker — Caminos de Avalon en vivo para tu clan">
+  <defs>
+    <!-- Deep navy base with a soft indigo glow from the center -->
+    <radialGradient id="bg" cx="50%" cy="45%" r="70%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="60%" stop-color="#0b0a2e"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </radialGradient>
+
+    <!-- Indigo → violet gradient for the title -->
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a5b4fc"/>
+      <stop offset="55%" stop-color="#c4b5fd"/>
+      <stop offset="100%" stop-color="#e9d5ff"/>
+    </linearGradient>
+
+    <!-- Subtle glow filter for highlights -->
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="strongGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Radial gradient for the highlighted portal node -->
+    <radialGradient id="portalGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f5d0fe"/>
+      <stop offset="50%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#7e22ce" stop-opacity="0.2"/>
+    </radialGradient>
+
+    <!-- Diagonal hairline grid (barely visible, adds depth) -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#312e81" stroke-width="0.5" stroke-opacity="0.3"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- ═════════════ Roads-of-Avalon graph — top band ═════════════ -->
+  <!-- Node edges: each a faint line connecting the portal dots.
+       The graph sits above/behind the title band, evoking the
+       interconnected portal network without competing with text. -->
+  <g stroke="#6366f1" stroke-width="1.5" fill="none" stroke-opacity="0.55">
+    <line x1="90"   y1="140" x2="215"  y2="95"/>
+    <line x1="215"  y1="95"  x2="345"  y2="175"/>
+    <line x1="345"  y1="175" x2="475"  y2="105"/>
+    <line x1="475"  y1="105" x2="605"  y2="195"/>
+    <line x1="605"  y1="195" x2="745"  y2="130"/>
+    <line x1="745"  y1="130" x2="875"  y2="210"/>
+    <line x1="875"  y1="210" x2="1005" y2="115"/>
+    <line x1="1005" y1="115" x2="1120" y2="210"/>
+    <line x1="215"  y1="95"  x2="345"  y2="55"/>
+    <line x1="475"  y1="105" x2="560"  y2="50"/>
+    <line x1="745"  y1="130" x2="820"  y2="60"/>
+    <line x1="1005" y1="115" x2="1090" y2="65"/>
+  </g>
+
+  <!-- Plain portal nodes on the top band -->
+  <g fill="#818cf8">
+    <circle cx="90"   cy="140" r="4.5"/>
+    <circle cx="215"  cy="95"  r="4.5"/>
+    <circle cx="345"  cy="175" r="4.5"/>
+    <circle cx="475"  cy="105" r="4.5"/>
+    <circle cx="605"  cy="195" r="5"/>
+    <circle cx="745"  cy="130" r="4.5"/>
+    <circle cx="875"  cy="210" r="4.5"/>
+    <circle cx="1005" cy="115" r="4.5"/>
+    <circle cx="1120" cy="210" r="4.5"/>
+    <circle cx="345"  cy="55"  r="3.5" opacity="0.7"/>
+    <circle cx="560"  cy="50"  r="3.5" opacity="0.7"/>
+    <circle cx="820"  cy="60"  r="3.5" opacity="0.7"/>
+    <circle cx="1090" cy="65"  r="3.5" opacity="0.7"/>
+  </g>
+
+  <!-- ═════════════ Roads-of-Avalon graph — bottom band ═════════════ -->
+  <g stroke="#6366f1" stroke-width="1.5" fill="none" stroke-opacity="0.55">
+    <line x1="75"   y1="500" x2="205"  y2="555"/>
+    <line x1="205"  y1="555" x2="355"  y2="490"/>
+    <line x1="355"  y1="490" x2="495"  y2="570"/>
+    <line x1="495"  y1="570" x2="635"  y2="495"/>
+    <line x1="635"  y1="495" x2="770"  y2="560"/>
+    <line x1="770"  y1="560" x2="910"  y2="490"/>
+    <line x1="910"  y1="490" x2="1045" y2="555"/>
+    <line x1="1045" y1="555" x2="1155" y2="490"/>
+    <line x1="205"  y1="555" x2="275"  y2="595"/>
+    <line x1="495"  y1="570" x2="420"  y2="600"/>
+    <line x1="770"  y1="560" x2="690"  y2="605"/>
+    <line x1="1045" y1="555" x2="975"  y2="600"/>
+  </g>
+
+  <g fill="#818cf8">
+    <circle cx="75"   cy="500" r="4.5"/>
+    <circle cx="205"  cy="555" r="4.5"/>
+    <circle cx="355"  cy="490" r="4.5"/>
+    <circle cx="495"  cy="570" r="4.5"/>
+    <circle cx="635"  cy="495" r="4.5"/>
+    <circle cx="770"  cy="560" r="5"/>
+    <circle cx="910"  cy="490" r="4.5"/>
+    <circle cx="1045" cy="555" r="4.5"/>
+    <circle cx="1155" cy="490" r="4.5"/>
+    <circle cx="275"  cy="595" r="3.5" opacity="0.7"/>
+    <circle cx="420"  cy="600" r="3.5" opacity="0.7"/>
+    <circle cx="690"  cy="605" r="3.5" opacity="0.7"/>
+    <circle cx="975"  cy="600" r="3.5" opacity="0.7"/>
+  </g>
+
+  <!-- ═════════════ Featured portal (pulse ring + glowing core) ═════════════ -->
+  <!-- Placed to the left of the wordmark so the eye reads portal → name. -->
+  <g transform="translate(135 315)">
+    <!-- Outer pulse ring -->
+    <circle r="62" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-opacity="0.35"/>
+    <circle r="46" fill="none" stroke="#c084fc" stroke-width="2"   stroke-opacity="0.55"/>
+    <!-- Portal core -->
+    <circle r="30" fill="url(#portalGrad)" filter="url(#strongGlow)"/>
+    <!-- Tick marks indicating a countdown timer (the "expiring hop") -->
+    <g stroke="#e9d5ff" stroke-width="2" stroke-linecap="round">
+      <line x1="0" y1="-44" x2="0" y2="-38"/>
+      <line x1="38" y1="22" x2="44" y2="25"/>
+      <line x1="-38" y1="22" x2="-44" y2="25"/>
+    </g>
+  </g>
+
+  <!-- ═════════════ Wordmark ═════════════ -->
+  <g font-family="Inter, 'Segoe UI', system-ui, -apple-system, sans-serif">
+    <!-- Kicker above title, tiny letter-spaced label -->
+    <text x="600" y="255" text-anchor="middle"
+          font-size="20" font-weight="600"
+          fill="#a5b4fc" letter-spacing="8" opacity="0.9">
+      ALBION ONLINE · CLAN COMPANION
+    </text>
+
+    <!-- Main wordmark -->
+    <text x="600" y="360" text-anchor="middle"
+          font-size="108" font-weight="800"
+          fill="url(#titleGrad)"
+          filter="url(#softGlow)">
+      Avalon Tracker
+    </text>
+
+    <!-- Tagline -->
+    <text x="600" y="415" text-anchor="middle"
+          font-size="30" font-weight="500"
+          fill="#cbd5e1" letter-spacing="1.5">
+      Caminos de Avalon en vivo · coordinación de clan
+    </text>
+  </g>
+
+  <!-- ═════════════ Mirror portal on the right for balance ═════════════ -->
+  <g transform="translate(1065 315)" opacity="0.85">
+    <circle r="48" fill="none" stroke="#818cf8" stroke-width="1" stroke-opacity="0.3"/>
+    <circle r="34" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-opacity="0.4"/>
+    <circle r="22" fill="url(#portalGrad)" filter="url(#softGlow)" opacity="0.7"/>
+  </g>
+
+  <!-- ═════════════ Brand footer ═════════════ -->
+  <g font-family="Inter, 'Segoe UI', system-ui, -apple-system, sans-serif"
+     text-anchor="middle">
+    <text x="600" y="595" font-size="18" font-weight="600"
+          fill="#64748b" letter-spacing="6">
+      BY CRINTECH STUDIOS · avalon.crintech.pro
+    </text>
+  </g>
+</svg>
