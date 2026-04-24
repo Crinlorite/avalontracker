@@ -6,14 +6,12 @@ import type { AppRole } from "@/generated/prisma/client";
 import { canCreate, canDelete } from "@/lib/role-ui";
 import toast from "react-hot-toast";
 import { mutate as globalMutate } from "swr";
-import { CreateRouteModal } from "./CreateRouteModal";
 import { AppendHopModal } from "./AppendHopModal";
 import { MergeRoutesModal } from "./MergeRoutesModal";
 import { useParams } from "next/navigation";
 
 export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole: AppRole | null }) {
   const { clanId } = useParams() as { clanId: string };
-  const [showCreate, setShowCreate] = useState(false);
   const [appendTo, setAppendTo] = useState<RouteView | null>(null);
   const [mergeInto, setMergeInto] = useState<RouteView | null>(null);
   const [pushingId, setPushingId] = useState<string | null>(null);
@@ -57,13 +55,6 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-white">Rutas ({routes.length})</h1>
-        {canEdit && (
-          <button onClick={() => setShowCreate(true)} className="rounded bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">+ Nueva</button>
-        )}
-      </div>
-
       {routes.length === 0 ? (
         <div className="rounded-lg border border-slate-800 bg-slate-900 p-8 text-center text-slate-400">Sin rutas activas.</div>
       ) : (
@@ -157,7 +148,6 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
         </div>
       )}
 
-      {showCreate && <CreateRouteModal clanId={clanId} onClose={() => setShowCreate(false)} onCreated={() => setShowCreate(false)} />}
       {appendTo && (
         <AppendHopModal
           clanId={clanId}
