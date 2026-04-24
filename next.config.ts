@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.discordapp.com" },
     ],
   },
+  // URL limpia y estable para la privacy policy de la Chrome extension
+  // (requisito de Chrome Web Store). El archivo real vive en
+  // public/extension-privacy.html.
+  async rewrites() {
+    return [
+      { source: "/extension-privacy", destination: "/extension-privacy.html" },
+    ];
+  },
   async headers() {
     // CSP intencionadamente permisivo en script-src/style-src ('unsafe-inline')
     // porque Next App Router requiere inline para hidratación. Cierra cargas
