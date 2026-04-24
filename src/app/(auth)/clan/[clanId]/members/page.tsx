@@ -11,7 +11,7 @@ import type { AppRole } from "@/generated/prisma/client";
 
 type MemberRow = {
   id: number; userId: string; appRole: AppRole | null; roleSource: string | null; lastSyncAt: string | null; joinedAt: string;
-  user: { id: string; discordUsername: string; globalNickname: string | null; displayName: string | null; discordAvatar: string | null; discordId: string };
+  user: { id: string; discordUsername: string; globalNickname: string | null; displayName: string | null; avatarUrl: string };
 };
 
 export default function MembersPage() {
@@ -53,11 +53,8 @@ export default function MembersPage() {
             {members.map((m) => (
               <tr key={m.id}>
                 <td className="flex items-center gap-3 px-3 py-2">
-                  {m.user.discordAvatar ? (
-                    <Image src={`https://cdn.discordapp.com/avatars/${m.user.discordId}/${m.user.discordAvatar}.png`} alt="" width={32} height={32} className="rounded-full" />
-                  ) : (
-                    <div className="h-8 w-8 rounded-full bg-indigo-700" />
-                  )}
+                  <Image src={m.user.avatarUrl} alt="" width={32} height={32} className="rounded-full" />
+
                   <div>
                     <div className="font-medium text-white">
                       {m.user.displayName ?? m.user.globalNickname ?? m.user.discordUsername}
@@ -72,17 +69,22 @@ export default function MembersPage() {
                 <td className="px-3 py-2 text-slate-500">{m.lastSyncAt ? new Date(m.lastSyncAt).toLocaleString("es-ES") : "—"}</td>
                 {amAdmin && (
                   <td className="px-3 py-2 text-right">
-                    {editing === m.id ? (
-                      <span className="flex gap-1">
-                        <input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Nombre override" maxLength={40} className="w-40 rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-white" />
-                        <button onClick={() => saveOverride(m.id)} className="rounded bg-green-600 px-2 py-1 text-xs text-white">OK</button>
-                        <button onClick={() => setEditing(null)} className="rounded border border-slate-700 px-2 py-1 text-xs text-slate-300">X</button>
-                      </span>
-                    ) : (
-                      <button onClick={() => { setEditing(m.id); setNewName(m.user.displayName ?? ""); }} className="text-xs text-indigo-400 hover:text-indigo-300">
-                        Renombrar
-                      </button>
-                    )}
+                    {/* displayName es campo global del User — por privacy fix
+                        solo el propio user puede editarlo. Admin del clan NO
+                        puede renombrar a otros. */}
+                    {m.userId === me?.id ? (
+                      editing === m.id ? (
+                        <span className="flex gap-1">
+                          <input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Nombre" maxLength={40} className="w-40 rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-white" />
+                          <button onClick={() => saveOverride(m.id)} className="rounded bg-green-600 px-2 py-1 text-xs text-white">OK</button>
+                          <button onClick={() => setEditing(null)} className="rounded border border-slate-700 px-2 py-1 text-xs text-slate-300">X</button>
+                        </span>
+                      ) : (
+                        <button onClick={() => { setEditing(m.id); setNewName(m.user.displayName ?? ""); }} className="text-xs text-indigo-400 hover:text-indigo-300">
+                          Renombrar
+                        </button>
+                      )
+                    ) : null}
                   </td>
                 )}
               </tr>
