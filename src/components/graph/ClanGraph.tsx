@@ -6,14 +6,15 @@ import { ZoneNode } from "./ZoneNode";
 import { RouteEdge } from "./RouteEdge";
 import { computeLayout } from "./graph-layout";
 import type { RouteView } from "@/hooks/useClanRoutes";
+import type { ClanAnchorZone } from "@/hooks/useClan";
 
 const nodeTypes = { zone: ZoneNode };
 const edgeTypes = { route: RouteEdge };
 
 export function ClanGraph({
-  routes, anchorZoneName, onNodeClick,
-}: { routes: RouteView[]; anchorZoneName: string | null; onNodeClick: (zoneName: string) => void }) {
-  const computed = useMemo(() => computeLayout(routes, anchorZoneName), [routes, anchorZoneName]);
+  routes, anchor, onNodeClick,
+}: { routes: RouteView[]; anchor: ClanAnchorZone | null; onNodeClick: (zoneName: string) => void }) {
+  const computed = useMemo(() => computeLayout(routes, anchor), [routes, anchor]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);

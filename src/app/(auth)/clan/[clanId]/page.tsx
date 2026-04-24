@@ -28,6 +28,7 @@ export default function ClanGraphPage() {
 
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [showCreate, setShowCreate] = useState(false);
+  const [createFromZone, setCreateFromZone] = useState<string | undefined>(undefined);
   const [showMerge, setShowMerge] = useState(false);
   const [branchFrom, setBranchFrom] = useState<{ route: RouteView; zoneName: string } | null>(null);
 
@@ -44,11 +45,15 @@ export default function ClanGraphPage() {
 
   if (isLoading) return <div className="text-slate-400">Cargando grafo…</div>;
 
-  const anchorName = clan?.anchorZoneId
-    ? routes.flatMap((r) => r.hops).find((h) => h.fromZone.id === clan.anchorZoneId)?.fromZone.name
-      ?? routes.flatMap((r) => r.hops).find((h) => h.toZone.id === clan.anchorZoneId)?.toZone.name
-      ?? null
-    : null;
+  // anchor: clan.anchorZone trae el metadata completo del API — lo usamos
+  // tanto para el label del header como para inyectar el nodo en el grafo
+  // incluso si aún no hay rutas que lo crucen. Si no hay anchor configurado,
+  // derivamos un fallback name desde la primera hop para el header.
+  const anchor = clan?.anchorZone ?? null;
+  const anchorName = anchor?.name
+    ?? routes.flatMap((r) => r.hops).find((h) => h.fromZone.id === clan?.anchorZoneId)?.fromZone.name
+    ?? routes.flatMap((r) => r.hops).find((h) => h.toZone.id === clan?.anchorZoneId)?.toZone.name
+    ?? null;
 
   const canMerge = canDelete(myRole) && routes.length >= 2;
 
@@ -72,7 +77,7 @@ export default function ClanGraphPage() {
           )}
           {canCreate(myRole) && (
             <button
-              onClick={() => setShowCreate(true)}
+              onClick={() => { setCreateFromZone(undefined); setShowCreate(true); }}
               className="rounded bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-500"
             >
               + Nueva ruta
@@ -81,20 +86,30 @@ export default function ClanGraphPage() {
         </div>
       </header>
 
-      <ClanGraph routes={routes} anchorZoneName={anchorName} onNodeClick={(name) => setSelectedZone(name)} />
+      <ClanGraph routes={routes} anchor={anchor} onNodeClick={(name) => setSelectedZone(name)} />
 
       {selectedZone && (
         <ZoneSidePanel
           zoneName={selectedZone}
           routes={routes}
           onClose={() => setSelectedZone(null)}
-          onCreateFromHere={() => { setShowCreate(true); }}
+          onCreateFromHere={() => {
+            setCreateFromZone(selectedZone);
+            setShowCreate(true);
+          }}
           onBranchFromHere={(route) => setBranchFrom({ route, zoneName: selectedZone })}
           myRole={myRole}
         />
       )}
 
-      {showCreate && <CreateRouteModal clanId={clanId} onClose={() => setShowCreate(false)} onCreated={() => setShowCreate(false)} />}
+      {showCreate && (
+        <CreateRouteModal
+          clanId={clanId}
+          defaultFromZone={createFromZone}
+          onClose={() => { setShowCreate(false); setCreateFromZone(undefined); }}
+          onCreated={() => { setShowCreate(false); setCreateFromZone(undefined); }}
+        />
+      )}
       {showMerge && (
         <MergeRoutesPicker
           clanId={clanId}

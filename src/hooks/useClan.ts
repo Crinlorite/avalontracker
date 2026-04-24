@@ -5,6 +5,9 @@ export type ClanAnchorZone = {
   name: string;
   type: "AVALON" | "ROYAL" | "OUTLANDS";
   tier: number | null;
+  hasHideout: boolean;
+  isRest: boolean;
+  isCapital: boolean;
 };
 
 export type ClanDetail = {

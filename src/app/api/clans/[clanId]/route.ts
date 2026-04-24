@@ -35,7 +35,7 @@ export async function GET(_req: Request, { params }: RouteParams) {
     where: { id: clanId },
     include: {
       _count: { select: { members: true, routes: true } },
-      anchorZone: { select: { id: true, name: true, type: true, tier: true } },
+      anchorZone: { select: { id: true, name: true, type: true, tier: true, hasHideout: true, isRest: true, isCapital: true } },
     },
   });
   if (!clan) return apiError("NOT_FOUND", 404, "Clan no encontrado");
