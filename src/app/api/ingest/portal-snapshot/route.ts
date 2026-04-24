@@ -20,8 +20,12 @@ const portalSchema = z.object({
   hours: z.number().int().min(0).max(48),
   minutes: z.number().int().min(0).max(59),
   timerMinutes: z.number().int().min(0).max(48 * 60),
-  usesUsed: z.number().int().min(0).max(40),
-  usesMax: z.union([z.literal(2), z.literal(5), z.literal(7), z.literal(10), z.literal(20)]),
+  // usesUsed/usesMax opcionales — el OCR de Loot Vigil a veces pierde la
+  // línea de capacidad por el padlock icon que confunde Tesseract (issue #12).
+  // Cuando faltan, el hop se guarda con portalSize default (20) y se podrá
+  // enriquecer luego vía otro snapshot o con Event 284 inline cuando exista.
+  usesUsed: z.number().int().min(0).max(40).optional(),
+  usesMax: z.union([z.literal(2), z.literal(5), z.literal(7), z.literal(10), z.literal(20)]).optional(),
 });
 
 const payloadSchema = z.object({
@@ -130,13 +134,25 @@ export async function POST(request: Request) {
       });
 
       const expiresAt = new Date(Date.now() + portal.timerMinutes * 60_000);
+      // usesMax puede venir undefined si el OCR falló en la capacidad.
+      // Usamos 20 como fallback (portalSize Int no-null en schema) —
+      // coincide con el default del auto-sniffer. Se podrá refinar con
+      // otro snapshot que sí capture la capacidad.
+      const PORTAL_SIZE_FALLBACK = 20;
+      const effectivePortalSize = portal.usesMax ?? PORTAL_SIZE_FALLBACK;
 
       if (existingHop) {
         // Match: refrescamos timer si el nuevo es posterior al existente.
+        // NO pisamos portalSize existente con el fallback — solo lo
+        // actualizamos si el nuevo snapshot trae una capacidad explícita.
         if (expiresAt > existingHop.expiresAt) {
           await prisma.routeHop.update({
             where: { id: existingHop.id },
-            data: { expiresAt, portalSize: portal.usesMax, status: "ACTIVE" },
+            data: {
+              expiresAt,
+              status: "ACTIVE",
+              ...(portal.usesMax !== undefined ? { portalSize: portal.usesMax } : {}),
+            },
           });
         }
         matched++;
@@ -171,7 +187,7 @@ export async function POST(request: Request) {
           order: nextOrder,
           fromZoneId: currentZone.id,
           toZoneId: destZone.id,
-          portalSize: portal.usesMax,
+          portalSize: effectivePortalSize,
           expiresAt,
           status: "WATCHED",
         },
