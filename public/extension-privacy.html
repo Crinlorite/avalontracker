@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index,follow">
+<title>Privacy Policy — Avalon Tracker Extension</title>
+<meta name="description" content="Privacy policy for the Avalon Tracker Chrome extension for Albion Online route capture.">
+<style>
+  :root {
+    --bg: #0e0e14;
+    --surface: #181824;
+    --fg: #e8e8f0;
+    --muted: #a0a0b0;
+    --accent: #7c5cfc;
+    --accent-2: #fbbf24;
+    --border: rgba(255,255,255,0.08);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font: 15px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, sans-serif;
+    max-width: 820px; margin: 0 auto; padding: 48px 24px 120px;
+  }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 40px; }
+  h1 { margin: 0; font-size: 28px; color: var(--accent-2); letter-spacing: 0.3px; }
+  .lede { margin-top: 10px; color: var(--muted); font-size: 14px; }
+  h2 { margin-top: 44px; font-size: 20px; color: var(--fg); letter-spacing: 0.2px; }
+  h3 { margin-top: 28px; font-size: 16px; color: var(--fg); }
+  ul, ol { padding-left: 22px; }
+  li { margin: 6px 0; }
+  code, kbd {
+    background: var(--surface); padding: 1px 6px; border-radius: 3px;
+    font-family: 'JetBrains Mono', Menlo, Consolas, monospace; font-size: 0.9em;
+  }
+  a { color: #7cb6ff; }
+  strong { color: #fff; }
+  em { color: var(--muted); font-style: normal; }
+  footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border);
+           color: var(--muted); font-size: 13px; }
+  .meta { display: flex; gap: 24px; flex-wrap: wrap; color: var(--muted); font-size: 13px; }
+  .box {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 16px 20px; border-radius: 6px; margin: 18px 0;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Privacy Policy</h1>
+  <p class="lede">Avalon Tracker Chrome Extension — by Crintech</p>
+  <div class="meta">
+    <span>Effective date: <strong id="effective-date">TBD (set on publication)</strong></span>
+    <span>Contact: <a href="mailto:claude@crintech.pro">claude@crintech.pro</a></span>
+  </div>
+</header>
+
+<p>This extension helps members of the <em>Celtiberos</em> Albion Online guild (and invited contributors) map the daily-randomised Avalonian Roads in <a href="https://avalon.crintech.pro">Avalon Tracker</a>.</p>
+
+<h2>What the extension does</h2>
+<p>When you press <kbd>F9</kbd>:</p>
+<ol>
+  <li>The extension asks Chrome to capture <strong>one frame of your desktop</strong> via the standard <code>chrome.desktopCapture</code> API. You explicitly grant this permission on first use and can revoke it at any time via Chrome's site settings.</li>
+  <li>The frame is <strong>cropped</strong> to the minimap region you previously outlined (via the in-extension calibrator) and preprocessed (grayscale + binary threshold) for OCR legibility.</li>
+  <li><a href="https://github.com/naptha/tesseract.js">Tesseract.js</a> — bundled locally — runs on the cropped image to extract text.</li>
+  <li>A regex parser finds portal tooltip rows (destination + timer + capacity) and the zone-title text.</li>
+  <li>The extracted fields are <strong>sent via HTTPS POST</strong> to <code>https://avalon.crintech.pro/api/ingest/portal-snapshot</code> with your existing <code>avalon.crintech.pro</code> session cookie.</li>
+</ol>
+
+<h2>Data we collect and transmit</h2>
+<div class="box">
+The POST body contains <strong>only</strong>:
+<ul>
+  <li>The portal rows parsed from OCR: destination name, timer hours + minutes, capacity used/max.</li>
+  <li>The zone-title string parsed from OCR (e.g. <em>Teros-Auiusum</em>) as <code>zoneNameGuess</code>.</li>
+  <li>A UTC timestamp of capture.</li>
+  <li>A constant <code>source: "extension"</code> tag.</li>
+</ul>
+</div>
+
+<p>We do <strong>NOT</strong> transmit:</p>
+<ul>
+  <li>Raw screenshots or image data.</li>
+  <li>Your Albion account credentials — the extension never reads Albion game files, memory, or network traffic.</li>
+  <li>Any data about other applications on your computer.</li>
+  <li>Cursor position, keyboard input, or clipboard contents.</li>
+  <li>Pixel data outside the calibrated minimap region.</li>
+</ul>
+
+<h2>Authentication</h2>
+<p>The extension does <strong>not</strong> store bearer tokens or passwords. Your identity on the tracker is established by your existing NextAuth session cookie on <code>avalon.crintech.pro</code>, which you set by signing in with Discord OAuth on the website. The extension only attaches that cookie to its own <code>fetch()</code> calls — it does not read, copy, or persist the cookie itself.</p>
+
+<h2>Permissions explained</h2>
+<ul>
+  <li><code>desktopCapture</code> — required to capture the game screen when you press F9. One-shot, user-consented, no continuous streaming.</li>
+  <li><code>offscreen</code> — hosts the image-processing DOM context (canvas + Tesseract) in a background page, since the service worker has no DOM.</li>
+  <li><code>storage</code> — persists two things locally in <code>chrome.storage.local</code>: the minimap region rectangle (from the calibrator) and the offline-retry queue of failed POSTs (drained on reconnection).</li>
+  <li><code>notifications</code> — surfaces capture results and errors via Chrome's notification system.</li>
+  <li><code>alarms</code> — wakes the service worker every 5 minutes to drain the offline queue when the tracker was temporarily down.</li>
+  <li><code>host_permissions: https://avalon.crintech.pro/*</code> — restricts the extension's network access to exactly one domain.</li>
+</ul>
+
+<h2>Third-party services</h2>
+<ul>
+  <li><strong>Avalon Tracker</strong> (<code>avalon.crintech.pro</code>) — the parsed OCR fields are sent here for use in the route graph. Data retention and handling are governed by the tracker's own privacy policy.</li>
+  <li><strong>Tesseract.js</strong> — OCR engine bundled into the extension. Runs locally in your browser; makes no network calls.</li>
+  <li>We do not use analytics, tracking, fingerprinting, or advertising SDKs.</li>
+</ul>
+
+<h2>Data retention</h2>
+<h3>Locally in your browser</h3>
+<ul>
+  <li>Minimap region rectangle: kept until you recalibrate or uninstall.</li>
+  <li>Offline queue entries: kept until successfully delivered or until the 100-item cap overflows (oldest dropped).</li>
+  <li>Last capture metadata (portal count + timestamp): overwritten on every capture.</li>
+</ul>
+<p>Uninstalling the extension clears all locally stored data.</p>
+
+<h3>On the Avalon Tracker server</h3>
+<p>Your parsed portal snapshots are associated with your Discord-linked user account on the tracker. You can request deletion by contacting the developer or revoking your access in the tracker admin panel.</p>
+
+<h2>Security</h2>
+<ul>
+  <li>All network traffic is HTTPS only (enforced by <code>host_permissions</code>).</li>
+  <li>We do not load remote scripts. All JavaScript, WASM, and assets are bundled into the extension package (MV3 CSP requirement).</li>
+  <li>The extension is <strong>not</strong> open-source at this time (private GitHub repository); source disclosure is available on request for security audit.</li>
+</ul>
+
+<h2>Changes to this policy</h2>
+<p>If the extension adds new data-collection behaviour, this policy will be updated and the extension version bumped. Material changes will be announced on the tracker home page and via an in-extension notification.</p>
+
+<h2>Contact</h2>
+<p>Questions, data deletion requests, or security reports: <a href="mailto:claude@crintech.pro">claude@crintech.pro</a></p>
+
+<footer>
+  This page is the canonical privacy policy for the Avalon Tracker Chrome Extension as listed on the Chrome Web Store. Source: <a href="https://github.com/Crinlorite/avalon-tracker-extension/blob/main/docs/privacy-policy.html">avalon-tracker-extension/docs/privacy-policy.html</a>.
+</footer>
+</body>
+</html>
