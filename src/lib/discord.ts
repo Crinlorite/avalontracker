@@ -16,7 +16,8 @@ interface RouteInfo {
 
 export async function sendRouteToDiscord(
   webhookUrl: string,
-  route: RouteInfo
+  route: RouteInfo,
+  headerText?: string,
 ) {
   // Defensa en profundidad: si por alguna ruta de update directa a BD se
   // hubiera saltado la validación de schema, aquí garantizamos que solo
@@ -61,12 +62,19 @@ export async function sendRouteToDiscord(
     timestamp: new Date().toISOString(),
   };
 
+  // headerText sale como `content` (texto encima del embed). Usamos
+  // allowed_mentions: { parse: [] } para que un usuario no pueda colar
+  // un @here / @everyone / role-ping desde el input del modal.
+  const payload: Record<string, unknown> = { embeds: [embed] };
+  if (headerText && headerText.trim()) {
+    payload.content = headerText.trim();
+    payload.allowed_mentions = { parse: [] };
+  }
+
   const response = await fetch(webhookUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      embeds: [embed],
-    }),
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {

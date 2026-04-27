@@ -15,6 +15,8 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
   const [appendTo, setAppendTo] = useState<RouteView | null>(null);
   const [mergeInto, setMergeInto] = useState<RouteView | null>(null);
   const [pushingId, setPushingId] = useState<string | null>(null);
+  const [pushTarget, setPushTarget] = useState<RouteView | null>(null);
+  const [headerDraft, setHeaderDraft] = useState("");
 
   async function disable(routeId: string, version: number) {
     const res = await fetch(`/api/clans/${clanId}/routes/${routeId}`, {
@@ -34,10 +36,19 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
     else toast.error("Error");
   }
 
-  async function pushToDiscord(routeId: string) {
+  async function confirmPush() {
+    if (!pushTarget) return;
+    const routeId = pushTarget.id;
+    const header = headerDraft.trim();
     setPushingId(routeId);
+    setPushTarget(null);
+    setHeaderDraft("");
     try {
-      const res = await fetch(`/api/clans/${clanId}/routes/${routeId}/discord-push`, { method: "POST" });
+      const res = await fetch(`/api/clans/${clanId}/routes/${routeId}/discord-push`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(header ? { headerText: header } : {}),
+      });
       const body = await res.json().catch(() => ({}));
       if (res.ok) toast.success("Enviada a Discord");
       else toast.error(body?.error?.message ?? "Error enviando a Discord");
@@ -101,7 +112,7 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
                         <div className="flex flex-wrap items-center justify-end gap-2">
                           {canEdit && (
                             <button
-                              onClick={() => pushToDiscord(r.id)}
+                              onClick={() => { setPushTarget(r); setHeaderDraft(""); }}
                               disabled={pushingId === r.id}
                               className="rounded bg-indigo-600/80 px-2 py-1 text-xs text-white hover:bg-indigo-500 disabled:opacity-50"
                               title="Enviar ruta al canal Discord del clan"
@@ -164,6 +175,51 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
           onClose={() => setMergeInto(null)}
           onMerged={() => setMergeInto(null)}
         />
+      )}
+
+      {pushTarget && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          onClick={() => { setPushTarget(null); setHeaderDraft(""); }}
+        >
+          <form
+            onClick={(e) => e.stopPropagation()}
+            onSubmit={(e) => { e.preventDefault(); confirmPush(); }}
+            className="w-full max-w-md space-y-4 rounded-xl border border-slate-700 bg-slate-900 p-6"
+          >
+            <h2 className="text-lg font-bold text-white">Enviar a Discord</h2>
+            <p className="text-xs text-slate-400">
+              Aparecerá como mensaje encima del embed de la ruta. Déjalo vacío si no quieres encabezado.
+            </p>
+            <label className="block">
+              <span className="text-sm text-slate-300">Encabezado (opcional)</span>
+              <input
+                autoFocus
+                value={headerDraft}
+                onChange={(e) => setHeaderDraft(e.target.value)}
+                maxLength={100}
+                placeholder="Ej: Thetford Portal"
+                className="mt-1 w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-white"
+              />
+              <span className="mt-1 block text-right text-[10px] text-slate-500">{headerDraft.length}/100</span>
+            </label>
+            <div className="flex justify-end gap-2 border-t border-slate-800 pt-4">
+              <button
+                type="button"
+                onClick={() => { setPushTarget(null); setHeaderDraft(""); }}
+                className="rounded border border-slate-700 px-4 py-2 text-sm text-slate-300"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                className="rounded bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
+              >
+                Enviar
+              </button>
+            </div>
+          </form>
+        </div>
       )}
     </div>
   );
