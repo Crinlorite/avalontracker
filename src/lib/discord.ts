@@ -62,12 +62,18 @@ export async function sendRouteToDiscord(
     timestamp: new Date().toISOString(),
   };
 
-  // headerText sale como `content` (texto encima del embed). Usamos
-  // allowed_mentions: { parse: [] } para que un usuario no pueda colar
-  // un @here / @everyone / role-ping desde el input del modal.
+  // headerText sale como `content` (texto encima del embed). Lo envolvemos
+  // con `# ` (h1 de Discord) — es el único mecanismo nativo para texto
+  // grande + negrita; Discord no soporta sizing arbitrario en pt.
+  // Si el usuario ya empezó con `#`/`##`/`###` se lo respetamos para que
+  // pueda elegir un nivel más pequeño si quiere.
+  // allowed_mentions: { parse: [] } evita que se cuele @here/@everyone/role
+  // desde el input del modal.
   const payload: Record<string, unknown> = { embeds: [embed] };
   if (headerText && headerText.trim()) {
-    payload.content = headerText.trim();
+    const clean = headerText.trim();
+    const alreadyHeading = /^#{1,3}\s/.test(clean);
+    payload.content = alreadyHeading ? clean : `# ${clean}`;
     payload.allowed_mentions = { parse: [] };
   }
 

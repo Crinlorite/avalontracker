@@ -189,7 +189,9 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
           >
             <h2 className="text-lg font-bold text-white">Enviar a Discord</h2>
             <p className="text-xs text-slate-400">
-              Aparecerá como mensaje encima del embed de la ruta. Déjalo vacío si no quieres encabezado.
+              Se mostrará como <span className="font-bold text-slate-200">título grande</span> encima del embed.
+              Si empiezas el texto con <code className="rounded bg-slate-800 px-1">##</code> o{" "}
+              <code className="rounded bg-slate-800 px-1">###</code> usarás un tamaño menor. Déjalo vacío para no añadir encabezado.
             </p>
             <label className="block">
               <span className="text-sm text-slate-300">Encabezado (opcional)</span>
