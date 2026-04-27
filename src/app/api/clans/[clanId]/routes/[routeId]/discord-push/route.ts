@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
@@ -11,12 +12,30 @@ import { consumeToken, createLimiter } from "@/lib/rate-limit";
 // usuario (o bot) tumbe el webhook del clan.
 const pushLimiter = createLimiter({ windowMs: 60_000, max: 10 });
 
+// headerText es texto libre que va en `content` del webhook (encima del
+// embed). 100 chars es holgado para títulos tipo "Thetford Portal abierto".
+const bodySchema = z
+  .object({ headerText: z.string().trim().max(100).optional() })
+  .strict();
+
 type RouteParams = { params: Promise<{ clanId: string; routeId: string }> };
 
-export async function POST(_req: Request, { params }: RouteParams) {
+export async function POST(req: Request, { params }: RouteParams) {
   const session = await auth();
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const { clanId, routeId } = await params;
+
+  // body es opcional: si no llega, push sin header. Si llega malformado,
+  // 400 con detalle de validación.
+  let headerText: string | undefined;
+  const raw = await req.text();
+  if (raw.trim()) {
+    let json: unknown;
+    try { json = JSON.parse(raw); } catch { return apiError("VALIDATION_ERROR", 400, "JSON inválido"); }
+    const parsed = bodySchema.safeParse(json);
+    if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Body inválido", { issues: parsed.error.issues });
+    headerText = parsed.data.headerText;
+  }
 
   try {
     await requireRoleOrSuperAdminRead(session.user.id, clanId, "CONTRIBUTOR", "WRITE");
@@ -52,17 +71,21 @@ export async function POST(_req: Request, { params }: RouteParams) {
     route.createdBy.discordUsername;
 
   try {
-    await sendRouteToDiscord(clan.discordWebhookUrl, {
-      status: route.status,
-      createdBy: createdByName,
-      hops: route.hops.map((h) => ({
-        fromZone: h.fromZone.name,
-        toZone: h.toZone.name,
-        portalSize: h.portalSize,
-        expiresAt: h.expiresAt.toISOString(),
-        status: h.status,
-      })),
-    });
+    await sendRouteToDiscord(
+      clan.discordWebhookUrl,
+      {
+        status: route.status,
+        createdBy: createdByName,
+        hops: route.hops.map((h) => ({
+          fromZone: h.fromZone.name,
+          toZone: h.toZone.name,
+          portalSize: h.portalSize,
+          expiresAt: h.expiresAt.toISOString(),
+          status: h.status,
+        })),
+      },
+      headerText,
+    );
     return NextResponse.json({ ok: true });
   } catch (e) {
     return apiError("VALIDATION_ERROR", 400, e instanceof Error ? e.message : "Error enviando a Discord");
