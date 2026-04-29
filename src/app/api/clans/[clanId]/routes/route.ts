@@ -41,13 +41,21 @@ export async function GET(request: Request, { params }: RouteParams) {
   const since = url.searchParams.get("since");
   const status = url.searchParams.get("status") as "ACTIVE" | "EXPIRED" | "DISABLED" | "ALL" | null;
 
-  // Caducidad lazy: antes de leer, transicionamos ACTIVE → EXPIRED las
-  // rutas con TODOS los hops ya vencidos. Sin cron ni scheduler — el
-  // barrido va en la propia consulta por clan. Usamos `every` para que
-  // rutas con al menos una puerta viva sigan visibles (decisión
-  // explícita: no descatalogar mientras parte de la cadena exista).
-  // `some: {}` previene el caso vacuoso de una ruta sin hops.
+  // Caducidad lazy: antes de leer hacemos dos barridos por clan, sin
+  // cron ni scheduler.
+  //   1) ACTIVE → EXPIRED si TODOS los hops están vencidos. `every` es
+  //      la decisión explícita: no descatalogar mientras parte de la
+  //      cadena siga viva. `some: {}` previene el caso vacuoso de una
+  //      ruta sin hops (Prisma evalúa `every` como true en lista vacía).
+  //   2) Hard delete de rutas EXPIRED con más de 7 días sin tocarse.
+  //      La ventana de 7 días permite recuperar una ruta caducada por
+  //      error (el endpoint de añadir hop ya resucita EXPIRED → ACTIVE).
+  //      Pasados los 7 días se asume que la ruta no volverá; las
+  //      cascadas de RouteHop (Cascade) y SnifferSession (SetNull) son
+  //      seguras.
   const now = new Date();
+  const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
   await prisma.route.updateMany({
     where: {
       clanId,
@@ -55,6 +63,14 @@ export async function GET(request: Request, { params }: RouteParams) {
       hops: { every: { expiresAt: { lt: now } }, some: {} },
     },
     data: { status: "EXPIRED" },
+  });
+
+  await prisma.route.deleteMany({
+    where: {
+      clanId,
+      status: "EXPIRED",
+      updatedAt: { lt: sevenDaysAgo },
+    },
   });
 
   const where: Record<string, unknown> = { clanId };
