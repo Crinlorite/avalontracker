@@ -41,6 +41,22 @@ export async function GET(request: Request, { params }: RouteParams) {
   const since = url.searchParams.get("since");
   const status = url.searchParams.get("status") as "ACTIVE" | "EXPIRED" | "DISABLED" | "ALL" | null;
 
+  // Caducidad lazy: antes de leer, transicionamos ACTIVE → EXPIRED las
+  // rutas con TODOS los hops ya vencidos. Sin cron ni scheduler — el
+  // barrido va en la propia consulta por clan. Usamos `every` para que
+  // rutas con al menos una puerta viva sigan visibles (decisión
+  // explícita: no descatalogar mientras parte de la cadena exista).
+  // `some: {}` previene el caso vacuoso de una ruta sin hops.
+  const now = new Date();
+  await prisma.route.updateMany({
+    where: {
+      clanId,
+      status: "ACTIVE",
+      hops: { every: { expiresAt: { lt: now } }, some: {} },
+    },
+    data: { status: "EXPIRED" },
+  });
+
   const where: Record<string, unknown> = { clanId };
   if (status && status !== "ALL") where.status = status;
   else if (!status) where.status = "ACTIVE";
@@ -56,8 +72,7 @@ export async function GET(request: Request, { params }: RouteParams) {
     take: 200,
   });
 
-  const now = new Date().toISOString();
-  return NextResponse.json({ routes, now });
+  return NextResponse.json({ routes, now: now.toISOString() });
 }
 
 export async function POST(request: Request, { params }: RouteParams) {
