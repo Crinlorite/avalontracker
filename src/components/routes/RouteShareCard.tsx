@@ -2,7 +2,7 @@
 import { forwardRef } from "react";
 import type { RouteView } from "@/hooks/useClanRoutes";
 import { nodeColorForZoneType } from "@/components/graph/graph-colors";
-import { secondsLeft, formatCountdown, colorForMinutes, minutesLeft } from "@/lib/time";
+import { colorForMinutes, minutesLeft } from "@/lib/time";
 
 // Tarjeta visual de una ruta para exportar como imagen al compartir en
 // Discord. Diseñada para capturar con html-to-image: ancho fijo, sin
@@ -10,18 +10,40 @@ import { secondsLeft, formatCountdown, colorForMinutes, minutesLeft } from "@/li
 // (cargada por el layout raíz). Inline styles para evitar que un CSS
 // no resuelto al momento de captura deje el card sin estilo.
 //
-// Branding: "Avalon Tracker · Crintech Studios" + URL en el footer.
-// Las hops se renderizan como cadena vertical: zona → label de
-// timer/portal → siguiente zona, etc.
+// Tiempos: usamos hora absoluta en UTC (== Albion Time). El countdown
+// relativo se vuelve obsoleto en cuanto la imagen llega al canal —
+// con UTC todo el clan, esté en Madrid o en LA, ve la misma hora de
+// cierre y la traduce a su huso local. El footer lo aclara.
 
 const CARD_WIDTH = 480;
 const NODE_WIDTH = 360;
+const WEEKDAY_FORMATTER = new Intl.DateTimeFormat("en-US", {
+  timeZone: "UTC",
+  weekday: "short",
+});
 
 function portalLabel(size: number): string {
   if (size === 7) return "7p";
   if (size === 20) return "20p";
   if (size === 40) return "40p (Tentáculo)";
   return `${size}p`;
+}
+
+// Formato de cierre absoluto en UTC (Albion Time). Si el cierre cae en
+// otro día UTC distinto al actual, prefijamos el día de la semana
+// (Mon/Tue/...) para evitar ambigüedad — un timer de 24h podría caer
+// en mañana sin que se note de un vistazo.
+function formatUtcClose(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "?";
+  const hh = String(d.getUTCHours()).padStart(2, "0");
+  const mm = String(d.getUTCMinutes()).padStart(2, "0");
+  const today = new Date().toISOString().slice(0, 10);
+  const closeDay = d.toISOString().slice(0, 10);
+  if (closeDay !== today) {
+    return `${WEEKDAY_FORMATTER.format(d)} ${hh}:${mm}`;
+  }
+  return `${hh}:${mm}`;
 }
 
 export const RouteShareCard = forwardRef<HTMLDivElement, { route: RouteView }>(
@@ -140,7 +162,9 @@ export const RouteShareCard = forwardRef<HTMLDivElement, { route: RouteView }>(
           ))}
         </div>
 
-        {/* Footer */}
+        {/* Footer: aclara que las horas son Albion Time (UTC+0) — sin
+            esto, alguien en otro huso podría confundir el cierre con
+            su hora local. La fecha de captura va en su zona local. */}
         <div
           style={{
             marginTop: 16,
@@ -151,10 +175,14 @@ export const RouteShareCard = forwardRef<HTMLDivElement, { route: RouteView }>(
             alignItems: "center",
             fontSize: 10,
             color: "#64748b",
+            gap: 8,
           }}
         >
-          <span>avalon.crintech.pro</span>
-          <span>{now}</span>
+          <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <span style={{ color: "#fbbf24", fontWeight: 700 }}>🕐 Albion Time</span>
+            <span>· UTC+0</span>
+          </span>
+          <span>avalon.crintech.pro · {now}</span>
         </div>
       </div>
     );
@@ -244,7 +272,9 @@ function HopArrow({
     status === "COLLAPSED" ? "#6b7280" :
     status === "WATCHED" ? "#fbbf24" :
     colorForMinutes(mins);
-  const countdown = formatCountdown(secondsLeft(expiresAt));
+  // Hora absoluta de cierre en UTC (Albion Time). Inmune al envejecer
+  // de la imagen — todo el clan ve la misma hora se vea cuando se vea.
+  const closeUtc = formatUtcClose(expiresAt);
 
   return (
     <div
@@ -268,7 +298,8 @@ function HopArrow({
           margin: "1px 0",
         }}
       >
-        <span>{countdown}</span>
+        <span style={{ color: "#94a3b8", marginRight: 4 }}>cierra</span>
+        <span style={{ fontWeight: 700 }}>{closeUtc}</span>
         <span style={{ color: "#64748b", margin: "0 4px" }}>·</span>
         <span style={{ color: "#cbd5e1" }}>{portalLabel(portalSize)}</span>
         {status === "COLLAPSED" && <span style={{ marginLeft: 4 }}>✕</span>}
