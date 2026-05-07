@@ -16,7 +16,15 @@ export function ClanGraph({
   clanId, routes, anchor, onNodeClick,
 }: { clanId: string; routes: RouteView[]; anchor: ClanAnchorZone | null; onNodeClick: (zoneName: string) => void }) {
   const computed = useMemo(() => computeLayout(routes, anchor), [routes, anchor]);
-  const { get: getCachedPosition, set: setCachedPosition } = useLayoutCache(clanId);
+  // Hash de topología: conjunto ordenado de aristas. Si la topología
+  // cambia (se añade o quita un hop), el hash cambia y la caché de
+  // posiciones se invalida automáticamente — los drags antiguos
+  // dejaban X huérfanas que colisionaban con la nueva geometría.
+  const topologyHash = useMemo(
+    () => computed.edges.map((e) => `${e.source}|${e.target}`).sort().join(";"),
+    [computed.edges],
+  );
+  const { get: getCachedPosition, set: setCachedPosition } = useLayoutCache(clanId, topologyHash);
 
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);

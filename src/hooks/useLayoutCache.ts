@@ -2,46 +2,63 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 
 type Position = { x: number; y: number };
 type PositionMap = Record<string, Position>;
+type CachedData = { topology: string; positions: PositionMap };
 
 // Versionado: bump cuando el algoritmo de auto-layout cambia de forma
 // no compatible. Las posiciones cacheadas por el usuario para nodos que
-// ya estaban en la versión anterior se descartan (lo cual es correcto:
-// el layout viejo produce posiciones que el nuevo layout no respeta).
+// ya estaban en la versión anterior se descartan.
 // v2 (2026-05-07) — multi-tree TB unificado, todo hacia el sur, edges rectos.
 const STORAGE_PREFIX = "avalon-tracker:layout:v2:";
 
-function readCache(key: string): PositionMap {
+function readCache(key: string, currentTopology: string): PositionMap {
   if (typeof window === "undefined") return {};
   try {
     const raw = window.localStorage.getItem(key);
     if (!raw) return {};
-    const parsed = JSON.parse(raw) as unknown;
-    if (parsed && typeof parsed === "object") return parsed as PositionMap;
+    const parsed = JSON.parse(raw) as Partial<CachedData> | unknown;
+    if (
+      parsed &&
+      typeof parsed === "object" &&
+      "topology" in parsed &&
+      "positions" in parsed &&
+      (parsed as CachedData).topology === currentTopology &&
+      typeof (parsed as CachedData).positions === "object"
+    ) {
+      return (parsed as CachedData).positions;
+    }
+    // topology cambiada (o formato viejo) → drop cache
     return {};
   } catch {
     return {};
   }
 }
 
-// Caché local (per-clan, per-user via localStorage del navegador) de
-// posiciones de nodos en el grafo. Permite que las posiciones que el
-// usuario arrastra a mano persistan entre recargas y entre refrescos
-// del SWR polling.
+// Caché local de posiciones de nodos en el grafo, vinculada a la
+// topología actual del grafo. Si la topología cambia (el usuario añade
+// o quita un hop), las posiciones cacheadas se descartan
+// automáticamente — porque dejan de ser válidas: un nodo podría haber
+// quedado donde ahora cae el hijo nuevo, generando colisiones, o el
+// auto-layout habría reposicionado todos los hermanos a ángulos
+// distintos. Mejor reset limpio que mezcla incoherente.
 //
 // Las edges no se cachean — son aristas calculadas a partir de los
 // nodos, no aportan estado del usuario.
-export function useLayoutCache(clanId: string | undefined) {
+export function useLayoutCache(clanId: string | undefined, topology: string) {
   const key = clanId ? `${STORAGE_PREFIX}${clanId}` : null;
 
-  // initialCache se calcula una vez por clanId. cacheRef lo refleja en
-  // un ref para que get/set no provoquen re-renders.
-  const initialCache = useMemo<PositionMap>(() => (key ? readCache(key) : {}), [key]);
+  // initialCache se recalcula si cambia clanId o topology.
+  const initialCache = useMemo<PositionMap>(
+    () => (key ? readCache(key, topology) : {}),
+    [key, topology],
+  );
   const cacheRef = useRef<PositionMap>(initialCache);
 
-  // Si el clanId cambia (raro pero posible), re-hidrata.
+  // Re-hidrata cuando topology o clanId cambian. La invalidación por
+  // topology cambiada es lo que asegura que añadir un hop reflowe el
+  // árbol entero en lugar de mantener X antiguas que colisionarían.
   useEffect(() => {
-    cacheRef.current = key ? readCache(key) : {};
-  }, [key]);
+    cacheRef.current = key ? readCache(key, topology) : {};
+  }, [key, topology]);
 
   const get = useCallback((zoneName: string): Position | null => {
     return cacheRef.current[zoneName] ?? null;
@@ -52,13 +69,14 @@ export function useLayoutCache(clanId: string | undefined) {
       cacheRef.current = { ...cacheRef.current, [zoneName]: pos };
       if (!key || typeof window === "undefined") return;
       try {
-        window.localStorage.setItem(key, JSON.stringify(cacheRef.current));
+        const data: CachedData = { topology, positions: cacheRef.current };
+        window.localStorage.setItem(key, JSON.stringify(data));
       } catch {
         // localStorage lleno o no disponible — ignoramos. El cache en
         // memoria sigue funcionando hasta que se cierre la pestaña.
       }
     },
-    [key],
+    [key, topology],
   );
 
   return { get, set };
