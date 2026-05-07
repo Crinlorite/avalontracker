@@ -13,6 +13,7 @@ type Tab = { label: string; path: string; adminOnly?: boolean };
 const TABS: Tab[] = [
   { label: "Rutas", path: "" },
   { label: "Miembros", path: "/members" },
+  { label: "Papelera", path: "/trash" },
   { label: "Configuración", path: "/settings", adminOnly: true },
   { label: "Auditoría", path: "/audit", adminOnly: true },
 ];
