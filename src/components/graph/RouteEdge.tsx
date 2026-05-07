@@ -1,5 +1,5 @@
 "use client";
-import { BaseEdge, EdgeLabelRenderer, getBezierPath, type EdgeProps } from "@xyflow/react";
+import { BaseEdge, EdgeLabelRenderer, getStraightPath, type EdgeProps } from "@xyflow/react";
 import { edgeColorForHop, edgeWidthForPortal, edgeDashForHop } from "./graph-colors";
 import { formatCountdown, secondsLeft } from "@/lib/time";
 import type { HopView } from "@/hooks/useClanRoutes";
@@ -7,8 +7,8 @@ import type { HopView } from "@/hooks/useClanRoutes";
 type RouteEdgeData = { hop: HopView; routeId: string };
 
 export function RouteEdge(props: EdgeProps) {
-  const { sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data } = props;
-  const [path, labelX, labelY] = getBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
+  const { sourceX, sourceY, targetX, targetY, data } = props;
+  const [path, labelX, labelY] = getStraightPath({ sourceX, sourceY, targetX, targetY });
   const d = data as unknown as RouteEdgeData | undefined;
   if (!d) return null;
   const color = edgeColorForHop(d.hop);
