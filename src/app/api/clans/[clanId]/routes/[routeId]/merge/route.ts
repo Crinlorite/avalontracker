@@ -48,11 +48,11 @@ export async function POST(request: Request, { params }: RouteParams) {
   const [target, source] = await Promise.all([
     prisma.route.findFirst({
       where: { id: routeId, clanId },
-      include: { hops: { orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } } },
+      include: { hops: { where: { deletedAt: null }, orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } } },
     }),
     prisma.route.findFirst({
       where: { id: parsed.data.sourceRouteId, clanId },
-      include: { hops: { orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } } },
+      include: { hops: { where: { deletedAt: null }, orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } } },
     }),
   ]);
   if (!target) return apiError("NOT_FOUND", 404, "Ruta destino no encontrada");
@@ -143,7 +143,7 @@ export async function POST(request: Request, { params }: RouteParams) {
 
   const merged = await prisma.route.findUnique({
     where: { id: target.id },
-    include: { hops: { orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } } },
+    include: { hops: { where: { deletedAt: null }, orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } } },
   });
   return NextResponse.json(merged);
 }

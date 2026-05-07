@@ -252,6 +252,12 @@ model RouteHop {
   statusNote     String?
   statusSetById  String?
   statusSetAt    DateTime?
+  // Soft-delete: cuando el usuario "borra" un hop o un path, se marca
+  // con timestamp aquí en vez de hard-delete. El barrido lazy del GET
+  // routes/route.ts hace hard-delete de hops con deletedAt > 7 días.
+  // En la ventana de 7 días el hop sigue en la tabla y se puede
+  // recuperar (set deletedAt = null).
+  deletedAt      DateTime?
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
 
@@ -262,6 +268,7 @@ model RouteHop {
 
   @@index([routeId])
   @@index([expiresAt, status])
+  @@index([deletedAt])
 }
 
 // ============ Sniffer ingest ============

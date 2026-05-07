@@ -25,16 +25,8 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
   const [copyingId, setCopyingId] = useState<string | null>(null);
   const shareCardRef = useRef<HTMLDivElement>(null);
 
-  async function disable(routeId: string, version: number) {
-    const res = await fetch(`/api/clans/${clanId}/routes/${routeId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json", "If-Match": `v=${version}` },
-      body: JSON.stringify({ status: "DISABLED" }),
-    });
-    if (res.ok) { toast.success("Ruta deshabilitada"); globalMutate((k) => typeof k === "string" && k.startsWith(`/api/clans/${clanId}/routes`)); }
-    else if (res.status === 409) toast.error("Otro miembro editó esto; recarga");
-    else toast.error("Error");
-  }
+  // (botón "Disable" quitado: el flujo correcto es Borrar → soft-delete
+  // recuperable 7 días, no un estado intermedio "deshabilitada".)
 
   // Borrado consciente del split en paths:
   // - Si la fila representa una Route entera (sin bifurcaciones, o
@@ -51,7 +43,7 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
     let exclusiveCount = 0;
 
     if (isFullRoute) {
-      confirmMsg = "¿Borrar permanentemente esta ruta completa?";
+      confirmMsg = "¿Borrar esta ruta? Quedará en papelera 7 días antes del borrado definitivo.";
       url = `/api/clans/${clanId}/routes/${pathRoute.id}`;
     } else {
       // Hops únicos de este path (no en ningún hermano).
@@ -62,11 +54,11 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
       }
       const exclusive = pathRoute.hops.map((h) => h.id).filter((id) => !otherHopIds.has(id));
       if (exclusive.length === 0) {
-        toast.error("Este path comparte todos sus hops con otros — no hay nada exclusivo que borrar");
+        toast.error("Este camino comparte todos sus hops con otros — no hay nada exclusivo que borrar");
         return;
       }
       exclusiveCount = exclusive.length;
-      confirmMsg = `¿Borrar este camino? (${exclusiveCount} hop${exclusiveCount > 1 ? "s" : ""} único${exclusiveCount > 1 ? "s" : ""}; el resto de la ruta se conserva)`;
+      confirmMsg = `¿Borrar este camino? (${exclusiveCount} hop${exclusiveCount > 1 ? "s" : ""} único${exclusiveCount > 1 ? "s" : ""}; recuperable 7 días, el resto de la ruta intacto)`;
       url = `/api/clans/${clanId}/routes/${pathRoute.id}?hops=${exclusive.join(",")}`;
     }
 
@@ -265,11 +257,6 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
                               title="Fusionar otra ruta dentro de esta"
                             >
                               ⛓ Fusionar
-                            </button>
-                          )}
-                          {canEdit && (
-                            <button onClick={() => disable(r.id, r.version)} className="text-xs text-yellow-400 hover:text-yellow-300">
-                              Disable
                             </button>
                           )}
                           {canDel && (
