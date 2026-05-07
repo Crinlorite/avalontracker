@@ -159,6 +159,32 @@ export function computeLayout(
 
     dagre.layout(g);
 
+    // Snap pass: para cada nodo con UN solo hijo en el spanning tree,
+    // forzar hijo.x = padre.x. dagre puede desviar levemente la X del
+    // hijo cuando el árbol es asimétrico (un lado del padre tiene
+    // descendencia más profunda que el otro), produciendo edges
+    // single-child casi-verticales pero no del todo. Tras este snap
+    // cualquier cadena lineal queda perfectamente recta hacia abajo.
+    // Las bifurcaciones (parent con 2+ hijos) no se tocan: queremos
+    // mantener la apertura natural a 45° SE/SW.
+    const childrenOf = new Map<string, string[]>();
+    for (const se of spanningEdges) {
+      const list = childrenOf.get(se.src) ?? [];
+      list.push(se.tgt);
+      childrenOf.set(se.src, list);
+    }
+    const snapQueue = [root];
+    while (snapQueue.length > 0) {
+      const cur = snapQueue.shift()!;
+      const kids = childrenOf.get(cur) ?? [];
+      if (kids.length === 1) {
+        const parentPos = g.node(cur);
+        const childPos = g.node(kids[0]);
+        if (parentPos && childPos) childPos.x = parentPos.x;
+      }
+      for (const k of kids) snapQueue.push(k);
+    }
+
     let minX = Infinity, maxX = -Infinity, minY = Infinity;
     const localPositions = new Map<string, { x: number; y: number }>();
     for (const n of comp) {
