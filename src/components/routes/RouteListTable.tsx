@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { createPortal } from "react-dom";
 import { secondsLeft, formatCountdown, colorForMinutes, minutesLeft } from "@/lib/time";
 import type { RouteView } from "@/hooks/useClanRoutes";
 import type { AppRole } from "@/generated/prisma/client";
@@ -8,6 +9,8 @@ import toast from "react-hot-toast";
 import { mutate as globalMutate } from "swr";
 import { AppendHopModal } from "./AppendHopModal";
 import { MergeRoutesModal } from "./MergeRoutesModal";
+import { RouteShareCard } from "./RouteShareCard";
+import { copyOrDownloadNodeAsPng } from "@/lib/routeImageExport";
 import { useParams } from "next/navigation";
 
 export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole: AppRole | null }) {
@@ -17,6 +20,9 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
   const [pushingId, setPushingId] = useState<string | null>(null);
   const [pushTarget, setPushTarget] = useState<RouteView | null>(null);
   const [headerDraft, setHeaderDraft] = useState("");
+  const [imageRoute, setImageRoute] = useState<RouteView | null>(null);
+  const [copyingId, setCopyingId] = useState<string | null>(null);
+  const shareCardRef = useRef<HTMLDivElement>(null);
 
   async function disable(routeId: string, version: number) {
     const res = await fetch(`/api/clans/${clanId}/routes/${routeId}`, {
@@ -56,6 +62,30 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
       toast.error("Error de red");
     } finally {
       setPushingId(null);
+    }
+  }
+
+  async function copyAsImage(route: RouteView) {
+    setCopyingId(route.id);
+    setImageRoute(route);
+    // Esperar a que el portal monte y se pinte el card off-screen.
+    await new Promise<void>((resolve) =>
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+    );
+    try {
+      if (!shareCardRef.current) throw new Error("share card no montada");
+      const result = await copyOrDownloadNodeAsPng(shareCardRef.current, `route-${route.id}`);
+      toast.success(
+        result === "clipboard"
+          ? "Imagen copiada — pega con Ctrl+V en Discord"
+          : "Imagen descargada (clipboard no disponible)",
+      );
+    } catch (err) {
+      toast.error("Error generando imagen");
+      console.warn("copyAsImage:", err);
+    } finally {
+      setImageRoute(null);
+      setCopyingId(null);
     }
   }
 
@@ -118,6 +148,16 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
                               title="Enviar ruta al canal Discord del clan"
                             >
                               {pushingId === r.id ? "…" : "📨 Discord"}
+                            </button>
+                          )}
+                          {canEdit && (
+                            <button
+                              onClick={() => copyAsImage(r)}
+                              disabled={copyingId === r.id}
+                              className="rounded bg-slate-700 px-2 py-1 text-xs text-white hover:bg-slate-600 disabled:opacity-50"
+                              title="Copiar la ruta como imagen al portapapeles (pegar en Discord con Ctrl+V)"
+                            >
+                              {copyingId === r.id ? "…" : "📷 Imagen"}
                             </button>
                           )}
                           {canAppend && (
@@ -223,6 +263,17 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
           </form>
         </div>
       )}
+
+      {imageRoute && typeof document !== "undefined" &&
+        createPortal(
+          // Portal off-screen para capturar el card sin que sea visible
+          // al usuario. position fixed + left -10000px lo saca del
+          // viewport pero deja la geometría intacta para html-to-image.
+          <div style={{ position: "fixed", left: -10000, top: 0, pointerEvents: "none" }}>
+            <RouteShareCard ref={shareCardRef} route={imageRoute} />
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }
