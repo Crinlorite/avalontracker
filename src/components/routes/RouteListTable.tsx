@@ -11,6 +11,7 @@ import { AppendHopModal } from "./AppendHopModal";
 import { MergeRoutesModal } from "./MergeRoutesModal";
 import { RouteShareCard } from "./RouteShareCard";
 import { copyOrDownloadNodeAsPng, captureNodeAsBlob } from "@/lib/routeImageExport";
+import { splitRouteIntoPaths, pathRouteKey } from "@/lib/routePaths";
 import { useParams } from "next/navigation";
 
 export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole: AppRole | null }) {
@@ -72,8 +73,12 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
       const fd = new FormData();
       if (header) fd.set("headerText", header);
       if (imageBlob) fd.set("image", imageBlob, "route.png");
-      // Si no hay header ni imagen, FormData va vacío → server lo
-      // detecta como multipart sin payload y manda el embed sin más.
+      // hopIds: si la route ha sido split en paths (bifurcación
+      // interna), pushTarget.hops es un subset. Mandamos los IDs para
+      // que el server filtre el embed al path correcto y no incluya
+      // hops de hermanos. Para routes sin bifurcaciones, mandar los
+      // IDs es benigno (= todos los hops del route).
+      fd.set("hopIds", JSON.stringify(route.hops.map((h) => h.id)));
       const res = await fetch(`/api/clans/${clanId}/routes/${route.id}/discord-push`, {
         method: "POST",
         body: fd,
@@ -121,10 +126,16 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
   const canDel = canDelete(myRole);
   const canMerge = canDel; // Merge requiere EDITOR+ (borra la ruta source).
   const hasActions = canEdit || canDel;
+  // Una Route con bifurcaciones internas (varios hops desde el mismo
+  // zone) se descompone en N path-routes lineales. Cada path es una
+  // fila independiente, con su propio botón de Discord push: así se
+  // pueden enviar al canal por separado en lugar de embarrar el
+  // mensaje con todos los caminos mezclados.
+  const pathRoutes = routes.flatMap(splitRouteIntoPaths);
 
   return (
     <div className="space-y-4">
-      {routes.length === 0 ? (
+      {pathRoutes.length === 0 ? (
         <div className="rounded-lg border border-slate-800 bg-slate-900 p-8 text-center text-slate-400">Sin rutas activas.</div>
       ) : (
         <div className="overflow-hidden rounded-lg border border-slate-800">
@@ -138,12 +149,12 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
-              {routes.map((r) => {
+              {pathRoutes.map((r) => {
                 const nextExpiry = r.hops.filter((h) => h.status === "ACTIVE").sort((a, b) => new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime())[0];
                 const mins = nextExpiry ? minutesLeft(nextExpiry.expiresAt) : -1;
                 const canAppend = canEdit && r.hops.length < 12;
                 return (
-                  <tr key={r.id} className="align-top">
+                  <tr key={pathRouteKey(r)} className="align-top">
                     <td className="px-3 py-3">
                       <div className="flex flex-wrap items-center gap-1 text-sm">
                         {r.hops.map((h, i) => (

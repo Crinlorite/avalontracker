@@ -55,23 +55,55 @@ export const RouteShareCard = forwardRef<HTMLDivElement, { route: RouteView }>(
           boxSizing: "border-box",
         }}
       >
-        {/* Header */}
+        {/* Header con branding marca: logo box con gradient + título grande
+            + tagline en uppercase, tipo Royal Forge. */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 10,
-            paddingBottom: 12,
+            gap: 14,
+            paddingBottom: 14,
             borderBottom: "1px solid #1e293b",
-            marginBottom: 16,
+            marginBottom: 18,
           }}
         >
-          <span style={{ fontSize: 22 }}>🗺️</span>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontSize: 16, fontWeight: 700, color: "#fff" }}>
+          <div
+            style={{
+              width: 44,
+              height: 44,
+              borderRadius: 10,
+              background: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 24,
+              boxShadow: "0 4px 12px rgba(99, 102, 241, 0.3)",
+              flexShrink: 0,
+            }}
+          >
+            🗺️
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
+            <span
+              style={{
+                fontSize: 20,
+                fontWeight: 800,
+                color: "#fff",
+                letterSpacing: "-0.02em",
+              }}
+            >
               Avalon Tracker
             </span>
-            <span style={{ fontSize: 11, color: "#94a3b8" }}>
+            <span
+              style={{
+                fontSize: 10,
+                fontWeight: 600,
+                color: "#94a3b8",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                marginTop: 3,
+              }}
+            >
               by Crintech Studios
             </span>
           </div>
