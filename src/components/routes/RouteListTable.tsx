@@ -10,7 +10,7 @@ import { mutate as globalMutate } from "swr";
 import { AppendHopModal } from "./AppendHopModal";
 import { MergeRoutesModal } from "./MergeRoutesModal";
 import { RouteShareCard } from "./RouteShareCard";
-import { copyOrDownloadNodeAsPng } from "@/lib/routeImageExport";
+import { copyOrDownloadNodeAsPng, captureNodeAsBlob } from "@/lib/routeImageExport";
 import { useParams } from "next/navigation";
 
 export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole: AppRole | null }) {
@@ -44,20 +44,48 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
 
   async function confirmPush() {
     if (!pushTarget) return;
-    const routeId = pushTarget.id;
+    const route = pushTarget;
     const header = headerDraft.trim();
-    setPushingId(routeId);
+    setPushingId(route.id);
     setPushTarget(null);
     setHeaderDraft("");
+
+    // Generamos la imagen del share-card off-screen ANTES del POST. Si
+    // la generación falla, mandamos el push sin imagen (degraded mode)
+    // — el header + embed siguen siendo útiles.
+    setImageRoute(route);
+    await new Promise<void>((resolve) =>
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+    );
+    let imageBlob: Blob | null = null;
     try {
-      const res = await fetch(`/api/clans/${clanId}/routes/${routeId}/discord-push`, {
+      if (shareCardRef.current) {
+        imageBlob = await captureNodeAsBlob(shareCardRef.current);
+      }
+    } catch (e) {
+      console.warn("share-card capture failed:", e);
+    } finally {
+      setImageRoute(null);
+    }
+
+    try {
+      const fd = new FormData();
+      if (header) fd.set("headerText", header);
+      if (imageBlob) fd.set("image", imageBlob, "route.png");
+      // Si no hay header ni imagen, FormData va vacío → server lo
+      // detecta como multipart sin payload y manda el embed sin más.
+      const res = await fetch(`/api/clans/${clanId}/routes/${route.id}/discord-push`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(header ? { headerText: header } : {}),
+        body: fd,
       });
       const body = await res.json().catch(() => ({}));
-      if (res.ok) toast.success("Enviada a Discord");
-      else toast.error(body?.error?.message ?? "Error enviando a Discord");
+      if (!res.ok) {
+        toast.error(body?.error?.message ?? "Error enviando a Discord");
+      } else if (imageBlob && body?.imageSent === false) {
+        toast.success("Ruta enviada (imagen no se pudo subir)");
+      } else {
+        toast.success(imageBlob ? "Ruta + imagen enviadas a Discord" : "Enviada a Discord");
+      }
     } catch {
       toast.error("Error de red");
     } finally {

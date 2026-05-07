@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
-import { sendRouteToDiscord } from "@/lib/discord";
+import { sendRouteToDiscord, sendImageToDiscord } from "@/lib/discord";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
 
 // Discord rate-limita los webhooks (~5/2s) y bloquea el webhook si lo
@@ -14,9 +14,11 @@ const pushLimiter = createLimiter({ windowMs: 60_000, max: 10 });
 
 // headerText es texto libre que va en `content` del webhook (encima del
 // embed). 100 chars es holgado para títulos tipo "Thetford Portal abierto".
-const bodySchema = z
-  .object({ headerText: z.string().trim().max(100).optional() })
-  .strict();
+const headerTextSchema = z.string().trim().max(100).optional();
+// JSON body schema: usado cuando no hay imagen (compat hacia atrás).
+const bodySchema = z.object({ headerText: headerTextSchema }).strict();
+// Cap de imagen — coincide con el del helper de discord.ts.
+const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 
 type RouteParams = { params: Promise<{ clanId: string; routeId: string }> };
 
@@ -25,16 +27,44 @@ export async function POST(req: Request, { params }: RouteParams) {
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const { clanId, routeId } = await params;
 
-  // body es opcional: si no llega, push sin header. Si llega malformado,
-  // 400 con detalle de validación.
+  // El cliente puede mandar:
+  //   - JSON: { headerText? } (sin imagen, compat con la versión anterior)
+  //   - multipart/form-data: campos `headerText` y `image` (PNG)
   let headerText: string | undefined;
-  const raw = await req.text();
-  if (raw.trim()) {
-    let json: unknown;
-    try { json = JSON.parse(raw); } catch { return apiError("VALIDATION_ERROR", 400, "JSON inválido"); }
-    const parsed = bodySchema.safeParse(json);
-    if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Body inválido", { issues: parsed.error.issues });
-    headerText = parsed.data.headerText;
+  let imageBytes: Uint8Array | null = null;
+
+  const contentType = req.headers.get("content-type") ?? "";
+  if (contentType.startsWith("multipart/form-data")) {
+    const fd = await req.formData().catch(() => null);
+    if (!fd) return apiError("VALIDATION_ERROR", 400, "FormData inválido");
+    const ht = fd.get("headerText");
+    const parsedHeader = headerTextSchema.safeParse(typeof ht === "string" ? ht : undefined);
+    if (!parsedHeader.success) return apiError("VALIDATION_ERROR", 400, "headerText inválido");
+    headerText = parsedHeader.data;
+    const img = fd.get("image");
+    if (img instanceof Blob) {
+      if (img.size > MAX_IMAGE_BYTES) {
+        return apiError("VALIDATION_ERROR", 400, "Imagen demasiado grande (máx 8MB)");
+      }
+      // Defensa de tipo: validamos image/* pero dejamos pasar cualquier
+      // formato que el navegador haya etiquetado como imagen. Discord
+      // valida la extensión por sí mismo.
+      if (img.type && !img.type.startsWith("image/")) {
+        return apiError("VALIDATION_ERROR", 400, "Archivo no es imagen");
+      }
+      const ab = await img.arrayBuffer();
+      imageBytes = new Uint8Array(ab);
+    }
+  } else {
+    // Compat: body JSON (incluye request sin body).
+    const raw = await req.text();
+    if (raw.trim()) {
+      let json: unknown;
+      try { json = JSON.parse(raw); } catch { return apiError("VALIDATION_ERROR", 400, "JSON inválido"); }
+      const parsed = bodySchema.safeParse(json);
+      if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Body inválido", { issues: parsed.error.issues });
+      headerText = parsed.data.headerText;
+    }
   }
 
   try {
@@ -71,6 +101,7 @@ export async function POST(req: Request, { params }: RouteParams) {
     route.createdBy.discordUsername;
 
   try {
+    // Mensaje 1: header (si lo hay) + embed con la cadena.
     await sendRouteToDiscord(
       clan.discordWebhookUrl,
       {
@@ -86,7 +117,22 @@ export async function POST(req: Request, { params }: RouteParams) {
       },
       headerText,
     );
-    return NextResponse.json({ ok: true });
+
+    // Mensaje 2: imagen (si el cliente la generó). Si falla, no
+    // tumbamos el flujo entero — el primer mensaje ya llegó y el
+    // usuario tiene la información esencial.
+    let imageSent = false;
+    let imageError: string | null = null;
+    if (imageBytes) {
+      try {
+        await sendImageToDiscord(clan.discordWebhookUrl, imageBytes, "route.png");
+        imageSent = true;
+      } catch (e) {
+        imageError = e instanceof Error ? e.message : "fallo al subir imagen";
+      }
+    }
+
+    return NextResponse.json({ ok: true, imageSent, imageError });
   } catch (e) {
     return apiError("VALIDATION_ERROR", 400, e instanceof Error ? e.message : "Error enviando a Discord");
   }
