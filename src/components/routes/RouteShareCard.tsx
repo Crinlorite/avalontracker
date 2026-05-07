@@ -15,12 +15,13 @@ import { colorForMinutes, minutesLeft } from "@/lib/time";
 // con UTC todo el clan, esté en Madrid o en LA, ve la misma hora de
 // cierre y la traduce a su huso local. El footer lo aclara.
 
-const CARD_WIDTH = 480;
-const NODE_WIDTH = 360;
-const WEEKDAY_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const CARD_WIDTH = 520;
+const NODE_WIDTH = 380;
+const WEEKDAY_UTC = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
   weekday: "short",
 });
+const WEEKDAY_LOCAL = new Intl.DateTimeFormat("en-US", { weekday: "short" });
 
 function portalLabel(size: number): string {
   if (size === 7) return "7p";
@@ -29,21 +30,85 @@ function portalLabel(size: number): string {
   return `${size}p`;
 }
 
-// Formato de cierre absoluto en UTC (Albion Time). Si el cierre cae en
-// otro día UTC distinto al actual, prefijamos el día de la semana
-// (Mon/Tue/...) para evitar ambigüedad — un timer de 24h podría caer
-// en mañana sin que se note de un vistazo.
+function pad2(n: number): string {
+  return String(n).padStart(2, "0");
+}
+
+// Cierre en UTC (Albion Time). Day prefix solo si cae en otro día UTC.
 function formatUtcClose(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "?";
-  const hh = String(d.getUTCHours()).padStart(2, "0");
-  const mm = String(d.getUTCMinutes()).padStart(2, "0");
+  const hh = pad2(d.getUTCHours());
+  const mm = pad2(d.getUTCMinutes());
   const today = new Date().toISOString().slice(0, 10);
   const closeDay = d.toISOString().slice(0, 10);
-  if (closeDay !== today) {
-    return `${WEEKDAY_FORMATTER.format(d)} ${hh}:${mm}`;
-  }
+  if (closeDay !== today) return `${WEEKDAY_UTC.format(d)} ${hh}:${mm}`;
   return `${hh}:${mm}`;
+}
+
+// Cierre en zona horaria del navegador. Day prefix solo si cae en
+// otro día local (puede no coincidir con el day-shift en UTC, son
+// husos distintos).
+function formatLocalClose(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "?";
+  const hh = pad2(d.getHours());
+  const mm = pad2(d.getMinutes());
+  const today = new Date().toDateString();
+  const closeDay = d.toDateString();
+  if (closeDay !== today) return `${WEEKDAY_LOCAL.format(d)} ${hh}:${mm}`;
+  return `${hh}:${mm}`;
+}
+
+// Abreviatura del huso local (CEST, EST, etc) extraída del Intl.
+// Fallback a "Local" si el navegador no expone el shortname.
+function getLocalTzAbbr(): string {
+  try {
+    const parts = new Intl.DateTimeFormat([], { timeZoneName: "short" }).formatToParts(new Date());
+    const part = parts.find((p) => p.type === "timeZoneName");
+    if (part?.value) return part.value;
+  } catch {
+    // ignore
+  }
+  return "Local";
+}
+
+// Offset de UTC en formato "UTC+H" o "UTC-H[:MM]".
+function formatUtcOffset(): string {
+  const offsetMin = -new Date().getTimezoneOffset();
+  if (offsetMin === 0) return "UTC+0";
+  const sign = offsetMin > 0 ? "+" : "-";
+  const abs = Math.abs(offsetMin);
+  const h = Math.floor(abs / 60);
+  const m = abs % 60;
+  return m === 0 ? `UTC${sign}${h}` : `UTC${sign}${h}:${pad2(m)}`;
+}
+
+// Detección de DST. Comparamos el offset de Enero vs Julio del año
+// actual; el huso "estándar" es el offset MAYOR (más negativo en
+// JavaScript, que devuelve -120 para UTC+2 etc). Si el offset actual
+// es menor (= clocks adelantados) entonces DST está activo. Si Enero
+// y Julio coinciden, este huso no usa DST en absoluto.
+function detectDstStatus(): "on" | "off" | "n/a" {
+  const year = new Date().getFullYear();
+  const janOffset = new Date(year, 0, 1).getTimezoneOffset();
+  const julOffset = new Date(year, 6, 1).getTimezoneOffset();
+  if (janOffset === julOffset) return "n/a";
+  const stdOffset = Math.max(janOffset, julOffset);
+  const currentOffset = new Date().getTimezoneOffset();
+  return currentOffset < stdOffset ? "on" : "off";
+}
+
+// Etiqueta completa del huso local con DST si aplica:
+//   "CEST · UTC+2 · DST activo"
+//   "CET · UTC+1 · DST inactivo"
+//   "JST · UTC+9"   (sin mención de DST porque Japón no lo usa)
+function formatLocalTzFull(): string {
+  const abbr = getLocalTzAbbr();
+  const offset = formatUtcOffset();
+  const dst = detectDstStatus();
+  if (dst === "n/a") return `${abbr} · ${offset}`;
+  return `${abbr} · ${offset} · DST ${dst === "on" ? "activo" : "inactivo"}`;
 }
 
 export const RouteShareCard = forwardRef<HTMLDivElement, { route: RouteView }>(
@@ -53,6 +118,12 @@ export const RouteShareCard = forwardRef<HTMLDivElement, { route: RouteView }>(
     // Construimos la cadena de zonas: la primera fromZone, y luego
     // todas las toZone. Aristas y portal sizes intercalados.
     const firstFrom = route.hops[0].fromZone;
+
+    // Metadata de huso horario una vez. Se pasa a HopArrow para evitar
+    // recalcular el offset por cada hop.
+    const offsetMin = -new Date().getTimezoneOffset();
+    const isAlbionTime = offsetMin === 0;
+    const localTzFull = formatLocalTzFull();
 
     const now = new Date().toLocaleString("es-ES", {
       year: "numeric",
@@ -149,6 +220,7 @@ export const RouteShareCard = forwardRef<HTMLDivElement, { route: RouteView }>(
                 portalSize={hop.portalSize}
                 expiresAt={hop.expiresAt}
                 status={hop.status}
+                showLocalAndUtc={!isAlbionTime}
               />
               <ZoneBox
                 name={hop.toZone.name}
@@ -162,27 +234,44 @@ export const RouteShareCard = forwardRef<HTMLDivElement, { route: RouteView }>(
           ))}
         </div>
 
-        {/* Footer: aclara que las horas son Albion Time (UTC+0) — sin
-            esto, alguien en otro huso podría confundir el cierre con
-            su hora local. La fecha de captura va en su zona local. */}
+        {/* Footer: declara los dos husos horarios. La hora "local" del
+            sharer queda explícita con su offset y estado de DST para
+            que cualquier viewer en cualquier huso sepa traducir sin
+            ambigüedad. El timestamp de captura va en hora local. */}
         <div
           style={{
             marginTop: 16,
             paddingTop: 10,
             borderTop: "1px solid #1e293b",
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            flexDirection: "column",
+            gap: 4,
             fontSize: 10,
             color: "#64748b",
-            gap: 8,
           }}
         >
-          <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            <span style={{ color: "#fbbf24", fontWeight: 700 }}>🕐 Albion Time</span>
-            <span>· UTC+0</span>
-          </span>
-          <span>avalon.crintech.pro · {now}</span>
+          {!isAlbionTime && (
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
+              <span>
+                <span style={{ color: "#cbd5e1", fontWeight: 600 }}>Local:</span>{" "}
+                <span>{localTzFull}</span>
+              </span>
+              <span>
+                <span style={{ color: "#fbbf24", fontWeight: 700 }}>🕐 Albion Time</span>{" "}
+                <span>· UTC+0</span>
+              </span>
+            </div>
+          )}
+          {isAlbionTime && (
+            <div>
+              <span style={{ color: "#fbbf24", fontWeight: 700 }}>🕐 Albion Time</span>{" "}
+              <span>· UTC+0 (capturada en este mismo huso)</span>
+            </div>
+          )}
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
+            <span>avalon.crintech.pro</span>
+            <span>capturada {now}</span>
+          </div>
         </div>
       </div>
     );
@@ -261,10 +350,12 @@ function HopArrow({
   portalSize,
   expiresAt,
   status,
+  showLocalAndUtc,
 }: {
   portalSize: number;
   expiresAt: string;
   status: string;
+  showLocalAndUtc: boolean;
 }) {
   const mins = minutesLeft(expiresAt);
   const timerColor =
@@ -272,9 +363,8 @@ function HopArrow({
     status === "COLLAPSED" ? "#6b7280" :
     status === "WATCHED" ? "#fbbf24" :
     colorForMinutes(mins);
-  // Hora absoluta de cierre en UTC (Albion Time). Inmune al envejecer
-  // de la imagen — todo el clan ve la misma hora se vea cuando se vea.
   const closeUtc = formatUtcClose(expiresAt);
+  const closeLocal = formatLocalClose(expiresAt);
 
   return (
     <div
@@ -299,7 +389,19 @@ function HopArrow({
         }}
       >
         <span style={{ color: "#94a3b8", marginRight: 4 }}>cierra</span>
-        <span style={{ fontWeight: 700 }}>{closeUtc}</span>
+        {showLocalAndUtc ? (
+          <>
+            <span style={{ fontWeight: 700 }}>{closeLocal}</span>
+            <span style={{ color: "#64748b", margin: "0 6px", fontSize: 10 }}>
+              ({closeUtc} UTC)
+            </span>
+          </>
+        ) : (
+          <>
+            <span style={{ fontWeight: 700 }}>{closeUtc}</span>
+            <span style={{ color: "#94a3b8", marginLeft: 3 }}>UTC</span>
+          </>
+        )}
         <span style={{ color: "#64748b", margin: "0 4px" }}>·</span>
         <span style={{ color: "#cbd5e1" }}>{portalLabel(portalSize)}</span>
         {status === "COLLAPSED" && <span style={{ marginLeft: 4 }}>✕</span>}
