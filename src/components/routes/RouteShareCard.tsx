@@ -1,0 +1,248 @@
+"use client";
+import { forwardRef } from "react";
+import type { RouteView } from "@/hooks/useClanRoutes";
+import { nodeColorForZoneType } from "@/components/graph/graph-colors";
+import { secondsLeft, formatCountdown, colorForMinutes, minutesLeft } from "@/lib/time";
+
+// Tarjeta visual de una ruta para exportar como imagen al compartir en
+// Discord. Diseñada para capturar con html-to-image: ancho fijo, sin
+// dependencias de scroll/animaciones, fonts del sistema o Inter
+// (cargada por el layout raíz). Inline styles para evitar que un CSS
+// no resuelto al momento de captura deje el card sin estilo.
+//
+// Branding: "Avalon Tracker · Crintech Studios" + URL en el footer.
+// Las hops se renderizan como cadena vertical: zona → label de
+// timer/portal → siguiente zona, etc.
+
+const CARD_WIDTH = 480;
+const NODE_WIDTH = 360;
+
+function portalLabel(size: number): string {
+  if (size === 7) return "7p";
+  if (size === 20) return "20p";
+  if (size === 40) return "40p (Tentáculo)";
+  return `${size}p`;
+}
+
+export const RouteShareCard = forwardRef<HTMLDivElement, { route: RouteView }>(
+  function RouteShareCard({ route }, ref) {
+    if (!route.hops.length) return null;
+
+    // Construimos la cadena de zonas: la primera fromZone, y luego
+    // todas las toZone. Aristas y portal sizes intercalados.
+    const firstFrom = route.hops[0].fromZone;
+
+    const now = new Date().toLocaleString("es-ES", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    return (
+      <div
+        ref={ref}
+        style={{
+          width: CARD_WIDTH,
+          padding: "20px 24px 16px",
+          background: "#0f172a",
+          color: "#e2e8f0",
+          fontFamily:
+            "Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+          borderRadius: 12,
+          border: "1px solid #1e293b",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Header */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            paddingBottom: 12,
+            borderBottom: "1px solid #1e293b",
+            marginBottom: 16,
+          }}
+        >
+          <span style={{ fontSize: 22 }}>🗺️</span>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <span style={{ fontSize: 16, fontWeight: 700, color: "#fff" }}>
+              Avalon Tracker
+            </span>
+            <span style={{ fontSize: 11, color: "#94a3b8" }}>
+              by Crintech Studios
+            </span>
+          </div>
+        </div>
+
+        {/* Cadena de zonas */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <ZoneBox
+            name={firstFrom.name}
+            type={firstFrom.type}
+            tier={firstFrom.tier}
+            hasHideout={firstFrom.hasHideout}
+            isRest={firstFrom.isRest}
+          />
+          {route.hops.map((hop, i) => (
+            <div
+              key={hop.id}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}
+            >
+              <HopArrow
+                portalSize={hop.portalSize}
+                expiresAt={hop.expiresAt}
+                status={hop.status}
+              />
+              <ZoneBox
+                name={hop.toZone.name}
+                type={hop.toZone.type}
+                tier={hop.toZone.tier}
+                hasHideout={hop.toZone.hasHideout}
+                isRest={hop.toZone.isRest}
+                isLast={i === route.hops.length - 1}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div
+          style={{
+            marginTop: 16,
+            paddingTop: 10,
+            borderTop: "1px solid #1e293b",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontSize: 10,
+            color: "#64748b",
+          }}
+        >
+          <span>avalon.crintech.pro</span>
+          <span>{now}</span>
+        </div>
+      </div>
+    );
+  },
+);
+
+function ZoneBox({
+  name,
+  type,
+  tier,
+  hasHideout,
+  isRest,
+  isLast,
+}: {
+  name: string;
+  type: string;
+  tier: number | null;
+  hasHideout: boolean;
+  isRest: boolean;
+  isLast?: boolean;
+}) {
+  const borderColor = nodeColorForZoneType(type);
+  // Trunca IDs largos (Mists) para no romper el ancho fijo.
+  const displayName = name.length > 30 ? name.slice(0, 28) + "…" : name;
+  return (
+    <div
+      style={{
+        width: NODE_WIDTH,
+        padding: "10px 12px",
+        background: "#0b1220",
+        border: `2px solid ${borderColor}`,
+        borderRadius: 8,
+        boxSizing: "border-box",
+        marginBottom: isLast ? 0 : 0,
+      }}
+    >
+      <div
+        style={{
+          fontSize: 14,
+          fontWeight: 600,
+          color: "#fff",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {displayName}
+      </div>
+      <div style={{ display: "flex", gap: 6, marginTop: 4, flexWrap: "wrap" }}>
+        {tier != null && <Pill bg="#334155">T{tier}</Pill>}
+        {hasHideout && <Pill bg="#a16207">HO</Pill>}
+        {isRest && <Pill bg="#15803d">Rest</Pill>}
+      </div>
+    </div>
+  );
+}
+
+function Pill({ bg, children }: { bg: string; children: React.ReactNode }) {
+  return (
+    <span
+      style={{
+        background: bg,
+        color: "#fff",
+        fontSize: 9,
+        fontWeight: 600,
+        padding: "2px 6px",
+        borderRadius: 4,
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
+function HopArrow({
+  portalSize,
+  expiresAt,
+  status,
+}: {
+  portalSize: number;
+  expiresAt: string;
+  status: string;
+}) {
+  const mins = minutesLeft(expiresAt);
+  const timerColor =
+    status === "EXPIRED" ? "#3b82f6" :
+    status === "COLLAPSED" ? "#6b7280" :
+    status === "WATCHED" ? "#fbbf24" :
+    colorForMinutes(mins);
+  const countdown = formatCountdown(secondsLeft(expiresAt));
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "6px 0",
+      }}
+    >
+      <div style={{ width: 2, height: 14, background: timerColor }} />
+      <div
+        style={{
+          background: "#1e293b",
+          border: `1px solid ${timerColor}`,
+          borderRadius: 4,
+          padding: "3px 8px",
+          fontSize: 11,
+          fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+          color: timerColor,
+          margin: "1px 0",
+        }}
+      >
+        <span>{countdown}</span>
+        <span style={{ color: "#64748b", margin: "0 4px" }}>·</span>
+        <span style={{ color: "#cbd5e1" }}>{portalLabel(portalSize)}</span>
+        {status === "COLLAPSED" && <span style={{ marginLeft: 4 }}>✕</span>}
+        {status === "WATCHED" && <span style={{ marginLeft: 4 }}>👁</span>}
+      </div>
+      <div style={{ width: 2, height: 14, background: timerColor }} />
+    </div>
+  );
+}
