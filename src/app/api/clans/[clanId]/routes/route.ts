@@ -41,36 +41,57 @@ export async function GET(request: Request, { params }: RouteParams) {
   const since = url.searchParams.get("since");
   const status = url.searchParams.get("status") as "ACTIVE" | "EXPIRED" | "DISABLED" | "ALL" | null;
 
-  // Caducidad lazy: antes de leer hacemos dos barridos por clan, sin
-  // cron ni scheduler.
-  //   1) ACTIVE → EXPIRED si TODOS los hops están vencidos. `every` es
-  //      la decisión explícita: no descatalogar mientras parte de la
-  //      cadena siga viva. `some: {}` previene el caso vacuoso de una
-  //      ruta sin hops (Prisma evalúa `every` como true en lista vacía).
-  //   2) Hard delete de rutas EXPIRED con más de 7 días sin tocarse.
-  //      La ventana de 7 días permite recuperar una ruta caducada por
-  //      error (el endpoint de añadir hop ya resucita EXPIRED → ACTIVE).
-  //      Pasados los 7 días se asume que la ruta no volverá; las
-  //      cascadas de RouteHop (Cascade) y SnifferSession (SetNull) son
-  //      seguras.
+  // Mantenimiento lazy: antes de leer hacemos varios barridos sin
+  // cron ni scheduler. Se mantienen idempotentes y baratos (queries
+  // con índices).
+  //   1) ACTIVE → EXPIRED si TODOS los hops VIVOS están vencidos.
+  //      Hops con deletedAt no cuentan — ya no son parte funcional de
+  //      la cadena. `none` con la condición invertida + `some` para
+  //      evitar el caso vacuoso de una route sin hops vivos.
+  //   2) Hard-delete de RouteHops con deletedAt > 7 días: ventana de
+  //      recuperación cerrada, fuera del DB.
+  //   3) Hard-delete de Routes que han quedado sin hops vivos NI
+  //      soft-deleted (todo limpiado por el paso 2 o nunca tuvieron).
+  //   4) Hard-delete de Routes EXPIRED con updatedAt > 7 días (legacy
+  //      para EXPIRED automáticas — el ttl real va por deletedAt en
+  //      hops desde este commit).
   const now = new Date();
   const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
+  // 1) Transición a EXPIRED contando solo hops vivos.
   await prisma.route.updateMany({
     where: {
       clanId,
       status: "ACTIVE",
-      hops: { every: { expiresAt: { lt: now } }, some: {} },
+      hops: {
+        // No hay ningún hop vivo y aún sin expirar (i.e. todos los
+        // vivos ya expiraron).
+        none: { deletedAt: null, expiresAt: { gt: now } },
+        // Pero al menos hay un hop vivo (vacuoso si ninguno).
+        some: { deletedAt: null },
+      },
     },
     data: { status: "EXPIRED" },
   });
 
-  await prisma.route.deleteMany({
+  // 2) Hard-delete de hops soft-borrados hace > 7 días.
+  await prisma.routeHop.deleteMany({
     where: {
-      clanId,
-      status: "EXPIRED",
-      updatedAt: { lt: sevenDaysAgo },
+      route: { clanId },
+      deletedAt: { lt: sevenDaysAgo },
     },
+  });
+
+  // 3) Hard-delete de Routes que ya no tienen ningún hop (ni vivo ni
+  // soft-deleted) — el paso 2 puede haber dejado huérfanas.
+  await prisma.route.deleteMany({
+    where: { clanId, hops: { none: {} } },
+  });
+
+  // 4) Hard-delete legacy de EXPIRED viejas (para datos previos a
+  // la migración a soft-delete por hop).
+  await prisma.route.deleteMany({
+    where: { clanId, status: "EXPIRED", updatedAt: { lt: sevenDaysAgo } },
   });
 
   const where: Record<string, unknown> = { clanId };
@@ -81,7 +102,14 @@ export async function GET(request: Request, { params }: RouteParams) {
   const routes = await prisma.route.findMany({
     where,
     include: {
-      hops: { orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } },
+      // Solo hops vivos en la respuesta — los soft-deleted no aparecen
+      // en la UI normal (recuperación es vía endpoint específico, no
+      // aquí). Mantiene el contrato existente del frontend.
+      hops: {
+        where: { deletedAt: null },
+        orderBy: { order: "asc" },
+        include: { fromZone: true, toZone: true },
+      },
       createdBy: { select: { id: true, discordUsername: true, globalNickname: true, displayName: true, discordAvatar: true } },
     },
     orderBy: { updatedAt: "desc" },

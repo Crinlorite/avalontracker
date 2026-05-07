@@ -30,7 +30,15 @@ export async function GET(_req: Request, { params }: RouteParams) {
 
   const route = await prisma.route.findFirst({
     where: { id: routeId, clanId },
-    include: { hops: { orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } } },
+    include: {
+      // Solo hops vivos: los soft-deleted no son parte funcional de la
+      // ruta hasta que se restauren o se hard-deleteen tras 7 días.
+      hops: {
+        where: { deletedAt: null },
+        orderBy: { order: "asc" },
+        include: { fromZone: true, toZone: true },
+      },
+    },
   });
   if (!route) return apiError("NOT_FOUND", 404, "Ruta no encontrada");
   return NextResponse.json(route);
@@ -114,44 +122,49 @@ export async function DELETE(req: Request, { params }: RouteParams) {
     }
   }
 
+  // Soft-delete: solo marcamos hops con deletedAt = now(). El barrido
+  // lazy de GET hace hard-delete después de 7 días. Esto da una
+  // ventana de recuperación para revertir borrados accidentales —
+  // basta con poner deletedAt = null para los hops afectados.
   const route = await prisma.route.findFirst({
     where: { id: routeId, clanId },
-    include: { hops: true },
+    include: { hops: { where: { deletedAt: null } } },
   });
   if (!route) return apiError("NOT_FOUND", 404, "Ruta no encontrada");
 
+  const now = new Date();
+  let targetHopIds: number[];
+  let action: "ROUTE_DELETE" | "ROUTE_HOPS_DELETE";
+
   if (hopIdsToDelete) {
-    // Validar que los hopIds pertenecen a esta route — no se permite
-    // borrar hops de OTRA route con esta ruta de DELETE.
     const ownedHopIds = new Set(route.hops.map((h) => h.id));
-    const validIds = hopIdsToDelete.filter((id) => ownedHopIds.has(id));
-    if (validIds.length === 0) {
+    targetHopIds = hopIdsToDelete.filter((id) => ownedHopIds.has(id));
+    if (targetHopIds.length === 0) {
       return apiError("VALIDATION_ERROR", 400, "Ningún hopId pertenece a la ruta");
     }
-
-    const willRemainCount = route.hops.length - validIds.length;
-    if (willRemainCount <= 0) {
-      // Si vamos a vaciar la route, borramos la route completa (los
-      // hops cascadean). Equivalente a no haber pasado hops.
-      await prisma.route.delete({ where: { id: routeId } });
-      await logAudit(clanId, session.user.id, "ROUTE_DELETE", routeId);
-    } else {
-      // Borrado parcial: solo los hops elegidos. Bumpeamos version
-      // para que el optimistic-concurrency control no se quede atrás.
-      await prisma.routeHop.deleteMany({ where: { id: { in: validIds } } });
-      await prisma.route.update({
-        where: { id: routeId },
-        data: { version: { increment: 1 } },
-      });
-      await logAudit(clanId, session.user.id, "ROUTE_HOPS_DELETE", routeId, {
-        hopIds: validIds,
-        remaining: willRemainCount,
-      });
-    }
+    // Si vamos a "vaciar" la route (todos los hops vivos pasan a
+    // soft-deleted) la marcamos con la acción de Route entera para
+    // que la audit log lo refleje.
+    const willEmptyRoute = targetHopIds.length === route.hops.length;
+    action = willEmptyRoute ? "ROUTE_DELETE" : "ROUTE_HOPS_DELETE";
   } else {
-    await prisma.route.delete({ where: { id: routeId } });
-    await logAudit(clanId, session.user.id, "ROUTE_DELETE", routeId);
+    targetHopIds = route.hops.map((h) => h.id);
+    action = "ROUTE_DELETE";
   }
+
+  await prisma.routeHop.updateMany({
+    where: { id: { in: targetHopIds }, deletedAt: null },
+    data: { deletedAt: now },
+  });
+  await prisma.route.update({
+    where: { id: routeId },
+    data: { version: { increment: 1 } },
+  });
+  await logAudit(clanId, session.user.id, action, routeId, {
+    hopIds: targetHopIds,
+    softDeletedAt: now.toISOString(),
+    recoverableUntil: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+  });
 
   return new NextResponse(null, { status: 204 });
 }

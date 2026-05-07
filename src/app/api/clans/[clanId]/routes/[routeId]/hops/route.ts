@@ -42,7 +42,7 @@ export async function POST(request: Request, { params }: RouteParams) {
 
   const route = await prisma.route.findFirst({
     where: { id: routeId, clanId },
-    include: { hops: { orderBy: { order: "desc" }, take: 1 } },
+    include: { hops: { where: { deletedAt: null }, orderBy: { order: "desc" }, take: 1 } },
   });
   if (!route) return apiError("NOT_FOUND", 404, "Ruta no encontrada");
   if (route.hops.length >= 50) return apiError("VALIDATION_ERROR", 400, "Una ruta no puede tener más de 50 hops");

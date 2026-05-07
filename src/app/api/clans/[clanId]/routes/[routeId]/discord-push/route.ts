@@ -103,7 +103,12 @@ export async function POST(req: Request, { params }: RouteParams) {
   const route = await prisma.route.findFirst({
     where: { id: routeId, clanId },
     include: {
-      hops: { orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } },
+      // Hops vivos solamente — un push no incluye hops soft-deleted.
+      hops: {
+        where: { deletedAt: null },
+        orderBy: { order: "asc" },
+        include: { fromZone: true, toZone: true },
+      },
       createdBy: { select: { discordUsername: true, displayName: true, globalNickname: true } },
     },
   });
