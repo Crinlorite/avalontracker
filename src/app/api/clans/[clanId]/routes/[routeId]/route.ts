@@ -32,7 +32,7 @@ export async function GET(_req: Request, { params }: RouteParams) {
     where: { id: routeId, clanId },
     include: {
       // Solo hops vivos: los soft-deleted no son parte funcional de la
-      // ruta hasta que se restauren o se hard-deleteen tras 7 días.
+      // ruta hasta que se restauren o se hard-deleteen tras 2 días.
       hops: {
         where: { deletedAt: null },
         orderBy: { order: "asc" },
@@ -123,7 +123,7 @@ export async function DELETE(req: Request, { params }: RouteParams) {
   }
 
   // Soft-delete: solo marcamos hops con deletedAt = now(). El barrido
-  // lazy de GET hace hard-delete después de 7 días. Esto da una
+  // lazy de GET hace hard-delete después de 2 días. Esto da una
   // ventana de recuperación para revertir borrados accidentales —
   // basta con poner deletedAt = null para los hops afectados.
   const route = await prisma.route.findFirst({
@@ -163,7 +163,7 @@ export async function DELETE(req: Request, { params }: RouteParams) {
   await logAudit(clanId, session.user.id, action, routeId, {
     hopIds: targetHopIds,
     softDeletedAt: now.toISOString(),
-    recoverableUntil: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    recoverableUntil: new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000).toISOString(),
   });
 
   return new NextResponse(null, { status: 204 });
