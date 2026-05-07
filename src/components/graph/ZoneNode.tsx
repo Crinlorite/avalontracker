@@ -13,13 +13,18 @@ export function ZoneNode({ data, selected }: NodeProps) {
   const borderWidth = d.isAnchor ? "border-[3px]" : "border-2";
   return (
     <div
+      // Ancho fijo 200px = NODE_WIDTH del graph-layout. Sin esto, nodos
+      // con texto largo (p.ej. IDs de Mists "@MISTS@<uuid>") se
+      // renderizan más anchos que lo que dagre asume, sus handles caen
+      // desplazados del eje de la cadena, y los edges single-child
+      // salen diagonales en vez de verticales.
       className={`rounded-lg ${borderWidth} bg-slate-900 px-3 py-2 shadow ${anchorGlow}`}
-      style={{ borderColor }}
+      style={{ borderColor, width: 200 }}
     >
       <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
-      <div className="flex items-center gap-1.5">
-        {d.isAnchor && <span className="text-xs" title="Anchor del clan">⚓</span>}
-        <div className="font-semibold text-white">{d.zoneName}</div>
+      <div className="flex items-center gap-1.5 min-w-0">
+        {d.isAnchor && <span className="text-xs flex-shrink-0" title="Anchor del clan">⚓</span>}
+        <div className="font-semibold text-white truncate" title={d.zoneName}>{d.zoneName}</div>
       </div>
       <div className="mt-1 flex flex-wrap gap-1">
         {d.tier != null && <span className="rounded bg-slate-700 px-1 py-0.5 text-[10px] text-white">T{d.tier}</span>}
