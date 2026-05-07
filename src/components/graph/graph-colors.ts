@@ -1,5 +1,6 @@
 import type { HopView } from "@/hooks/useClanRoutes";
 import { colorForMinutes, minutesLeft } from "@/lib/time";
+import { borderColorForPvp, getZonePvp } from "@/lib/world-meta";
 
 export function edgeColorForHop(hop: HopView): string {
   if (hop.status === "EXPIRED") return "#3b82f6";
@@ -25,4 +26,13 @@ export function nodeColorForZoneType(type: string): string {
   if (type === "ROYAL") return "#2563eb";
   if (type === "OUTLANDS") return "#dc2626";
   return "#64748b";
+}
+
+// Color preferido por NOMBRE de zona usando world-meta (pvp real del
+// dump de Albion). Cae a nodeColorForZoneType si la zona no está en el
+// dump (raro, solo zonas custom o data desactualizada).
+export function nodeBorderColorForZone(name: string, fallbackType: string): string {
+  const pvp = getZonePvp(name);
+  if (pvp) return borderColorForPvp(pvp);
+  return nodeColorForZoneType(fallbackType);
 }

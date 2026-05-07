@@ -1,11 +1,14 @@
 "use client";
 import { Handle, Position, type NodeProps } from "@xyflow/react";
-import { nodeColorForZoneType } from "./graph-colors";
+import { nodeBorderColorForZone } from "./graph-colors";
 import type { LayoutNode } from "./graph-layout";
 
 export function ZoneNode({ data, selected }: NodeProps) {
   const d = data as unknown as LayoutNode;
-  const color = nodeColorForZoneType(d.zoneType);
+  // Color del borde basado en el PvP real de la zona (azul, amarillo,
+  // rojo, negro, especial...) extraído del dump del juego. Cae al
+  // tipo del modelo si la zona no está en el dump.
+  const color = nodeBorderColorForZone(d.zoneName, d.zoneType);
   // El anchor del clan se resalta con borde dorado más grueso y glow suave
   // para que quede claro desde qué nodo arranca la guarida del clan.
   const anchorGlow = d.isAnchor ? "shadow-[0_0_20px_rgba(250,204,21,0.35)]" : "";

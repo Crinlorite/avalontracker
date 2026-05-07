@@ -3,6 +3,7 @@ import { forwardRef } from "react";
 import type { RouteView } from "@/hooks/useClanRoutes";
 import { nodeColorForZoneType } from "@/components/graph/graph-colors";
 import { colorForMinutes, minutesLeft } from "@/lib/time";
+import { borderColorForPvp, getZonePvp, proximityHintForZone } from "@/lib/world-meta";
 
 // Tarjeta visual de una ruta para exportar como imagen al compartir en
 // Discord. Diseñada para capturar con html-to-image: ancho fijo, sin
@@ -293,9 +294,22 @@ function ZoneBox({
   isRest: boolean;
   isLast?: boolean;
 }) {
-  const borderColor = nodeColorForZoneType(type);
+  // El color del borde sale del PvP en world-meta.json (azul royal,
+  // amarillo, rojo, negro místico, especial mistic, etc.). Si no
+  // tenemos pvp para esta zona (entry sin matchear), caemos al color
+  // del tipo del modelo del backend como fallback.
+  const pvp = getZonePvp(name);
+  const borderColor = pvp ? borderColorForPvp(pvp) : nodeColorForZoneType(type);
+  // Black mode: el color es muy oscuro, le añadimos un glow sutil
+  // violeta para que destaque sobre el fondo y se entienda como
+  // "outlands místicas".
+  const isBlack = pvp === "black";
+  const boxShadow = isBlack ? "0 0 8px rgba(168, 85, 247, 0.25)" : undefined;
   // Trunca IDs largos (Mists) para no romper el ancho fijo.
   const displayName = name.length > 30 ? name.slice(0, 28) + "…" : name;
+  // Pista de proximidad para zonas "interesantes" (negras / especiales)
+  // — número de hops + ciudad/portal más cercanos.
+  const hint = proximityHintForZone(name);
   return (
     <div
       style={{
@@ -306,6 +320,7 @@ function ZoneBox({
         borderRadius: 8,
         boxSizing: "border-box",
         marginBottom: isLast ? 0 : 0,
+        boxShadow,
       }}
     >
       <div
@@ -320,10 +335,22 @@ function ZoneBox({
       >
         {displayName}
       </div>
-      <div style={{ display: "flex", gap: 6, marginTop: 4, flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: 6, marginTop: 4, flexWrap: "wrap", alignItems: "center" }}>
         {tier != null && <Pill bg="#334155">T{tier}</Pill>}
         {hasHideout && <Pill bg="#a16207">HO</Pill>}
         {isRest && <Pill bg="#15803d">Rest</Pill>}
+        {hint && (
+          <span
+            style={{
+              fontSize: 10,
+              color: "#94a3b8",
+              fontWeight: 500,
+              marginLeft: "auto",
+            }}
+          >
+            {hint}
+          </span>
+        )}
       </div>
     </div>
   );
