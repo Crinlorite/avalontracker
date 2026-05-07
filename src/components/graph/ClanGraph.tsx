@@ -21,19 +21,19 @@ export function ClanGraph({
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
-  // Sync incremental con el computed: mantiene posición de nodos
-  // existentes (no aplasta drag del usuario ni la posición cacheada),
-  // añade nuevos con su posición cacheada o, en su defecto, la del
-  // auto-layout, y elimina los que ya no están en el grafo. Sin esto,
-  // cada refresh del SWR (cada ~30s) reseteaba el layout.
+  // Sync con el computed: la presencia en localStorage es la única señal
+  // de "fijo por el usuario" — si arrastró el nodo, respetamos su
+  // posición; si no, aplicamos el auto-layout SIEMPRE (no solo en la
+  // creación del nodo). Sin esto, cuando se añade un hermano nuevo a
+  // un nodo con bifurcación de 2 hijos para convertirla en una de 3,
+  // los dos hermanos viejos se quedaban en sus X "de bifurcación-2" y
+  // el nuevo se solapaba encima en vez de reflowarse el trío con
+  // ángulos nuevos.
+  // Como dagre es determinista, re-aplicar layout cada SWR refresh no
+  // produce flicker para topologías que no cambian.
   useEffect(() => {
-    setNodes((current) => {
-      const currentById = new Map(current.map((n) => [n.id, n]));
-      return computed.nodes.map((c) => {
-        const existing = currentById.get(c.id);
-        if (existing) {
-          return { ...existing, data: c };
-        }
+    setNodes(
+      computed.nodes.map((c) => {
         const cached = getCachedPosition(c.id);
         return {
           id: c.id,
@@ -41,8 +41,8 @@ export function ClanGraph({
           data: c,
           position: cached ?? { x: c.x, y: c.y },
         };
-      });
-    });
+      }),
+    );
     setEdges(
       computed.edges.map((e) => ({
         id: e.id,
