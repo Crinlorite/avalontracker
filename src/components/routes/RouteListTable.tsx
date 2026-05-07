@@ -26,7 +26,7 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
   const shareCardRef = useRef<HTMLDivElement>(null);
 
   // (botón "Disable" quitado: el flujo correcto es Borrar → soft-delete
-  // recuperable 7 días, no un estado intermedio "deshabilitada".)
+  // recuperable 2 días, no un estado intermedio "deshabilitada".)
 
   // Borrado consciente del split en paths:
   // - Si la fila representa una Route entera (sin bifurcaciones, o
@@ -43,7 +43,7 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
     let exclusiveCount = 0;
 
     if (isFullRoute) {
-      confirmMsg = "¿Borrar esta ruta? Quedará en papelera 7 días antes del borrado definitivo.";
+      confirmMsg = "¿Borrar esta ruta? Quedará en papelera 2 días antes del borrado definitivo.";
       url = `/api/clans/${clanId}/routes/${pathRoute.id}`;
     } else {
       // Hops únicos de este path (no en ningún hermano).
@@ -58,7 +58,7 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
         return;
       }
       exclusiveCount = exclusive.length;
-      confirmMsg = `¿Borrar este camino? (${exclusiveCount} hop${exclusiveCount > 1 ? "s" : ""} único${exclusiveCount > 1 ? "s" : ""}; recuperable 7 días, el resto de la ruta intacto)`;
+      confirmMsg = `¿Borrar este camino? (${exclusiveCount} hop${exclusiveCount > 1 ? "s" : ""} único${exclusiveCount > 1 ? "s" : ""}; recuperable 2 días, el resto de la ruta intacto)`;
       url = `/api/clans/${clanId}/routes/${pathRoute.id}?hops=${exclusive.join(",")}`;
     }
 

@@ -48,22 +48,26 @@ export async function GET(request: Request, { params }: RouteParams) {
   //      Hops con deletedAt no cuentan — ya no son parte funcional de
   //      la cadena. `none` con la condición invertida + `some` para
   //      evitar el caso vacuoso de una route sin hops vivos.
-  //   2) Hard-delete de RouteHops con deletedAt > 7 días: ventana de
+  //   2) Hard-delete de RouteHops con deletedAt > 2 días: ventana de
   //      recuperación cerrada, fuera del DB.
   //   3) Hard-delete de Routes que han quedado sin hops vivos NI
   //      soft-deleted (todo limpiado por el paso 2 o nunca tuvieron).
-  //   4) Hard-delete de Routes EXPIRED con updatedAt > 7 días (legacy
+  //   4) Hard-delete de Routes EXPIRED con updatedAt > 2 días (legacy
   //      para EXPIRED automáticas — el ttl real va por deletedAt en
   //      hops desde este commit).
   const now = new Date();
-  const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  // 2 días: una ruta de Avalon dura horas, así que 48h es ventana
+  // sobrada para revertir un borrado por error. Pasado ese tiempo, la
+  // ruta de todas formas habría caducado por sí misma.
+  const ttlMs = 2 * 24 * 60 * 60 * 1000;
+  const ttlAgo = new Date(now.getTime() - ttlMs);
 
   // 1) Transición a EXPIRED + soft-delete de hops cuando la chain
   //    entera ha caducado. Unificamos con el flujo manual de borrado:
   //    auto-expiración y borrado-por-usuario producen el mismo
-  //    estado (deletedAt en los hops) y comparten el TTL de 7 días.
+  //    estado (deletedAt en los hops) y comparten el TTL de 2 días.
   //    Beneficio: una sola lógica de recuperación, una sola fecha de
-  //    barrido. Si dentro de los 7 días el usuario añade un hop a una
+  //    barrido. Si dentro de los 2 días el usuario añade un hop a una
   //    Route EXPIRED, resurrecciona a ACTIVE con el hop nuevo (los
   //    soft-deleted antiguos no estorban — quedan filtrados).
   const expiringRoutes = await prisma.route.findMany({
@@ -91,11 +95,11 @@ export async function GET(request: Request, { params }: RouteParams) {
     ]);
   }
 
-  // 2) Hard-delete de hops soft-borrados hace > 7 días.
+  // 2) Hard-delete de hops soft-borrados hace > 2 días.
   await prisma.routeHop.deleteMany({
     where: {
       route: { clanId },
-      deletedAt: { lt: sevenDaysAgo },
+      deletedAt: { lt: ttlAgo },
     },
   });
 
@@ -108,7 +112,7 @@ export async function GET(request: Request, { params }: RouteParams) {
   // 4) Hard-delete legacy de EXPIRED viejas (para datos previos a
   // la migración a soft-delete por hop).
   await prisma.route.deleteMany({
-    where: { clanId, status: "EXPIRED", updatedAt: { lt: sevenDaysAgo } },
+    where: { clanId, status: "EXPIRED", updatedAt: { lt: ttlAgo } },
   });
 
   const where: Record<string, unknown> = { clanId };
