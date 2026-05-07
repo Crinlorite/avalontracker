@@ -58,21 +58,38 @@ export async function GET(request: Request, { params }: RouteParams) {
   const now = new Date();
   const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 
-  // 1) Transición a EXPIRED contando solo hops vivos.
-  await prisma.route.updateMany({
+  // 1) Transición a EXPIRED + soft-delete de hops cuando la chain
+  //    entera ha caducado. Unificamos con el flujo manual de borrado:
+  //    auto-expiración y borrado-por-usuario producen el mismo
+  //    estado (deletedAt en los hops) y comparten el TTL de 7 días.
+  //    Beneficio: una sola lógica de recuperación, una sola fecha de
+  //    barrido. Si dentro de los 7 días el usuario añade un hop a una
+  //    Route EXPIRED, resurrecciona a ACTIVE con el hop nuevo (los
+  //    soft-deleted antiguos no estorban — quedan filtrados).
+  const expiringRoutes = await prisma.route.findMany({
     where: {
       clanId,
       status: "ACTIVE",
       hops: {
-        // No hay ningún hop vivo y aún sin expirar (i.e. todos los
-        // vivos ya expiraron).
         none: { deletedAt: null, expiresAt: { gt: now } },
-        // Pero al menos hay un hop vivo (vacuoso si ninguno).
         some: { deletedAt: null },
       },
     },
-    data: { status: "EXPIRED" },
+    select: { id: true },
   });
+  if (expiringRoutes.length > 0) {
+    const expiringIds = expiringRoutes.map((r) => r.id);
+    await prisma.$transaction([
+      prisma.route.updateMany({
+        where: { id: { in: expiringIds } },
+        data: { status: "EXPIRED" },
+      }),
+      prisma.routeHop.updateMany({
+        where: { routeId: { in: expiringIds }, deletedAt: null },
+        data: { deletedAt: now },
+      }),
+    ]);
+  }
 
   // 2) Hard-delete de hops soft-borrados hace > 7 días.
   await prisma.routeHop.deleteMany({
