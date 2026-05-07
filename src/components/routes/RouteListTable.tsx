@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { secondsLeft, formatCountdown, colorForMinutes, minutesLeft } from "@/lib/time";
 import type { RouteView } from "@/hooks/useClanRoutes";
@@ -36,11 +36,48 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
     else toast.error("Error");
   }
 
-  async function del(routeId: string) {
-    if (!confirm("¿Borrar permanentemente?")) return;
-    const res = await fetch(`/api/clans/${clanId}/routes/${routeId}`, { method: "DELETE" });
-    if (res.ok) { toast.success("Borrado"); globalMutate((k) => typeof k === "string" && k.startsWith(`/api/clans/${clanId}/routes`)); }
-    else toast.error("Error");
+  // Borrado consciente del split en paths:
+  // - Si la fila representa una Route entera (sin bifurcaciones, o
+  //   path único): borra la Route completa como antes.
+  // - Si la fila es UN path de una Route con varios caminos: borra
+  //   solo los hops EXCLUSIVOS de ese path (no compartidos con otros
+  //   hermanos), preservando los demás caminos.
+  async function del(pathRoute: RouteView) {
+    const siblings = pathsByRoute.get(pathRoute.id) ?? [pathRoute];
+    const isFullRoute = siblings.length <= 1;
+
+    let confirmMsg: string;
+    let url: string;
+    let exclusiveCount = 0;
+
+    if (isFullRoute) {
+      confirmMsg = "¿Borrar permanentemente esta ruta completa?";
+      url = `/api/clans/${clanId}/routes/${pathRoute.id}`;
+    } else {
+      // Hops únicos de este path (no en ningún hermano).
+      const otherHopIds = new Set<number>();
+      for (const sib of siblings) {
+        if (sib === pathRoute) continue;
+        for (const h of sib.hops) otherHopIds.add(h.id);
+      }
+      const exclusive = pathRoute.hops.map((h) => h.id).filter((id) => !otherHopIds.has(id));
+      if (exclusive.length === 0) {
+        toast.error("Este path comparte todos sus hops con otros — no hay nada exclusivo que borrar");
+        return;
+      }
+      exclusiveCount = exclusive.length;
+      confirmMsg = `¿Borrar este camino? (${exclusiveCount} hop${exclusiveCount > 1 ? "s" : ""} único${exclusiveCount > 1 ? "s" : ""}; el resto de la ruta se conserva)`;
+      url = `/api/clans/${clanId}/routes/${pathRoute.id}?hops=${exclusive.join(",")}`;
+    }
+
+    if (!confirm(confirmMsg)) return;
+    const res = await fetch(url, { method: "DELETE" });
+    if (res.ok) {
+      toast.success(isFullRoute ? "Ruta borrada" : `Camino borrado (${exclusiveCount} hop${exclusiveCount > 1 ? "s" : ""})`);
+      globalMutate((k) => typeof k === "string" && k.startsWith(`/api/clans/${clanId}/routes`));
+    } else {
+      toast.error("Error");
+    }
   }
 
   async function confirmPush() {
@@ -131,7 +168,20 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
   // fila independiente, con su propio botón de Discord push: así se
   // pueden enviar al canal por separado en lugar de embarrar el
   // mensaje con todos los caminos mezclados.
-  const pathRoutes = routes.flatMap(splitRouteIntoPaths);
+  //
+  // Mantenemos un Map routeId → paths para que `del()` pueda detectar
+  // si el path-route que se está borrando tiene hermanos (otros paths
+  // de la misma Route): si los tiene, borrado parcial; si no, borra
+  // la Route entera.
+  const pathsByRoute = useMemo(() => {
+    const m = new Map<string, RouteView[]>();
+    for (const r of routes) m.set(r.id, splitRouteIntoPaths(r));
+    return m;
+  }, [routes]);
+  const pathRoutes = useMemo(
+    () => Array.from(pathsByRoute.values()).flat(),
+    [pathsByRoute],
+  );
 
   return (
     <div className="space-y-4">
@@ -223,7 +273,15 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
                             </button>
                           )}
                           {canDel && (
-                            <button onClick={() => del(r.id)} className="text-xs text-red-400 hover:text-red-300">
+                            <button
+                              onClick={() => del(r)}
+                              className="text-xs text-red-400 hover:text-red-300"
+                              title={
+                                (pathsByRoute.get(r.id)?.length ?? 1) > 1
+                                  ? "Borrar este camino (preserva los hermanos)"
+                                  : "Borrar la ruta completa"
+                              }
+                            >
                               Borrar
                             </button>
                           )}
