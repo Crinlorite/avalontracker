@@ -1,10 +1,11 @@
 "use client";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useCallback } from "react";
 import { ReactFlow, Background, Controls, type Node, type Edge, useNodesState, useEdgesState } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { ZoneNode } from "./ZoneNode";
 import { RouteEdge } from "./RouteEdge";
 import { computeLayout } from "./graph-layout";
+import { useLayoutCache } from "@/hooks/useLayoutCache";
 import type { RouteView } from "@/hooks/useClanRoutes";
 import type { ClanAnchorZone } from "@/hooks/useClan";
 
@@ -12,22 +13,36 @@ const nodeTypes = { zone: ZoneNode };
 const edgeTypes = { route: RouteEdge };
 
 export function ClanGraph({
-  routes, anchor, onNodeClick,
-}: { routes: RouteView[]; anchor: ClanAnchorZone | null; onNodeClick: (zoneName: string) => void }) {
+  clanId, routes, anchor, onNodeClick,
+}: { clanId: string; routes: RouteView[]; anchor: ClanAnchorZone | null; onNodeClick: (zoneName: string) => void }) {
   const computed = useMemo(() => computeLayout(routes, anchor), [routes, anchor]);
+  const { get: getCachedPosition, set: setCachedPosition } = useLayoutCache(clanId);
 
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
+  // Sync incremental con el computed: mantiene posición de nodos
+  // existentes (no aplasta drag del usuario ni la posición cacheada),
+  // añade nuevos con su posición cacheada o, en su defecto, la del
+  // auto-layout, y elimina los que ya no están en el grafo. Sin esto,
+  // cada refresh del SWR (cada ~30s) reseteaba el layout.
   useEffect(() => {
-    setNodes(
-      computed.nodes.map((n) => ({
-        id: n.id,
-        type: "zone",
-        data: n,
-        position: { x: n.x, y: n.y },
-      }))
-    );
+    setNodes((current) => {
+      const currentById = new Map(current.map((n) => [n.id, n]));
+      return computed.nodes.map((c) => {
+        const existing = currentById.get(c.id);
+        if (existing) {
+          return { ...existing, data: c };
+        }
+        const cached = getCachedPosition(c.id);
+        return {
+          id: c.id,
+          type: "zone",
+          data: c,
+          position: cached ?? { x: c.x, y: c.y },
+        };
+      });
+    });
     setEdges(
       computed.edges.map((e) => ({
         id: e.id,
@@ -35,9 +50,18 @@ export function ClanGraph({
         source: e.source,
         target: e.target,
         data: { hop: e.hop, routeId: e.routeId },
-      }))
+      })),
     );
-  }, [computed, setNodes, setEdges]);
+  }, [computed, setNodes, setEdges, getCachedPosition]);
+
+  // Persiste la posición cuando el usuario suelta un nodo arrastrado.
+  // Así sobrevive a refreshes y a recargas completas del navegador.
+  const handleNodeDragStop = useCallback(
+    (_: unknown, node: Node) => {
+      setCachedPosition(node.id, node.position);
+    },
+    [setCachedPosition],
+  );
 
   return (
     <div className="clan-graph h-[calc(100vh-220px)] w-full rounded-xl border border-slate-800">
@@ -70,6 +94,7 @@ export function ClanGraph({
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onNodeDragStop={handleNodeDragStop}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         onNodeClick={(_, n) => onNodeClick(n.id)}
