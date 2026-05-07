@@ -1,5 +1,11 @@
 import { isDiscordWebhookUrl } from "@/lib/webhook-url";
 
+// Discord limita los attachments por mensaje a 25 MB en el plan free.
+// Una PNG generada por nuestro share-card pesa < 200 KB típicamente,
+// así que 8 MB es un cap conservador que evita abuso sin recortar uso
+// legítimo.
+const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024;
+
 interface HopInfo {
   fromZone: string;
   toZone: string;
@@ -87,5 +93,35 @@ export async function sendRouteToDiscord(
     throw new Error(`Discord webhook error: ${response.status}`);
   }
 
+  return true;
+}
+
+// Envía un segundo mensaje al mismo webhook con la imagen como adjunto,
+// sin contenido extra. Discord espera multipart/form-data con un
+// `payload_json` (puede ser vacío) y `files[N]` para el archivo.
+// allowed_mentions.parse=[] previene cualquier ping si el filename
+// contuviera @here u otros patrones (defensa en profundidad).
+export async function sendImageToDiscord(
+  webhookUrl: string,
+  imageBytes: ArrayBuffer | Uint8Array,
+  filename = "route.png",
+): Promise<true> {
+  if (!isDiscordWebhookUrl(webhookUrl)) {
+    throw new Error("Webhook URL no válida (debe ser de discord.com)");
+  }
+  const bytes = imageBytes instanceof Uint8Array ? imageBytes : new Uint8Array(imageBytes);
+  if (bytes.byteLength > MAX_ATTACHMENT_BYTES) {
+    throw new Error(`Imagen demasiado grande (${bytes.byteLength} bytes, max ${MAX_ATTACHMENT_BYTES})`);
+  }
+
+  const fd = new FormData();
+  fd.set("payload_json", JSON.stringify({ allowed_mentions: { parse: [] } }));
+  // Blob desde Uint8Array para que FormData ponga Content-Type correcto.
+  fd.set("files[0]", new Blob([new Uint8Array(bytes)], { type: "image/png" }), filename);
+
+  const response = await fetch(webhookUrl, { method: "POST", body: fd });
+  if (!response.ok) {
+    throw new Error(`Discord webhook image error: ${response.status}`);
+  }
   return true;
 }

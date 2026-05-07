@@ -62,7 +62,10 @@ async function waitForAssets(node: HTMLElement): Promise<void> {
   );
 }
 
-async function captureNodeAsBlob(node: HTMLElement): Promise<Blob> {
+// Exportado para que el flujo de Discord-push pueda generar el blob,
+// enviarlo al server vía multipart FormData, y que el server lo
+// reenvíe al webhook de Discord como adjunto.
+export async function captureNodeAsBlob(node: HTMLElement): Promise<Blob> {
   await waitForAssets(node);
   // Un frame extra para que cualquier reflow final se asiente.
   await new Promise<void>((resolve) =>
