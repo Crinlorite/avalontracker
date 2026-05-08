@@ -158,8 +158,9 @@ export class PermissionError extends Error {
   }
 }
 
-// Enforce RBAC: el user debe tener al menos `minRole` en el clan.
-// Modelo flat — sin figuras super-admin globales ni bypass.
+// Enforce RBAC: el user debe tener al menos `minRole` EN ESTE clan.
+// Los roles están scoped al clan; no hay autoridad global que pase
+// por encima.
 export async function requireRole(
   userId: string,
   clanId: string,
