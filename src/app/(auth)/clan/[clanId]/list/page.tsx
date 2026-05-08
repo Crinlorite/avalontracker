@@ -9,6 +9,7 @@ import { RouteListTable } from "@/components/routes/RouteListTable";
 import { CreateRouteModal } from "@/components/routes/CreateRouteModal";
 import { MergeRoutesPicker } from "@/components/routes/MergeRoutesPicker";
 import { ViewToggle } from "@/components/clan/ViewToggle";
+import { HamburgerButton } from "@/components/layout/SidebarToggleContext";
 import { canCreate, canDelete } from "@/lib/role-ui";
 import type { AppRole } from "@/generated/prisma/client";
 
@@ -38,9 +39,12 @@ export default function ClanListPage() {
   return (
     <div className="space-y-4">
       <header className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold text-white">{clan?.name ?? "…"}</h1>
-          <p className="text-xs text-slate-500">{routes.length} rutas activas · anchor: {anchorName ?? "—"}</p>
+        <div className="flex items-center gap-3">
+          <HamburgerButton />
+          <div>
+            <h1 className="text-2xl font-bold text-white">{clan?.name ?? "…"}</h1>
+            <p className="text-xs text-slate-500">{routes.length} rutas activas · anchor: {anchorName ?? "—"}</p>
+          </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <ViewToggle clanId={clanId} />

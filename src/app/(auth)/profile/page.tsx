@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useMe } from "@/hooks/useMe";
 import toast from "react-hot-toast";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 export default function ProfilePage() {
   const { me, mutate } = useMe();
@@ -34,7 +35,9 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-xl space-y-8">
-      <h1 className="text-2xl font-bold text-white">Perfil</h1>
+      <PageHeader>
+        <h1 className="text-2xl font-bold text-white">Perfil</h1>
+      </PageHeader>
 
       <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
         <h2 className="mb-4 text-lg font-semibold text-white">Identidad Discord</h2>

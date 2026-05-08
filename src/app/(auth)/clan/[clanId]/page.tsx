@@ -7,6 +7,7 @@ import { useClan } from "@/hooks/useClan";
 import { useMe } from "@/hooks/useMe";
 import { ClanGraph } from "@/components/graph/ClanGraph";
 import { ZoneSidePanel } from "@/components/graph/ZoneSidePanel";
+import { HamburgerButton } from "@/components/layout/SidebarToggleContext";
 import { CreateRouteModal } from "@/components/routes/CreateRouteModal";
 import { AppendHopModal } from "@/components/routes/AppendHopModal";
 import { MergeRoutesPicker } from "@/components/routes/MergeRoutesPicker";
@@ -61,9 +62,12 @@ export default function ClanGraphPage() {
   return (
     <div className="relative">
       <header className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold text-white">{clan?.name ?? "…"}</h1>
-          <p className="text-xs text-slate-500">{routes.length} rutas activas · anchor: {anchorName ?? "—"}</p>
+        <div className="flex items-center gap-3">
+          <HamburgerButton />
+          <div>
+            <h1 className="text-2xl font-bold text-white">{clan?.name ?? "…"}</h1>
+            <p className="text-xs text-slate-500">{routes.length} rutas activas · anchor: {anchorName ?? "—"}</p>
+          </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <ViewToggle clanId={clanId} />

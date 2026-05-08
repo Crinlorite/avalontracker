@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useMe } from "@/hooks/useMe";
 import { useClan } from "@/hooks/useClan";
 import { roleLabel, roleBadgeColor, canAdmin } from "@/lib/role-ui";
+import { PageHeader } from "@/components/layout/PageHeader";
 import type { AppRole } from "@/generated/prisma/client";
 
 type MemberRow = {
@@ -36,7 +37,9 @@ export default function MembersPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-white">Miembros ({members.length})</h1>
+      <PageHeader>
+        <h1 className="text-2xl font-bold text-white">Miembros ({members.length})</h1>
+      </PageHeader>
 
       <div className="overflow-hidden rounded-lg border border-slate-800">
         <table className="w-full text-sm">

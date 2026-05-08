@@ -6,6 +6,7 @@ import { useMe } from "@/hooks/useMe";
 import { useMyClans } from "@/hooks/useMyClans";
 import { roleLabel, roleBadgeColor } from "@/lib/role-ui";
 import { CreateClanModal } from "@/components/clan/CreateClanModal";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 export default function DashboardPage() {
   const { me } = useMe();
@@ -14,10 +15,10 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      <header>
+      <PageHeader>
         <h1 className="text-3xl font-bold text-white">Hola, {me?.displayName ?? me?.globalNickname ?? me?.discordUsername ?? "Usuario"}</h1>
         <p className="text-sm text-slate-400">Elige un clan para ver sus rutas o crea uno nuevo.</p>
-      </header>
+      </PageHeader>
 
       <section>
         <div className="mb-4 flex items-center justify-between">

@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
@@ -8,6 +7,7 @@ import useSWR from "swr";
 import { roleLabel, roleBadgeColor, canAdmin } from "@/lib/role-ui";
 import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSidebarToggle } from "@/components/layout/SidebarToggleContext";
 import type { AppRole } from "@/generated/prisma/client";
 
 type ClanEntry = { id: string; name: string; discordGuildIcon: string | null; myRole: AppRole | null };
@@ -15,7 +15,11 @@ type ClanEntry = { id: string; name: string; discordGuildIcon: string | null; my
 export function Sidebar() {
   const { data: session } = useSession();
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  // State del open/close vive en SidebarToggleContext: el HamburgerButton
+  // que cada página renderiza inline (junto al ViewToggle, etc) llama a
+  // setOpen(true). Antes era fixed top-3 left-3 ocupando una fila propia
+  // en mobile; ahora se ahorra esa fila.
+  const { open, setOpen } = useSidebarToggle();
   const { data: clans = [] } = useSWR<ClanEntry[]>("/api/me/clans");
   const { t } = useLanguage();
 
@@ -24,12 +28,6 @@ export function Sidebar() {
 
   return (
     <>
-      <button
-        className="fixed left-3 top-3 z-50 rounded-md border border-slate-700 bg-slate-900 p-2 text-white md:hidden"
-        onClick={() => setOpen(!open)}
-        aria-label="Menú"
-      >☰</button>
-
       {open && <div className="fixed inset-0 z-30 bg-black/50 md:hidden" onClick={() => setOpen(false)} />}
 
       {/* inset-y-0 left-0: anclado explícito al borde izquierdo del
@@ -115,7 +113,9 @@ export function Sidebar() {
 
         <div className="mb-2 flex items-center justify-between gap-2">
           <span className="text-[10px] uppercase tracking-wider text-slate-500">Idioma · Language</span>
-          <LanguageSwitcher />
+          {/* direction="up" porque el switcher está al pie del sidebar
+              — abrir hacia abajo dejaría la lista fuera del viewport. */}
+          <LanguageSwitcher direction="up" />
         </div>
 
         <button

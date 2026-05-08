@@ -3,6 +3,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import useSWR from "swr";
 import toast from "react-hot-toast";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 type AuditEntry = {
   id: number; action: string; details: Record<string, unknown> | null; createdAt: string;
@@ -41,7 +42,9 @@ export default function AuditPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold text-white">Auditoría</h1>
+      <PageHeader>
+        <h1 className="text-2xl font-bold text-white">Auditoría</h1>
+      </PageHeader>
 
       {isLoading && <div className="text-slate-400">Cargando…</div>}
 

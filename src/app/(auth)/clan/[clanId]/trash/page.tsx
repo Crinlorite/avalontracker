@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { useMe } from "@/hooks/useMe";
 import { canDelete } from "@/lib/role-ui";
+import { PageHeader } from "@/components/layout/PageHeader";
 import type { AppRole } from "@/generated/prisma/client";
 
 type ZoneInfo = {
@@ -103,13 +104,13 @@ export default function TrashPage() {
 
   return (
     <div className="space-y-4">
-      <header>
+      <PageHeader>
         <h1 className="text-2xl font-bold text-white">Papelera</h1>
         <p className="text-sm text-slate-400">
           Rutas y caminos borrados (manual o por caducidad de toda la chain). Se eliminan
           definitivamente tras 2 días desde el borrado. Antes de eso, puedes restaurarlos.
         </p>
-      </header>
+      </PageHeader>
 
       {events.length === 0 ? (
         <div className="rounded-lg border border-slate-800 bg-slate-900 p-8 text-center text-slate-400">
