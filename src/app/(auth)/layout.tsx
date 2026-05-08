@@ -16,26 +16,33 @@ export default async function AuthLayout({
 
   return (
     <SidebarToggleProvider>
-      <div className="flex min-h-screen bg-gray-950">
+      {/*
+        Layout cambiado a flex-column con altura atada al viewport
+        (`h-dvh`): main es flex-col donde el contenedor de children
+        ocupa flex-1 con su propio scroll, y el footer queda anclado
+        al fondo (shrink-0) sin tener que scrollear hasta él. Para
+        pages cortas (como dashboard o el grafo del clan) todo es
+        visible: header → contenido → footer en una sola pantalla.
+        Pages largas (audit log, etc) scrollean dentro del flex-1
+        sin desplazar el footer.
+      */}
+      <div className="flex h-dvh bg-gray-950">
         <Sidebar />
-        <main className="flex-1 overflow-y-auto md:ml-64">
-          {/* p-4 en mobile (sin pt extra — ya no hay botón fixed,
-              el hamburger lo renderiza cada página inline en su
-              header junto a ViewToggle/etc). */}
-          <div className="p-4 md:p-8">{children}</div>
-        <footer className="border-t border-slate-800/60 px-4 py-6 text-center text-xs text-slate-500">
-          <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-            <a href="/feedback" className="hover:text-slate-300">📝 Feedback</a>
-            <span aria-hidden className="text-slate-700">·</span>
-            <a href="https://royalforge.crintech.pro" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">
-              🛡️ Royal Forge
-            </a>
-            <span aria-hidden className="text-slate-700">·</span>
-            <a href="/legal/aviso-legal" className="hover:text-slate-300">Aviso legal</a>
-            <span aria-hidden className="text-slate-700">·</span>
-            <a href="/legal/privacy" className="hover:text-slate-300">Privacidad</a>
-          </nav>
-            <p className="mt-3 text-base font-semibold text-slate-300">
+        <main className="flex flex-1 flex-col overflow-hidden md:ml-64">
+          <div className="flex-1 overflow-y-auto p-4 md:p-8">{children}</div>
+          <footer className="shrink-0 border-t border-slate-800/60 px-4 py-3 text-center text-xs text-slate-500 md:py-6">
+            <nav className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 md:gap-x-4 md:gap-y-2">
+              <a href="/feedback" className="hover:text-slate-300">📝 Feedback</a>
+              <span aria-hidden className="text-slate-700">·</span>
+              <a href="https://royalforge.crintech.pro" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">
+                🛡️ Royal Forge
+              </a>
+              <span aria-hidden className="text-slate-700">·</span>
+              <a href="/legal/aviso-legal" className="hover:text-slate-300">Aviso legal</a>
+              <span aria-hidden className="text-slate-700">·</span>
+              <a href="/legal/privacy" className="hover:text-slate-300">Privacidad</a>
+            </nav>
+            <p className="mt-1.5 text-sm font-semibold text-slate-300 md:mt-3 md:text-base">
               Avalon Tracker
               <span className="font-normal text-slate-500"> · by </span>
               <a
