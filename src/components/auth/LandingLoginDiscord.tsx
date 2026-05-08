@@ -148,6 +148,10 @@ function Feature({ icon, title, body }: { icon: string; title: string; body: str
 
 function SideProjectCard({ project, lang }: { project: SideProject; lang: Lang }) {
   const hostname = project.url.replace(/^https?:\/\//, "").replace(/\/.*/, "");
+  // sideProjects.ts solo tiene tags/desc en EN y ES — fallback a EN si
+  // el lang activo es cualquier otro de los 25 soportados.
+  const tags = project.tags[lang] ?? project.tags.en;
+  const desc = project.desc[lang] ?? project.desc.en;
   return (
     <a
       href={project.url}
@@ -160,7 +164,7 @@ function SideProjectCard({ project, lang }: { project: SideProject; lang: Lang }
         <div className="mb-2 flex flex-wrap items-center gap-2">
           <span className="font-semibold text-white">{project.name}</span>
           <div className="flex flex-wrap gap-1">
-            {project.tags[lang].map((tag, i) => (
+            {tags.map((tag, i) => (
               <span
                 key={i}
                 className="rounded bg-slate-800/80 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-slate-400"
@@ -170,7 +174,7 @@ function SideProjectCard({ project, lang }: { project: SideProject; lang: Lang }
             ))}
           </div>
         </div>
-        <p className="mb-2 text-xs leading-relaxed text-slate-400">{project.desc[lang]}</p>
+        <p className="mb-2 text-xs leading-relaxed text-slate-400">{desc}</p>
         <div className="text-[11px] font-mono text-indigo-400/80 group-hover:text-indigo-300">
           {hostname} →
         </div>
