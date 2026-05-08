@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { mutate as globalMutate } from "swr";
 import type { ClanDetail, SecurityLevel } from "@/hooks/useClan";
 import { canCreate } from "@/lib/role-ui";
+import { SECURITY_LEVEL_META } from "@/lib/security-level";
 import type { AppRole } from "@/generated/prisma/client";
 
 // Umbral de "info rancia": pasadas 3h sin actualizar el parte de
@@ -11,11 +12,7 @@ import type { AppRole } from "@/generated/prisma/client";
 // las cosas cambian rápido — un parte de hace 4h ya no informa.
 const STALE_AFTER_MS = 3 * 60 * 60 * 1000;
 
-const LEVEL_META: Record<SecurityLevel, { color: string; label: string; bg: string }> = {
-  SAFE: { color: "#22c55e", label: "Seguro", bg: "rgba(34, 197, 94, 0.12)" },
-  CAUTION: { color: "#eab308", label: "Precaución", bg: "rgba(234, 179, 8, 0.12)" },
-  DANGER: { color: "#ef4444", label: "Peligro", bg: "rgba(239, 68, 68, 0.12)" },
-};
+const LEVEL_META = SECURITY_LEVEL_META;
 
 function formatRelative(iso: string): string {
   const d = new Date(iso);

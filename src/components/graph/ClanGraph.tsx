@@ -14,9 +14,18 @@ const nodeTypes = { zone: ZoneNode };
 const edgeTypes = { route: RouteEdge };
 
 export function ClanGraph({
-  clanId, routes, anchor, onNodeClick,
-}: { clanId: string; routes: RouteView[]; anchor: ClanAnchorZone | null; onNodeClick: (zoneName: string) => void }) {
-  const computed = useMemo(() => computeLayout(routes, anchor), [routes, anchor]);
+  clanId, routes, anchor, anchorSecurityLevel, onNodeClick,
+}: {
+  clanId: string;
+  routes: RouteView[];
+  anchor: ClanAnchorZone | null;
+  anchorSecurityLevel?: "SAFE" | "CAUTION" | "DANGER" | null;
+  onNodeClick: (zoneName: string) => void;
+}) {
+  const computed = useMemo(
+    () => computeLayout(routes, anchor, anchorSecurityLevel ?? null),
+    [routes, anchor, anchorSecurityLevel],
+  );
   // Hash de topología: conjunto ordenado de aristas. Si la topología
   // cambia (se añade o quita un hop), el hash cambia y la caché de
   // posiciones se invalida automáticamente — los drags antiguos

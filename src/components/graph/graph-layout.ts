@@ -2,15 +2,16 @@ import * as dagre from "@dagrejs/dagre";
 import type { RouteView, HopView } from "@/hooks/useClanRoutes";
 import type { ClanAnchorZone } from "@/hooks/useClan";
 
-export type LayoutNode = { id: string; zoneName: string; zoneType: string; tier: number | null; hasHideout: boolean; isRest: boolean; isCapital: boolean; x: number; y: number; isAnchor?: boolean };
+export type LayoutNode = { id: string; zoneName: string; zoneType: string; tier: number | null; hasHideout: boolean; isRest: boolean; isCapital: boolean; x: number; y: number; isAnchor?: boolean; anchorSecurityLevel?: "SAFE" | "CAUTION" | "DANGER" | null };
 export type LayoutEdge = { id: string; source: string; target: string; hop: HopView; routeId: string };
 
 const NODE_WIDTH = 200;
-// 100px en lugar de 80: ZoneNode ahora puede mostrar una línea extra
-// con la pista de proximidad (📍 portales más cercanos) para zonas
-// negras/especiales. Si dagre asumiera 80, los edges single-child
-// caerían dentro del propio cuerpo del nodo destino.
-const NODE_HEIGHT = 100;
+// 130px: ZoneNode puede mostrar hasta DOS líneas extra de pista
+// de proximidad (📍 los 2 portales más cercanos para zonas negras).
+// Cada línea es 📍 + countdown + nombre completo de portal/ciudad.
+// Si dagre asumiera menos altura, los edges single-child caerían
+// dentro del propio cuerpo del nodo destino.
+const NODE_HEIGHT = 130;
 // Geometría calculada para que un nodo con 2 hijos los reparta a ~45°
 // SE/SW. Con node-center-to-child-center horizontal = (NODE_WIDTH +
 // nodesep)/2 y vertical = NODE_HEIGHT + ranksep, igualar ambas da 45°:
@@ -24,6 +25,7 @@ const COMPONENT_PADDING = 120;
 export function computeLayout(
   routes: RouteView[],
   anchor: ClanAnchorZone | null,
+  anchorSecurityLevel?: "SAFE" | "CAUTION" | "DANGER" | null,
 ): { nodes: LayoutNode[]; edges: LayoutEdge[] } {
   const nodes = new Map<string, LayoutNode>();
   const edges: LayoutEdge[] = [];
@@ -46,16 +48,19 @@ export function computeLayout(
   }
 
   // El anchor siempre nodo, aunque ninguna ruta lo cruce todavía.
+  // Inyectamos también el security level para que el ZoneNode pinte
+  // el círculo de seguridad sin tener que ir a buscarlo por separado.
   if (anchor) {
+    const securityLevel = anchorSecurityLevel ?? null;
     if (!nodes.has(anchor.name)) {
       nodes.set(anchor.name, {
         id: anchor.name, zoneName: anchor.name, zoneType: anchor.type, tier: anchor.tier,
         hasHideout: anchor.hasHideout, isRest: anchor.isRest, isCapital: anchor.isCapital,
-        x: 0, y: 0, isAnchor: true,
+        x: 0, y: 0, isAnchor: true, anchorSecurityLevel: securityLevel,
       });
     } else {
       const existing = nodes.get(anchor.name)!;
-      nodes.set(anchor.name, { ...existing, isAnchor: true });
+      nodes.set(anchor.name, { ...existing, isAnchor: true, anchorSecurityLevel: securityLevel });
     }
   }
 

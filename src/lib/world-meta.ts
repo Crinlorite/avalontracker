@@ -150,29 +150,47 @@ export function nearestRoyalPortals(zoneName: string, n = 2): { name: string; ho
 }
 
 // Pista de proximidad para mostrar en zone-card (grafo) y share-card.
-// - Royal/blue/green/yellow/red: ya está en mapa conocido, no necesita
-// - Black: hasta 2 portales más cercanos ("3h Martlock · 4h Thetford")
-// - Special/mixed: ciudad royal más cercana
-export function proximityHintForZone(name: string): string | null {
+// Devuelve UN ARRAY de líneas (no string concatenado) para que cada
+// destino se renderice en su propia fila — caben sin truncarse.
+//
+// Nombres completos preservados: "Fort Sterling Portal" no se acorta
+// (en Albion son zonas distintas a "Fort Sterling" → ciudad royal).
+//
+// Política:
+// - Si la zona ES una royal city principal → null (ya estás ahí)
+// - Black → 2 portales más cercanos (líneas separadas)
+// - Cualquier otra zona (yellow/red/green/special/mixed/etc) → la
+//   royal city más cercana en hops. Útil para zonas tipo Sandgust
+//   Cleft (green safe area) o Mists especiales — saber a cuántos
+//   hops queda la ciudad de respaldo siempre informa.
+export function proximityHintsForZone(name: string): string[] | null {
   const pvp = getZonePvp(name);
   if (!pvp) return null;
-  if (pvp === "blue" || pvp === "green" || pvp === "yellow" || pvp === "red") return null;
+  if (ROYAL_CITIES.has(name)) return null;
+
   if (pvp === "black") {
     const portals = nearestRoyalPortals(name, 2);
-    if (portals.length === 0) {
-      // Fallback a royal city si no hay portales alcanzables.
-      const c = nearestRoyalCity(name);
-      if (c && c.hops > 0) return `${c.hops}h → ${c.name}`;
-      return null;
+    if (portals.length > 0) {
+      return portals.map((p) => `${p.hops}h ${p.name}`);
     }
-    // Acortamos "Martlock Portal" → "Martlock" para no consumir tanto
-    // ancho — el contexto deja claro que es portal de Outlands.
-    return portals
-      .map((p) => `${p.hops}h ${p.name.replace(/ Portal$/, "")}`)
-      .join(" · ");
+    // Fallback a royal city si no hay portales alcanzables.
+    const c = nearestRoyalCity(name);
+    if (c && c.hops > 0) return [`${c.hops}h → ${c.name}`];
+    return null;
   }
-  // Special, mixed: nearest royal city.
+
+  // Resto: nearest royal city (incluye green safearea como Sandgust
+  // Cleft, yellow/red de roads, special de Mists, mixed de tunnels).
   const c = nearestRoyalCity(name);
-  if (c && c.hops > 0) return `${c.hops}h → ${c.name}`;
+  if (c && c.hops > 0) return [`${c.hops}h → ${c.name}`];
   return null;
+}
+
+// Wrapper retro-compat (string concatenado) — solo si algún caller
+// suelto lo necesita. Preferimos proximityHintsForZone que devuelve
+// líneas separadas.
+export function proximityHintForZone(name: string): string | null {
+  const lines = proximityHintsForZone(name);
+  if (!lines || lines.length === 0) return null;
+  return lines.join(" · ");
 }
