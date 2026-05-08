@@ -1,15 +1,17 @@
 import type { AppRole } from "@/generated/prisma/client";
 
-const LABELS: Record<AppRole, string> = {
-  ADMIN: "Admin",
-  EDITOR: "Editor",
-  CONTRIBUTOR: "Colaborador",
-  VIEWER: "Observador",
+const ROLE_KEYS: Record<AppRole, string> = {
+  ADMIN: "role.admin",
+  EDITOR: "role.editor",
+  CONTRIBUTOR: "role.contributor",
+  VIEWER: "role.viewer",
 };
 
-export function roleLabel(role: AppRole | null): string {
-  if (!role) return "Sin acceso";
-  return LABELS[role];
+type Translator = (key: string) => string;
+
+export function roleLabel(role: AppRole | null, t: Translator): string {
+  if (!role) return t("role.none");
+  return t(ROLE_KEYS[role]);
 }
 
 const HIER: Record<AppRole, number> = { VIEWER: 1, CONTRIBUTOR: 2, EDITOR: 3, ADMIN: 4 };

@@ -74,6 +74,10 @@ const en: Dict = {
   "nav.signOut": "Sign out",
   "nav.list": "List",
   "nav.graph": "Graph",
+  "nav.dashboard": "Dashboard",
+  "nav.profile": "Profile",
+  "nav.myClans": "My clans",
+  "nav.noClans": "No clans yet",
 
   // Clan header
   "clan.anchor": "anchor",
@@ -120,6 +124,43 @@ const en: Dict = {
   "toast.restored": "Restored",
   "toast.error": "Error",
   "toast.networkError": "Network error",
+
+  // Dashboard
+  "dashboard.greeting": "Hi, {name}",
+  "dashboard.greetingFallback": "User",
+  "dashboard.subtitle": "Pick a clan to view its routes or create a new one.",
+  "dashboard.myClans": "My clans",
+  "dashboard.newClan": "+ New clan",
+  "dashboard.empty": "You are not in any clan yet. If your clan is registered and you signed in with Discord, make sure you have a mapped role.",
+
+  // Role labels
+  "role.admin": "Admin",
+  "role.editor": "Editor",
+  "role.contributor": "Contributor",
+  "role.viewer": "Viewer",
+  "role.none": "No access",
+
+  // Create clan modal
+  "createClan.title": "Create a new clan",
+  "createClan.requirementVigil": "{vigil} must be installed on the Discord server.",
+  "createClan.requirementOwner": "Only the {owner} or a user with {admin} / {manage} permission can register the clan here.",
+  "createClan.requirementOwnerToken": "owner",
+  "createClan.fieldName": "Clan name",
+  "createClan.fieldGuildId": "Discord Guild ID",
+  "createClan.fieldGuildIdHint": "Right-click the server → Copy ID",
+  "createClan.fieldGuildName": "Discord server name",
+  "createClan.submit": "Create",
+  "createClan.submitting": "Creating…",
+  "createClan.errorGeneric": "Could not create clan",
+  "createClan.successToast": "Clan created",
+
+  // Profile
+  "profile.title": "Profile",
+  "profile.identityTitle": "Discord identity",
+  "profile.displayNameTitle": "Display name",
+  "profile.displayNameHelp": "If filled, it will be used in the app instead of your Discord username. Clan admins can also override it.",
+  "profile.displayNamePlaceholderEmpty": "No custom name",
+  "profile.saveError": "Could not save",
 };
 
 // — Español (referencia base) —
@@ -168,6 +209,10 @@ const es: Dict = {
   "nav.signOut": "Cerrar sesión",
   "nav.list": "Lista",
   "nav.graph": "Grafo",
+  "nav.dashboard": "Dashboard",
+  "nav.profile": "Perfil",
+  "nav.myClans": "Mis clanes",
+  "nav.noClans": "Sin clanes todavía",
 
   "clan.anchor": "anchor",
   "clan.routesActive": "{count} rutas activas",
@@ -209,6 +254,39 @@ const es: Dict = {
   "toast.restored": "Restaurado",
   "toast.error": "Error",
   "toast.networkError": "Error de red",
+
+  "dashboard.greeting": "Hola, {name}",
+  "dashboard.greetingFallback": "Usuario",
+  "dashboard.subtitle": "Elige un clan para ver sus rutas o crea uno nuevo.",
+  "dashboard.myClans": "Mis clanes",
+  "dashboard.newClan": "+ Nuevo clan",
+  "dashboard.empty": "Todavía no estás en ningún clan. Si tu clan ya está dado de alta y has iniciado sesión con Discord, asegúrate de tener un rol mapeado.",
+
+  "role.admin": "Admin",
+  "role.editor": "Editor",
+  "role.contributor": "Colaborador",
+  "role.viewer": "Observador",
+  "role.none": "Sin acceso",
+
+  "createClan.title": "Crear nuevo clan",
+  "createClan.requirementVigil": "{vigil} debe estar instalado en el servidor Discord.",
+  "createClan.requirementOwner": "Solo el {owner} o un usuario con permiso {admin} / {manage} puede registrar el clan aquí.",
+  "createClan.requirementOwnerToken": "owner",
+  "createClan.fieldName": "Nombre del clan",
+  "createClan.fieldGuildId": "Discord Guild ID",
+  "createClan.fieldGuildIdHint": "Click derecho en el servidor → Copiar ID",
+  "createClan.fieldGuildName": "Nombre del servidor Discord",
+  "createClan.submit": "Crear",
+  "createClan.submitting": "Creando…",
+  "createClan.errorGeneric": "Error al crear clan",
+  "createClan.successToast": "Clan creado",
+
+  "profile.title": "Perfil",
+  "profile.identityTitle": "Identidad Discord",
+  "profile.displayNameTitle": "Nombre a mostrar",
+  "profile.displayNameHelp": "Si lo rellenas, se usará en la app en vez de tu username Discord. Los admins de tus clanes también pueden sobrescribirlo.",
+  "profile.displayNamePlaceholderEmpty": "Sin nombre custom",
+  "profile.saveError": "Error al guardar",
 };
 
 // — Alemán —
