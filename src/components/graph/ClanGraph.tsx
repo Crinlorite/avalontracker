@@ -102,22 +102,15 @@ export function ClanGraph({
   }, [routes]);
 
   return (
-    <div ref={containerRef} className="clan-graph h-[calc(100dvh-280px)] min-h-[300px] w-full rounded-xl border border-slate-800 md:h-[calc(100dvh-220px)]">
+    <div ref={containerRef} className="clan-graph h-full min-h-[200px] w-full rounded-xl border border-slate-800">
       {/*
-        Altura responsive:
-        - Mobile: 100dvh (dynamic viewport height) menos 280px de chrome
-          típico (header del clan + AnchorStatusCard + paddings + safe
-          slop). Targeta iPhone SE 3 / iPhone 14/15/16 base / Pro: en
-          esos viewports (567-750px efectivos con URL bar visible) el
-          grafo entra entre 287-470px sin scroll del wrapper. Plus/Max
-          quedan fuera del target — sobra espacio y no pasa nada.
-        - dvh en lugar de vh: en iOS Safari `100vh` es el viewport
-          estático (URL bar colapsada) y deja el grafo solapado por
-          debajo del fold cuando la URL bar aún está visible. dvh sí
-          se contrae con la URL bar.
-        - md+: 220px de chrome — desktop tiene más viewport y el
-          header no wrapea, así que el grafo recupera tamaño.
-        - min-h-[300px] como suelo defensivo para viewports raros.
+        Altura: el grafo ocupa el espacio sobrante del flex-column del
+        page wrapper (clan/[clanId]/page.tsx). El wrapper se ata al
+        viewport via 100dvh (dynamic viewport height = se contrae con
+        la URL bar de iOS) y deja que header + AnchorStatusCard sean
+        shrink-0; lo demás es para nosotros. min-h-[200px] como suelo
+        defensivo en viewports muy bajos (ej: portrait de teléfono pequeño
+        con URL bar + teclado abierto).
       */}
       <style jsx global>{`
         .clan-graph .react-flow__controls {
