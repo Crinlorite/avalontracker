@@ -2,12 +2,16 @@ import { describe, it, expect } from "vitest";
 import { roleLabel, canCreate, canDelete, canAdmin } from "@/lib/role-ui";
 
 describe("roleLabel", () => {
-  it("maps enum → ES", () => {
-    expect(roleLabel("ADMIN")).toBe("Admin");
-    expect(roleLabel("EDITOR")).toBe("Editor");
-    expect(roleLabel("CONTRIBUTOR")).toBe("Colaborador");
-    expect(roleLabel("VIEWER")).toBe("Observador");
-    expect(roleLabel(null)).toBe("Sin acceso");
+  // El translator se mockea como identity → comprueba que devuelve la
+  // key correcta. La traducción real vive en src/i18n/translations.ts y
+  // se prueba implícitamente por uso en la UI.
+  const id = (k: string) => k;
+  it("maps enum → translation key", () => {
+    expect(roleLabel("ADMIN", id)).toBe("role.admin");
+    expect(roleLabel("EDITOR", id)).toBe("role.editor");
+    expect(roleLabel("CONTRIBUTOR", id)).toBe("role.contributor");
+    expect(roleLabel("VIEWER", id)).toBe("role.viewer");
+    expect(roleLabel(null, id)).toBe("role.none");
   });
 });
 

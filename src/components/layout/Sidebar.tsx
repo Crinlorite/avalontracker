@@ -24,7 +24,7 @@ export function Sidebar() {
   const { t } = useLanguage();
 
   const avatar = session?.user?.image;
-  const name = session?.user?.name ?? "Usuario";
+  const name = session?.user?.name ?? t("dashboard.greetingFallback");
 
   return (
     <>
@@ -55,11 +55,11 @@ export function Sidebar() {
         )}
 
         <nav className="mb-6 flex flex-col gap-1">
-          <Link href="/dashboard" className={navClass(pathname === "/dashboard")}>Dashboard</Link>
-          <Link href="/profile" className={navClass(pathname === "/profile")}>Perfil</Link>
+          <Link href="/dashboard" className={navClass(pathname === "/dashboard")}>{t("nav.dashboard")}</Link>
+          <Link href="/profile" className={navClass(pathname === "/profile")}>{t("nav.profile")}</Link>
         </nav>
 
-        <div className="mb-2 text-xs uppercase text-slate-500">Mis clanes</div>
+        <div className="mb-2 text-xs uppercase text-slate-500">{t("nav.myClans")}</div>
         <div className="mb-6 flex flex-1 flex-col gap-1 overflow-y-auto">
           {clans.map((c) => {
             const clanBase = `/clan/${c.id}`;
@@ -78,7 +78,7 @@ export function Sidebar() {
                   <span className="truncate">{c.name}</span>
                   {c.myRole && (
                     <span className={`ml-2 shrink-0 rounded px-1.5 py-0.5 text-[10px] ${roleBadgeColor(c.myRole)}`}>
-                      {roleLabel(c.myRole)}
+                      {roleLabel(c.myRole, t)}
                     </span>
                   )}
                 </Link>
@@ -108,7 +108,7 @@ export function Sidebar() {
               </div>
             );
           })}
-          {clans.length === 0 && <div className="px-3 py-2 text-xs text-slate-500">Sin clanes todavía</div>}
+          {clans.length === 0 && <div className="px-3 py-2 text-xs text-slate-500">{t("nav.noClans")}</div>}
         </div>
 
         <div className="mb-2 flex items-center justify-between gap-2">

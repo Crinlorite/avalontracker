@@ -8,6 +8,7 @@ import { useMe } from "@/hooks/useMe";
 import { useClan } from "@/hooks/useClan";
 import { roleLabel, roleBadgeColor, canAdmin } from "@/lib/role-ui";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { AppRole } from "@/generated/prisma/client";
 
 type MemberRow = {
@@ -19,6 +20,7 @@ export default function MembersPage() {
   const { clanId } = useParams() as { clanId: string };
   const { data: members = [], mutate } = useSWR<MemberRow[]>(`/api/clans/${clanId}/members`);
   const { me } = useMe();
+  const { t } = useLanguage();
   const myMember = members.find((m) => m.userId === me?.id);
   const amAdmin = canAdmin(myMember?.appRole ?? null);
   const [editing, setEditing] = useState<number | null>(null);
@@ -66,7 +68,7 @@ export default function MembersPage() {
                   </div>
                 </td>
                 <td className="px-3 py-2">
-                  <span className={`rounded px-2 py-0.5 text-xs ${roleBadgeColor(m.appRole)}`}>{roleLabel(m.appRole)}</span>
+                  <span className={`rounded px-2 py-0.5 text-xs ${roleBadgeColor(m.appRole)}`}>{roleLabel(m.appRole, t)}</span>
                 </td>
                 <td className="px-3 py-2 text-slate-400">{new Date(m.joinedAt).toLocaleDateString("es-ES")}</td>
                 <td className="px-3 py-2 text-slate-500">{m.lastSyncAt ? new Date(m.lastSyncAt).toLocaleString("es-ES") : "—"}</td>
