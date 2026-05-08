@@ -294,10 +294,12 @@ model RouteHop {
 
 // ============ Sniffer ingest ============
 
-// Token personal emitido por el super admin para autorizar una instancia local
-// de Loot Vigil a ingestar eventos de zona en su clan-target.
-// Se almacena sólo el hash (SHA-256) — el token en claro se muestra una vez al
-// crearlo. Revocable en cualquier momento.
+// Token personal emitido por un usuario ADMIN del clan-target para
+// autorizar una instancia local de Loot Vigil (sniffer) a ingestar
+// eventos de zona en ese clan. Cada token está scoped a (userId,
+// targetClanId): solo opera en el clan donde el emisor es ADMIN.
+// Se almacena sólo el hash (SHA-256) — el token en claro se muestra
+// una vez al crearlo. Revocable en cualquier momento.
 model IngestToken {
   id            String    @id @default(cuid())
   userId        String

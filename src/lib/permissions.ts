@@ -158,15 +158,14 @@ export class PermissionError extends Error {
   }
 }
 
-// Enforce RBAC puro: el user debe tener al menos `minRole` en el clan.
-// Nombre se mantiene por compat con imports existentes; ya no hay bypass
-// super admin — el modelo es flat.
-export async function requireRoleOrSuperAdminRead(
+// Enforce RBAC: el user debe tener al menos `minRole` en el clan.
+// Modelo flat — sin figuras super-admin globales ni bypass.
+export async function requireRole(
   userId: string,
   clanId: string,
   minRole: AppRole,
   method: "GET" | "WRITE"
-): Promise<{ bypass: false; role: AppRole | null; stale: boolean }> {
+): Promise<{ role: AppRole; stale: boolean }> {
   const user = await prisma.user.findUnique({
     where: { id: userId },
     select: { id: true },
@@ -184,7 +183,7 @@ export async function requireRoleOrSuperAdminRead(
       have: current.appRole,
     });
   }
-  return { bypass: false, role: current.appRole, stale: current.stale };
+  return { role: current.appRole, stale: current.stale };
 }
 
 export async function isClanMember(userId: string, clanId: string): Promise<boolean> {

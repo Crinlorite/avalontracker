@@ -1,3 +1,14 @@
+# Avalon Tracker — docker-compose para self-host completo
+# (DB + app + Nginx). Para producción real con TLS usa Caddy/Traefik
+# o un reverse proxy gestionado (Coolify, Fly, etc).
+#
+# Quick start:
+#   1. cp .env.example .env  (rellena al menos las (*) obligatorias)
+#   2. docker compose up -d
+#   3. abre http://localhost:3000
+#
+# Necesitas también un Vigil Bot accesible (https://github.com/Crinlorite/vigil-discordbot).
+
 services:
   db:
     image: postgres:16-alpine
@@ -7,6 +18,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-avalon_tracker}
     volumes:
       - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
 
   app:
     build:
@@ -17,18 +29,29 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: ${DATABASE_URL}
+      # Auth
       AUTH_SECRET: ${AUTH_SECRET}
       AUTH_URL: ${AUTH_URL}
-      AUTH_GOOGLE_ID: ${AUTH_GOOGLE_ID}
-      AUTH_GOOGLE_SECRET: ${AUTH_GOOGLE_SECRET}
       NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
-      SUPER_ADMIN_EMAIL: ${SUPER_ADMIN_EMAIL}
+      # Discord OAuth
+      DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
+      # Vigil Bot integration
+      VIGIL_BOT_API_URL: ${VIGIL_BOT_API_URL}
+      VIGIL_BOT_SHARED_SECRET: ${VIGIL_BOT_SHARED_SECRET}
+      # Database
+      DATABASE_URL: ${DATABASE_URL}
+      PRISMA_CLIENT_POOL_SIZE: ${PRISMA_CLIENT_POOL_SIZE:-5}
+      # Feedback (opcional)
+      FEEDBACK_SECRET: ${FEEDBACK_SECRET}
+      VIGIL_BOT_URL: ${VIGIL_BOT_URL}
+      # Turnstile (opcional)
+      TURNSTILE_SECRET: ${TURNSTILE_SECRET}
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+      # Misc
+      LOG_LEVEL: ${LOG_LEVEL:-info}
       NODE_ENV: production
-    command: >
-      sh -c "npx prisma migrate deploy &&
-             npx tsx scripts/seed.ts &&
-             node server.js"
+    restart: unless-stopped
 
   nginx:
     image: nginx:alpine
@@ -38,6 +61,7 @@ services:
       - app
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
 
 volumes:
   pgdata:

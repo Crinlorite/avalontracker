@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { apiError, internalError } from "@/lib/api-error";
 import { generateToken } from "@/lib/ingest-token";
-import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
+import { requireRole, PermissionError } from "@/lib/permissions";
 
 // GET /api/me/ingest-tokens — lista los tokens del user autenticado
 // a través de todos los clanes donde tiene rol (aunque el token sólo lo
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
   // Gate: solo ADMIN del clan puede emitir tokens que ingestan en ese clan.
   try {
-    await requireRoleOrSuperAdminRead(session.user.id, parsed.data.targetClanId, "ADMIN", "WRITE");
+    await requireRole(session.user.id, parsed.data.targetClanId, "ADMIN", "WRITE");
   } catch (e) {
     if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos en ese clan", e.extra);
     return internalError(e);
