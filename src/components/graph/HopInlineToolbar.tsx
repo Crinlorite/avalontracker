@@ -48,10 +48,11 @@ export function HopInlineToolbar({
   if (!canCreate(myRole)) return null;
 
   return (
-    <div className="flex gap-1 rounded border border-slate-700 bg-slate-900 p-1 shadow-xl">
+    <div className="flex flex-wrap gap-1 rounded border border-slate-700 bg-slate-900 p-1 shadow-xl">
       <button disabled={busy} onClick={() => extend(30)} className="rounded px-2 py-1 text-xs text-slate-200 hover:bg-slate-800">+30m</button>
       <button disabled={busy} onClick={() => extend(60)} className="rounded px-2 py-1 text-xs text-slate-200 hover:bg-slate-800">+1h</button>
-      <button disabled={busy} onClick={() => patch({ status: "WATCHED" })} className="rounded px-2 py-1 text-xs text-yellow-300 hover:bg-slate-800">👁 Watch</button>
+      <button disabled={busy} onClick={() => extend(120)} className="rounded px-2 py-1 text-xs text-slate-200 hover:bg-slate-800">+2h</button>
+      <button disabled={busy} onClick={() => extend(240)} className="rounded px-2 py-1 text-xs text-slate-200 hover:bg-slate-800">+4h</button>
       <button disabled={busy} onClick={() => patch({ status: "COLLAPSED" })} className="rounded px-2 py-1 text-xs text-slate-400 hover:bg-slate-800">✕ Collapsed</button>
       <button disabled={busy} onClick={() => patch({ status: "ACTIVE", statusNote: null })} className="rounded px-2 py-1 text-xs text-green-300 hover:bg-slate-800">✓ Active</button>
       {canDelete(myRole) && (
