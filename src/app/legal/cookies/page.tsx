@@ -4,8 +4,9 @@ import { LegalPage } from "@/components/legal/LegalPage";
 
 export default function CookiesPage() {
   const { lang } = useLanguage();
-  if (lang === "en") return <English />;
-  return <Spanish />;
+  // EN como fallback universal — ver comentario en aviso-legal/page.tsx.
+  if (lang === "es") return <Spanish />;
+  return <English />;
 }
 
 function Spanish() {
