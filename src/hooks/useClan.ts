@@ -10,6 +10,8 @@ export type ClanAnchorZone = {
   isCapital: boolean;
 };
 
+export type SecurityLevel = "SAFE" | "CAUTION" | "DANGER";
+
 export type ClanDetail = {
   id: string;
   name: string;
@@ -19,6 +21,9 @@ export type ClanDetail = {
   discordWebhookUrl: string | null;
   anchorZoneId: number | null;
   anchorZone: ClanAnchorZone | null;
+  anchorSecurityLevel: SecurityLevel | null;
+  anchorNotes: string | null;
+  anchorNotesAt: string | null;
   botInstalled: boolean;
   _count?: { members: number; routes: number };
 };

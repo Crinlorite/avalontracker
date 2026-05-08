@@ -38,6 +38,9 @@ export async function GET(_req: Request, { params }: RouteParams) {
       anchorZone: { select: { id: true, name: true, type: true, tier: true, hasHideout: true, isRest: true, isCapital: true } },
     },
   });
+  // anchorSecurityLevel/anchorNotes/anchorNotesAt se devuelven por
+  // defecto al ser campos top-level del Clan model — no hace falta
+  // añadirlos al select.
   if (!clan) return apiError("NOT_FOUND", 404, "Clan no encontrado");
   return NextResponse.json(clan);
 }
