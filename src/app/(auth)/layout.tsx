@@ -35,7 +35,18 @@ export default async function AuthLayout({
             <span aria-hidden className="text-slate-700">·</span>
             <a href="/legal/privacy" className="hover:text-slate-300">Privacidad</a>
           </nav>
-            <p className="mt-2">Avalon Tracker · by Crintech Studios</p>
+            <p className="mt-3 text-base font-semibold text-slate-300">
+              Avalon Tracker
+              <span className="font-normal text-slate-500"> · by </span>
+              <a
+                href="https://crintech.pro"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-indigo-400 underline-offset-2 hover:underline"
+              >
+                Crintech Studios
+              </a>
+            </p>
           </footer>
         </main>
       </div>

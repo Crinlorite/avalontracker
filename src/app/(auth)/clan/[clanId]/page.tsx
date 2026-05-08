@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useState } from "react";
+import { useParams } from "next/navigation";
 import useSWR from "swr";
 import { useClanRoutes } from "@/hooks/useClanRoutes";
 import { useClan } from "@/hooks/useClan";
@@ -21,7 +21,6 @@ type MemberRow = { userId: string; appRole: AppRole | null };
 
 export default function ClanGraphPage() {
   const { clanId } = useParams() as { clanId: string };
-  const router = useRouter();
   const { clan } = useClan(clanId);
   const { routes, isLoading } = useClanRoutes(clanId);
   const { me } = useMe();
@@ -34,16 +33,11 @@ export default function ClanGraphPage() {
   const [showMerge, setShowMerge] = useState(false);
   const [branchFrom, setBranchFrom] = useState<{ route: RouteView; zoneName: string } | null>(null);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(orientation: portrait)");
-    const check = () => {
-      if (mq.matches && window.innerWidth < 1024) router.replace(`/clan/${clanId}/list`);
-    };
-    check();
-    mq.addEventListener("change", check);
-    return () => mq.removeEventListener("change", check);
-  }, [clanId, router]);
+  // Auto-redirección a /list en mobile portrait quitada: el ViewToggle
+  // permite al usuario elegir, y forzar lista hacía que cada click
+  // en "Grafo" rebotara de vuelta. Con NODE_HEIGHT/WIDTH compactos y
+  // fitView/maxZoom en ClanGraph, el grafo es usable en mobile aunque
+  // sea pequeño (pinch-zoom de React Flow lo amplía).
 
   if (isLoading) return <div className="text-slate-400">Cargando grafo…</div>;
 

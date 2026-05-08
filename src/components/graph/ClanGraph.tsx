@@ -137,6 +137,13 @@ export function ClanGraph({
         edgeTypes={edgeTypes}
         onNodeClick={(_, n) => onNodeClick(n.id)}
         fitView
+        // En grafos pequeños fitView calcula un zoom alto que pinta
+        // los nodos enormes (sobre todo en mobile). maxZoom=0.85 evita
+        // que se acerque más allá de eso. minZoom 0.2 deja al usuario
+        // alejar bastante con pinch en grafos grandes.
+        fitViewOptions={{ maxZoom: 0.85, padding: 0.15 }}
+        minZoom={0.2}
+        maxZoom={2}
         proOptions={{ hideAttribution: true }}
       >
         <Background color="#334155" />

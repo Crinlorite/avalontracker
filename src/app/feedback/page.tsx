@@ -214,6 +214,12 @@ export default function FeedbackPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-12">
       <header className="mb-8">
+        <a
+          href="/dashboard"
+          className="mb-4 inline-flex items-center gap-1 text-xs text-slate-400 hover:text-white"
+        >
+          ← {lang === "es" ? "Volver al Dashboard" : "Back to Dashboard"}
+        </a>
         <h1 className="text-3xl font-bold text-white">
           {lang === "es" ? "Enviar Feedback" : "Send Feedback"}
         </h1>
@@ -334,14 +340,11 @@ export default function FeedbackPage() {
           />
         </div>
 
-        {/* Turnstile */}
-        {TURNSTILE_SITE_KEY ? (
-          <div ref={turnstileRef}></div>
-        ) : (
-          <p className="text-xs italic text-amber-400">
-            {lang === "es" ? "(Anti-bot no configurado en este entorno)" : "(Anti-bot not configured in this environment)"}
-          </p>
-        )}
+        {/* Turnstile (anti-bot). Solo se renderiza si la site key
+            está configurada en build-time (NEXT_PUBLIC_TURNSTILE_SITE_KEY).
+            En dev/preview puede no estar — el form sigue siendo
+            funcional, sólo le faltará la verificación CF. */}
+        {TURNSTILE_SITE_KEY && <div ref={turnstileRef}></div>}
 
         <button
           type="submit"
