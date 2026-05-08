@@ -110,25 +110,68 @@ export function nearestRoyalPortal(zoneName: string): { name: string; hops: numb
   return bfsNearest(zoneName, (n) => ROYAL_PORTALS.has(n), "portal");
 }
 
-// Helper: pista de proximidad apropiada para mostrar en un zone-card.
-// - Royal/blue/green/yellow/red: ya está en un mapa conocido, no
-//   necesita pista
-// - Black: ciudad portal más cercana ("Martlock Portal · 3 hops")
-// - Special (Mists, Avalon, etc): ciudad royal más cercana
-// - Resto: nearest royal city como fallback genérico
+// BFS que devuelve los N portales más cercanos. Útil para dar opciones
+// al usuario en lugar de un único "el más corto" — si el más corto es
+// un portal saturado, el segundo le sirve.
+const portalsNearestCache = new Map<string, { name: string; hops: number }[]>();
+
+function nearestNRoyalPortals(zoneName: string, n: number, maxDepth = 12): { name: string; hops: number }[] {
+  const ck = `${zoneName}|n${n}`;
+  if (portalsNearestCache.has(ck)) return portalsNearestCache.get(ck)!;
+  if (!ADJACENCY_BY_NAME[zoneName]) {
+    portalsNearestCache.set(ck, []);
+    return [];
+  }
+
+  const found: { name: string; hops: number }[] = [];
+  const visited = new Set<string>([zoneName]);
+  const queue: { name: string; hops: number }[] = [{ name: zoneName, hops: 0 }];
+  while (queue.length > 0 && found.length < n) {
+    const cur = queue.shift()!;
+    if (cur.hops >= maxDepth) continue;
+    const neighbors = ADJACENCY_BY_NAME[cur.name] ?? [];
+    for (const neigh of neighbors) {
+      if (visited.has(neigh)) continue;
+      visited.add(neigh);
+      const hops = cur.hops + 1;
+      if (ROYAL_PORTALS.has(neigh)) {
+        found.push({ name: neigh, hops });
+        if (found.length >= n) break;
+      }
+      queue.push({ name: neigh, hops });
+    }
+  }
+  portalsNearestCache.set(ck, found);
+  return found;
+}
+
+export function nearestRoyalPortals(zoneName: string, n = 2): { name: string; hops: number }[] {
+  return nearestNRoyalPortals(zoneName, n);
+}
+
+// Pista de proximidad para mostrar en zone-card (grafo) y share-card.
+// - Royal/blue/green/yellow/red: ya está en mapa conocido, no necesita
+// - Black: hasta 2 portales más cercanos ("3h Martlock · 4h Thetford")
+// - Special/mixed: ciudad royal más cercana
 export function proximityHintForZone(name: string): string | null {
   const pvp = getZonePvp(name);
   if (!pvp) return null;
   if (pvp === "blue" || pvp === "green" || pvp === "yellow" || pvp === "red") return null;
   if (pvp === "black") {
-    const r = nearestRoyalPortal(name);
-    if (r && r.hops > 0) return `${r.hops}h → ${r.name}`;
-    // fallback a royal city si no hay portal a tiro
-    const c = nearestRoyalCity(name);
-    if (c && c.hops > 0) return `${c.hops}h → ${c.name}`;
-    return null;
+    const portals = nearestRoyalPortals(name, 2);
+    if (portals.length === 0) {
+      // Fallback a royal city si no hay portales alcanzables.
+      const c = nearestRoyalCity(name);
+      if (c && c.hops > 0) return `${c.hops}h → ${c.name}`;
+      return null;
+    }
+    // Acortamos "Martlock Portal" → "Martlock" para no consumir tanto
+    // ancho — el contexto deja claro que es portal de Outlands.
+    return portals
+      .map((p) => `${p.hops}h ${p.name.replace(/ Portal$/, "")}`)
+      .join(" · ");
   }
-  // special, mixed, o tipos sin clasificación clara
+  // Special, mixed: nearest royal city.
   const c = nearestRoyalCity(name);
   if (c && c.hops > 0) return `${c.hops}h → ${c.name}`;
   return null;

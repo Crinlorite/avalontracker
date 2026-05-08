@@ -1,6 +1,7 @@
 "use client";
 import { Handle, Position, type NodeProps } from "@xyflow/react";
 import { nodeBorderColorForZone } from "./graph-colors";
+import { proximityHintForZone } from "@/lib/world-meta";
 import type { LayoutNode } from "./graph-layout";
 
 export function ZoneNode({ data, selected }: NodeProps) {
@@ -14,6 +15,10 @@ export function ZoneNode({ data, selected }: NodeProps) {
   const anchorGlow = d.isAnchor ? "shadow-[0_0_20px_rgba(250,204,21,0.35)]" : "";
   const borderColor = selected ? "#facc15" : d.isAnchor ? "#fbbf24" : color;
   const borderWidth = d.isAnchor ? "border-[3px]" : "border-2";
+  // Pista de proximidad para zonas no-royal (negras / especiales /
+  // mixed): los 2 portales más cercanos para que el clan sepa por
+  // dónde sale más rápido. Royal/safe → null (no hace falta).
+  const proximity = proximityHintForZone(d.zoneName);
   return (
     <div
       // Ancho fijo 200px = NODE_WIDTH del graph-layout. Sin esto, nodos
@@ -35,6 +40,14 @@ export function ZoneNode({ data, selected }: NodeProps) {
         {d.isRest && <span className="rounded bg-green-700 px-1 py-0.5 text-[10px] text-white">Rest</span>}
         {d.isCapital && <span className="rounded bg-amber-700 px-1 py-0.5 text-[10px] text-white">Capital</span>}
       </div>
+      {proximity && (
+        <div
+          className="mt-1 truncate text-[10px] font-mono text-slate-400"
+          title={`Portales/ciudades más cercanas — ${proximity}`}
+        >
+          📍 {proximity}
+        </div>
+      )}
       <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
     </div>
   );

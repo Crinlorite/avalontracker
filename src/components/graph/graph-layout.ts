@@ -6,7 +6,11 @@ export type LayoutNode = { id: string; zoneName: string; zoneType: string; tier:
 export type LayoutEdge = { id: string; source: string; target: string; hop: HopView; routeId: string };
 
 const NODE_WIDTH = 200;
-const NODE_HEIGHT = 80;
+// 100px en lugar de 80: ZoneNode ahora puede mostrar una línea extra
+// con la pista de proximidad (📍 portales más cercanos) para zonas
+// negras/especiales. Si dagre asumiera 80, los edges single-child
+// caerían dentro del propio cuerpo del nodo destino.
+const NODE_HEIGHT = 100;
 // Geometría calculada para que un nodo con 2 hijos los reparta a ~45°
 // SE/SW. Con node-center-to-child-center horizontal = (NODE_WIDTH +
 // nodesep)/2 y vertical = NODE_HEIGHT + ranksep, igualar ambas da 45°:
