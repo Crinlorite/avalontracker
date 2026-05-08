@@ -16,7 +16,15 @@ const GROUP_LABELS: Record<LangGroup, { en: string; es: string }> = {
 
 const GROUP_ORDER: LangGroup[] = ["language", "regional", "community"];
 
-export function LanguageSwitcher({ className = "" }: { className?: string }) {
+export function LanguageSwitcher({
+  className = "",
+  direction = "down",
+}: {
+  className?: string;
+  // "up" para sitios donde el botón está cerca del borde inferior
+  // (ej: sidebar) y abrir hacia abajo dejaría la lista off-screen.
+  direction?: "up" | "down";
+}) {
   const { lang, setLanguage } = useLanguage();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -55,7 +63,9 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
 
       {open && (
         <div
-          className="absolute right-0 z-50 mt-2 max-h-[480px] w-72 overflow-y-auto rounded-lg border border-slate-700 bg-slate-900 shadow-2xl"
+          className={`absolute right-0 z-50 max-h-[480px] w-72 overflow-y-auto rounded-lg border border-slate-700 bg-slate-900 shadow-2xl ${
+            direction === "up" ? "bottom-full mb-2" : "top-full mt-2"
+          }`}
           role="menu"
         >
           {GROUP_ORDER.map((g) => (

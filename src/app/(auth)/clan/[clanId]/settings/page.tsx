@@ -8,6 +8,7 @@ import { useClan, type ClanAnchorZone } from "@/hooks/useClan";
 import { useMe } from "@/hooks/useMe";
 import { RoleMappingEditor } from "@/components/clan/RoleMappingEditor";
 import { ZoneAutocomplete } from "@/components/zones/ZoneAutocomplete";
+import { PageHeader } from "@/components/layout/PageHeader";
 import { canAdmin } from "@/lib/role-ui";
 import type { AppRole } from "@/generated/prisma/client";
 
@@ -34,7 +35,9 @@ export default function SettingsPage() {
   if (!allowed) {
     return (
       <div className="space-y-4">
-        <h1 className="text-2xl font-bold text-white">Configuración de {clan.name}</h1>
+        <PageHeader>
+          <h1 className="text-2xl font-bold text-white">Configuración de {clan.name}</h1>
+        </PageHeader>
         <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-8 text-center">
           <div className="mx-auto mb-3 inline-block rounded-full bg-slate-800 px-3 py-1 text-xs uppercase text-slate-400">
             Acceso restringido
