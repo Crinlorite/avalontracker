@@ -1,12 +1,13 @@
 "use client";
-import { useMemo, useEffect, useCallback } from "react";
+import { useMemo, useEffect, useCallback, useState, useRef } from "react";
 import { ReactFlow, Background, Controls, type Node, type Edge, useNodesState, useEdgesState } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { ZoneNode } from "./ZoneNode";
 import { RouteEdge } from "./RouteEdge";
 import { computeLayout } from "./graph-layout";
 import { useLayoutCache } from "@/hooks/useLayoutCache";
-import type { RouteView } from "@/hooks/useClanRoutes";
+import { EditHopTimeModal } from "@/components/routes/EditHopTimeModal";
+import type { RouteView, HopView } from "@/hooks/useClanRoutes";
 import type { ClanAnchorZone } from "@/hooks/useClan";
 
 const nodeTypes = { zone: ZoneNode };
@@ -71,8 +72,28 @@ export function ClanGraph({
     [setCachedPosition],
   );
 
+  // Editor de tiempo a mano: el RouteEdge dispara un CustomEvent
+  // "avalon:edit-hop-time" (con detail={routeId, hopId}) cuando el
+  // usuario clickea el label del timer. Resolvemos la HopView con los
+  // datos actuales y abrimos el modal.
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [editingHop, setEditingHop] = useState<{ hop: HopView; routeId: string } | null>(null);
+  useEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
+    function handler(ev: Event) {
+      const detail = (ev as CustomEvent<{ routeId: string; hopId: number }>).detail;
+      if (!detail) return;
+      const route = routes.find((r) => r.id === detail.routeId);
+      const hop = route?.hops.find((h) => h.id === detail.hopId);
+      if (route && hop) setEditingHop({ hop, routeId: route.id });
+    }
+    node.addEventListener("avalon:edit-hop-time", handler);
+    return () => node.removeEventListener("avalon:edit-hop-time", handler);
+  }, [routes]);
+
   return (
-    <div className="clan-graph h-[calc(100vh-220px)] w-full rounded-xl border border-slate-800">
+    <div ref={containerRef} className="clan-graph h-[calc(100vh-220px)] w-full rounded-xl border border-slate-800">
       <style jsx global>{`
         .clan-graph .react-flow__controls {
           background: rgb(15, 23, 42);
@@ -112,6 +133,14 @@ export function ClanGraph({
         <Background color="#334155" />
         <Controls showInteractive={false} />
       </ReactFlow>
+      {editingHop && (
+        <EditHopTimeModal
+          clanId={clanId}
+          routeId={editingHop.routeId}
+          hop={editingHop.hop}
+          onClose={() => setEditingHop(null)}
+        />
+      )}
     </div>
   );
 }
