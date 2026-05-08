@@ -25,9 +25,10 @@ export default function AuditPage() {
   const [page, setPage] = useState(1);
   const { data, error, isLoading, mutate } = useSWR<AuditResponse>(`/api/clans/${clanId}/audit?page=${page}&limit=20`);
 
-  // El endpoint GET de audit ya gatea a ADMIN; si llegamos aquí somos ADMIN
-  // del clan y podemos borrar entradas. Sin figura super admin global — el
-  // RBAC es puro: ADMIN del clan actúa sobre su propio audit log.
+  // El endpoint GET de audit ya gatea a ADMIN; si llegamos aquí somos
+  // ADMIN del clan y podemos borrar entradas del audit propio. RBAC
+  // puro: ADMIN del clan actúa solo sobre su propio audit log, no
+  // sobre los de otros clanes.
 
   async function removeEntry(id: number) {
     if (!confirm("¿Borrar esta entrada de auditoría? (irreversible)")) return;

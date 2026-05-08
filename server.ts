@@ -62,12 +62,13 @@ app.prepare().then(() => {
     socket.on("join-clan", async (clanId: string) => {
       const userId = (socket.data as { userId?: string }).userId;
       if (!userId) return;
+      // RBAC puro: solo miembros del clan pueden suscribirse a sus
+      // eventos en tiempo real. No hay bypass super-admin.
       const membership = await prisma.clanMember.findUnique({
         where: { userId_clanId: { userId, clanId } },
         select: { appRole: true },
       });
-      const user = await prisma.user.findUnique({ where: { id: userId }, select: { isSuperAdmin: true } });
-      if (!membership?.appRole && !user?.isSuperAdmin) return;
+      if (!membership?.appRole) return;
       socket.join(`clan:${clanId}`);
     });
 

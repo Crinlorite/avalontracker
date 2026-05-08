@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
+import { requireRole, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 import { logAudit } from "@/lib/audit";
 
@@ -19,7 +19,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const { clanId, routeId, hopId } = await params;
   try {
-    await requireRoleOrSuperAdminRead(session.user.id, clanId, "CONTRIBUTOR", "WRITE");
+    await requireRole(session.user.id, clanId, "CONTRIBUTOR", "WRITE");
   } catch (e) {
     if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
     return internalError(e);
@@ -63,7 +63,7 @@ export async function DELETE(_req: Request, { params }: RouteParams) {
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const { clanId, routeId, hopId } = await params;
   try {
-    await requireRoleOrSuperAdminRead(session.user.id, clanId, "EDITOR", "WRITE");
+    await requireRole(session.user.id, clanId, "EDITOR", "WRITE");
   } catch (e) {
     if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
     return internalError(e);

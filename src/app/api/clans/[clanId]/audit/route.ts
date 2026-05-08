@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireRoleOrSuperAdminRead, PermissionError } from "@/lib/permissions";
+import { requireRole, PermissionError } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 
 type RouteParams = { params: Promise<{ clanId: string }> };
@@ -12,7 +12,7 @@ export async function GET(request: Request, { params }: RouteParams) {
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const { clanId } = await params;
   try {
-    await requireRoleOrSuperAdminRead(session.user.id, clanId, "ADMIN", "GET");
+    await requireRole(session.user.id, clanId, "ADMIN", "GET");
   } catch (e) {
     if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin acceso", e.extra);
     return internalError(e);
@@ -44,7 +44,7 @@ export async function DELETE(request: Request, { params }: RouteParams) {
   const { clanId } = await params;
 
   try {
-    await requireRoleOrSuperAdminRead(session.user.id, clanId, "ADMIN", "WRITE");
+    await requireRole(session.user.id, clanId, "ADMIN", "WRITE");
   } catch (e) {
     if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
     return internalError(e);

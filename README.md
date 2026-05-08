@@ -1,20 +1,29 @@
 # Avalon Tracker
 
-Herramienta colaborativa para mapear los Caminos de Avalon (Roads of Avalon) de Albion Online entre miembros de un clan. Vista primaria en **grafo interactivo** tipo Tripwire/Pathfinder con timers en vivo, pathfinding a salidas a Royal Cities / Rests y notificaciones a Discord.
+Herramienta colaborativa para mapear los **Caminos de Avalon** (Roads of Avalon) de Albion Online entre miembros de un clan. Vista primaria en **grafo interactivo** con timers en vivo, pathfinding a salidas a Royal Cities / Rests y notificaciones a Discord.
 
-> **Estado**: rediseño Discord-native completado en la rama `feat/discord-redesign-backend` (78 commits). Pendiente de merge a `main` y primer deploy con el stack nuevo.
+> **Open source · MIT** — el código es libre. El despliegue público en [avalon.crintech.pro](https://avalon.crintech.pro) lo mantengo yo (Crintech Studios), pero **te animo a montar tu propio portal privado** para tu clan: así la información sensible (rutas, anchors, partes de seguridad) **se queda bajo tu llave**, sin que terceros — ni yo — vean nada.
 
 ---
 
-## Funcionalidades
+## ¿Por qué montar mi propio portal?
+
+- **Privacidad total** — tus rutas, anchors, partes de seguridad y tickets viven en tu Postgres, no en los míos.
+- **Sin dependencia de mi VPS** — si dejo de pagar el hosting o cambio el dominio, tu clan sigue funcionando.
+- **Personalización** — branding, idiomas extra, integraciones propias con tu Discord. El código es tuyo.
+- **Confianza por código** — nada que esté en este repo es secreto. Audita lo que despliegues.
+- **Coste mínimo** — un VPS pequeño + Postgres compartido es suficiente para un clan de hasta 200 personas.
+
+---
+
+## Funcionalidades principales
 
 ### Autenticación Discord-native
 - Login con **Discord OAuth** (scopes mínimos: `identify email`). Sin contraseñas, sin Google.
-- **Vigil Bot obligatorio**: autoridad de roles del guild + notificaciones. Avalon Tracker no habla directamente con la API de Discord — todo va vía el bot.
-- Identidad proyectada en la app: Discord username / global nickname / avatar. Email jamás se renderiza.
-- Sesiones JWT (NextAuth v5).
+- **Vigil Bot** (servicio sibling) actúa como autoridad de roles y emisor de notificaciones. Avalon Tracker no habla directamente con la Discord API — todo va vía el bot.
+- Sesiones JWT (NextAuth v5), cookie persistente 14 días.
 
-### Roles (4, jerárquicos)
+### Roles del clan (4 niveles, jerárquicos)
 | Nivel | Enum | UI ES | Puede |
 |:-:|---|---|---|
 | 4 | `ADMIN` | Admin | Todo (gestionar clan, roles, webhook, borrar) |
@@ -22,40 +31,46 @@ Herramienta colaborativa para mapear los Caminos de Avalon (Roads of Avalon) de 
 | 2 | `CONTRIBUTOR` | Colaborador | Crear + editar (sin borrar) |
 | 1 | `VIEWER` | Observador | Solo lectura |
 
-Mapeo **many-to-many** desde roles Discord. Un usuario con varios roles mapeados → gana el más alto. Configurable por Admin desde Settings del clan (dropdown con roles reales del guild).
+Mapeo **many-to-many** desde roles de Discord. El usuario con varios roles mapeados gana el más alto. Configurable por Admin desde Settings del clan.
 
-### Grafo interactivo (vista primaria)
-- `@xyflow/react` con nodos custom (zonas con badges T4/T6/T8/HO/Rest/Capital) y edges custom (grosor por tamaño de portal 7/20/40, color por tiempo restante, status visual COLLAPSED/WATCHED).
-- **Anchor zone** configurable por clan (típicamente HO Avalon): centro del grafo, layout radial.
-- Panel lateral al clickar nodo: datos de la zona + **pathfinding** (royal más cercana + rest más cercano, hops).
-- Toolbar inline al hover sobre edge: extend timer, cambiar status, borrar (según permisos).
-- Drag/zoom/pan, minimap. Posiciones persistidas en `localStorage` por clan.
+**El creador del clan siempre es ADMIN** (no se puede degradar ni aunque sus roles Discord cambien).
 
-### Lista fallback
-- `/clan/[id]/list` para móvil portrait (redirect automático si `orientation: portrait && width < 1024px`), ediciones masivas o preferencia del usuario.
-- Tabla con filtros, disable/delete con `If-Match: v=N` header (optimistic concurrency).
+### Grafo interactivo
+- `@xyflow/react` con nodos custom (zonas con badges T-tier, HO, Rest, Capital y borde por tipo PvP) y edges custom (grosor por tamaño de portal, color por tiempo restante).
+- **Anchor zone** del clan configurable — punto fijo desde el que parten las rutas.
+- **Parte de seguridad** del anchor (semáforo verde/amarillo/rojo) editable por cualquier CONTRIBUTOR+.
+- Layout multi-árbol top-down con dagre, edges rectos, ángulos a 45° en bifurcaciones.
+- Drag-and-drop de nodos persistido en `localStorage` por clan.
+- Click en timer → editar tiempo a mano. Click en zona → panel lateral con pathfinding + acciones.
 
-### Pathfinding
-- `ao-bin-dumps` como fuente del world-graph.
-- BFS precomputado (`ZoneRouting` tabla) al arranque: para cada zona Avalon, la royal más cercana y el rest más cercano con su número de hops.
-- Expuesto vía `GET /api/zones/:id/routing`.
+### Lista alternativa
+- `/clan/[id]/list`: tabla con filtros, fusión de rutas, push a Discord, copia como imagen.
+- Cada ruta puede tener **bifurcaciones internas** que la lista descompone en filas independientes.
+- Borrado **soft con TTL de 2 días** (recuperable desde la **Papelera**).
 
-### Colaboración asíncrona
-- SWR con **polling dinámico**: 10-15s cuando la pestaña está visible, 60s en background.
-- Endpoint delta: `GET /api/clans/:id/routes?since=<iso>` devuelve solo rutas con `updatedAt > since`.
-- **Optimistic concurrency**: `Route.version` + header `If-Match: v=N`. Conflictos devuelven 409 con mensaje "Otro miembro editó esto, recarga".
-- Socket.io conservado únicamente para el evento `route-expired` (timer server-side cada 30s).
+### Pathfinding con dump del juego
+- World-graph extraído de [`broderickhyman/ao-bin-dumps`](https://github.com/broderickhyman/ao-bin-dumps) vía session-tracker.
+- BFS en runtime para encontrar **2 portales más cercanos** desde una zona negra y la **royal city más cercana** desde cualquier no-royal-city.
+- Datos en `src/data/world-meta.json` — refrescables tras parches del juego.
 
-### Discord webhook por clan
-- URL configurable por Admin en Settings.
-- Botón "Probar" envía mensaje test al canal.
-- Notificaciones automáticas en expiración (vía Vigil Bot cuando esté implementado en el bot).
+### Compartir con Discord
+- Webhook por clan configurable.
+- Push de ruta como **embed + imagen PNG** generada client-side (html-to-image) con branding "Avalon Tracker by Crintech Studios" (puedes cambiarlo si forkeas).
+- Cada ruta se puede **copiar como imagen al portapapeles** sin tocar Discord.
+- Hora de cierre en **Albion Time (UTC+0)** + huso local del que comparte, con auto-detección de DST.
 
-### Super Admin ("observador fantasma")
-- Definido por env `SUPER_ADMIN_DISCORD_IDS="id1,id2"`.
-- En clanes ajenos: solo GET, sin audit trail.
-- En clanes propios: permisos de su rol Discord normal.
-- UI dedicada en `/admin/*`: dashboard, grafo global cross-clan, tabla de rutas, CSV export, listado de clanes y users.
+### Otros
+- 25 idiomas (inglés y castellano nativos, resto en beta).
+- Audit log por clan accesible solo a ADMIN del propio clan.
+- Sistema de feedback/tickets vía Vigil Bot.
+
+---
+
+## Modelo de permisos
+
+**RBAC puro, sin figura super-admin global.** Cada clan es una unidad de privacidad estanca. ADMIN solo es ADMIN de SU clan, no del sistema. Si quieres ver qué pasa en otro clan, debes ser miembro de ese clan con el rol que el ADMIN te haya dado.
+
+Esto significa que **ni siquiera el operador del servidor** (tú, si self-hosteas) tiene visibilidad cross-clan vía aplicación. Para acceso a datos crudos puedes ir a Postgres directamente — pero no hay UI o API que lo facilite.
 
 ---
 
@@ -64,56 +79,138 @@ Mapeo **many-to-many** desde roles Discord. Un usuario con varios roles mapeados
 | Capa | Tecnología |
 |---|---|
 | Frontend | Next.js 16 (App Router) + React 19 + Tailwind v4 |
-| Grafo | `@xyflow/react` 12.x con custom nodes/edges |
-| Data fetching | SWR 2.x (con polling visible/background) |
-| Toasts | `react-hot-toast` |
-| Auth | NextAuth v5 beta + Discord provider |
+| Grafo | `@xyflow/react` + dagre layout |
+| Data fetching | SWR 2.x con polling visible/background |
+| Auth | NextAuth v5 + Discord provider |
 | BD | PostgreSQL 16 + Prisma v7 (PrismaPg adapter) |
-| Realtime | Socket.io 4.x (JWT handshake + CORS restringido) |
-| Logs | `pino` + `pino-http` (JSON a stdout) |
-| Rate limit | `lru-cache` token bucket in-memory |
 | Discord | OAuth + Vigil Bot (HTTP + HMAC webhooks) |
-| Deploy | Docker multi-stage + Coolify |
-
-### Dependencias obligatorias
-
-1. **Discord Application** — para OAuth (Client ID/Secret).
-2. **Vigil Bot** — sibling service corriendo en el mismo Coolify network, resuelve roles y emite webhooks. Sin bot → la app no puede autorizar.
-3. **PostgreSQL** — Prisma v7 con adapter `@prisma/adapter-pg`.
+| Deploy | Docker multi-stage |
 
 ---
 
-## Arquitectura
+## Self-host: panel privado para tu clan
 
+Esta sección asume Linux + Docker. Adapta a tu infra (Coolify, Fly, Railway, k8s, lo que sea).
+
+### Paso 1 — Discord Application
+
+1. Ve a [discord.com/developers/applications](https://discord.com/developers/applications) → **New Application**.
+2. Pestaña **OAuth2 → General**: copia **Client ID** y **Client Secret**.
+3. Añade redirect URI: `https://TU-DOMINIO/api/auth/callback/discord` (o `http://localhost:3000/...` para dev).
+
+### Paso 2 — Vigil Bot
+
+Avalon Tracker requiere un **Vigil Bot** corriendo. Es un sibling que:
+- Resuelve roles del guild Discord (autoridad).
+- Emite webhooks cuando alguien se va o cambia rol.
+- Encola tickets de feedback en un canal Discord del clan.
+
+```bash
+git clone https://github.com/Crinlorite/vigil-discordbot.git
+cd vigil-discordbot
+# Sigue las instrucciones de su README para añadirlo a tu guild Discord
+# y desplegarlo. Apunta a su URL desde VIGIL_BOT_API_URL.
 ```
-┌──────────────────────────────────────────────┐
-│  Browser (React 19)                          │
-│  - react-flow graph (primary view)           │
-│  - SWR polling 10-15s visible, 60s bg        │
-│  - Socket.io client (solo route-expired)     │
-└──────────┬───────────────────────────────────┘
-           │ HTTPS (cookie authjs JWT)
-┌──────────▼───────────────────────────────────┐
-│  Next.js 16 server (Coolify / VPS)           │
-│  - App Router + API routes                   │
-│  - NextAuth v5 + Discord provider            │
-│  - Middleware Edge: gate auth + superadmin   │
-│  - LRU cache roles (30 min TTL)              │
-│  - Circuit breaker hacia Vigil Bot           │
-│  - Socket.io server (solo expiración)        │
-└────┬─────────────────────────────┬───────────┘
-     │                             │
-┌────▼────────┐        ┌───────────▼──────────┐
-│ PostgreSQL  │        │ Vigil Bot (Coolify)  │
-│ PrismaPg    │        │ - discord.js gateway │
-│ pool max 5  │        │ - Express API        │
-└─────────────┘        │ - autoridad roles    │
-                       │ - push notifs        │
-                       └──────────────────────┘
-                                  │
-                                  ▼
-                           Discord API
+
+### Paso 3 — Variables de entorno
+
+```bash
+git clone https://github.com/Crinlorite/avalon-tracker.git
+cd avalon-tracker
+cp .env.example .env
 ```
+
+Edita `.env`. Las **(*) marcadas son obligatorias**:
+
+| Variable | Cómo conseguirla |
+|---|---|
+| (*) `AUTH_SECRET` | `openssl rand -base64 32` |
+| (*) `AUTH_URL` | URL pública del sitio (ej: `https://avalon.miclan.es`) |
+| `NEXT_PUBLIC_APP_URL` | Igual que `AUTH_URL`, expuesta al cliente |
+| (*) `DISCORD_CLIENT_ID` / `_SECRET` | Del Discord Developer Portal (Paso 1) |
+| (*) `VIGIL_BOT_API_URL` | URL del bot accesible desde el server |
+| (*) `VIGIL_BOT_SHARED_SECRET` | `openssl rand -hex 32` (mismo valor en bot y app) |
+| (*) `DATABASE_URL` | Postgres 16+ — `postgresql://user:pass@host:5432/dbname` |
+| `FEEDBACK_SECRET` / `VIGIL_BOT_URL` | Solo si activas la página `/feedback` |
+| `TURNSTILE_*` | Solo si quieres anti-bot Cloudflare en `/feedback` |
+
+### Paso 4 — Levantar
+
+**Opción A: Docker Compose** (recomendado para empezar)
+
+```bash
+docker compose up -d
+# Espera ~30 segundos para que Postgres + app arranquen
+# Visita http://localhost:3000
+```
+
+`docker-compose.yml` levanta Postgres + app + Nginx. Para producción real con TLS, usa Caddy/Traefik o un PaaS gestionado (Coolify, Fly, Railway).
+
+**Opción B: Coolify**
+
+1. Coolify → Resource → Application → Public Repository.
+2. Repositorio: `https://github.com/Crinlorite/avalon-tracker`, rama `main`.
+3. Build Pack: Dockerfile (auto-detectado).
+4. Pegamento: las env vars de `.env.example`.
+5. Postgres: Coolify → Resource → Database → PostgreSQL 16. Coge la `DATABASE_URL` resultante.
+6. Domain: tu dominio + Cloudflare DNS-only (no proxy — causa redirect loops con NextAuth).
+7. Deploy.
+
+### Paso 5 — Primer arranque
+
+El Dockerfile CMD ejecuta:
+
+```bash
+npx prisma db push --accept-data-loss   # crea tablas si no existen
+npx tsx scripts/seed-zones.ts           # idempotente, importa zonas Avalon
+node server.js
+```
+
+⚠️ **El primer deploy crea las tablas desde cero.** Si quieres migrations versionadas, sustituye `db push` por `prisma migrate deploy` después de generar el historial de migraciones contra una BD staging.
+
+### Paso 6 — Crear tu clan en la app
+
+1. Login con Discord (debes ser owner / "manage guild" del servidor que vas a registrar).
+2. Dashboard → **+ Crear clan** → ID del guild Discord.
+3. Settings → mapear roles de Discord a roles de la app (VIEWER/CONTRIBUTOR/EDITOR/ADMIN).
+4. Settings → Anchor zone (la zona Avalon donde estará vuestra HO).
+5. Settings → Webhook URL del canal Discord donde queréis los push de rutas.
+
+Listo. Cualquier miembro del guild Discord podrá entrar tras el OAuth.
+
+---
+
+## Desarrollo local
+
+Sin Docker:
+
+```bash
+npm install
+cp .env.example .env  # rellena al menos las (*) y apunta DATABASE_URL a un Postgres local o staging
+
+# (Si no tienes Vigil Bot real desplegado:)
+npm run mock-bot      # mock en :4000
+
+# En otra terminal:
+npx prisma generate   # cliente Prisma
+npm run dev           # Next.js en :3000
+```
+
+### Tests
+
+```bash
+npm test              # Vitest sobre libs puras
+```
+
+### Scripts útiles
+
+| Comando | Acción |
+|---|---|
+| `npm run dev` | Next.js dev server |
+| `npm run build` | Build producción (Node ≥20) |
+| `npm run start:prod` | `server.js` (Next.js + timer) |
+| `npm run mock-bot` | Mock de Vigil Bot en :4000 |
+| `npm run seed:zones` | Seed Zone desde JSON |
 
 ---
 
@@ -122,364 +219,108 @@ Mapeo **many-to-many** desde roles Discord. Un usuario con varios roles mapeados
 ```
 avalon-tracker/
 ├── prisma/
-│   └── schema.prisma              # User, Clan, ClanMember, ClanRoleMapping,
-│                                  # Route (version), RouteHop (COLLAPSED/WATCHED),
-│                                  # Zone (tier/HO/rest/capital), ZoneConnection,
-│                                  # ZoneRouting (pathfinding precalc), AuditLog
+│   └── schema.prisma          # User, Clan, ClanMember, ClanRoleMapping,
+│                              # Route, RouteHop (con soft-delete TTL 2d),
+│                              # Zone, IngestToken, AuditLog
 ├── scripts/
-│   ├── seed-zones.ts              # Zonas desde JSON (idempotente)
-│   ├── import-world-graph.ts      # Poblado de ZoneConnection desde dump
-│   ├── precompute-routing.ts      # BFS → ZoneRouting (nearest royal/rest)
-│   └── mock-vigil-bot.ts          # Mock Express del bot para dev local
+│   ├── seed-zones.ts          # Seed de zonas (idempotente)
+│   └── mock-vigil-bot.ts      # Mock para dev local
 ├── src/
 │   ├── app/
-│   │   ├── page.tsx               # Landing Discord login
-│   │   ├── loading.tsx, error.tsx, not-found.tsx
-│   │   ├── (auth)/
-│   │   │   ├── dashboard/         # Mis clanes con rol badge
-│   │   │   ├── profile/           # Discord identity + displayName override
-│   │   │   ├── clan/[clanId]/
-│   │   │   │   ├── page.tsx       # GRAFO primario (react-flow)
-│   │   │   │   ├── list/          # Vista lista fallback
-│   │   │   │   ├── settings/      # Webhook + anchor + role mappings
-│   │   │   │   ├── members/       # Lista Discord + displayName override admin
-│   │   │   │   └── audit/         # Log de acciones (Admin only)
-│   │   │   └── admin/             # Super admin: dashboard, map, routes, clans, users
-│   │   └── api/                   # Ver sección "API Endpoints"
+│   │   ├── page.tsx           # Landing pública (Discord login)
+│   │   ├── feedback/          # Form de feedback (público)
+│   │   ├── (auth)/            # Rutas autenticadas
+│   │   │   ├── dashboard/
+│   │   │   ├── profile/
+│   │   │   └── clan/[clanId]/
+│   │   │       ├── page.tsx   # Vista grafo
+│   │   │       ├── list/      # Vista lista
+│   │   │       ├── trash/     # Papelera (recuperación TTL)
+│   │   │       ├── settings/  # Webhook, anchor, role mappings
+│   │   │       ├── members/   # Lista de miembros + roles
+│   │   │       └── audit/     # Audit log (ADMIN only)
+│   │   ├── legal/             # Legales (privacidad, cookies, aviso)
+│   │   └── api/               # Endpoints REST
 │   ├── components/
-│   │   ├── auth/                  # LandingLoginDiscord
-│   │   ├── layout/                # Sidebar (Discord avatar + super admin badge)
-│   │   ├── clan/                  # CreateClanModal (guild ID), RoleMappingEditor, ClanTabs
-│   │   ├── zones/                 # ZoneAutocomplete v2, ZoneBadges
-│   │   ├── routes/                # CreateRouteModal v2, RouteListTable, RouteTimer
-│   │   ├── graph/                 # ClanGraph, ZoneNode, RouteEdge,
-│   │   │                          # ZoneSidePanel, HopInlineToolbar,
-│   │   │                          # graph-layout.ts, graph-colors.ts
-│   │   ├── admin/                 # AdminCard, GlobalGraphClient
-│   │   └── providers/             # SWRProvider, ToastProvider
 │   ├── hooks/
-│   │   ├── useMe.ts, useMyClans.ts, useClan.ts
-│   │   ├── useClanRoutes.ts       # SWR con polling delta
-│   │   ├── useVisibilityPolling.ts
-│   │   ├── useZoneSearch.ts       # autocomplete debounced
-│   │   └── useZoneRouting.ts      # pathfinding on-demand
+│   ├── i18n/                  # 25 idiomas (en/es nativos, resto beta)
 │   ├── lib/
-│   │   ├── auth.ts, auth.config.ts  # NextAuth Discord + Edge-safe
-│   │   ├── prisma.ts              # Cliente Prisma singleton
-│   │   ├── permissions.ts         # resolveAppRole + cache LRU 30min + super admin helpers
-│   │   ├── vigil-bot-client.ts    # HTTP client con circuit breaker + timeout 2s
-│   │   ├── audit.ts               # logAudit con bypass silencioso super admin
-│   │   ├── hmac.ts                # sign/verify para webhooks
-│   │   ├── rate-limit.ts          # token bucket in-memory
-│   │   ├── version-check.ts       # If-Match parsing para optimistic concurrency
-│   │   ├── fetcher.ts             # SWR fetcher con ApiError
-│   │   ├── logger.ts              # pino
-│   │   ├── api-error.ts           # Error envelope uniforme
-│   │   ├── time.ts                # colorForMinutes, formatCountdown
-│   │   └── role-ui.ts             # roleLabel, canCreate/canDelete/canAdmin
-│   ├── data/                      # avalon-zones.json, world-zones.json, world-graph.json
-│   └── types/next-auth.d.ts       # Session shape con discordId + isSuperAdmin
-├── tests/                         # Vitest (42 tests, libs puras)
-├── docs/superpowers/
-│   ├── specs/2026-04-20-discord-redesign-design.md
-│   └── plans/
-│       ├── 2026-04-21-backend-redesign.md   (+ execution summary)
-│       └── 2026-04-21-frontend-rewrite.md   (+ execution summary)
-├── server.ts                      # Next.js + Socket.io (JWT handshake) + timer expiración
-├── Dockerfile                     # Multi-stage; CMD: db push + seeds + precompute + server
+│   └── data/                  # world-meta.json (zonas + adyacencias)
+├── Dockerfile
 ├── docker-compose.yml
-├── nginx.conf                     # Reverse proxy + WebSocket
-└── vitest.config.ts
+└── nginx.conf
 ```
 
 ---
 
-## API Endpoints
+## API Endpoints (resumen)
 
-### Sesión (`/api/auth/*`)
-Gestionados por NextAuth con provider Discord.
+Todos los endpoints autenticados verifican rol del clan via `requireRole`. **No hay bypass** — el modelo es estrictamente per-clan.
 
-### Usuario actual (`/api/me/*`)
-| Método | Ruta | Acceso |
-|---|---|---|
-| GET | `/api/me` | Autenticado |
-| PATCH | `/api/me` | Autenticado (displayName override) |
-| GET | `/api/me/clans` | Autenticado |
-| POST | `/api/me/refresh-roles` | Autenticado (rate 5/min) |
+### Sesión / usuario
+- `GET /api/me` — perfil propio
+- `GET /api/me/clans` — clanes a los que perteneces
 
-### Clanes y miembros
-| Método | Ruta | Acceso |
-|---|---|---|
-| POST | `/api/clans` | Autenticado (valida Vigil Bot en guild) |
-| GET | `/api/clans/:clanId` | Miembro |
-| PATCH | `/api/clans/:clanId` | Admin |
-| DELETE | `/api/clans/:clanId` | Admin |
-| GET | `/api/clans/:clanId/members` | Miembro |
-| PATCH | `/api/clans/:clanId/members/:id` | Admin (displayName override) |
-| GET | `/api/clans/:clanId/role-mappings` | Admin |
-| POST | `/api/clans/:clanId/role-mappings` | Admin |
-| DELETE | `/api/clans/:clanId/role-mappings/:id` | Admin |
-| GET | `/api/clans/:clanId/discord-roles` | Admin (proxy a Vigil Bot) |
-| GET | `/api/clans/:clanId/audit` | Admin |
-| POST | `/api/clans/:clanId/webhook-test` | Admin |
+### Clanes
+- `POST /api/clans` — crear clan (validado contra Vigil Bot)
+- `GET/PATCH/DELETE /api/clans/:clanId` — VIEWER / ADMIN / ADMIN
+- `GET /api/clans/:clanId/members` — VIEWER
+- `PATCH /api/clans/:clanId/anchor-status` — CONTRIBUTOR (parte de seguridad)
 
-### Rutas y hops
-| Método | Ruta | Acceso |
-|---|---|---|
-| GET | `/api/clans/:clanId/routes?status=&since=` | Miembro |
-| POST | `/api/clans/:clanId/routes` | Contributor+ (rate 20/min) |
-| GET | `/api/clans/:clanId/routes/:id` | Miembro |
-| PATCH | `/api/clans/:clanId/routes/:id` | Contributor+ (If-Match, rate 60/min) |
-| DELETE | `/api/clans/:clanId/routes/:id` | Editor+ |
-| PATCH | `/api/clans/:clanId/routes/:rid/hops/:hid` | Contributor+ |
-| DELETE | `/api/clans/:clanId/routes/:rid/hops/:hid` | Editor+ |
+### Rutas
+- `GET /api/clans/:clanId/routes?status=&since=` — VIEWER (soporte delta)
+- `POST /api/clans/:clanId/routes` — CONTRIBUTOR
+- `PATCH /api/clans/:clanId/routes/:id` — CONTRIBUTOR (con `If-Match: v=N`)
+- `DELETE /api/clans/:clanId/routes/:id?hops=...` — EDITOR (soft-delete o hops parciales)
+- `POST /api/clans/:clanId/routes/:id/restore` — EDITOR (recuperar de la papelera)
+- `POST /api/clans/:clanId/routes/:id/discord-push` — CONTRIBUTOR (multipart con imagen opcional)
 
-### Zonas y pathfinding
-| Método | Ruta | Acceso |
-|---|---|---|
-| GET | `/api/zones?q=` | Autenticado (rate 60/min) |
-| GET | `/api/zones/:id` | Autenticado |
-| GET | `/api/zones/:id/routing` | Autenticado |
+### Zonas / pathfinding
+- `GET /api/zones?q=` — autocomplete
+- `GET /api/zones/:id/routing` — pathfinding precomputed
 
-### Webhooks entrantes (Vigil Bot → Tracker)
-Todos con `X-Vigil-Signature: HMAC-SHA256(body, VIGIL_BOT_SHARED_SECRET)` y rate limit 100/min por IP.
-
-| Método | Ruta |
-|---|---|
-| POST | `/api/webhooks/vigil/role-change` |
-| POST | `/api/webhooks/vigil/member-leave` |
-| POST | `/api/webhooks/vigil/guild-update` |
-
-### Endpoint interno (Tracker → Vigil Bot coordination)
-| Método | Ruta | Auth |
-|---|---|---|
-| GET | `/api/internal/role-mappings/:guildId` | Bearer `VIGIL_BOT_SHARED_SECRET` |
-
-### Super admin (`isSuperAdmin=true` only, sin audit)
-| Método | Ruta |
-|---|---|
-| GET | `/api/admin/overview` |
-| GET | `/api/admin/routes?status=&zone=&clanId=` |
-| GET | `/api/admin/routes/export.csv` |
-| GET | `/api/admin/clans` |
-| GET | `/api/admin/users?q=` |
-| GET | `/api/admin/map?clanId=` |
+### Webhooks entrantes (Vigil Bot → Tracker, HMAC-SHA256)
+- `POST /api/webhooks/vigil/role-change`
+- `POST /api/webhooks/vigil/member-leave`
+- `POST /api/webhooks/vigil/guild-update`
 
 ### Health
-`GET /api/health` → `{ db, vigilBot, uptime }`. 503 si DB caída.
-
----
-
-## Modelo de datos (resumido)
-
-| Entidad | Campos clave |
-|---|---|
-| **User** | `discordId` (unique), `discordUsername`, `email` (no renderizar), `displayName?`, `isSuperAdmin` |
-| **Clan** | `name` (unique), `discordGuildId` (unique), `anchorZoneId?`, `discordWebhookUrl?`, `botInstalled`, `tier?` |
-| **ClanRoleMapping** | `clanId`, `discordRoleId`, `appRole` (many-to-many) |
-| **ClanMember** | `userId`, `clanId`, `appRole?` (nullable = sin acceso), `lastSyncAt` |
-| **Zone** | `name` (unique), `type` (AVALON/ROYAL/OUTLANDS), `tier?`, `hasHideout`, `isRest`, `isCapital` |
-| **ZoneConnection** | `fromZoneId`, `toZoneId`, `connectionType` |
-| **ZoneRouting** | `zoneId` (PK), `nearestRoyalZoneId?`, `hopsToRoyal?`, `nearestRestZoneId?`, `hopsToRest?` |
-| **Route** | `clanId`, `createdById`, `status`, `version` (optimistic concurrency), `notes?` |
-| **RouteHop** | `routeId`, `order`, `fromZoneId`, `toZoneId`, `portalSize`, `expiresAt`, `status` (ACTIVE/EXPIRED/COLLAPSED/WATCHED), `statusNote?` |
-| **AuditLog** | `clanId`, `userId`, `action`, `targetId?`, `details?` |
-
-Ver `prisma/schema.prisma` para los detalles completos. `AppRole` y `RouteHopStatus` son nuevos enums.
-
----
-
-## Desarrollo local
-
-No hace falta Docker local gracias al mock del bot:
-
-```bash
-npm install
-
-# Copiar .env.example → .env y rellenar (sin Docker local, DATABASE_URL puede
-# apuntar a un Postgres remoto o de staging)
-cp .env.example .env
-
-# Mock de Vigil Bot en localhost:4000 (fake guild + users)
-npm run mock-bot
-
-# En otra terminal
-npx prisma generate   # regenera cliente local, no toca BD
-npm run dev           # Next.js en localhost:3000
-```
-
-El mock expone los 5 endpoints que el Tracker espera del bot con Bearer auth y un guild fake (`111111111111111111`) + 3 usuarios fake con roles mapeados. Suficiente para probar UI sin Discord real.
-
-### Tests
-
-```bash
-npm test              # Vitest: 42 tests (libs puras: permissions, hmac,
-                      # rate-limit, version-check, vigil-bot-client,
-                      # precompute-routing, time, role-ui)
-npm run test:watch
-```
-
-### Scripts útiles
-
-| Comando | Acción |
-|---|---|
-| `npm run dev` | Next.js dev server |
-| `npm run build` | Build producción (requiere Node ≥20) |
-| `npm run start:prod` | Arranca `server.js` (Socket.io + Next.js) |
-| `npm run mock-bot` | Mock Vigil Bot en :4000 |
-| `npm run seed:zones` | Seed Zone desde JSON (idempotente) |
-| `npm run seed:graph` | Importa ZoneConnection desde `world-graph.json` |
-| `npm run precompute` | BFS → ZoneRouting (nearest royal/rest) |
-
----
-
-## Deploy en Coolify
-
-### Prerequisitos
-
-1. **Discord Application** en [discord.com/developers/applications](https://discord.com/developers/applications):
-   - `New Application` → nombrarla (p.ej. Avalon Tracker)
-   - Pestaña **OAuth2 → General**: copiar Client ID + Client Secret
-   - **Redirects**: añadir `https://tu-dominio.com/api/auth/callback/discord`
-
-2. **Vigil Bot** desplegado en el **mismo Coolify network** que Avalon Tracker. Mismo `VIGIL_BOT_SHARED_SECRET` en las env vars de ambas apps. Ver repo `vigil-bot`.
-
-3. **PostgreSQL** en Coolify (genera la `DATABASE_URL`).
-
-4. **Shared secret** para bot↔tracker:
-   ```bash
-   openssl rand -hex 32
-   ```
-
-5. **Tu Discord ID** (Ajustes → Avanzado → Developer Mode, click derecho sobre tu user → Copiar ID) para `SUPER_ADMIN_DISCORD_IDS`.
-
-### Env vars en Coolify
-
-```
-# Auth
-AUTH_SECRET=<openssl rand -base64 32>
-AUTH_URL=https://tu-dominio.com
-NEXT_PUBLIC_APP_URL=https://tu-dominio.com
-
-# Discord OAuth
-DISCORD_CLIENT_ID=<del Discord Developer Portal>
-DISCORD_CLIENT_SECRET=<idem>
-
-# Vigil Bot
-VIGIL_BOT_API_URL=http://vigil-bot:<puerto>   # resolve interno de Coolify
-VIGIL_BOT_SHARED_SECRET=<mismo en ambas apps>
-
-# Super admin (opcional)
-SUPER_ADMIN_DISCORD_IDS=123456789012345678
-
-# BD
-DATABASE_URL=<la que te da Coolify>
-PRISMA_CLIENT_POOL_SIZE=5
-```
-
-**Env vars obsoletas que HAY QUE ELIMINAR** si venías del stack viejo:
-- `AUTH_SIMPLE_PASSWORD`
-- `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`
-- `SUPER_ADMIN_EMAIL`
-- `EXTERNAL_API_KEY` (Loot Vigil fue eliminado)
-
-### Primer deploy
-
-El Dockerfile CMD ejecuta:
-```bash
-npx prisma db push --accept-data-loss    # big-bang, resetea schema
-npx tsx scripts/seed-zones.ts            # idempotente
-npx tsx scripts/import-world-graph.ts    # idempotente (skip si vacío)
-npx tsx scripts/precompute-routing.ts    # idempotente (skip si sin conexiones)
-node server.js                           # arranca Next + Socket.io
-```
-
-**⚠️ El primer deploy resetea la BD completamente** (por el `db push --accept-data-loss`). Solo es aceptable porque la app está en boceto sin usuarios reales. Cuando el schema se estabilice, migrar a `prisma migrate deploy` con historial versionado.
-
-Healthcheck: `GET /api/health` cada 30s. Si falla 3 veces seguidas, Coolify reinicia.
-
-### Hardening opcional: CloudFlare Access para `/admin/*`
-
-Si quieres una capa extra para el panel super admin (defense-in-depth):
-
-1. En Cloudflare Zero Trust → **Access Applications** → New Application
-2. Apunta a `tu-dominio.com/admin/*`
-3. Policy: email allowlist con `tu@email.com`
-4. La app no requiere cambios — CF Access intercepta antes de llegar a Next.js
+- `GET /api/health` → `{ db, vigilBot, uptime }`
 
 ---
 
 ## Seguridad
 
-- **Discord OAuth** con scopes mínimos (`identify email`). Sin `guilds.members.read` — todo va vía bot.
-- **JWT cookie** `authjs.session-token` HttpOnly + Secure.
-- **Socket.io** handshake valida el JWT + verifica membresía antes de `socket.join`. CORS restringido a `AUTH_URL`.
-- **Webhooks entrantes** verifican HMAC-SHA256 con `timingSafeEqual`. Rate limit 100/min por IP.
-- **Endpoint interno** (`/api/internal/*`) con Bearer token.
-- **Rate limits** en endpoints críticos (callback OAuth, POST rutas, PATCH rutas, zones, refresh-roles).
-- **Headers de seguridad** (next.config.ts): X-Frame-Options DENY, X-Content-Type-Options nosniff, Referrer-Policy strict-origin-when-cross-origin, Permissions-Policy.
-- **Super admin silencioso**: sin entradas en audit log cuando opera en clanes ajenos (aceptado conscientemente — riesgo asumido por operador).
-
----
-
-## Escalabilidad
-
-VPS Hetzner 4vCPU / 8GB compartido con otros proyectos. Techos prácticos calculados con budget efectivo ~1.5 GB RAM / 1 vCPU:
-
-| Recurso | Techo | Revienta primero si… |
-|---|---|---|
-| Next.js RSS | ~1 GB | memory leak o SSR pesado |
-| Socket.io concurrentes | ~5.000 | adapter in-memory |
-| Postgres connections | ~80 compartidos | multi-app sin pgbouncer |
-| API req/s | ~500-1000 | 1 vCPU |
-| Bandwidth | 20 TB/mes Hetzner | irrelevante |
-
-Concurrencia esperada realista (10 clanes × 30-100 miembros con 10-30% online pico) = 50-200 concurrentes. **10× de margen**.
-
-Cuello real: pool de conexiones Postgres si escalan los sibling projects. Mitigado con `PRISMA_CLIENT_POOL_SIZE=5`. pgbouncer proactivo cuando aparezca el tercer proyecto escribiendo al mismo Postgres.
-
----
-
-## Contrato con Vigil Bot (resumen)
-
-El bot expone (consumido por Tracker, Bearer auth):
-- `GET /guilds/:id/health`
-- `GET /guilds/:id/roles`
-- `GET /guilds/:id/member/:discordId/roles` → `{ discordRoleIds, computedAppRole }`
-- `GET /guilds/:id/member/:discordId` → `{ nickname, avatar (hash), joinedAt (ISO), discordRoleIds, computedAppRole }`
-- `GET /users/:discordId/clans` → `[{ guildId, discordRoleIds, computedAppRole }]`
-- `POST /guilds/:id/message` → envío a canal
-
-El bot llama (HMAC-SHA256 del body):
-- `POST /api/webhooks/vigil/role-change`
-- `POST /api/webhooks/vigil/member-leave`
-- `POST /api/webhooks/vigil/guild-update`
-
-El Tracker expone para el bot (Bearer):
-- `GET /api/internal/role-mappings/:guildId` — el bot lo cachea 60s y computa appRole localmente (no BD compartida).
-
-Detalle completo en `docs/superpowers/specs/2026-04-20-discord-redesign-design.md` §7.
+- **Discord OAuth** con scopes mínimos (`identify email`).
+- **JWT cookie** `authjs.session-token` HttpOnly + Secure (en prod).
+- **Webhooks entrantes** verifican HMAC-SHA256 con `timingSafeEqual` + ventana de freshness 5 min.
+- **Rate limits** en endpoints críticos (callback OAuth, POST/PATCH rutas, zones, etc).
+- **Headers de seguridad** (next.config.ts): X-Frame-Options DENY, X-Content-Type-Options nosniff, Permissions-Policy, CSP estricto.
+- **RBAC puro** — sin figura super-admin, cada clan es una unidad de privacidad.
+- **Soft-delete con TTL** — borrar rutas no las hace desaparecer instantáneamente (2 días de gracia).
+- **Audit log per-clan** — ADMIN ve quién hizo qué en SU clan.
 
 ---
 
 ## Fuentes de datos
 
-- Zonas avalonianas (tier, recursos, cofres, dungeons): [AO-Noki/avalon-roads](https://github.com/AO-Noki/avalon-roads)
-- Zonas del mundo + topología: [ao-data/ao-bin-dumps](https://github.com/ao-data/ao-bin-dumps) — se actualiza en cada patch mayor de Albion
-- Información de portales: [Wiki — Roads of Avalon](https://wiki.albiononline.com/wiki/Roads_of_Avalon)
-- Referencias UX: [Tripwire](https://tripwiremap.app/) y [Pathfinder](https://wiki.eve-linknet.com/en/tools/pathfinder) (EVE Online)
+- World-graph (zonas + adyacencias): [broderickhyman/ao-bin-dumps](https://github.com/broderickhyman/ao-bin-dumps) vía [`Crinlorite/session-tracker`](https://github.com/Crinlorite/session-tracker) que aplica overrides manuales para corregir errores del dump tras parches.
+- Información de portales: [Wiki — Roads of Avalon](https://wiki.albiononline.com/wiki/Roads_of_Avalon).
+
+Refresco de datos tras parches del juego: actualmente manual, ver `src/data/world-meta.json` en este repo.
 
 ---
 
-## Follow-ups conocidos
+## Contribuir
 
-- `world-graph.json` actual está keyed por zone id (~115 KB, shape distinta a lo que espera `import-world-graph.ts`). Hay que escribir un transformer para que el pathfinding inserte conexiones reales. Mientras tanto, `precompute-routing.ts` skipea limpiamente y `ZoneRouting` queda vacío.
-- 2 TS errors triviales en `tests/lib/rate-limit.test.ts` (narrowing de discriminated union). Runtime OK.
-- Migrar Dockerfile CMD de `prisma db push --accept-data-loss` a `prisma migrate deploy` cuando el schema se estabilice (requiere generar historial versionado contra BD staging).
-- Slash commands de Vigil Bot para crear/editar rutas desde Discord — fuera del scope actual, pendiente de un Plan 4.
+PRs bienvenidas. Issues etiquetados con `bug`, `enhancement` o `language` (este último para reportar errores de traducciones beta).
+
+Si tienes una propuesta grande (rediseño, nueva integración), abre un issue antes para alinear scope.
 
 ---
 
 ## Licencia
 
-Proyecto privado.
+MIT — ver [`LICENSE`](LICENSE). Eres libre de usar, modificar, distribuir y vender. Solo se pide mantener el aviso de copyright.
+
+Hecho con 🌀 por [Crintech Studios](https://crintech.pro). Si lo despliegas para tu clan, encantado de saberlo — abre un issue y lo añadimos al README como "deployments en el wild".
