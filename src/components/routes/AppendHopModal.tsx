@@ -135,14 +135,15 @@ export function AppendHopModal({
           <label className="flex-1 min-w-[160px]">
             <span className="text-xs text-slate-400">Duración</span>
             <div className="mt-1 flex items-center gap-1">
+              {/* Inputs sin spinners up/down — input crudo en horas/minutos. */}
               <input
-                type="number" min="0" max="24" value={hours}
-                onChange={(e) => setHours(Number(e.target.value))}
+                type="text" inputMode="numeric" pattern="[0-9]*" value={hours}
+                onChange={(e) => setHours(Math.max(0, Math.min(24, Number(e.target.value.replace(/\D/g, "")) || 0)))}
                 className="w-14 rounded border border-slate-700 bg-slate-950 px-2 py-2 text-white"
               /> h
               <input
-                type="number" min="0" max="59" value={minutes}
-                onChange={(e) => setMinutes(Number(e.target.value))}
+                type="text" inputMode="numeric" pattern="[0-9]*" value={minutes}
+                onChange={(e) => setMinutes(Math.max(0, Math.min(59, Number(e.target.value.replace(/\D/g, "")) || 0)))}
                 className="w-14 rounded border border-slate-700 bg-slate-950 px-2 py-2 text-white"
               /> m
             </div>

@@ -7,10 +7,14 @@ import type { AppRole } from "@/generated/prisma/client";
 import { canCreate, canDelete } from "@/lib/role-ui";
 
 export function HopInlineToolbar({
-  clanId, routeId, hop, myRole, onDone,
-}: { clanId: string; routeId: string; hop: HopView; myRole: AppRole | null; onDone: () => void }) {
+  clanId, routeId, hop, myRole,
+}: { clanId: string; routeId: string; hop: HopView; myRole: AppRole | null }) {
   const [busy, setBusy] = useState(false);
 
+  // No cerramos el panel en cada acción — el usuario quiere poder
+  // hacer múltiples clicks consecutivos (e.g., +30m tres veces) sin
+  // que se le cierre todo. onDone queda para cuando el caller lo
+  // quiera invocar manualmente desde fuera, no aquí.
   async function patch(body: Record<string, unknown>) {
     setBusy(true);
     try {
@@ -22,7 +26,6 @@ export function HopInlineToolbar({
       if (!res.ok) throw new Error("Error");
       toast.success("Actualizado");
       globalMutate((k) => typeof k === "string" && k.startsWith(`/api/clans/${clanId}/routes`));
-      onDone();
     } catch (e: unknown) {
       toast.error(e instanceof Error ? e.message : "Error");
     } finally { setBusy(false); }
@@ -31,8 +34,10 @@ export function HopInlineToolbar({
   async function del() {
     if (!confirm("¿Borrar este hop?")) return;
     const res = await fetch(`/api/clans/${clanId}/routes/${routeId}/hops/${hop.id}`, { method: "DELETE" });
-    if (res.ok) { toast.success("Borrado"); globalMutate((k) => typeof k === "string" && k.startsWith(`/api/clans/${clanId}/routes`)); onDone(); }
-    else toast.error("Error");
+    if (res.ok) {
+      toast.success("Borrado");
+      globalMutate((k) => typeof k === "string" && k.startsWith(`/api/clans/${clanId}/routes`));
+    } else toast.error("Error");
   }
 
   function extend(minutes: number) {

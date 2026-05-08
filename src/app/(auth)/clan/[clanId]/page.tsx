@@ -13,6 +13,7 @@ import { MergeRoutesPicker } from "@/components/routes/MergeRoutesPicker";
 import type { RouteView } from "@/hooks/useClanRoutes";
 import { ViewToggle } from "@/components/clan/ViewToggle";
 import { canCreate, canDelete } from "@/lib/role-ui";
+import { AnchorStatusCard } from "@/components/clan/AnchorStatusCard";
 import type { AppRole } from "@/generated/prisma/client";
 
 type MemberRow = { userId: string; appRole: AppRole | null };
@@ -85,6 +86,12 @@ export default function ClanGraphPage() {
           )}
         </div>
       </header>
+
+      {clan && clan.anchorZoneId && (
+        <div className="mb-4">
+          <AnchorStatusCard clan={clan} myRole={myRole} />
+        </div>
+      )}
 
       <ClanGraph clanId={clanId} routes={routes} anchor={anchor} onNodeClick={(name) => setSelectedZone(name)} />
 

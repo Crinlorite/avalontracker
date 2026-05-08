@@ -102,8 +102,27 @@ export function CreateRouteModal({
               <div className="col-span-12 flex flex-wrap items-end gap-2">
                 <label className="text-xs text-slate-400">Duración
                   <div className="mt-1 flex gap-1">
-                    <input type="number" min="0" max="24" value={h.hours} onChange={(e) => setHop(i, { hours: Number(e.target.value) })} className="w-14 rounded border border-slate-700 bg-slate-950 px-2 py-1 text-white" /> h
-                    <input type="number" min="0" max="59" value={h.minutes} onChange={(e) => setHop(i, { minutes: Number(e.target.value) })} className="w-14 rounded border border-slate-700 bg-slate-950 px-2 py-1 text-white" /> m
+                    {/* type=text + inputMode=numeric: sin spinners up/down,
+                        teclado numérico en móvil, y el usuario puede borrar
+                        y reescribir el número crudo sin que se "atore" en
+                        ediciones intermedias. Saneamos el valor a entero
+                        positivo en el handler. */}
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={h.hours}
+                      onChange={(e) => setHop(i, { hours: Math.max(0, Math.min(24, Number(e.target.value.replace(/\D/g, "")) || 0)) })}
+                      className="w-14 rounded border border-slate-700 bg-slate-950 px-2 py-1 text-white"
+                    /> h
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={h.minutes}
+                      onChange={(e) => setHop(i, { minutes: Math.max(0, Math.min(59, Number(e.target.value.replace(/\D/g, "")) || 0)) })}
+                      className="w-14 rounded border border-slate-700 bg-slate-950 px-2 py-1 text-white"
+                    /> m
                   </div>
                 </label>
                 {[30, 60, 120, 240, 360].map((m) => (

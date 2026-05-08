@@ -92,7 +92,7 @@ export function ZoneSidePanel({
                     {r.hops.filter((h) => h.fromZone.name === zoneName || h.toZone.name === zoneName).map((h) => (
                       <li key={`tb-${h.id}`} className="flex flex-wrap items-center gap-2">
                         <span className="font-mono text-[10px] text-slate-500">{h.fromZone.name} → {h.toZone.name}</span>
-                        <HopInlineToolbar clanId={clanId} routeId={r.id} hop={h} myRole={myRole} onDone={onClose} />
+                        <HopInlineToolbar clanId={clanId} routeId={r.id} hop={h} myRole={myRole} />
                       </li>
                     ))}
                   </ul>
