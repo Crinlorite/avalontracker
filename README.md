@@ -1,3 +1,5 @@
+> 🌐 **English README:** [README.en.md](README.en.md) — same content in English.
+
 # Avalon Tracker
 
 Herramienta colaborativa para mapear los **Caminos de Avalon** (Roads of Avalon) de Albion Online entre miembros de un clan. Vista primaria en **grafo interactivo** con timers en vivo, pathfinding a salidas a Royal Cities / Rests y notificaciones a Discord.
