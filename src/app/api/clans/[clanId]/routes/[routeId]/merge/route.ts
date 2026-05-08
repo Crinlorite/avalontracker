@@ -89,6 +89,21 @@ export async function POST(request: Request, { params }: RouteParams) {
 
   const sourceHopIds = source.hops.map((h) => h.id);
 
+  // Pre-check de colisión de edges entre source y target. Si target ya
+  // tiene un hop activo con (fromZoneId, toZoneId) idéntico al de algún
+  // hop activo del source, reasignar la routeId del source al target
+  // violaría @@unique([routeId, fromZoneId, toZoneId]) con un P2002.
+  // Mejor detectarlo aquí y devolver 409 con info accionable.
+  const targetEdges = new Set(target.hops.map((h) => `${h.fromZoneId}->${h.toZoneId}`));
+  const collision = source.hops.find((h) => targetEdges.has(`${h.fromZoneId}->${h.toZoneId}`));
+  if (collision) {
+    return apiError(
+      "CONFLICT",
+      409,
+      `La ruta destino ya tiene el edge "${collision.fromZone.name}" → "${collision.toZone.name}". Quita ese hop de una de las rutas antes de fusionar.`
+    );
+  }
+
   try {
     await prisma.$transaction(async (tx) => {
       if (parsed.data.position === "append") {

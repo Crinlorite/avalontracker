@@ -18,7 +18,8 @@ describe("rate-limit", () => {
     consumeToken(limiter, "k1");
     consumeToken(limiter, "k1");
     const blocked = consumeToken(limiter, "k1");
-    expect(blocked.ok).toBe(false);
+    // Narrow el discriminated union: ok === false expone retryAfterMs.
+    if (blocked.ok) throw new Error("expected blocked");
     expect(blocked.retryAfterMs).toBeGreaterThan(0);
     expect(blocked.retryAfterMs).toBeLessThanOrEqual(60_000);
   });
