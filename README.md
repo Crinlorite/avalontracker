@@ -68,9 +68,9 @@ Mapeo **many-to-many** desde roles de Discord. El usuario con varios roles mapea
 
 ## Modelo de permisos
 
-**RBAC puro, sin figura super-admin global.** Cada clan es una unidad de privacidad estanca. ADMIN solo es ADMIN de SU clan, no del sistema. Si quieres ver qué pasa en otro clan, debes ser miembro de ese clan con el rol que el ADMIN te haya dado.
+**RBAC estricto per-clan.** Cada clan es una unidad de privacidad estanca: el rol ADMIN está scoped al clan donde se otorga, no al sistema. Para ver el contenido de un clan tienes que ser miembro de ese clan con el rol que su ADMIN te haya asignado.
 
-Esto significa que **ni siquiera el operador del servidor** (tú, si self-hosteas) tiene visibilidad cross-clan vía aplicación. Para acceso a datos crudos puedes ir a Postgres directamente — pero no hay UI o API que lo facilite.
+Esto significa que **ni el operador del servidor** (tú, si self-hosteas) tiene visibilidad cross-clan vía aplicación. Para acceso a datos crudos puedes ir a Postgres directamente — pero no hay UI ni API que lo facilite.
 
 ---
 
@@ -296,7 +296,7 @@ Todos los endpoints autenticados verifican rol del clan via `requireRole`. **No 
 - **Webhooks entrantes** verifican HMAC-SHA256 con `timingSafeEqual` + ventana de freshness 5 min.
 - **Rate limits** en endpoints críticos (callback OAuth, POST/PATCH rutas, zones, etc).
 - **Headers de seguridad** (next.config.ts): X-Frame-Options DENY, X-Content-Type-Options nosniff, Permissions-Policy, CSP estricto.
-- **RBAC puro** — sin figura super-admin, cada clan es una unidad de privacidad.
+- **RBAC estricto per-clan** — los roles están scoped al clan donde se otorgan; cada clan es una unidad de privacidad estanca.
 - **Soft-delete con TTL** — borrar rutas no las hace desaparecer instantáneamente (2 días de gracia).
 - **Audit log per-clan** — ADMIN ve quién hizo qué en SU clan.
 
@@ -313,9 +313,14 @@ Refresco de datos tras parches del juego: actualmente manual, ver `src/data/worl
 
 ## Contribuir
 
-PRs bienvenidas. Issues etiquetados con `bug`, `enhancement` o `language` (este último para reportar errores de traducciones beta).
+**Pull requests no se aceptan.** El proyecto lo mantengo yo en solitario y prefiero no integrar contribuciones directas — la responsabilidad de lo que se merge tiene que recaer en una sola voz para que la dirección quede consistente.
 
-Si tienes una propuesta grande (rediseño, nueva integración), abre un issue antes para alinear scope.
+**Issues sí.** Reportes y propuestas son bienvenidos:
+- `bug` — algo no funciona como debería
+- `enhancement` — idea concreta para añadir / mejorar
+- `language` — error o falta de traducción en idiomas beta
+
+Si quieres tocar el código (cambiar comportamiento, añadir features, adaptarlo a tu clan), **forkéalo**: la licencia MIT te lo permite sin restricciones. Mantén tu fork con tus cambios y deplóyalo bajo tu control. Si descubres un bug genérico que afecta también al upstream, abre un issue aquí con el detalle y lo evalúo.
 
 ---
 
