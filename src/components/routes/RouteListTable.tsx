@@ -198,7 +198,15 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
                 return (
                   <tr key={pathRouteKey(r)} className="align-top">
                     <td className="px-3 py-3">
-                      <div className="flex flex-wrap items-center gap-1 text-sm">
+                      {/*
+                        Mobile: una fila por hop (stack vertical). Con 6+
+                        hops y nombres de zona largos, el flex-wrap
+                        horizontal del desktop produce wraps irregulares
+                        que cuesta leer. En móvil cada hop ocupa su
+                        propia fila — más alto pero predecible.
+                        Desktop: flex-wrap inline como antes.
+                      */}
+                      <div className="flex flex-col gap-0.5 text-sm md:flex-row md:flex-wrap md:items-center md:gap-1">
                         {r.hops.map((h, i) => (
                           <span key={h.id} className="flex items-center gap-1">
                             {i === 0 && <span className="text-white">{h.fromZone.name}</span>}
