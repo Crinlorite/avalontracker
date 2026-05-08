@@ -32,7 +32,12 @@ export function Sidebar() {
 
       {open && <div className="fixed inset-0 z-30 bg-black/50 md:hidden" onClick={() => setOpen(false)} />}
 
-      <aside className={`${open ? "translate-x-0" : "-translate-x-full"} fixed z-40 flex h-full w-64 flex-col border-r border-slate-800 bg-slate-950 p-4 transition-transform md:translate-x-0`}>
+      {/* inset-y-0 left-0: anclado explícito al borde izquierdo del
+          viewport. Sin esto, en mobile el `fixed` sin posicion
+          definida se quedaba en el natural-flow position y el bg
+          se pintaba off-viewport — el contenido entraba con el
+          transform pero el background no. */}
+      <aside className={`${open ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-slate-800 bg-slate-950 p-4 transition-transform md:translate-x-0`}>
         <div className="mb-6 flex items-center gap-2">
           <span className="text-xl">🌀</span>
           <span className="font-bold text-white">Avalon Tracker</span>
