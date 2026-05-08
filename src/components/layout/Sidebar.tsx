@@ -5,7 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import useSWR from "swr";
-import { roleLabel, roleBadgeColor } from "@/lib/role-ui";
+import { roleLabel, roleBadgeColor, canAdmin } from "@/lib/role-ui";
 import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { AppRole } from "@/generated/prisma/client";
@@ -63,16 +63,53 @@ export function Sidebar() {
 
         <div className="mb-2 text-xs uppercase text-slate-500">Mis clanes</div>
         <div className="mb-6 flex flex-1 flex-col gap-1 overflow-y-auto">
-          {clans.map((c) => (
-            <Link key={c.id} href={`/clan/${c.id}`} className={navClass(pathname.startsWith(`/clan/${c.id}`))}>
-              <span className="truncate">{c.name}</span>
-              {c.myRole && (
-                <span className={`ml-2 shrink-0 rounded px-1.5 py-0.5 text-[10px] ${roleBadgeColor(c.myRole)}`}>
-                  {roleLabel(c.myRole)}
-                </span>
-              )}
-            </Link>
-          ))}
+          {clans.map((c) => {
+            const clanBase = `/clan/${c.id}`;
+            // Activo = el usuario está en alguna ruta del clan, no
+            // necesariamente el dashboard del clan en sí. Mostramos
+            // sub-nav para que en mobile el burger sustituya a las
+            // pestañas (Rutas/Miembros/Papelera/etc).
+            const isClanActive = pathname.startsWith(clanBase);
+            return (
+              <div key={c.id}>
+                <Link
+                  href={clanBase}
+                  className={navClass(isClanActive && pathname === clanBase)}
+                  onClick={() => setOpen(false)}
+                >
+                  <span className="truncate">{c.name}</span>
+                  {c.myRole && (
+                    <span className={`ml-2 shrink-0 rounded px-1.5 py-0.5 text-[10px] ${roleBadgeColor(c.myRole)}`}>
+                      {roleLabel(c.myRole)}
+                    </span>
+                  )}
+                </Link>
+                {isClanActive && (
+                  <div className="ml-3 mt-1 space-y-0.5 border-l border-slate-800 pl-2">
+                    <SubNavLink href={clanBase} active={pathname === clanBase} onClick={() => setOpen(false)}>
+                      {t("nav.routes")}
+                    </SubNavLink>
+                    <SubNavLink href={`${clanBase}/members`} active={pathname.startsWith(`${clanBase}/members`)} onClick={() => setOpen(false)}>
+                      {t("nav.members")}
+                    </SubNavLink>
+                    <SubNavLink href={`${clanBase}/trash`} active={pathname.startsWith(`${clanBase}/trash`)} onClick={() => setOpen(false)}>
+                      {t("nav.trash")}
+                    </SubNavLink>
+                    {canAdmin(c.myRole) && (
+                      <>
+                        <SubNavLink href={`${clanBase}/settings`} active={pathname.startsWith(`${clanBase}/settings`)} onClick={() => setOpen(false)}>
+                          {t("nav.settings")}
+                        </SubNavLink>
+                        <SubNavLink href={`${clanBase}/audit`} active={pathname.startsWith(`${clanBase}/audit`)} onClick={() => setOpen(false)}>
+                          {t("nav.audit")}
+                        </SubNavLink>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
           {clans.length === 0 && <div className="px-3 py-2 text-xs text-slate-500">Sin clanes todavía</div>}
         </div>
 
@@ -92,4 +129,25 @@ export function Sidebar() {
 
 function navClass(active: boolean): string {
   return `flex items-center justify-between rounded-md px-3 py-2 text-sm transition ${active ? "bg-indigo-600 text-white" : "text-slate-300 hover:bg-slate-900"}`;
+}
+
+// Sub-nav link bajo el clan activo: más compacto, indentado, sin
+// border-i. Cierra el sidebar mobile al click para no tener que
+// dar al backdrop después de navegar.
+function SubNavLink({
+  href, active, onClick, children,
+}: { href: string; active: boolean; onClick?: () => void; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`block rounded-md px-2 py-1.5 text-xs transition ${
+        active
+          ? "bg-indigo-600/30 text-indigo-200"
+          : "text-slate-400 hover:bg-slate-900 hover:text-white"
+      }`}
+    >
+      {children}
+    </Link>
+  );
 }

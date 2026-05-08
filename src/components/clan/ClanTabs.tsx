@@ -33,8 +33,11 @@ export default function ClanTabs({ clanId }: { clanId: string }) {
 
   const visibleTabs = TABS.filter((tab) => !tab.adminOnly || isAdmin);
 
+  // hidden md:flex: en mobile estos tabs migran al sidebar
+  // (sub-nav del clan activo). Evita que la fila se desborde y
+  // quede más espacio para el ViewToggle compacto.
   return (
-    <nav className="flex gap-1 rounded-lg border border-gray-800 bg-gray-900 p-1">
+    <nav className="hidden gap-1 rounded-lg border border-gray-800 bg-gray-900 p-1 md:flex">
       {visibleTabs.map((tab) => {
         const href = `${basePath}${tab.path}`;
         const isActive =
