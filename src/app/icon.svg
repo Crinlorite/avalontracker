@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Avalon Tracker logo mark. Self-contained portal glyph designed to read
+     from 16px favicon to 512px app icon. Dark navy rounded-square backdrop
+     so it stays visible on both light and dark browser chrome without a
+     transparency gamble. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Avalon Tracker">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="70%" stop-color="#0b0a2e"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </radialGradient>
+    <radialGradient id="core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f5d0fe"/>
+      <stop offset="45%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#6b21a8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <!-- Navy rounded-square backdrop. 96px radius ≈ iOS home-screen feel. -->
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+
+  <!-- Concentric rings — the portal -->
+  <g fill="none">
+    <circle cx="256" cy="256" r="176" stroke="#a78bfa" stroke-width="3" stroke-opacity="0.35"/>
+    <circle cx="256" cy="256" r="132" stroke="#c084fc" stroke-width="4" stroke-opacity="0.55"/>
+    <circle cx="256" cy="256" r="92"  stroke="#e9d5ff" stroke-width="2.5" stroke-opacity="0.3"/>
+  </g>
+
+  <!-- Glowing core (blur pass + sharp center for definition at small sizes) -->
+  <circle cx="256" cy="256" r="64" fill="url(#core)" filter="url(#glow)"/>
+  <circle cx="256" cy="256" r="38" fill="url(#core)"/>
+
+  <!-- Three hop nodes on the middle ring at 120° intervals.
+       Evokes the routes/portal network. Sized so they survive the 16px
+       downscale as visible specks rather than disappearing. -->
+  <g fill="#ddd6fe">
+    <circle cx="256" cy="124" r="9"/>
+    <circle cx="370.3" cy="322" r="9"/>
+    <circle cx="141.7" cy="322" r="9"/>
+  </g>
+</svg>

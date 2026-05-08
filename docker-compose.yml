@@ -1,0 +1,67 @@
+# Avalon Tracker — docker-compose para self-host completo
+# (DB + app + Nginx). Para producción real con TLS usa Caddy/Traefik
+# o un reverse proxy gestionado (Coolify, Fly, etc).
+#
+# Quick start:
+#   1. cp .env.example .env  (rellena al menos las (*) obligatorias)
+#   2. docker compose up -d
+#   3. abre http://localhost:3000
+#
+# Necesitas también un Vigil Bot accesible (https://github.com/Crinlorite/vigil-discordbot).
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-avalon}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-avalon_tracker}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      # Auth
+      AUTH_SECRET: ${AUTH_SECRET}
+      AUTH_URL: ${AUTH_URL}
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+      # Discord OAuth
+      DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
+      # Vigil Bot integration
+      VIGIL_BOT_API_URL: ${VIGIL_BOT_API_URL}
+      VIGIL_BOT_SHARED_SECRET: ${VIGIL_BOT_SHARED_SECRET}
+      # Database
+      DATABASE_URL: ${DATABASE_URL}
+      PRISMA_CLIENT_POOL_SIZE: ${PRISMA_CLIENT_POOL_SIZE:-5}
+      # Feedback (opcional)
+      FEEDBACK_SECRET: ${FEEDBACK_SECRET}
+      VIGIL_BOT_URL: ${VIGIL_BOT_URL}
+      # Turnstile (opcional)
+      TURNSTILE_SECRET: ${TURNSTILE_SECRET}
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+      # Misc
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      NODE_ENV: production
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
+
+volumes:
+  pgdata:
