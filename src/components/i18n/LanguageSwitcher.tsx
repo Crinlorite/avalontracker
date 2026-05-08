@@ -3,27 +3,33 @@ import { useState, useRef, useEffect } from "react";
 import { LANGUAGES, findLanguage, type LangGroup, type LanguageDef } from "@/i18n/languages";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-// Switcher de idioma con dropdown agrupado: language / regional /
-// community (mismo esquema que Royal Forge). El botón muestra el
-// código del idioma actual + 🌐. El menú lista todos los soportados
-// con nombre nativo + nombre en inglés + badge BETA si aplica.
+// Switcher de idioma como panel grande, no como roll-menu compacto.
+// Inspirado en el LanguageFooter de euskera-static (mismo padre
+// Crintech): tres secciones tipográficas con grid 2-col, badges
+// "Beta" sutiles, link al feedback al final. Paleta Avalon: indigo
+// como accent (sustituye el rojo de euskera), slate para fondos.
 
-const GROUP_LABELS: Record<LangGroup, { en: string; es: string }> = {
-  language:  { en: "Languages", es: "Idiomas" },
-  regional:  { en: "Regional",  es: "Regionales" },
-  community: { en: "Community", es: "Comunidad" },
+const SECTION_LABELS: Record<LangGroup, { en: string; es: string }> = {
+  language:  { en: "Languages",  es: "Idiomas" },
+  regional:  { en: "Regional",   es: "Regionales" },
+  community: { en: "Community",  es: "Comunidad" },
 };
 
-const GROUP_ORDER: LangGroup[] = ["language", "regional", "community"];
+const SECTION_ORDER: LangGroup[] = ["language", "regional", "community"];
 
 export function LanguageSwitcher({
   className = "",
   direction = "down",
+  align,
 }: {
   className?: string;
-  // "up" para sitios donde el botón está cerca del borde inferior
-  // (ej: sidebar) y abrir hacia abajo dejaría la lista off-screen.
   direction?: "up" | "down";
+  // "left" → panel crece hacia la derecha (anchor en left-0). Útil
+  // cuando el trigger vive cerca del borde izquierdo del viewport
+  // (sidebar). "right" → panel crece hacia la izquierda (right-0).
+  // Por defecto: "right" si direction="down" (top de la página),
+  // "left" si direction="up" (sidebar al pie del aside).
+  align?: "left" | "right";
 }) {
   const { lang, setLanguage } = useLanguage();
   const [open, setOpen] = useState(false);
@@ -44,77 +50,108 @@ export function LanguageSwitcher({
   };
   for (const l of LANGUAGES) groups[l.group].push(l);
 
-  const groupHeading = (g: LangGroup) =>
-    lang === "es" ? GROUP_LABELS[g].es : GROUP_LABELS[g].en;
+  const sectionHeading = (g: LangGroup) =>
+    lang === "es" ? SECTION_LABELS[g].es : SECTION_LABELS[g].en;
+
+  const effectiveAlign = align ?? (direction === "up" ? "left" : "right");
 
   return (
     <div ref={ref} className={`relative ${className}`}>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-semibold uppercase text-slate-200 hover:border-slate-500 hover:bg-slate-800"
+        className="flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-sm font-medium text-slate-200 hover:border-slate-500 hover:bg-slate-800"
         title={current ? `${current.native} · ${current.english}` : "Select language"}
         aria-label={lang === "es" ? "Cambiar idioma" : "Change language"}
         aria-expanded={open}
       >
-        <span aria-hidden>🌐</span>
-        <span>{current?.code ?? lang}</span>
+        <Globe className={`h-4 w-4 transition-colors ${open ? "text-indigo-400" : "text-slate-400"}`} />
+        <span className="text-xs font-mono uppercase text-slate-400">{current?.code ?? lang}</span>
+        <span className="hidden md:inline">{current?.native}</span>
+        <span
+          className={`text-[10px] text-slate-500 transition-transform ${open ? "rotate-180 text-indigo-400" : ""}`}
+          aria-hidden
+        >
+          ▾
+        </span>
       </button>
 
       {open && (
         <div
-          className={`absolute right-0 z-50 max-h-[480px] w-72 overflow-y-auto rounded-lg border border-slate-700 bg-slate-900 shadow-2xl ${
+          className={`absolute z-50 w-[min(92vw,440px)] rounded-xl border border-slate-700 bg-slate-900 p-5 shadow-2xl ${
             direction === "up" ? "bottom-full mb-2" : "top-full mt-2"
-          }`}
+          } ${effectiveAlign === "left" ? "left-0" : "right-0"}`}
           role="menu"
         >
-          {GROUP_ORDER.map((g) => (
-            <div key={g}>
-              <div className="sticky top-0 border-b border-slate-800 bg-slate-950/90 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
-                {groupHeading(g)}
-              </div>
-              <ul>
-                {groups[g].map((l) => {
-                  const active = l.code === lang;
-                  return (
-                    <li key={l.code}>
-                      <button
-                        type="button"
-                        onClick={() => { setLanguage(l.code); setOpen(false); }}
-                        className={`flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-sm hover:bg-slate-800 ${
-                          active ? "bg-indigo-950/40 text-indigo-300" : "text-slate-200"
-                        }`}
-                      >
-                        <span className="flex min-w-0 items-center gap-2">
-                          <span className="w-8 flex-shrink-0 font-mono text-xs uppercase text-slate-500">
-                            {l.code}
-                          </span>
-                          <span className="truncate" lang={l.code} dir={l.rtl ? "rtl" : "ltr"}>
-                            {l.native}
-                          </span>
-                          <span className="truncate text-xs text-slate-500">
-                            · {l.english}
-                          </span>
-                        </span>
-                        {l.beta && (
-                          <span className="flex-shrink-0 rounded bg-amber-900/40 px-1 py-0.5 text-[9px] font-bold uppercase text-amber-300">
-                            beta
-                          </span>
-                        )}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
-          <div className="border-t border-slate-800 px-3 py-2 text-[10px] text-slate-500">
-            {lang === "es"
-              ? "Las traducciones BETA pueden tener errores. Sugiere correcciones en el feedback."
-              : "BETA translations may contain errors. Submit corrections via feedback."}
+          <div className="grid gap-5">
+            {SECTION_ORDER.map((g) => {
+              const items = groups[g];
+              if (items.length === 0) return null;
+              return (
+                <section key={g}>
+                  <h4 className="mb-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+                    {sectionHeading(g)}
+                  </h4>
+                  <ul className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                    {items.map((l) => {
+                      const active = l.code === lang;
+                      return (
+                        <li key={l.code}>
+                          <button
+                            type="button"
+                            onClick={() => { setLanguage(l.code); setOpen(false); }}
+                            className={`flex w-full items-baseline gap-2 rounded-md py-0.5 text-left text-sm transition-colors ${
+                              active
+                                ? "font-semibold text-indigo-300"
+                                : "text-slate-300 hover:text-indigo-300"
+                            }`}
+                            lang={l.code}
+                            dir={l.rtl ? "rtl" : "ltr"}
+                          >
+                            <span className="truncate">{l.native}</span>
+                            {l.beta && (
+                              <span className="ml-auto rounded-full bg-amber-900/30 px-1.5 py-px text-[9px] font-semibold uppercase tracking-wider text-amber-300/80">
+                                beta
+                              </span>
+                            )}
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              );
+            })}
           </div>
+
+          <p className="mt-5 border-t border-slate-800 pt-3 text-xs text-slate-500">
+            {lang === "es"
+              ? <>¿Hablas alguno? <a href="/feedback" className="font-semibold text-indigo-400 underline-offset-2 hover:underline">Ayúdanos a traducir</a>.</>
+              : <>Speak one? <a href="/feedback" className="font-semibold text-indigo-400 underline-offset-2 hover:underline">Help us translate</a>.</>}
+          </p>
         </div>
       )}
     </div>
+  );
+}
+
+function Globe({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18" />
+      <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0 -18" />
+    </svg>
   );
 }
