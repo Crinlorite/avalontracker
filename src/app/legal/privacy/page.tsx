@@ -6,8 +6,9 @@ const UPDATED_ISO = "2026-04-24";
 
 export default function PrivacyPolicyPage() {
   const { lang } = useLanguage();
-  if (lang === "en") return <English />;
-  return <Spanish />;
+  // EN como fallback universal — ver comentario en aviso-legal/page.tsx.
+  if (lang === "es") return <Spanish />;
+  return <English />;
 }
 
 function Spanish() {
