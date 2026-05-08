@@ -23,8 +23,12 @@ export function LandingLoginDiscord() {
       <div className="absolute -left-40 top-1/3 h-96 w-96 rounded-full bg-indigo-600/30 blur-[120px]" />
       <div className="absolute -right-40 bottom-1/4 h-96 w-96 rounded-full bg-purple-600/20 blur-[120px]" />
 
-      {/* Top bar — selector de idioma */}
-      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+      {/* Top bar — selector de idioma. z-50 (no z-10) para que el
+          dropdown del switcher (absolute z-50 dentro de este header)
+          quede por encima del contenido principal — que también es
+          relative z-10. Sin esto, el contenido pintaba encima por
+          orden de DOM y tapaba el menú. */}
+      <header className="relative z-50 mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         <div className="flex items-center gap-2 text-slate-300">
           <span className="text-2xl">🌀</span>
           <span className="font-semibold tracking-tight">Avalon Tracker</span>
