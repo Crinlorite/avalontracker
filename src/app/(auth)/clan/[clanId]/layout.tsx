@@ -1,10 +1,13 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import ClanTabs from "@/components/clan/ClanTabs";
 
+// La navegación entre tabs del clan (Rutas / Miembros / Papelera /
+// Configuración / Auditoría) vive en el sidebar, expandiendo el
+// clan activo. Antes había una fila de tabs encima del contenido
+// que duplicaba la info; eliminada para dar más espacio al grafo
+// y simplificar la jerarquía visual.
 export default async function ClanLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
   params: Promise<{ clanId: string }>;
@@ -15,12 +18,5 @@ export default async function ClanLayout({
     redirect("/");
   }
 
-  const { clanId } = await params;
-
-  return (
-    <div className="space-y-6">
-      <ClanTabs clanId={clanId} />
-      {children}
-    </div>
-  );
+  return <div className="space-y-6">{children}</div>;
 }
