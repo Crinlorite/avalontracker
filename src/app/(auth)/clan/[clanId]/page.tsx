@@ -93,7 +93,13 @@ export default function ClanGraphPage() {
         </div>
       )}
 
-      <ClanGraph clanId={clanId} routes={routes} anchor={anchor} onNodeClick={(name) => setSelectedZone(name)} />
+      <ClanGraph
+        clanId={clanId}
+        routes={routes}
+        anchor={anchor}
+        anchorSecurityLevel={clan?.anchorSecurityLevel ?? null}
+        onNodeClick={(name) => setSelectedZone(name)}
+      />
 
       {selectedZone && (
         <ZoneSidePanel
