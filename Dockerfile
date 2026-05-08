@@ -59,4 +59,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=180s --retries=3 \
 # --force-reset temporalmente para esa migración puntual.
 # HOSTNAME/PORT explícitos inline como refuerzo a los ENV — Docker o el shell
 # pueden sobreescribirlos; aquí garantizamos que node server.js ve lo correcto.
-CMD ["sh", "-c", "npx prisma db push --accept-data-loss && npx tsx scripts/seed-zones.ts && npx tsx scripts/import-world-graph.ts && npx tsx scripts/precompute-routing.ts && HOSTNAME=0.0.0.0 PORT=3000 node server.js"]
+CMD ["sh", "-c", "npx tsx scripts/cleanup-routehop-duplicates.ts && npx prisma db push --accept-data-loss && npx tsx scripts/seed-zones.ts && npx tsx scripts/import-world-graph.ts && npx tsx scripts/precompute-routing.ts && HOSTNAME=0.0.0.0 PORT=3000 node server.js"]

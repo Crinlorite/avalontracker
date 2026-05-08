@@ -277,7 +277,13 @@ model RouteHop {
   toZone         Zone            @relation("HopTo",           fields: [toZoneId],      references: [id])
   statusSetBy    User?           @relation("HopStatusSetter", fields: [statusSetById], references: [id])
 
-  @@index([routeId])
+  // Un edge (from→to) sólo puede aparecer una vez por ruta. Aplica también
+  // a hops soft-deleted (deletedAt != null): durante la ventana de TTL
+  // (2 días) un edge "tombstoned" bloquea recrearlo en la misma ruta.
+  // Pasado el TTL el sweep en GET routes lo hard-deletea y queda libre.
+  // Para el caso operativo (merge de rutas con edge solapado), los
+  // handlers capturan P2002 y devuelven 409 con mensaje claro.
+  @@unique([routeId, fromZoneId, toZoneId])
   @@index([expiresAt, status])
   @@index([deletedAt])
 }

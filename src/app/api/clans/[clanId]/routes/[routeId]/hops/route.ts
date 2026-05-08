@@ -82,17 +82,29 @@ export async function POST(request: Request, { params }: RouteParams) {
 
   const nextOrder = lastHop ? lastHop.order + 1 : 0;
 
-  const hop = await prisma.routeHop.create({
-    data: {
-      routeId,
-      order: nextOrder,
-      fromZoneId: fromZoneRow.id,
-      toZoneId: toZoneRow.id,
-      portalSize: parsed.data.portalSize,
-      expiresAt: new Date(parsed.data.expiresAt),
-    },
-    include: { fromZone: true, toZone: true },
-  });
+  let hop;
+  try {
+    hop = await prisma.routeHop.create({
+      data: {
+        routeId,
+        order: nextOrder,
+        fromZoneId: fromZoneRow.id,
+        toZoneId: toZoneRow.id,
+        portalSize: parsed.data.portalSize,
+        expiresAt: new Date(parsed.data.expiresAt),
+      },
+      include: { fromZone: true, toZone: true },
+    });
+  } catch (err: unknown) {
+    // P2002 = unique constraint @@unique([routeId, fromZoneId, toZoneId])
+    // Probable causa: el hop ya existe (activo) o es un tombstone aún
+    // dentro del TTL de 2 días. Se devuelve 409 con mensaje claro en
+    // vez de un 500 genérico.
+    if (typeof err === "object" && err !== null && "code" in err && (err as { code?: string }).code === "P2002") {
+      return apiError("CONFLICT", 409, `El edge "${parsed.data.fromZone}" → "${parsed.data.toZone}" ya existe en esta ruta (activo o pendiente de purga en papelera).`);
+    }
+    throw err;
+  }
 
   // Bump version para optimistic concurrency, resucitar si estaba EXPIRED.
   await prisma.route.update({
