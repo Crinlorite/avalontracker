@@ -41,64 +41,63 @@ export default function ClanGraphPage() {
 
   if (isLoading) return <div className="text-slate-400">Cargando grafo…</div>;
 
-  // anchor: clan.anchorZone trae el metadata completo del API — lo usamos
-  // tanto para el label del header como para inyectar el nodo en el grafo
-  // incluso si aún no hay rutas que lo crucen. Si no hay anchor configurado,
-  // derivamos un fallback name desde la primera hop para el header.
+  // anchor: clan.anchorZone trae el metadata completo del API — se usa
+  // para inyectar el nodo en el grafo incluso si ninguna ruta lo cruza
+  // todavía. La info textual del anchor ya vive en el AnchorStatusCard,
+  // no en el header.
   const anchor = clan?.anchorZone ?? null;
-  const anchorName = anchor?.name
-    ?? routes.flatMap((r) => r.hops).find((h) => h.fromZone.id === clan?.anchorZoneId)?.fromZone.name
-    ?? routes.flatMap((r) => r.hops).find((h) => h.toZone.id === clan?.anchorZoneId)?.toZone.name
-    ?? null;
 
   const canMerge = canDelete(myRole) && routes.length >= 2;
 
   return (
     /*
-      Flex column atado a la altura visible del viewport (`100dvh`
-      menos el padding del auth layout: 32px mobile = p-4 dos veces,
-      64px desktop = p-8 dos veces). Header y AnchorStatusCard son
-      `shrink-0` con su altura natural; el grafo es `flex-1` y se
-      come lo que sobra. Así no dependemos de calcular a mano cuánto
-      mide el chrome — si la URL bar de iOS aparece/desaparece, si
-      el header wrapea por buttons largos, si no hay anchor card,
-      todo se ajusta solo. El `min-h-0` en el wrapper del grafo
-      evita que el contenido interno fuerce a crecer al flex-1
-      (default min-h en flexbox es auto, no 0).
+      Flex-column que ocupa toda la altura del flex-1 padre (auth
+      layout) — así header + anchor + grafo caben juntos en pantalla
+      con el footer del layout también visible. Mobile aprovecha esto
+      especialmente: viewport bounded → cero scroll del wrapper, el
+      grafo se contrae al espacio sobrante.
     */
-    <div className="relative flex h-[calc(100dvh-32px)] flex-col md:h-[calc(100dvh-64px)]">
-      <header className="mb-3 flex shrink-0 flex-wrap items-center justify-between gap-3 md:mb-4">
-        <div className="flex items-center gap-3">
-          <HamburgerButton />
-          <div>
-            <h1 className="text-2xl font-bold text-white">{clan?.name ?? "…"}</h1>
-            <p className="text-xs text-slate-500">{routes.length} rutas activas · anchor: {anchorName ?? "—"}</p>
-          </div>
+    <div className="relative flex h-full flex-col">
+      {/*
+        Header de una sola fila tanto mobile como desktop. Mobile:
+        botones icon-only (emoji + tooltip), h1 más pequeño y
+        truncado. Subtítulo "X rutas activas" oculto en mobile para
+        no robar más alto al grafo. Quitada la mención al anchor —
+        el AnchorStatusCard de abajo ya tiene esa info de sobra.
+      */}
+      <header className="mb-2 flex shrink-0 items-center gap-2 md:mb-4 md:gap-3">
+        <HamburgerButton />
+        <div className="min-w-0 flex-1">
+          <h1 className="truncate text-lg font-bold text-white md:text-2xl">{clan?.name ?? "…"}</h1>
+          <p className="hidden text-xs text-slate-500 md:block">{routes.length} rutas activas</p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <ViewToggle clanId={clanId} />
-          {canMerge && (
-            <button
-              onClick={() => setShowMerge(true)}
-              className="rounded bg-slate-700 px-3 py-1.5 text-sm text-white hover:bg-slate-600"
-              title="Fusionar dos rutas en una sola cadena"
-            >
-              ⛓ Fusionar rutas
-            </button>
-          )}
-          {canCreate(myRole) && (
-            <button
-              onClick={() => { setCreateFromZone(undefined); setShowCreate(true); }}
-              className="rounded bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-500"
-            >
-              + Nueva ruta
-            </button>
-          )}
-        </div>
+        <ViewToggle clanId={clanId} />
+        {canMerge && (
+          <button
+            onClick={() => setShowMerge(true)}
+            className="shrink-0 rounded bg-slate-700 px-2.5 py-1.5 text-sm text-white hover:bg-slate-600 md:px-3"
+            title="Fusionar dos rutas en una sola cadena"
+            aria-label="Fusionar rutas"
+          >
+            <span aria-hidden>⛓</span>
+            <span className="ml-1.5 hidden md:inline">Fusionar rutas</span>
+          </button>
+        )}
+        {canCreate(myRole) && (
+          <button
+            onClick={() => { setCreateFromZone(undefined); setShowCreate(true); }}
+            className="shrink-0 rounded bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white hover:bg-indigo-500 md:px-3"
+            title="Nueva ruta"
+            aria-label="Nueva ruta"
+          >
+            <span aria-hidden>+</span>
+            <span className="ml-1 hidden md:inline">Nueva ruta</span>
+          </button>
+        )}
       </header>
 
       {clan && clan.anchorZoneId && (
-        <div className="mb-3 shrink-0 md:mb-4">
+        <div className="mb-2 shrink-0 md:mb-4">
           <AnchorStatusCard clan={clan} myRole={myRole} />
         </div>
       )}

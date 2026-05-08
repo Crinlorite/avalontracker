@@ -87,6 +87,21 @@ export function ClanGraph({
   // datos actuales y abrimos el modal.
   const containerRef = useRef<HTMLDivElement>(null);
   const [editingHop, setEditingHop] = useState<{ hop: HopView; routeId: string } | null>(null);
+
+  // Mobile + grafos densos: en lugar de meter todos los nodos en
+  // viewport (zoom-out hasta hacerlos ilegibles), enfocamos solo
+  // el anchor con padding generoso. El usuario hace pinch para
+  // explorar el resto. Si no hay anchor o son pocos nodos, el
+  // fitView normal con maxZoom 0.85 ya da buen resultado.
+  const fitOptions = useMemo(() => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const manyNodes = computed.nodes.length > 8;
+    const anchorRfNode = computed.nodes.find((n) => n.isAnchor);
+    if (isMobile && manyNodes && anchorRfNode) {
+      return { nodes: [{ id: anchorRfNode.id }], padding: 0.6, maxZoom: 1.1 };
+    }
+    return { maxZoom: 0.85, padding: 0.15 };
+  }, [computed.nodes]);
   useEffect(() => {
     const node = containerRef.current;
     if (!node) return;
@@ -146,11 +161,7 @@ export function ClanGraph({
         edgeTypes={edgeTypes}
         onNodeClick={(_, n) => onNodeClick(n.id)}
         fitView
-        // En grafos pequeños fitView calcula un zoom alto que pinta
-        // los nodos enormes (sobre todo en mobile). maxZoom=0.85 evita
-        // que se acerque más allá de eso. minZoom 0.2 deja al usuario
-        // alejar bastante con pinch en grafos grandes.
-        fitViewOptions={{ maxZoom: 0.85, padding: 0.15 }}
+        fitViewOptions={fitOptions}
         minZoom={0.2}
         maxZoom={2}
         proOptions={{ hideAttribution: true }}
