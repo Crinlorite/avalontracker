@@ -28,44 +28,46 @@ export default function ClanListPage() {
 
   if (isLoading) return <div className="text-slate-400">Cargando…</div>;
 
-  const anchorName = clan?.anchorZoneId
-    ? routes.flatMap((r) => r.hops).find((h) => h.fromZone.id === clan.anchorZoneId)?.fromZone.name
-      ?? routes.flatMap((r) => r.hops).find((h) => h.toZone.id === clan.anchorZoneId)?.toZone.name
-      ?? null
-    : null;
-
   const canMerge = canDelete(myRole) && routes.length >= 2;
 
   return (
-    <div className="space-y-4">
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <HamburgerButton />
-          <div>
-            <h1 className="text-2xl font-bold text-white">{clan?.name ?? "…"}</h1>
-            <p className="text-xs text-slate-500">{routes.length} rutas activas · anchor: {anchorName ?? "—"}</p>
-          </div>
+    <div className="space-y-3 md:space-y-4">
+      {/*
+        Mismo header de una fila que el grafo: hamburger + clan name
+        + ViewToggle + acciones, todo en línea. Botones icon-only en
+        mobile, subtítulo oculto en mobile, mención al anchor quitada
+        (no aporta en este header — está en el AnchorStatusCard del
+        grafo y en el detalle del clan).
+      */}
+      <header className="flex items-center gap-2 md:gap-3">
+        <HamburgerButton />
+        <div className="min-w-0 flex-1">
+          <h1 className="truncate text-lg font-bold text-white md:text-2xl">{clan?.name ?? "…"}</h1>
+          <p className="hidden text-xs text-slate-500 md:block">{routes.length} rutas activas</p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <ViewToggle clanId={clanId} />
-          {canMerge && (
-            <button
-              onClick={() => setShowMerge(true)}
-              className="rounded bg-slate-700 px-3 py-1.5 text-sm text-white hover:bg-slate-600"
-              title="Fusionar dos rutas en una sola cadena"
-            >
-              ⛓ Fusionar rutas
-            </button>
-          )}
-          {canCreate(myRole) && (
-            <button
-              onClick={() => setShowCreate(true)}
-              className="rounded bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-500"
-            >
-              + Nueva ruta
-            </button>
-          )}
-        </div>
+        <ViewToggle clanId={clanId} />
+        {canMerge && (
+          <button
+            onClick={() => setShowMerge(true)}
+            className="shrink-0 rounded bg-slate-700 px-2.5 py-1.5 text-sm text-white hover:bg-slate-600 md:px-3"
+            title="Fusionar dos rutas en una sola cadena"
+            aria-label="Fusionar rutas"
+          >
+            <span aria-hidden>⛓</span>
+            <span className="ml-1.5 hidden md:inline">Fusionar rutas</span>
+          </button>
+        )}
+        {canCreate(myRole) && (
+          <button
+            onClick={() => setShowCreate(true)}
+            className="shrink-0 rounded bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white hover:bg-indigo-500 md:px-3"
+            title="Nueva ruta"
+            aria-label="Nueva ruta"
+          >
+            <span aria-hidden>+</span>
+            <span className="ml-1 hidden md:inline">Nueva ruta</span>
+          </button>
+        )}
       </header>
 
       <RouteListTable routes={routes} myRole={myRole} />
