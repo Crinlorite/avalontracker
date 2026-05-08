@@ -4,8 +4,12 @@ import { LegalPage } from "@/components/legal/LegalPage";
 
 export default function LegalNoticePage() {
   const { lang } = useLanguage();
-  if (lang === "en") return <English />;
-  return <Spanish />;
+  // EN como fallback universal: solo el castellano explícito devuelve
+  // la versión ES. Cualquier otro idioma (fr, de, pt, etc.) ve EN para
+  // ser consistente con el navbar del legal/layout.tsx, que también
+  // usa EN como default.
+  if (lang === "es") return <Spanish />;
+  return <English />;
 }
 
 function Spanish() {
