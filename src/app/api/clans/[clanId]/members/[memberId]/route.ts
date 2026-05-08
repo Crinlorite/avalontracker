@@ -34,7 +34,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
   // displayName es campo GLOBAL del User — visible en todos los clanes
   // donde participe. No queremos que un admin de clan A pueda renombrar
   // a un user que también está en clan B. Solo el propio user puede
-  // editar su displayName (vía /api/profile o este endpoint si es él
+  // editar su displayName (vía PATCH /api/me o este endpoint si es él
   // mismo). Admins de clan: usen otra vía si querían un nickname local.
   if (member.userId !== session.user.id) {
     return apiError("INSUFFICIENT_ROLE", 403, "Sin permisos");

@@ -165,23 +165,47 @@ export async function POST(request: Request, { params }: RouteParams) {
     return apiError("VALIDATION_ERROR", 400, `Zona desconocida: ${n}`);
   }
 
-  const route = await prisma.route.create({
-    data: {
-      clanId,
-      createdById: session.user.id,
-      notes: parsed.data.notes ?? null,
-      hops: {
-        create: parsed.data.hops.map((h, i) => ({
-          order: i,
-          fromZoneId: byName.get(h.fromZone)!,
-          toZoneId: byName.get(h.toZone)!,
-          portalSize: h.portalSize,
-          expiresAt: new Date(h.expiresAt),
-        })),
+  // Pre-check: dentro del payload, si vienen dos hops con el mismo
+  // (fromZone, toZone) el constraint @@unique fallaría con P2002. Es
+  // un error de cliente (ramificación con doble edge) — devolvemos
+  // 400 antes de tocar la BD para que la UI pueda señalarlo.
+  const seen = new Set<string>();
+  for (const h of parsed.data.hops) {
+    const key = `${h.fromZone}->${h.toZone}`;
+    if (seen.has(key)) {
+      return apiError("VALIDATION_ERROR", 400, `Edge duplicado dentro de la ruta: ${h.fromZone} → ${h.toZone}`);
+    }
+    seen.add(key);
+  }
+
+  let route;
+  try {
+    route = await prisma.route.create({
+      data: {
+        clanId,
+        createdById: session.user.id,
+        notes: parsed.data.notes ?? null,
+        hops: {
+          create: parsed.data.hops.map((h, i) => ({
+            order: i,
+            fromZoneId: byName.get(h.fromZone)!,
+            toZoneId: byName.get(h.toZone)!,
+            portalSize: h.portalSize,
+            expiresAt: new Date(h.expiresAt),
+          })),
+        },
       },
-    },
-    include: { hops: { orderBy: { order: "asc" } } },
-  });
+      include: { hops: { orderBy: { order: "asc" } } },
+    });
+  } catch (err: unknown) {
+    // Caso muy raro post-pre-check: algún hop colisiona con un
+    // tombstone soft-deleted en _otra_ ruta (no es posible — el
+    // constraint es per-route — pero blindamos por si acaso).
+    if (typeof err === "object" && err !== null && "code" in err && (err as { code?: string }).code === "P2002") {
+      return apiError("CONFLICT", 409, "Conflicto al crear la ruta: edge duplicado.");
+    }
+    throw err;
+  }
 
   await logAudit(clanId, session.user.id, "ROUTE_CREATE", route.id, { hopCount: parsed.data.hops.length });
 
