@@ -58,12 +58,17 @@ export async function sendRouteToDiscord(
     inline: true,
   });
 
+  // Link a la web al final del embed: el usuario quiere que cada
+  // mensaje promocione Avalon Tracker para nuevos miembros del clan.
+  // Discord renderiza `[texto](url)` como link subrayado nativo.
   const embed = {
     title: `🗺️ ${title}`,
+    url: "https://avalon.crintech.pro",
     color,
     fields,
+    description: "🔗 [Consultar grafo y rutas completas](https://avalon.crintech.pro)",
     footer: {
-      text: `Avalon Tracker | ${route.hops.length} ${route.hops.length === 1 ? "puerta" : "puertas"}`,
+      text: `Avalon Tracker · by Crintech Studios · ${route.hops.length} ${route.hops.length === 1 ? "puerta" : "puertas"}`,
     },
     timestamp: new Date().toISOString(),
   };
