@@ -103,8 +103,6 @@ model User {
   routesDisabled   Route[]      @relation("RouteDisabler")
   hopStatusSet     RouteHop[]   @relation("HopStatusSetter")
   auditLogs        AuditLog[]
-  ingestTokens     IngestToken[]
-  snifferSession   SnifferSession?
 }
 
 // ============ Clan ============
@@ -141,7 +139,6 @@ model Clan {
   routes             Route[]
   auditLogs          AuditLog[]
   roleMappings       ClanRoleMapping[]
-  ingestTokens       IngestToken[]
 }
 
 model ClanRoleMapping {
@@ -186,12 +183,6 @@ model Zone {
   isRest           Boolean          @default(false)
   isCapital        Boolean          @default(false)
   rawData          Json?
-  // Ingesta sniffer — identificadores externos de Loot Vigil.
-  // externalZoneId: zoneId autoritativo del sniffer ("2000", "TNL-011", etc.)
-  // externalType: clasificación cruda de Loot Vigil (royal, avalonB, mists, etc.)
-  // Nullable porque no todas las zonas seeded tienen mapping todavía.
-  externalZoneId   String?          @unique
-  externalType     String?
 
   connectionsFrom   ZoneConnection[] @relation("ConnectionFrom")
   connectionsTo     ZoneConnection[] @relation("ConnectionTo")
@@ -255,7 +246,6 @@ model Route {
   createdBy     User          @relation("RouteCreator",  fields: [createdById],  references: [id])
   disabledBy    User?         @relation("RouteDisabler", fields: [disabledById], references: [id])
   hops          RouteHop[]
-  snifferSessionsOpen SnifferSession[] @relation("SnifferCurrent")
 
   @@index([clanId, status])
   @@index([updatedAt])
@@ -290,45 +280,6 @@ model RouteHop {
   @@index([routeId])
   @@index([expiresAt, status])
   @@index([deletedAt])
-}
-
-// ============ Sniffer ingest ============
-
-// Token personal emitido por un usuario ADMIN del clan-target para
-// autorizar una instancia local de Loot Vigil (sniffer) a ingestar
-// eventos de zona en ese clan. Cada token está scoped a (userId,
-// targetClanId): solo opera en el clan donde el emisor es ADMIN.
-// Se almacena sólo el hash (SHA-256) — el token en claro se muestra
-// una vez al crearlo. Revocable en cualquier momento.
-model IngestToken {
-  id            String    @id @default(cuid())
-  userId        String
-  targetClanId  String
-  tokenHash     String    @unique
-  label         String
-  createdAt     DateTime  @default(now())
-  lastUsedAt    DateTime?
-  revokedAt     DateTime?
-
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  targetClan    Clan      @relation(fields: [targetClanId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@index([tokenHash])
-}
-
-// Estado de la state-machine de ruta por usuario. Un sólo registro activo por
-// usuario (userId como PK). currentRouteId apunta a la ruta abierta en Avalon
-// o null cuando el jugador está fuera.
-model SnifferSession {
-  userId          String    @id
-  currentRouteId  String?
-  currentZoneId   Int?      // posición actual del jugador; desacopla del último hop
-  lastEventAt     DateTime?
-  updatedAt       DateTime  @updatedAt
-
-  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  currentRoute    Route?    @relation("SnifferCurrent", fields: [currentRouteId], references: [id], onDelete: SetNull)
 }
 
 // ============ Audit ============

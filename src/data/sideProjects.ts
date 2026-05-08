@@ -4,7 +4,6 @@
 // sitio externo. Cubre reciprocidad entre las herramientas "hermanas".
 //
 // NO incluir Avalon Tracker aquí (somos este propio proyecto).
-// NO incluir proyectos privados (Loot Vigil).
 
 import type { Lang } from "@/i18n/translations";
 
