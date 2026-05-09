@@ -29,7 +29,7 @@ export default async function AuthLayout({
           <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             <a href="/feedback" className="hover:text-slate-300">📝 Feedback</a>
             <span aria-hidden className="text-slate-700">·</span>
-            <a href="https://royalforge.crintech.pro" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">
+            <a href="https://royalforge.app" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">
               🛡️ Royal Forge
             </a>
             <span aria-hidden className="text-slate-700">·</span>

@@ -21,7 +21,7 @@ export const SIDE_PROJECTS: SideProject[] = [
     id: "royalforge",
     icon: "⚒️",
     name: "Royal Forge",
-    url: "https://royalforge.crintech.pro",
+    url: "https://royalforge.app",
     tags: {
       en: ["Build maker", "Killboard", "Market", "Free"],
       es: ["Build maker", "Killboard", "Mercado", "Gratis"],
@@ -49,7 +49,7 @@ export const SIDE_PROJECTS: SideProject[] = [
     id: "vigil",
     icon: "👁️",
     name: "Vigil",
-    url: "https://vigil.crintech.pro",
+    url: "https://vigilbot.app",
     tags: {
       en: ["Discord bot", "Killboard", "Reminders"],
       es: ["Bot de Discord", "Killboard", "Recordatorios"],

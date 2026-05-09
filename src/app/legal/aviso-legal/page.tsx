@@ -17,7 +17,7 @@ function Spanish() {
     <LegalPage title="Aviso Legal" updated="Actualizado: 24/04/2026">
       <h2>🏷 Titular del sitio</h2>
       <p>
-        Este sitio, accesible en <a href="https://avalon.crintech.pro">https://avalon.crintech.pro</a>, es operado por <strong>Crintech Studios</strong>, proyecto personal sin
+        Este sitio, accesible en <a href="https://avalontracker.app">https://avalontracker.app</a>, es operado por <strong>Crintech Studios</strong>, proyecto personal sin
         forma jurídica registrada. Contacto:{" "}
         <a href="mailto:avalon@crintech.pro">avalon@crintech.pro</a>.
       </p>
@@ -125,7 +125,7 @@ function English() {
     <LegalPage title="Legal Notice" updated="Last updated: 2026-04-24">
       <h2>🏷 Site owner</h2>
       <p>
-        This site, available at <a href="https://avalon.crintech.pro">https://avalon.crintech.pro</a>, is operated by <strong>Crintech Studios</strong>, a personal project without
+        This site, available at <a href="https://avalontracker.app">https://avalontracker.app</a>, is operated by <strong>Crintech Studios</strong>, a personal project without
         registered legal form. Contact: <a href="mailto:avalon@crintech.pro">avalon@crintech.pro</a>.
       </p>
 

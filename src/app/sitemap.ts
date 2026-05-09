@@ -9,7 +9,7 @@ import type { MetadataRoute } from "next";
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const base = "https://avalon.crintech.pro";
+  const base = "https://avalontracker.app";
 
   return [
     {

@@ -63,10 +63,10 @@ export async function sendRouteToDiscord(
   // Discord renderiza `[texto](url)` como link subrayado nativo.
   const embed = {
     title: `🗺️ ${title}`,
-    url: "https://avalon.crintech.pro",
+    url: "https://avalontracker.app",
     color,
     fields,
-    description: "🔗 [Consultar grafo y rutas completas](https://avalon.crintech.pro)",
+    description: "🔗 [Consultar grafo y rutas completas](https://avalontracker.app)",
     footer: {
       text: `Avalon Tracker · by Crintech Studios · ${route.hops.length} ${route.hops.length === 1 ? "puerta" : "puertas"}`,
     },

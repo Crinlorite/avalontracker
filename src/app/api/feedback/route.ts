@@ -10,7 +10,7 @@ import { apiError } from "@/lib/api-error";
 //
 // Env vars requeridas (Coolify env):
 //   FEEDBACK_SECRET      compartido con Vigil bot (X-API-Key)
-//   VIGIL_BOT_URL        https://vigil.crintech.pro
+//   VIGIL_BOT_URL        https://vigilbot.app
 //   TURNSTILE_SECRET     CF Turnstile secret key (server-side)
 
 const MAX_TITLE = 200;

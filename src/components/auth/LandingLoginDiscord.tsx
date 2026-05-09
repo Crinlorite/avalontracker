@@ -106,7 +106,7 @@ export function LandingLoginDiscord() {
               <>
                 {parts[0]}
                 <a
-                  href="https://vigil.crintech.pro"
+                  href="https://vigilbot.app"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-semibold text-indigo-400 underline-offset-2 hover:underline"

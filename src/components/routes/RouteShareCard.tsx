@@ -270,7 +270,7 @@ export const RouteShareCard = forwardRef<HTMLDivElement, { route: RouteView }>(
             </div>
           )}
           <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
-            <span>avalon.crintech.pro</span>
+            <span>avalontracker.app</span>
             <span>capturada {now}</span>
           </div>
         </div>

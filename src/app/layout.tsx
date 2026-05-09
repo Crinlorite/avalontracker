@@ -8,7 +8,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const SITE_URL = "https://avalon.crintech.pro";
+const SITE_URL = "https://avalontracker.app";
 const SITE_NAME = "Avalon Tracker";
 const SITE_DESCRIPTION =
   "Mapa en vivo de los Caminos de Avalon para clanes de Albion Online. Comparte rutas con tu equipo, marca portales con expiración y coordina roams en tiempo real.";
