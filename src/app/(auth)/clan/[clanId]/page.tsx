@@ -51,13 +51,14 @@ export default function ClanGraphPage() {
 
   return (
     /*
-      Flex-column que ocupa toda la altura del flex-1 padre (auth
-      layout) — así header + anchor + grafo caben juntos en pantalla
-      con el footer del layout también visible. Mobile aprovecha esto
-      especialmente: viewport bounded → cero scroll del wrapper, el
-      grafo se contrae al espacio sobrante.
+      Flex-1 dentro del flex-col del auth layout — así toda la cadena
+      es flex (sin porcentajes que requieran parent con altura
+      explícita). Page wrapper crece al espacio disponible bajo el
+      footer; header y anchor son shrink-0; el grafo se queda con lo
+      que sobre. min-h-0 permite que el flex-1 baje de su contenido
+      intrínseco si hace falta.
     */
-    <div className="relative flex h-full flex-col">
+    <div className="relative flex min-h-0 flex-1 flex-col">
       {/*
         Header de una sola fila tanto mobile como desktop. Mobile:
         botones icon-only (emoji + tooltip), h1 más pequeño y
