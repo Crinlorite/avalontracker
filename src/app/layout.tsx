@@ -11,12 +11,12 @@ const inter = Inter({ subsets: ["latin"] });
 const SITE_URL = "https://avalontracker.app";
 const SITE_NAME = "Avalon Tracker";
 const SITE_DESCRIPTION =
-  "Mapa en vivo de los Caminos de Avalon para clanes de Albion Online. Comparte rutas con tu equipo, marca portales con expiración y coordina roams en tiempo real.";
+  "Live Roads of Avalon map for Albion Online clans. Share routes with your team, mark portals with expiration timers, and coordinate roams in real time.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Caminos de Avalon en vivo para tu clan`,
+    default: `${SITE_NAME} — Live Roads of Avalon map for your clan`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   category: "Game Companion",
   keywords: [
     "Avalon Tracker",
-    "Caminos de Avalon",
     "Roads of Avalon",
+    "Caminos de Avalon",
     "Albion Online",
     "clan tracker",
     "avalon roads map",
@@ -54,25 +54,26 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "es_ES",
+    locale: "en_US",
+    alternateLocale: ["es_ES"],
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — Caminos de Avalon en vivo`,
+    title: `${SITE_NAME} — Live Roads of Avalon map`,
     description: SITE_DESCRIPTION,
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Avalon Tracker — mapa en vivo de los Caminos de Avalon",
+        alt: "Avalon Tracker — live Roads of Avalon map for Albion Online clans",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Caminos de Avalon en vivo`,
+    title: `${SITE_NAME} — Live Roads of Avalon map`,
     description:
-      "Mapa colaborativo de los Caminos de Avalon: comparte rutas, marca portales y coordina tu clan en Albion Online.",
+      "Collaborative Roads of Avalon map: share routes, mark portals and coordinate your clan in Albion Online.",
     images: ["/og-image.png"],
   },
   appleWebApp: {
@@ -118,12 +119,12 @@ const jsonLd = {
     name: "Crintech Studios",
     url: "https://crintech.pro",
   },
-  inLanguage: ["es", "en"],
+  inLanguage: ["en", "es"],
   featureList: [
-    "Mapa en vivo de los Caminos de Avalon",
-    "Edición colaborativa de rutas por clan",
-    "Marcado de portales con expiración",
-    "Coordinación de roams entre miembros",
+    "Live Roads of Avalon map",
+    "Collaborative per-clan route editing",
+    "Portal expiration timers and security reports",
+    "Real-time roam coordination across clan members",
   ],
 };
 
@@ -133,7 +134,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className="dark">
+    <html lang="en" className="dark">
       <head>
         <meta name="mobile-web-app-capable" content="yes" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
