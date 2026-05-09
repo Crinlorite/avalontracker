@@ -56,7 +56,7 @@
   </div>
 </header>
 
-<p>This extension helps members of the <em>Celtiberos</em> Albion Online guild (and invited contributors) map the daily-randomised Avalonian Roads in <a href="https://avalon.crintech.pro">Avalon Tracker</a>.</p>
+<p>This extension helps members of the <em>Celtiberos</em> Albion Online guild (and invited contributors) map the daily-randomised Avalonian Roads in <a href="https://avalontracker.app">Avalon Tracker</a>.</p>
 
 <h2>What the extension does</h2>
 <p>When you press <kbd>F9</kbd>:</p>
@@ -65,7 +65,7 @@
   <li>The frame is <strong>cropped</strong> to the minimap region you previously outlined (via the in-extension calibrator) and preprocessed (grayscale + binary threshold) for OCR legibility.</li>
   <li><a href="https://github.com/naptha/tesseract.js">Tesseract.js</a> — bundled locally — runs on the cropped image to extract text.</li>
   <li>A regex parser finds portal tooltip rows (destination + timer + capacity) and the zone-title text.</li>
-  <li>The extracted fields are <strong>sent via HTTPS POST</strong> to <code>https://avalon.crintech.pro/api/ingest/portal-snapshot</code> with your existing <code>avalon.crintech.pro</code> session cookie.</li>
+  <li>The extracted fields are <strong>sent via HTTPS POST</strong> to <code>https://avalontracker.app/api/ingest/portal-snapshot</code> with your existing <code>avalontracker.app</code> session cookie.</li>
 </ol>
 
 <h2>Data we collect and transmit</h2>
@@ -89,7 +89,7 @@ The POST body contains <strong>only</strong>:
 </ul>
 
 <h2>Authentication</h2>
-<p>The extension does <strong>not</strong> store bearer tokens or passwords. Your identity on the tracker is established by your existing NextAuth session cookie on <code>avalon.crintech.pro</code>, which you set by signing in with Discord OAuth on the website. The extension only attaches that cookie to its own <code>fetch()</code> calls — it does not read, copy, or persist the cookie itself.</p>
+<p>The extension does <strong>not</strong> store bearer tokens or passwords. Your identity on the tracker is established by your existing NextAuth session cookie on <code>avalontracker.app</code>, which you set by signing in with Discord OAuth on the website. The extension only attaches that cookie to its own <code>fetch()</code> calls — it does not read, copy, or persist the cookie itself.</p>
 
 <h2>Permissions explained</h2>
 <ul>
@@ -98,12 +98,12 @@ The POST body contains <strong>only</strong>:
   <li><code>storage</code> — persists two things locally in <code>chrome.storage.local</code>: the minimap region rectangle (from the calibrator) and the offline-retry queue of failed POSTs (drained on reconnection).</li>
   <li><code>notifications</code> — surfaces capture results and errors via Chrome's notification system.</li>
   <li><code>alarms</code> — wakes the service worker every 5 minutes to drain the offline queue when the tracker was temporarily down.</li>
-  <li><code>host_permissions: https://avalon.crintech.pro/*</code> — restricts the extension's network access to exactly one domain.</li>
+  <li><code>host_permissions: https://avalontracker.app/*</code> — restricts the extension's network access to exactly one domain.</li>
 </ul>
 
 <h2>Third-party services</h2>
 <ul>
-  <li><strong>Avalon Tracker</strong> (<code>avalon.crintech.pro</code>) — the parsed OCR fields are sent here for use in the route graph. Data retention and handling are governed by the tracker's own privacy policy.</li>
+  <li><strong>Avalon Tracker</strong> (<code>avalontracker.app</code>) — the parsed OCR fields are sent here for use in the route graph. Data retention and handling are governed by the tracker's own privacy policy.</li>
   <li><strong>Tesseract.js</strong> — OCR engine bundled into the extension. Runs locally in your browser; makes no network calls.</li>
   <li>We do not use analytics, tracking, fingerprinting, or advertising SDKs.</li>
 </ul>

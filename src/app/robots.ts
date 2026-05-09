@@ -27,6 +27,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "Amazonbot", disallow: "/" },
       { userAgent: "meta-externalagent", disallow: "/" },
     ],
-    sitemap: "https://avalon.crintech.pro/sitemap.xml",
+    sitemap: "https://avalontracker.app/sitemap.xml",
   };
 }

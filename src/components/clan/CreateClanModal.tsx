@@ -40,7 +40,7 @@ export function CreateClanModal({ onClose, onCreated }: { onClose: () => void; o
               vigil: (
                 <a
                   key="vigil"
-                  href="https://vigil.crintech.pro"
+                  href="https://vigilbot.app"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-indigo-400 underline hover:text-indigo-300"
