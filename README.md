@@ -4,7 +4,7 @@
 
 Herramienta colaborativa para mapear los **Caminos de Avalon** (Roads of Avalon) de Albion Online entre miembros de un clan. Vista primaria en **grafo interactivo** con timers en vivo, pathfinding a salidas a Royal Cities / Rests y notificaciones a Discord.
 
-> **Open source · MIT** — el código es libre. El despliegue público en [avalon.crintech.pro](https://avalon.crintech.pro) lo mantengo yo (Crintech Studios), pero **te animo a montar tu propio portal privado** para tu clan: así la información sensible (rutas, anchors, partes de seguridad) **se queda bajo tu llave**, sin que terceros — ni yo — vean nada.
+> **Open source · MIT** — el código es libre. El despliegue público en [avalontracker.app](https://avalontracker.app) lo mantengo yo (Crintech Studios), pero **te animo a montar tu propio portal privado** para tu clan: así la información sensible (rutas, anchors, partes de seguridad) **se queda bajo tu llave**, sin que terceros — ni yo — vean nada.
 
 ---
 
@@ -51,7 +51,7 @@ Mapeo **many-to-many** desde roles de Discord. El usuario con varios roles mapea
 - Borrado **soft con TTL de 2 días** (recuperable desde la **Papelera**).
 
 ### Pathfinding con dump del juego
-- World-graph extraído de [`broderickhyman/ao-bin-dumps`](https://github.com/broderickhyman/ao-bin-dumps) vía session-tracker.
+- World-graph extraído de [`broderickhyman/ao-bin-dumps`](https://github.com/broderickhyman/ao-bin-dumps) procesado con un script de extracción local.
 - BFS en runtime para encontrar **2 portales más cercanos** desde una zona negra y la **royal city más cercana** desde cualquier no-royal-city.
 - Datos en `src/data/world-meta.json` — refrescables tras parches del juego.
 
@@ -223,7 +223,7 @@ avalon-tracker/
 ├── prisma/
 │   └── schema.prisma          # User, Clan, ClanMember, ClanRoleMapping,
 │                              # Route, RouteHop (con soft-delete TTL 2d),
-│                              # Zone, IngestToken, AuditLog
+│                              # Zone, AuditLog
 ├── scripts/
 │   ├── seed-zones.ts          # Seed de zonas (idempotente)
 │   └── mock-vigil-bot.ts      # Mock para dev local
@@ -306,7 +306,7 @@ Todos los endpoints autenticados verifican rol del clan via `requireRole`. **No 
 
 ## Fuentes de datos
 
-- World-graph (zonas + adyacencias): [broderickhyman/ao-bin-dumps](https://github.com/broderickhyman/ao-bin-dumps) vía [`Crinlorite/session-tracker`](https://github.com/Crinlorite/session-tracker) que aplica overrides manuales para corregir errores del dump tras parches.
+- World-graph (zonas + adyacencias): [broderickhyman/ao-bin-dumps](https://github.com/broderickhyman/ao-bin-dumps) procesado con un script de extracción local que aplica overrides manuales para corregir errores del dump tras parches del juego.
 - Información de portales: [Wiki — Roads of Avalon](https://wiki.albiononline.com/wiki/Roads_of_Avalon).
 
 Refresco de datos tras parches del juego: actualmente manual, ver `src/data/world-meta.json` en este repo.

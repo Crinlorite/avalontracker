@@ -194,7 +194,7 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
   <g font-family="Inter, 'Segoe UI', system-ui, -apple-system, sans-serif" text-anchor="middle">
     <text x="600" y="595" font-size="19" font-weight="600"
           fill="#64748b" letter-spacing="6">
-      BY CRINTECH STUDIOS · avalon.crintech.pro
+      BY CRINTECH STUDIOS · avalontracker.app
     </text>
   </g>
 </svg>`;

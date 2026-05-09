@@ -4,7 +4,7 @@
 
 Collaborative tool for mapping the **Roads of Avalon** (Caminos de Avalon) of Albion Online among members of a clan. Primary view is an **interactive graph** with live timers, pathfinding to exits towards Royal Cities / Rests, and Discord notifications.
 
-> **Open source · MIT** — the code is free. The public deployment at [avalon.crintech.pro](https://avalon.crintech.pro) is run by me (Crintech Studios), but **I encourage you to spin up your own private portal** for your clan: that way the sensitive information (routes, anchors, security reports) **stays under your own key**, with no third party — not even me — seeing anything.
+> **Open source · MIT** — the code is free. The public deployment at [avalontracker.app](https://avalontracker.app) is run by me (Crintech Studios), but **I encourage you to spin up your own private portal** for your clan: that way the sensitive information (routes, anchors, security reports) **stays under your own key**, with no third party — not even me — seeing anything.
 
 ---
 
@@ -51,7 +51,7 @@ Collaborative tool for mapping the **Roads of Avalon** (Caminos de Avalon) of Al
 - **Soft-delete with 2-day TTL** (recoverable from the **Trash**).
 
 ### Pathfinding with the game dump
-- World-graph extracted from [`broderickhyman/ao-bin-dumps`](https://github.com/broderickhyman/ao-bin-dumps) via session-tracker.
+- World-graph extracted from [`broderickhyman/ao-bin-dumps`](https://github.com/broderickhyman/ao-bin-dumps) and processed with a local extraction script.
 - Runtime BFS to find the **2 nearest portals** from a black zone and the **nearest royal city** from any non-royal-city.
 - Data lives in `src/data/world-meta.json` — refreshable after game patches.
 
@@ -306,7 +306,7 @@ Every authenticated endpoint validates the clan role through `requireRole`. **Th
 
 ## Data sources
 
-- World-graph (zones + adjacencies): [broderickhyman/ao-bin-dumps](https://github.com/broderickhyman/ao-bin-dumps) through [`Crinlorite/session-tracker`](https://github.com/Crinlorite/session-tracker), which applies manual overrides to fix dump errors after patches.
+- World-graph (zones + adjacencies): [broderickhyman/ao-bin-dumps](https://github.com/broderickhyman/ao-bin-dumps) processed with a local extraction script that applies manual overrides to fix dump errors after game patches.
 - Portal information: [Wiki — Roads of Avalon](https://wiki.albiononline.com/wiki/Roads_of_Avalon).
 
 Refreshing data after a game patch is currently manual — see `src/data/world-meta.json` in this repo.
