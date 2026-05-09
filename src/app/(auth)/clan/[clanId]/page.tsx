@@ -103,15 +103,20 @@ export default function ClanGraphPage() {
         </div>
       )}
 
-      <div className="min-h-0 flex-1">
-        <ClanGraph
-          clanId={clanId}
-          routes={routes}
-          anchor={anchor}
-          anchorSecurityLevel={clan?.anchorSecurityLevel ?? null}
-          onNodeClick={(name) => setSelectedZone(name)}
-        />
-      </div>
+      {/*
+        ClanGraph se renderiza directo (sin wrapper intermedio) — su
+        outer div ya es `flex-1` y se estira a llenar el espacio
+        sobrante del page wrapper. Wrapper extra con `h-full` rompía
+        en desktop porque h-full dentro de flex-item necesita
+        contexto que no siempre se resuelve.
+      */}
+      <ClanGraph
+        clanId={clanId}
+        routes={routes}
+        anchor={anchor}
+        anchorSecurityLevel={clan?.anchorSecurityLevel ?? null}
+        onNodeClick={(name) => setSelectedZone(name)}
+      />
 
       {selectedZone && (
         <ZoneSidePanel
