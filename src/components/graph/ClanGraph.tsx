@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useEffect, useCallback, useState, useRef } from "react";
-import { ReactFlow, Background, Controls, type Node, type Edge, useNodesState, useEdgesState } from "@xyflow/react";
+import { ReactFlow, Background, Controls, type Node, type Edge, type ReactFlowInstance, useNodesState, useEdgesState } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { ZoneNode } from "./ZoneNode";
 import { RouteEdge } from "./RouteEdge";
@@ -196,6 +196,17 @@ export function ClanGraph({
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         onNodeClick={(_, n) => onNodeClick(n.id)}
+        onInit={(rf: ReactFlowInstance) => {
+          // El `fitView` prop sólo se ejecuta en mount con los nodos
+          // que haya en ese instante; si el container del flex chain
+          // aún no tiene su tamaño final, el cálculo del viewport sale
+          // raro y los nodos quedan fuera de pantalla. Re-disparamos
+          // fitView explícitamente cuando ReactFlow termina de montar
+          // (su instancia ya conoce las dimensiones reales) y otra vez
+          // tras un raf por si hay re-layout de flex pendiente.
+          rf.fitView(fitOptions);
+          requestAnimationFrame(() => rf.fitView(fitOptions));
+        }}
         fitView
         fitViewOptions={fitOptions}
         minZoom={0.2}
