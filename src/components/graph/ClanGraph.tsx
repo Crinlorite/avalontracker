@@ -14,13 +14,17 @@ const nodeTypes = { zone: ZoneNode };
 const edgeTypes = { route: RouteEdge };
 
 export function ClanGraph({
-  clanId, routes, anchor, anchorSecurityLevel, onNodeClick,
+  clanId, routes, anchor, anchorSecurityLevel, onNodeClick, onNodeContextMenu,
 }: {
   clanId: string;
   routes: RouteView[];
   anchor: ClanAnchorZone | null;
   anchorSecurityLevel?: "SAFE" | "CAUTION" | "DANGER" | null;
   onNodeClick: (zoneName: string) => void;
+  // Callback opcional para click derecho sobre una zona. Si se pasa,
+  // se llama con el evento (para extraer clientX/clientY) y el nombre
+  // de la zona. La página padre decide qué hacer (menú contextual).
+  onNodeContextMenu?: (event: React.MouseEvent, zoneName: string) => void;
 }) {
   const computed = useMemo(
     () => computeLayout(routes, anchor, anchorSecurityLevel ?? null),
@@ -136,6 +140,15 @@ export function ClanGraph({
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         onNodeClick={(_, n) => onNodeClick(n.id)}
+        onNodeContextMenu={(event, n) => {
+          // Suprimimos el menú nativo del browser sólo cuando hay
+          // handler — si el padre no pasa onNodeContextMenu, deja que el
+          // navegador haga lo suyo (rare case, pero defensivo).
+          if (onNodeContextMenu) {
+            event.preventDefault();
+            onNodeContextMenu(event, n.id);
+          }
+        }}
         fitView
         // En grafos pequeños fitView calcula un zoom alto que pinta
         // los nodos enormes (sobre todo en mobile). maxZoom=0.85 evita

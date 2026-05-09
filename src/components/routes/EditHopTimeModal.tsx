@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import toast from "react-hot-toast";
 import { mutate as globalMutate } from "swr";
 import type { HopView } from "@/hooks/useClanRoutes";
@@ -9,6 +9,9 @@ import { secondsLeft, formatCountdown } from "@/lib/time";
 // al clicar el timer del edge: el usuario decide la nueva duración
 // (horas + minutos desde AHORA) o usa los botones rápidos para sumar
 // al tiempo actual.
+//
+// UX: NO se cierra al click fuera (perderías el form si te despistas).
+// Se cierra con Cancel, X, o ESC.
 
 export function EditHopTimeModal({
   clanId, routeId, hop, onClose,
@@ -29,6 +32,13 @@ export function EditHopTimeModal({
   const [hours, setHours] = useState(Math.floor(initialRemainingMin / 60));
   const [minutes, setMinutes] = useState(initialRemainingMin % 60);
   const [saving, setSaving] = useState(false);
+
+  // ESC cierra el modal (UX baseline tras quitar el cierre por click-fuera).
+  useEffect(() => {
+    function onEsc(e: KeyboardEvent) { if (e.key === "Escape") onClose(); }
+    window.addEventListener("keydown", onEsc);
+    return () => window.removeEventListener("keydown", onEsc);
+  }, [onClose]);
 
   function bump(extraMinutes: number) {
     const total = hours * 60 + minutes + extraMinutes;
@@ -64,12 +74,8 @@ export function EditHopTimeModal({
   }
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
       <form
-        onClick={(e) => e.stopPropagation()}
         onSubmit={(e) => { e.preventDefault(); save(); }}
         className="w-full max-w-md space-y-4 rounded-xl border border-slate-700 bg-slate-900 p-6"
       >
@@ -116,7 +122,7 @@ export function EditHopTimeModal({
         <div>
           <span className="text-xs text-slate-400">Sumar al valor actual</span>
           <div className="mt-1 flex flex-wrap gap-1">
-            {[15, 30, 60, 120, 240, 360].map((m) => (
+            {[15, 30, 45, 60, 120, 240, 480].map((m) => (
               <button
                 key={m}
                 type="button"

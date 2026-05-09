@@ -7,6 +7,7 @@ import { useClan } from "@/hooks/useClan";
 import { useMe } from "@/hooks/useMe";
 import { ClanGraph } from "@/components/graph/ClanGraph";
 import { ZoneSidePanel } from "@/components/graph/ZoneSidePanel";
+import { ContextMenu, type ContextMenuOption } from "@/components/graph/ContextMenu";
 import { HamburgerButton } from "@/components/layout/SidebarToggleContext";
 import { CreateRouteModal } from "@/components/routes/CreateRouteModal";
 import { AppendHopModal } from "@/components/routes/AppendHopModal";
@@ -32,6 +33,9 @@ export default function ClanGraphPage() {
   const [createFromZone, setCreateFromZone] = useState<string | undefined>(undefined);
   const [showMerge, setShowMerge] = useState(false);
   const [branchFrom, setBranchFrom] = useState<{ route: RouteView; zoneName: string } | null>(null);
+  // Estado del menu contextual del click derecho sobre un nodo. Cursor
+  // viewport-coords + zona target. Null = menu cerrado.
+  const [nodeContextMenu, setNodeContextMenu] = useState<{ x: number; y: number; zoneName: string } | null>(null);
 
   // Auto-redirección a /list en mobile portrait quitada: el ViewToggle
   // permite al usuario elegir, y forzar lista hacía que cada click
@@ -97,7 +101,59 @@ export default function ClanGraphPage() {
         anchor={anchor}
         anchorSecurityLevel={clan?.anchorSecurityLevel ?? null}
         onNodeClick={(name) => setSelectedZone(name)}
+        onNodeContextMenu={(event, name) => {
+          setNodeContextMenu({ x: event.clientX, y: event.clientY, zoneName: name });
+        }}
       />
+
+      {nodeContextMenu && (() => {
+        const zone = nodeContextMenu.zoneName;
+        // Rutas que pasan por la zona — para decidir si "Ramificar"
+        // tiene sentido y si va directo (1 ruta) o via panel (varias).
+        const routesHere = routes.filter((r) =>
+          r.hops.some((h) => h.fromZone.name === zone || h.toZone.name === zone),
+        );
+        const options: ContextMenuOption[] = [];
+        if (canCreate(myRole)) {
+          options.push({
+            icon: "+",
+            label: "Nueva ruta desde aquí",
+            onClick: () => {
+              setCreateFromZone(zone);
+              setShowCreate(true);
+            },
+          });
+          if (routesHere.length === 1) {
+            options.push({
+              icon: "🌿",
+              label: `Ramificar desde ${zone}`,
+              onClick: () => setBranchFrom({ route: routesHere[0], zoneName: zone }),
+            });
+          } else if (routesHere.length > 1) {
+            options.push({
+              icon: "🌿",
+              label: `Ramificar (${routesHere.length} rutas) …`,
+              // Varias rutas pasan por aquí — abrimos side panel donde
+              // el user elige a cuál ramificar.
+              onClick: () => setSelectedZone(zone),
+            });
+          }
+        }
+        // Always available: ver detalles. Aunque seas VIEWER ves el side panel.
+        options.push({
+          icon: "🔍",
+          label: "Ver detalles",
+          onClick: () => setSelectedZone(zone),
+        });
+        return (
+          <ContextMenu
+            x={nodeContextMenu.x}
+            y={nodeContextMenu.y}
+            options={options}
+            onClose={() => setNodeContextMenu(null)}
+          />
+        );
+      })()}
 
       {selectedZone && (
         <ZoneSidePanel
