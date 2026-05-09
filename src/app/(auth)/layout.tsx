@@ -29,7 +29,16 @@ export default async function AuthLayout({
       <div className="flex h-dvh bg-gray-950">
         <Sidebar />
         <main className="flex flex-1 flex-col overflow-hidden md:ml-64">
-          <div className="flex-1 overflow-y-auto p-4 md:p-8">{children}</div>
+          {/*
+            children container es flex-col para que pages que necesiten
+            ocupar TODA la altura (grafo del clan) puedan usar `flex-1`
+            en su wrapper en lugar de `h-full` (este último requiere
+            parent con altura explícita y rompe en cadenas largas de
+            flex). Pages "planas" (dashboard, perfil, etc.) renderizan
+            stacked top-down y, si exceden el viewport, scrollean
+            dentro de este overflow-y-auto.
+          */}
+          <div className="flex flex-1 flex-col overflow-y-auto p-4 md:p-8">{children}</div>
           <footer className="shrink-0 border-t border-slate-800/60 px-4 py-3 text-center text-xs text-slate-500 md:py-6">
             <nav className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 md:gap-x-4 md:gap-y-2">
               <a href="/feedback" className="hover:text-slate-300">📝 Feedback</a>

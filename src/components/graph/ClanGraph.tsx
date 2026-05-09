@@ -117,15 +117,13 @@ export function ClanGraph({
   }, [routes]);
 
   return (
-    <div ref={containerRef} className="clan-graph h-full min-h-[200px] w-full rounded-xl border border-slate-800">
+    <div ref={containerRef} className="clan-graph h-full min-h-[350px] w-full rounded-xl border border-slate-800">
       {/*
-        Altura: el grafo ocupa el espacio sobrante del flex-column del
-        page wrapper (clan/[clanId]/page.tsx). El wrapper se ata al
-        viewport via 100dvh (dynamic viewport height = se contrae con
-        la URL bar de iOS) y deja que header + AnchorStatusCard sean
-        shrink-0; lo demás es para nosotros. min-h-[200px] como suelo
-        defensivo en viewports muy bajos (ej: portrait de teléfono pequeño
-        con URL bar + teclado abierto).
+        h-full resuelve contra el flex-1 del page wrapper. min-h-[350px]
+        es un suelo generoso: si por cualquier razón el flex chain
+        colapsa a 0 en algún navegador, el grafo sigue siendo usable.
+        ReactFlow necesita dimensiones explícitas en su contenedor —
+        sin alto el componente no monta los nodos.
       */}
       <style jsx global>{`
         .clan-graph .react-flow__controls {
