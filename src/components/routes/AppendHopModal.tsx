@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { mutate as globalMutate } from "swr";
 import { ZoneAutocomplete } from "@/components/zones/ZoneAutocomplete";
@@ -30,6 +30,13 @@ export function AppendHopModal({
   const [minutes, setMinutes] = useState(0);
   const [allowBrokenChain, setAllowBrokenChain] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  // No cerramos al click fuera (perderías el form a medias). ESC sí cierra.
+  useEffect(() => {
+    function onEsc(e: KeyboardEvent) { if (e.key === "Escape") onClose(); }
+    window.addEventListener("keydown", onEsc);
+    return () => window.removeEventListener("keydown", onEsc);
+  }, [onClose]);
 
   function bumpTime(delta: number) {
     const total = Math.max(0, hours * 60 + minutes + delta);
@@ -83,10 +90,9 @@ export function AppendHopModal({
     lastHop && fromZone.trim() && !graphNodes.has(fromZone.trim());
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 overflow-y-auto" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 overflow-y-auto">
       <form
         onSubmit={submit}
-        onClick={(e) => e.stopPropagation()}
         className="w-full max-w-lg my-8 space-y-4 rounded-xl border border-slate-700 bg-slate-900 p-6"
       >
         <div>
@@ -151,7 +157,7 @@ export function AppendHopModal({
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {[30, 60, 120, 240, 360].map((m) => (
+          {[15, 30, 45, 60, 120, 240, 480].map((m) => (
             <button
               key={m}
               type="button"

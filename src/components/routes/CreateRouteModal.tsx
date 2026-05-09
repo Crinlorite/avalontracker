@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { mutate } from "swr";
 import { ZoneAutocomplete } from "@/components/zones/ZoneAutocomplete";
@@ -17,6 +17,13 @@ export function CreateRouteModal({
   const [hops, setHops] = useState<HopInput[]>([newHop(defaultFromZone ?? "")]);
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  // No cerramos al click fuera (form en plena edición). ESC cierra.
+  useEffect(() => {
+    function onEsc(e: KeyboardEvent) { if (e.key === "Escape") onClose(); }
+    window.addEventListener("keydown", onEsc);
+    return () => window.removeEventListener("keydown", onEsc);
+  }, [onClose]);
 
   function setHop(i: number, patch: Partial<HopInput>) {
     setHops((prev) => {
@@ -75,8 +82,8 @@ export function CreateRouteModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 overflow-y-auto" onClick={onClose}>
-      <form onSubmit={submit} onClick={(e) => e.stopPropagation()} className="w-full max-w-3xl my-8 space-y-4 rounded-xl border border-slate-700 bg-slate-900 p-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 overflow-y-auto">
+      <form onSubmit={submit} className="w-full max-w-3xl my-8 space-y-4 rounded-xl border border-slate-700 bg-slate-900 p-6">
         <h2 className="text-xl font-bold text-white">Nueva ruta</h2>
 
         <div className="space-y-3">
@@ -125,7 +132,7 @@ export function CreateRouteModal({
                     /> m
                   </div>
                 </label>
-                {[30, 60, 120, 240, 360].map((m) => (
+                {[15, 30, 45, 60, 120, 240, 480].map((m) => (
                   <button key={m} type="button" onClick={() => bumpTime(i, m)} className="rounded border border-slate-700 px-2 py-1 text-xs text-slate-200 hover:bg-slate-800">
                     +{m < 60 ? `${m}m` : `${m / 60}h`}
                   </button>
