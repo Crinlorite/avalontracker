@@ -41,75 +41,56 @@ export default function ClanGraphPage() {
 
   if (isLoading) return <div className="text-slate-400">Cargando grafo…</div>;
 
-  // anchor: clan.anchorZone trae el metadata completo del API — se usa
-  // para inyectar el nodo en el grafo incluso si ninguna ruta lo cruza
-  // todavía. La info textual del anchor ya vive en el AnchorStatusCard,
-  // no en el header.
+  // anchor: clan.anchorZone trae el metadata completo del API — lo usamos
+  // tanto para el label del header como para inyectar el nodo en el grafo
+  // incluso si aún no hay rutas que lo crucen. Si no hay anchor configurado,
+  // derivamos un fallback name desde la primera hop para el header.
   const anchor = clan?.anchorZone ?? null;
+  const anchorName = anchor?.name
+    ?? routes.flatMap((r) => r.hops).find((h) => h.fromZone.id === clan?.anchorZoneId)?.fromZone.name
+    ?? routes.flatMap((r) => r.hops).find((h) => h.toZone.id === clan?.anchorZoneId)?.toZone.name
+    ?? null;
 
   const canMerge = canDelete(myRole) && routes.length >= 2;
 
   return (
-    /*
-      Flex-1 dentro del flex-col del auth layout — así toda la cadena
-      es flex (sin porcentajes que requieran parent con altura
-      explícita). Page wrapper crece al espacio disponible bajo el
-      footer; header y anchor son shrink-0; el grafo se queda con lo
-      que sobre. min-h-0 permite que el flex-1 baje de su contenido
-      intrínseco si hace falta.
-    */
-    <div className="relative flex min-h-0 flex-1 flex-col">
-      {/*
-        Header de una sola fila tanto mobile como desktop. Mobile:
-        botones icon-only (emoji + tooltip), h1 más pequeño y
-        truncado. Subtítulo "X rutas activas" oculto en mobile para
-        no robar más alto al grafo. Quitada la mención al anchor —
-        el AnchorStatusCard de abajo ya tiene esa info de sobra.
-      */}
-      <header className="mb-2 flex shrink-0 items-center gap-2 md:mb-4 md:gap-3">
-        <HamburgerButton />
-        <div className="min-w-0 flex-1">
-          <h1 className="truncate text-lg font-bold text-white md:text-2xl">{clan?.name ?? "…"}</h1>
-          <p className="hidden text-xs text-slate-500 md:block">{routes.length} rutas activas</p>
+    <div className="relative">
+      <header className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <HamburgerButton />
+          <div>
+            <h1 className="text-2xl font-bold text-white">{clan?.name ?? "…"}</h1>
+            <p className="text-xs text-slate-500">{routes.length} rutas activas · anchor: {anchorName ?? "—"}</p>
+          </div>
         </div>
-        <ViewToggle clanId={clanId} />
-        {canMerge && (
-          <button
-            onClick={() => setShowMerge(true)}
-            className="shrink-0 rounded bg-slate-700 px-2.5 py-1.5 text-sm text-white hover:bg-slate-600 md:px-3"
-            title="Fusionar dos rutas en una sola cadena"
-            aria-label="Fusionar rutas"
-          >
-            <span aria-hidden>⛓</span>
-            <span className="ml-1.5 hidden md:inline">Fusionar rutas</span>
-          </button>
-        )}
-        {canCreate(myRole) && (
-          <button
-            onClick={() => { setCreateFromZone(undefined); setShowCreate(true); }}
-            className="shrink-0 rounded bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white hover:bg-indigo-500 md:px-3"
-            title="Nueva ruta"
-            aria-label="Nueva ruta"
-          >
-            <span aria-hidden>+</span>
-            <span className="ml-1 hidden md:inline">Nueva ruta</span>
-          </button>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          <ViewToggle clanId={clanId} />
+          {canMerge && (
+            <button
+              onClick={() => setShowMerge(true)}
+              className="rounded bg-slate-700 px-3 py-1.5 text-sm text-white hover:bg-slate-600"
+              title="Fusionar dos rutas en una sola cadena"
+            >
+              ⛓ Fusionar rutas
+            </button>
+          )}
+          {canCreate(myRole) && (
+            <button
+              onClick={() => { setCreateFromZone(undefined); setShowCreate(true); }}
+              className="rounded bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-500"
+            >
+              + Nueva ruta
+            </button>
+          )}
+        </div>
       </header>
 
       {clan && clan.anchorZoneId && (
-        <div className="mb-2 shrink-0 md:mb-4">
+        <div className="mb-4">
           <AnchorStatusCard clan={clan} myRole={myRole} />
         </div>
       )}
 
-      {/*
-        ClanGraph se renderiza directo (sin wrapper intermedio) — su
-        outer div ya es `flex-1` y se estira a llenar el espacio
-        sobrante del page wrapper. Wrapper extra con `h-full` rompía
-        en desktop porque h-full dentro de flex-item necesita
-        contexto que no siempre se resuelve.
-      */}
       <ClanGraph
         clanId={clanId}
         routes={routes}
