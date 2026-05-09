@@ -14,7 +14,7 @@ const nodeTypes = { zone: ZoneNode };
 const edgeTypes = { route: RouteEdge };
 
 export function ClanGraph({
-  clanId, routes, anchor, anchorSecurityLevel, onNodeClick, onNodeContextMenu,
+  clanId, routes, anchor, anchorSecurityLevel, onNodeClick, onNodeContextMenu, onEdgeContextMenu,
 }: {
   clanId: string;
   routes: RouteView[];
@@ -25,6 +25,10 @@ export function ClanGraph({
   // se llama con el evento (para extraer clientX/clientY) y el nombre
   // de la zona. La página padre decide qué hacer (menú contextual).
   onNodeContextMenu?: (event: React.MouseEvent, zoneName: string) => void;
+  // Callback para click derecho sobre un edge (sólo el path SVG —
+  // el timer label tiene su propio handler vía custom event para
+  // que su menu contextual no incluya delete).
+  onEdgeContextMenu?: (event: React.MouseEvent, hop: HopView, routeId: string) => void;
 }) {
   const computed = useMemo(
     () => computeLayout(routes, anchor, anchorSecurityLevel ?? null),
@@ -106,7 +110,15 @@ export function ClanGraph({
   }, [routes]);
 
   return (
-    <div ref={containerRef} className="clan-graph h-[calc(100vh-220px)] w-full rounded-xl border border-slate-800">
+    <div
+      ref={containerRef}
+      className="clan-graph h-[calc(100vh-220px)] w-full rounded-xl border border-slate-800"
+      // Suprime el menú nativo del browser en cualquier click derecho
+      // dentro del grafo (canvas, nodos, edges, timer). Los handlers
+      // específicos abren menús contextuales propios; lo que no tenga
+      // handler simplemente no muestra nada en lugar del menu nativo.
+      onContextMenu={(e) => e.preventDefault()}
+    >
       <style jsx global>{`
         .clan-graph .react-flow__controls {
           background: rgb(15, 23, 42);
@@ -141,12 +153,17 @@ export function ClanGraph({
         edgeTypes={edgeTypes}
         onNodeClick={(_, n) => onNodeClick(n.id)}
         onNodeContextMenu={(event, n) => {
-          // Suprimimos el menú nativo del browser sólo cuando hay
-          // handler — si el padre no pasa onNodeContextMenu, deja que el
-          // navegador haga lo suyo (rare case, pero defensivo).
           if (onNodeContextMenu) {
             event.preventDefault();
             onNodeContextMenu(event, n.id);
+          }
+        }}
+        onEdgeContextMenu={(event, edge) => {
+          if (!onEdgeContextMenu) return;
+          event.preventDefault();
+          const data = edge.data as { hop?: HopView; routeId?: string } | undefined;
+          if (data?.hop && data?.routeId) {
+            onEdgeContextMenu(event, data.hop, data.routeId);
           }
         }}
         fitView

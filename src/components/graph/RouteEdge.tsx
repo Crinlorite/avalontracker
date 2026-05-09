@@ -29,6 +29,21 @@ export function RouteEdge(props: EdgeProps) {
     (e.target as HTMLElement).dispatchEvent(ev);
   }
 
+  // Click derecho sobre el timer dispara un context menu específico
+  // del temporizador (solo opciones de añadir tiempo, sin borrar). El
+  // stopPropagation evita que ReactFlow trate este click derecho como
+  // "click derecho sobre edge" (que sí mostraría también borrar).
+  // preventDefault suprime el menu nativo del browser.
+  function emitTimerContextMenu(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    const ev = new CustomEvent("avalon:timer-context-menu", {
+      detail: { routeId: d.routeId, hopId: d.hop.id, x: e.clientX, y: e.clientY },
+      bubbles: true,
+    });
+    (e.target as HTMLElement).dispatchEvent(ev);
+  }
+
   return (
     <>
       <BaseEdge path={path} style={{ stroke: color, strokeWidth: width, strokeDasharray: dash }} />
@@ -37,7 +52,8 @@ export function RouteEdge(props: EdgeProps) {
           style={{ position: "absolute", transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`, pointerEvents: "all" }}
           className="cursor-pointer rounded bg-slate-900/90 px-2 py-0.5 text-[10px] font-mono text-white border border-slate-700 hover:border-slate-500"
           onClick={emitTimerClick}
-          title="Click para editar el tiempo a mano"
+          onContextMenu={emitTimerContextMenu}
+          title="Click: editar tiempo · Click derecho: añadir tiempos rápido"
         >
           <span style={{ color }}>{formatCountdown(secondsLeft(d.hop.expiresAt))}</span>
           <span className="mx-1 text-slate-500">·</span>
