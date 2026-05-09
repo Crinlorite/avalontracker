@@ -15,7 +15,9 @@
 // reapareció el mismo edge en el mismo route?) y la pérdida es
 // recuperable manualmente vía la papelera del clan.
 
-import { PrismaClient } from "@/generated/prisma/client";
+// Path relativo (no alias `@/`) — tsx en standalone no resuelve los
+// `paths` de tsconfig.json fuera del contexto de Next.js.
+import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 async function main() {
