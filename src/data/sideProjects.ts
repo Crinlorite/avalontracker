@@ -1,5 +1,5 @@
 // Side projects del ecosistema Crintech que compartimos en el landing.
-// Patrón portado de albionforge-static (Royal Forge): cada entry aparece
+// Patrón portado de royalforge (Royal Forge): cada entry aparece
 // como card con icon + tags + descripción + dominio, click-through al
 // sitio externo. Cubre reciprocidad entre las herramientas "hermanas".
 //
