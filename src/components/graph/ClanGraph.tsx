@@ -36,8 +36,45 @@ export function ClanGraph({
   );
   const { get: getCachedPosition, set: setCachedPosition } = useLayoutCache(clanId, topologyHash);
 
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  // Computa los nodos/edges iniciales con los datos ya disponibles —
+  // clave para que ReactFlow monte CON nodos y `fitView` los pueda
+  // encuadrar de salida. Antes useNodesState se inicializaba con []
+  // y los nodos llegaban en un useEffect posterior, momento en que
+  // fitView ya había corrido en vacío y el viewport quedaba en (0,0).
+  // Resultado visible: grafo aparentemente vacío hasta que el usuario
+  // panea/zoomea manualmente. Edits y refresh SWR siguen funcionando
+  // porque el useEffect de sync de abajo sobreescribe la state cuando
+  // `computed` cambia.
+  const initialNodes = useMemo<Node[]>(
+    () =>
+      computed.nodes.map((c) => {
+        const cached = getCachedPosition(c.id);
+        return {
+          id: c.id,
+          type: "zone",
+          data: c,
+          position: cached ?? { x: c.x, y: c.y },
+        };
+      }),
+    // Dependencia vacía: solo se computa al mount. Updates posteriores
+    // van por el useEffect (setNodes) — no reinicializan este memo.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+  const initialEdges = useMemo<Edge[]>(
+    () =>
+      computed.edges.map((e) => ({
+        id: e.id,
+        type: "route",
+        source: e.source,
+        target: e.target,
+        data: { hop: e.hop, routeId: e.routeId },
+      })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(initialEdges);
 
   // Sync con el computed: la presencia en localStorage es la única señal
   // de "fijo por el usuario" — si arrastró el nodo, respetamos su
@@ -117,13 +154,14 @@ export function ClanGraph({
   }, [routes]);
 
   return (
-    <div ref={containerRef} className="clan-graph h-full min-h-[350px] w-full rounded-xl border border-slate-800">
+    <div ref={containerRef} className="clan-graph w-full min-h-[350px] flex-1 rounded-xl border border-slate-800">
       {/*
-        h-full resuelve contra el flex-1 del page wrapper. min-h-[350px]
-        es un suelo generoso: si por cualquier razón el flex chain
-        colapsa a 0 en algún navegador, el grafo sigue siendo usable.
-        ReactFlow necesita dimensiones explícitas en su contenedor —
-        sin alto el componente no monta los nodos.
+        ClanGraph ahora es flex-1 directamente (no h-full): el padre
+        es el flex-col del page wrapper y aquí crecemos para llenar
+        el espacio sobrante tras header + anchor card. min-h-[350px]
+        actúa como suelo. Antes el outer div usaba h-full que
+        necesita parent con altura explícita y fallaba en algunas
+        cadenas flex (especialmente Safari + ciertos overflow).
       */}
       <style jsx global>{`
         .clan-graph .react-flow__controls {
