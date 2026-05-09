@@ -5,7 +5,7 @@ import { apiError } from "@/lib/api-error";
 // POST /api/feedback
 //
 // Replica del endpoint de Royal Forge: recibe el form de feedback,
-// verifica Turnstile, y reenvía a Vigil bot con project="avalon-tracker"
+// verifica Turnstile, y reenvía a Vigil bot con project="avalontracker"
 // para que genere ticket con prefix AT-XXXX.
 //
 // Env vars requeridas (Coolify env):
@@ -103,7 +103,7 @@ export async function POST(req: Request) {
   // Forward al Vigil bot. Stripamos null/undefined opcionales — Zod
   // del bot espera `string | undefined`, no `string | null`.
   const forwardBody: Record<string, unknown> = {
-    project: "avalon-tracker",
+    project: "avalontracker",
     type: body.type,
     title: t,
     description: d,
@@ -119,7 +119,7 @@ export async function POST(req: Request) {
       headers: {
         "Content-Type": "application/json",
         "X-API-Key": FEEDBACK_SECRET,
-        "X-Project": "avalon-tracker",
+        "X-Project": "avalontracker",
       },
       body: JSON.stringify(forwardBody),
     });
