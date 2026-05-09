@@ -135,6 +135,19 @@ export async function getUserRoleInClan(
     roleCache.set(key, fresh);
     return fresh;
   } catch {
+    // Bot unreachable. El creator del clan se reconoce como ADMIN
+    // SIN marcarlo stale: su rol es intrínseco a la fila de Clan
+    // (createdById), no depende de roles de Discord, así que no
+    // tiene sentido bloquearle WRITE cuando el bot está caído.
+    if (isCreator) {
+      const owner: CachedRole = {
+        appRole: "ADMIN",
+        stale: false,
+        syncedAt: new Date(),
+      };
+      roleCache.set(key, owner);
+      return owner;
+    }
     const fallback = await prisma.clanMember.findUnique({
       where: { userId_clanId: { userId, clanId } },
       select: { appRole: true, lastSyncAt: true },
@@ -158,6 +171,14 @@ export class PermissionError extends Error {
   }
 }
 
+// Stale-write grace: cuando Vigil Bot está caído usamos el último rol
+// sincronizado como respaldo. Aceptamos WRITES si el sync es < 24h
+// (suficiente para sobrevivir caídas transitorias del bot sin abrir
+// peligrosamente la ventana de "rol revocado y nadie lo sabe"). Si el
+// usuario fue degradado en Discord, el webhook ROLE_CHANGE de Vigil
+// ya invalida la caché en cuanto el bot vuelve a estar online.
+const STALE_WRITE_GRACE_MS = 24 * 60 * 60 * 1000;
+
 // Enforce RBAC: el user debe tener al menos `minRole` EN ESTE clan.
 // Los roles están scoped al clan; no hay autoridad global que pase
 // por encima.
@@ -174,15 +195,24 @@ export async function requireRole(
   if (!user) throw new PermissionError("UNAUTHORIZED", 401);
 
   const current = await getUserRoleInClan(userId, clanId);
-  if (current.stale && method === "WRITE") {
-    throw new PermissionError("STALE_DEPENDENCY", 503, { reason: "vigil_bot_unreachable" });
-  }
   if (!current.appRole) throw new PermissionError("NOT_MEMBER", 403, { clanId });
   if (!hasMinRole(current.appRole, minRole)) {
     throw new PermissionError("INSUFFICIENT_ROLE", 403, {
       required: minRole,
       have: current.appRole,
     });
+  }
+  // Stale + WRITE: solo bloqueamos si la caché de rol es antigua. Con un
+  // sync reciente (<24h) confiamos en el último estado conocido — los
+  // webhooks de Vigil Bot mantienen la caché al día en operación normal.
+  if (current.stale && method === "WRITE") {
+    const ageMs = Date.now() - current.syncedAt.getTime();
+    if (ageMs > STALE_WRITE_GRACE_MS) {
+      throw new PermissionError("STALE_DEPENDENCY", 503, {
+        reason: "vigil_bot_unreachable",
+        lastSyncAt: current.syncedAt.toISOString(),
+      });
+    }
   }
   return { role: current.appRole, stale: current.stale };
 }
