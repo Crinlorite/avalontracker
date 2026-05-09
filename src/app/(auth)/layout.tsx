@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SidebarToggleProvider } from "@/components/layout/SidebarToggleContext";
+import { VigilHealthBanner } from "@/components/layout/VigilHealthBanner";
 
 export default async function AuthLayout({
   children,
@@ -26,6 +27,7 @@ export default async function AuthLayout({
         Pages largas (audit log, etc) scrollean dentro del flex-1
         sin desplazar el footer.
       */}
+      <VigilHealthBanner />
       <div className="flex h-dvh bg-gray-950">
         <Sidebar />
         <main className="flex flex-1 flex-col overflow-hidden md:ml-64">
