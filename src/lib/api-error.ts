@@ -7,6 +7,7 @@ export type ApiErrorCode =
   | "UNAUTHORIZED"
   | "NOT_MEMBER"
   | "INSUFFICIENT_ROLE"
+  | "BOT_NOT_IN_GUILD"
   | "CONFLICT"
   | "STALE_DEPENDENCY"
   | "RATE_LIMITED"
