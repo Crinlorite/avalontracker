@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireRole, PermissionError } from "@/lib/permissions";
+import { requireRole, PermissionError, permissionErrorMessage } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 import { logAudit } from "@/lib/audit";
 
@@ -38,7 +38,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
   try {
     await requireRole(session.user.id, clanId, "CONTRIBUTOR", "WRITE");
   } catch (e) {
-    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
+    if (e instanceof PermissionError) return apiError(e.code, e.status, permissionErrorMessage(e), e.extra);
     return internalError(e);
   }
 
