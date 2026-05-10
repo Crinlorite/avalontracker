@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireRole, PermissionError } from "@/lib/permissions";
+import { requireRole, PermissionError, permissionErrorMessage } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 
 const patchSchema = z.object({
@@ -18,7 +18,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
   try {
     await requireRole(session.user.id, clanId, "ADMIN", "WRITE");
   } catch (e) {
-    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
+    if (e instanceof PermissionError) return apiError(e.code, e.status, permissionErrorMessage(e), e.extra);
     return internalError(e);
   }
 
@@ -37,7 +37,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
   // editar su displayName (vía PATCH /api/me o este endpoint si es él
   // mismo). Admins de clan: usen otra vía si querían un nickname local.
   if (member.userId !== session.user.id) {
-    return apiError("INSUFFICIENT_ROLE", 403, "Sin permisos");
+    return apiError("INSUFFICIENT_ROLE", 403, "Solo puedes editar tu propio displayName (es un campo global del usuario, no del clan)");
   }
 
   await prisma.user.update({ where: { id: member.userId }, data: { displayName: parsed.data.displayName } });

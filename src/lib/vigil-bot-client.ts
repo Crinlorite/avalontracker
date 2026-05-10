@@ -8,6 +8,16 @@ export class BotUnavailableError extends Error {
   }
 }
 
+// Permanente: el bot vive y autentica, pero no es miembro del Discord
+// guild que el clan tiene registrado. Distinto de BotUnavailableError —
+// no se arregla esperando, hay que invitar el bot al servidor.
+export class BotNotInGuildError extends Error {
+  public code = "VIGIL_BOT_NOT_IN_GUILD" as const;
+  constructor() {
+    super("Vigil Bot is not a member of the Discord guild");
+  }
+}
+
 type UserRoleResponse = {
   discordRoleIds: string[];
   computedAppRole: AppRole | null;
@@ -47,11 +57,15 @@ async function botFetch<T>(path: string, init?: RequestInit): Promise<T> {
       headers: { ...authHeaders(), ...(init?.headers ?? {}) },
       signal: controller.signal,
     });
+    if (res.status === 404) {
+      throw new BotNotInGuildError();
+    }
     if (!res.ok) {
       throw new BotUnavailableError(new Error(`HTTP ${res.status}`));
     }
     return (await res.json()) as T;
   } catch (err) {
+    if (err instanceof BotNotInGuildError) throw err;
     if (err instanceof BotUnavailableError) throw err;
     logger.warn({ err, path }, "vigil bot call failed");
     throw new BotUnavailableError(err);

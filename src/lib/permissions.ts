@@ -38,6 +38,7 @@ type CachedRole = {
   appRole: AppRole | null;
   stale: boolean;
   syncedAt: Date;
+  error?: "BOT_NOT_IN_GUILD";
 };
 
 const ROLE_CACHE_TTL_MS = 30 * 60 * 1000;
@@ -134,7 +135,7 @@ export async function getUserRoleInClan(
     });
     roleCache.set(key, fresh);
     return fresh;
-  } catch {
+  } catch (err) {
     // Bot unreachable. El creator del clan se reconoce como ADMIN
     // SIN marcarlo stale: su rol es intrínseco a la fila de Clan
     // (createdById), no depende de roles de Discord, así que no
@@ -147,6 +148,21 @@ export async function getUserRoleInClan(
       };
       roleCache.set(key, owner);
       return owner;
+    }
+    // Bot está vivo pero NO es miembro de la guild Discord del clan.
+    // Permanente — esperar no lo arregla, hay que invitar el bot. Lo
+    // surfaceamos como error explícito en vez de stale para que el API
+    // devuelva 412 con CTA "Invita el bot" en lugar del 503 ambiguo.
+    const errCode = (err as { code?: string })?.code;
+    if (errCode === "VIGIL_BOT_NOT_IN_GUILD") {
+      const notInGuild: CachedRole = {
+        appRole: null,
+        stale: false,
+        syncedAt: new Date(),
+        error: "BOT_NOT_IN_GUILD",
+      };
+      roleCache.set(key, notInGuild);
+      return notInGuild;
     }
     const fallback = await prisma.clanMember.findUnique({
       where: { userId_clanId: { userId, clanId } },
@@ -163,11 +179,39 @@ export async function getUserRoleInClan(
 
 export class PermissionError extends Error {
   constructor(
-    public code: "UNAUTHORIZED" | "NOT_MEMBER" | "INSUFFICIENT_ROLE" | "STALE_DEPENDENCY",
+    public code:
+      | "UNAUTHORIZED"
+      | "NOT_MEMBER"
+      | "INSUFFICIENT_ROLE"
+      | "BOT_NOT_IN_GUILD"
+      | "STALE_DEPENDENCY",
     public status: number,
     public extra?: Record<string, unknown>
   ) {
     super(code);
+  }
+}
+
+// Mensaje human-readable derivado del code. Antes todas las rutas
+// devolvían "Sin permisos" para cualquier fallo, lo que hacía
+// imposible diagnosticar (NOT_MEMBER vs BOT_NOT_IN_GUILD vs
+// STALE_DEPENDENCY se ven idénticos al usuario). Cada code tiene
+// ahora su propio CTA.
+export function permissionErrorMessage(e: PermissionError): string {
+  switch (e.code) {
+    case "UNAUTHORIZED":
+      return "Sesión no válida — vuelve a iniciar sesión";
+    case "NOT_MEMBER":
+      return "No tienes rol asignado en este clan. Pide al admin que mapee tu rol de Discord en Ajustes → Roles";
+    case "INSUFFICIENT_ROLE": {
+      const have = (e.extra?.have as string | undefined) ?? "VIEWER";
+      const required = (e.extra?.required as string | undefined) ?? "superior";
+      return `Tu rol (${have}) no permite esta acción — necesitas ${required} o superior`;
+    }
+    case "BOT_NOT_IN_GUILD":
+      return "El bot Vigil no está en el servidor de Discord del clan. El admin del clan tiene que invitarlo desde el botón en la landing";
+    case "STALE_DEPENDENCY":
+      return "El bot Vigil está caído y tu rol no se ha podido refrescar. Reintenta en unos minutos";
   }
 }
 
@@ -195,6 +239,14 @@ export async function requireRole(
   if (!user) throw new PermissionError("UNAUTHORIZED", 401);
 
   const current = await getUserRoleInClan(userId, clanId);
+  // Surfacear primero el error de setup permanente para que el frontend
+  // muestre CTA "Invita el bot" — sin esto cae en NOT_MEMBER y suena a
+  // problema del usuario cuando es de configuración del clan.
+  if (current.error === "BOT_NOT_IN_GUILD") {
+    throw new PermissionError("BOT_NOT_IN_GUILD", 412, {
+      reason: "vigil_bot_not_in_guild",
+    });
+  }
   if (!current.appRole) throw new PermissionError("NOT_MEMBER", 403, { clanId });
   if (!hasMinRole(current.appRole, minRole)) {
     throw new PermissionError("INSUFFICIENT_ROLE", 403, {

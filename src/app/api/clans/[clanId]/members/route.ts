@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireRole, PermissionError } from "@/lib/permissions";
+import { requireRole, PermissionError, permissionErrorMessage } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 
 type RouteParams = { params: Promise<{ clanId: string }> };
@@ -13,7 +13,7 @@ export async function GET(_req: Request, { params }: RouteParams) {
   try {
     await requireRole(session.user.id, clanId, "VIEWER", "GET");
   } catch (e) {
-    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin acceso", e.extra);
+    if (e instanceof PermissionError) return apiError(e.code, e.status, permissionErrorMessage(e), e.extra);
     return internalError(e);
   }
 

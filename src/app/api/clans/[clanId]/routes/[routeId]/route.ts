@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { requireRole, PermissionError } from "@/lib/permissions";
+import { requireRole, PermissionError, permissionErrorMessage } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 import { parseIfMatch, VersionMismatchError } from "@/lib/version-check";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
@@ -24,7 +24,7 @@ export async function GET(_req: Request, { params }: RouteParams) {
   try {
     await requireRole(session.user.id, clanId, "VIEWER", "GET");
   } catch (e) {
-    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin acceso", e.extra);
+    if (e instanceof PermissionError) return apiError(e.code, e.status, permissionErrorMessage(e), e.extra);
     return internalError(e);
   }
 
@@ -58,7 +58,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
   try {
     await requireRole(session.user.id, clanId, minRole, "WRITE");
   } catch (e) {
-    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
+    if (e instanceof PermissionError) return apiError(e.code, e.status, permissionErrorMessage(e), e.extra);
     return internalError(e);
   }
 
@@ -99,7 +99,7 @@ export async function DELETE(req: Request, { params }: RouteParams) {
   try {
     await requireRole(session.user.id, clanId, "EDITOR", "WRITE");
   } catch (e) {
-    if (e instanceof PermissionError) return apiError(e.code, e.status, "Sin permisos", e.extra);
+    if (e instanceof PermissionError) return apiError(e.code, e.status, permissionErrorMessage(e), e.extra);
     return internalError(e);
   }
 
