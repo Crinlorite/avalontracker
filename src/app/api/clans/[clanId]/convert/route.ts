@@ -6,6 +6,7 @@ import { apiError, internalError } from "@/lib/api-error";
 import { requireRole, PermissionError, permissionErrorMessage, invalidateClanRoleCache } from "@/lib/permissions";
 import { checkGuildRegistration } from "@/lib/clan-register";
 import { logAudit } from "@/lib/audit";
+import { revokeAllShares } from "@/lib/map-shares";
 import { Prisma } from "@/generated/prisma/client";
 
 // Convierte un mapa personal en mapa de clan ligado a un servidor de
@@ -45,6 +46,9 @@ export async function POST(request: Request, { params }: RouteParams) {
 
     const check = await checkGuildRegistration(userId, parsed.data.discordGuildId, parsed.data.name, clanId);
     if (!check.ok) return apiError(check.code, check.status, check.message, check.extra);
+
+    // Los enlaces compartidos y sus miembros dejan de valer: los roles pasan a Discord.
+    await revokeAllShares(clanId);
 
     const updated = await prisma.$transaction(async (tx) => {
       const c = await tx.clan.update({
