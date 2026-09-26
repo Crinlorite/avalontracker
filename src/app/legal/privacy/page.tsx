@@ -50,10 +50,16 @@ function Spanish() {
         ella. Si luego entras con Discord, esos mapas pasan a tu cuenta y la de invitado se borra.
       </p>
       <p>
-        <strong>App móvil (iOS / Android)</strong>: funciona sin cuenta y guarda todo en tu
-        dispositivo; no nos envía datos. Si configuras un webhook de Discord, las rutas que decidas
-        enviar van a ese canal de Discord; los enlaces y códigos QR para compartir llevan la ruta
-        dentro del propio enlace.
+        <strong>App móvil (iOS / Android)</strong>: funciona sin cuenta y guarda tus rutas en el
+        dispositivo. Si decides vincularla a tu cuenta (con el QR de la web, con Discord o como
+        invitado), la app envía a Avalon Tracker las rutas, puertas y notas del mapa que sincronizas,
+        y el nombre del dispositivo para que puedas reconocerlo y revocarlo desde tu perfil; a cambio
+        recibe un token de dispositivo que solo sirve para la API de la app. Puedes desvincular el
+        móvil cuando quieras (las rutas se quedan en él) y revocar cualquier dispositivo desde tu
+        perfil. Si configuras un webhook de Discord, las rutas que decidas enviar van a ese canal de
+        Discord; los enlaces y códigos QR para compartir llevan la ruta dentro del propio enlace. Las
+        fichas de zona piden los precios públicos de mercado (Albion Online Data Project) a
+        avalontracker.app sin enviar datos tuyos.
       </p>
       <p>
         <strong>No recogemos</strong>: IP persistente, datos de pago, datos de juego de Albion Online
@@ -118,6 +124,10 @@ function Spanish() {
         <li>
           <strong>Cuenta de invitado</strong>: se borra, con sus mapas y rutas, tras 30 días sin
           actividad (o antes, si entras con Discord y se fusiona con tu cuenta).
+        </li>
+        <li>
+          <strong>Dispositivos vinculados</strong>: mientras no los revoques o desvincules el móvil;
+          se borran con tu cuenta.
         </li>
         <li>
           <strong>Rutas y logs</strong>: mientras el clan al que pertenecen exista.
@@ -229,9 +239,15 @@ function English() {
         later sign in with Discord, those maps move to your account and the guest account is deleted.
       </p>
       <p>
-        <strong>Mobile app (iOS / Android)</strong>: works without an account and keeps everything on
-        your device; it sends us no data. If you set up a Discord webhook, the routes you choose to
-        send go to that Discord channel; share links and QR codes carry the route inside the link.
+        <strong>Mobile app (iOS / Android)</strong>: works without an account and keeps your routes on
+        your device. If you choose to link it to your account (with the QR from the website, with
+        Discord or as a guest), the app sends Avalon Tracker the routes, doors and notes of the map
+        you sync, and the device name so you can recognise and revoke it from your profile; in return
+        it gets a device token that only works for the app API. You can unlink the phone at any time
+        (your routes stay on it) and revoke any device from your profile. If you set up a Discord
+        webhook, the routes you choose to send go to that Discord channel; share links and QR codes
+        carry the route inside the link. Zone pages fetch public market prices (Albion Online Data
+        Project) from avalontracker.app without sending any of your data.
       </p>
       <p>
         <strong>We do not collect</strong>: persistent IP, payment data, in-game Albion data beyond
@@ -295,6 +311,10 @@ function English() {
         <li>
           <strong>Guest account</strong>: deleted, with its maps and routes, after 30 days without
           activity (or earlier, if you sign in with Discord and it merges into your account).
+        </li>
+        <li>
+          <strong>Linked devices</strong>: until you revoke them or unlink the phone; deleted with your
+          account.
         </li>
         <li>
           <strong>Routes and logs</strong>: while the clan they belong to exists.
