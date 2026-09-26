@@ -2,7 +2,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LegalPage } from "@/components/legal/LegalPage";
 
-const UPDATED_ISO = "2026-04-24";
+const UPDATED_ISO = "2026-09-26";
 
 export default function PrivacyPolicyPage() {
   const { lang } = useLanguage();
@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
 
 function Spanish() {
   return (
-    <LegalPage title="Política de Privacidad" updated="Actualizado: 24/04/2026">
+    <LegalPage title="Política de Privacidad" updated="Actualizado: 26/09/2026">
       <h2>👤 Responsable del tratamiento</h2>
       <p>
         Avalon Tracker es un proyecto operado por <strong>Crintech Studios</strong>. Para consultas
@@ -43,6 +43,18 @@ function Spanish() {
           (crear/borrar rutas, cambios de config, etc.).
         </li>
       </ul>
+      <p>
+        <strong>Mapa sin cuenta (invitado)</strong>: si creas un mapa gratis sin entrar con Discord,
+        abrimos una cuenta de invitado anónima (sin nombre, email ni IP guardados) que solo se
+        identifica por la cookie de sesión de tu navegador. Guarda los mapas y rutas que crees en
+        ella. Si luego entras con Discord, esos mapas pasan a tu cuenta y la de invitado se borra.
+      </p>
+      <p>
+        <strong>App móvil (iOS / Android)</strong>: funciona sin cuenta y guarda todo en tu
+        dispositivo; no nos envía datos. Si configuras un webhook de Discord, las rutas que decidas
+        enviar van a ese canal de Discord; los enlaces y códigos QR para compartir llevan la ruta
+        dentro del propio enlace.
+      </p>
       <p>
         <strong>No recogemos</strong>: IP persistente, datos de pago, datos de juego de Albion Online
         más allá de nombres de zona, ni información de otros jugadores fuera de tu clan.
@@ -102,6 +114,10 @@ function Spanish() {
           <strong>Cuenta de usuario</strong>: mientras exista. Si cierras sesión Discord
           permanentemente o borras tu cuenta Discord, tu registro en Avalon Tracker queda huérfano —
           puedes pedir borrado escribiendo a <a href="mailto:avalon@crintech.pro">avalon@crintech.pro</a>.
+        </li>
+        <li>
+          <strong>Cuenta de invitado</strong>: se borra, con sus mapas y rutas, tras 30 días sin
+          actividad (o antes, si entras con Discord y se fusiona con tu cuenta).
         </li>
         <li>
           <strong>Rutas y logs</strong>: mientras el clan al que pertenecen exista.
@@ -176,7 +192,7 @@ function Spanish() {
 
 function English() {
   return (
-    <LegalPage title="Privacy Policy" updated="Last updated: 2026-04-24">
+    <LegalPage title="Privacy Policy" updated="Last updated: 2026-09-26">
       <h2>👤 Data controller</h2>
       <p>
         Avalon Tracker is operated by <strong>Crintech Studios</strong>. For privacy questions,
@@ -206,6 +222,17 @@ function English() {
           routes, settings changes, etc.).
         </li>
       </ul>
+      <p>
+        <strong>Map without an account (guest)</strong>: if you create a free map without signing in
+        with Discord, we open an anonymous guest account (no name, email or IP stored) identified
+        only by your browser&apos;s session cookie. It holds the maps and routes you create. If you
+        later sign in with Discord, those maps move to your account and the guest account is deleted.
+      </p>
+      <p>
+        <strong>Mobile app (iOS / Android)</strong>: works without an account and keeps everything on
+        your device; it sends us no data. If you set up a Discord webhook, the routes you choose to
+        send go to that Discord channel; share links and QR codes carry the route inside the link.
+      </p>
       <p>
         <strong>We do not collect</strong>: persistent IP, payment data, in-game Albion data beyond
         zone names, or information about other players outside your clan.
@@ -264,6 +291,10 @@ function English() {
           <strong>User account</strong>: while it exists. If you permanently disconnect Discord or
           delete your Discord account, your Avalon Tracker record becomes orphan — request deletion
           at <a href="mailto:avalon@crintech.pro">avalon@crintech.pro</a>.
+        </li>
+        <li>
+          <strong>Guest account</strong>: deleted, with its maps and routes, after 30 days without
+          activity (or earlier, if you sign in with Discord and it merges into your account).
         </li>
         <li>
           <strong>Routes and logs</strong>: while the clan they belong to exists.
