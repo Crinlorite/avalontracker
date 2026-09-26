@@ -16,16 +16,18 @@ import {
   AVALON_ZONES, ZONES_SOURCE, zoneBySlug, zoneSlug, zoneSummaries, zoneFamily, similarZones,
   resourceTypes, chestCount, dungeonCount, CHEST_TYPES, DUNGEON_TYPES, type AvalonZone,
 } from "@/lib/avalon-zones";
-import { publicT, publicPath, type PublicLang, type PublicKey, type PublicT } from "@/i18n/public";
+import { publicT, publicPath, PUBLIC_LANGS, PUBLIC_LOCALE, type PublicLang, type PublicKey, type PublicT } from "@/i18n/public";
 
 const SITE = "https://avalontracker.app";
 
+// hreflang de los 11 idiomas; x-default = inglés (sin prefijo).
 function alternates(path: string, lang: PublicLang): Metadata["alternates"] {
   return {
     canonical: publicPath(lang, path),
-    languages: { en: path, es: `/es${path}`, "x-default": path },
+    languages: { ...Object.fromEntries(PUBLIC_LANGS.map((l) => [l, publicPath(l, path)])), "x-default": path },
   };
 }
+const ogLocale = (lang: PublicLang) => PUBLIC_LOCALE[lang].replace("-", "_");
 
 // ——— /zones ———
 
@@ -35,14 +37,14 @@ export function zonesIndexMetadata(lang: PublicLang): Metadata {
     title: { absolute: t("zones.metaTitle") },
     description: t("zones.metaDesc"),
     alternates: alternates("/zones", lang),
-    openGraph: { title: t("zones.metaTitle"), description: t("zones.metaDesc"), url: `${SITE}${publicPath(lang, "/zones")}`, locale: lang === "es" ? "es_ES" : "en_US" },
+    openGraph: { title: t("zones.metaTitle"), description: t("zones.metaDesc"), url: `${SITE}${publicPath(lang, "/zones")}`, locale: ogLocale(lang) },
   };
 }
 
 export function ZonesIndexPage({ lang }: { lang: PublicLang }) {
   const t = publicT(lang);
   return (
-    <PublicShell lang={lang} altHref={lang === "es" ? "/zones" : "/es/zones"}>
+    <PublicShell lang={lang} path="/zones">
       <h1 className="text-3xl font-bold tracking-tight text-white md:text-4xl">{t("zones.title")}</h1>
       <p className="mt-3 max-w-3xl text-slate-400">{t("zones.intro")}</p>
       <div className="mt-6">
@@ -77,7 +79,7 @@ export async function zoneMetadata(params: Promise<{ zone: string }>, lang: Publ
     title: { absolute: `${title} | Avalon Tracker` },
     description,
     alternates: alternates(`/zones/${zoneSlug(z.name)}`, lang),
-    openGraph: { title, description, url: `${SITE}${publicPath(lang, `/zones/${zoneSlug(z.name)}`)}`, locale: lang === "es" ? "es_ES" : "en_US" },
+    openGraph: { title, description, url: `${SITE}${publicPath(lang, `/zones/${zoneSlug(z.name)}`)}`, locale: ogLocale(lang) },
   };
 }
 
@@ -106,7 +108,7 @@ export async function ZonePage({ params, lang }: { params: Promise<{ zone: strin
   };
 
   return (
-    <PublicShell lang={lang} altHref={lang === "es" ? `/zones/${slug}` : `/es/zones/${slug}`}>
+    <PublicShell lang={lang} path={`/zones/${slug}`}>
       <script type="application/ld+json">{JSON.stringify(breadcrumb)}</script>
       <Link href={publicPath(lang, "/zones")} className="text-sm text-indigo-300 hover:text-indigo-200">← {t("zone.back")}</Link>
       <div className="mt-3 flex flex-wrap items-end gap-x-4 gap-y-2">
@@ -238,14 +240,14 @@ export function exitsMetadata(lang: PublicLang): Metadata {
     title: { absolute: t("exits.metaTitle") },
     description: t("exits.metaDesc"),
     alternates: alternates("/exits", lang),
-    openGraph: { title: t("exits.metaTitle"), description: t("exits.metaDesc"), url: `${SITE}${publicPath(lang, "/exits")}`, locale: lang === "es" ? "es_ES" : "en_US" },
+    openGraph: { title: t("exits.metaTitle"), description: t("exits.metaDesc"), url: `${SITE}${publicPath(lang, "/exits")}`, locale: ogLocale(lang) },
   };
 }
 
 export function ExitsPage({ lang, from }: { lang: PublicLang; from?: string }) {
   const t = publicT(lang);
   return (
-    <PublicShell lang={lang} altHref={lang === "es" ? "/exits" : "/es/exits"}>
+    <PublicShell lang={lang} path="/exits">
       <h1 className="text-3xl font-bold tracking-tight text-white md:text-4xl">{t("exits.title")}</h1>
       <p className="mt-3 max-w-3xl text-slate-400">{t("exits.intro")}</p>
       <div className="mt-6"><ExitFinder lang={lang} avalonNames={AVALON_ZONES.map((z) => z.name)} from={from} /></div>

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
+import { isPublicLang } from "@/i18n/public";
 import { Inter } from "next/font/google";
 import SessionProvider from "@/components/providers/SessionProvider";
 import { SWRProvider } from "@/components/providers/SWRProvider";
@@ -131,8 +132,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Idioma servido: EN por defecto; /es/... lo marca el middleware.
-  const pageLang = (await headers()).get("x-page-lang") === "es" ? "es" : undefined;
+  // Idioma servido: EN por defecto; /es/…, /de/… lo marca el middleware.
+  const rawLang = (await headers()).get("x-page-lang");
+  const pageLang = rawLang && isPublicLang(rawLang) && rawLang !== "en" ? rawLang : undefined;
   return (
     <html lang={pageLang ?? "en"} className="dark">
       <head>

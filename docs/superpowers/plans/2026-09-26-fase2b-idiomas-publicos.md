@@ -1,0 +1,13 @@
+# Fase 2b (web): páginas públicas en 11 idiomas — mini-plan
+
+**Decisión de Crinlorite (26-sep-2026):** las páginas públicas indexables (`/zones`, `/zones/<zona>`, `/exits`) pasan de EN+ES a los **11 idiomas internacionales** de `src/i18n/languages.ts` (en, es, de, fr, ru, pl, pt-BR, it, zh, ja, ko), que son a grandes rasgos los del cliente del juego. Los 13 regionales/comunitarios siguen solo en la app (cambio de idioma en el cliente): como páginas indexadas serían contenido casi duplicado sin demanda. Euskera y compañía, después si los pide.
+
+**Goal:** que cualquiera de las 400 fichas, el índice y el buscador de salidas existan en `/<lang>/…` para los 11 idiomas, con `hreflang`, sitemap y selector, sin tocar el resto de la web.
+
+**Architecture:** la carpeta `src/app/es/` se sustituye por un segmento `src/app/[lang]/` que valida el código (desconocido → 404; `/en/…` → 308 a la ruta sin prefijo). `src/i18n/public.ts` deja de ser bilingüe: `PUBLIC_LANGS`, `publicPath`, `publicT` con un diccionario por idioma (`src/i18n/public/<lang>.ts`, `Record<PublicKey, string>` para que `tsc` exija completitud). El middleware pone `x-page-lang` para cualquiera de los 11 y el layout lo vuelca en `<html lang>`. Textos nuevos marcados «beta» en el selector salvo en/es, como en la app.
+
+## Tareas
+
+1. **Núcleo i18n + rutas** (TDD: `tests/lib/public-i18n.test.ts`, `tests/lib/public-routing.test.ts`, `tests/lib/sitemap.test.ts`): `PUBLIC_LANGS`, `isPublicLang`, `publicPath`, `PUBLIC_LOCALE`, `publicLangName`, `isBetaLang`, `publicDictionaries`; `src/lib/public-routing.ts` (`parsePublicPath`); middleware generalizado (matcher con los 10 prefijos); layout; `src/app/[lang]/{zones,zones/[zone],exits}/page.tsx`; borrar `src/app/es/`; `alternates` y `openGraph.locale` para los 11; sitemap ×11; `PublicShell` con selector de idioma (enlaces, sin JS) y textos del pie por clave; `ZonePrices` con meses y locale por idioma.
+2. **Diccionarios** de, fr, ru, pl, pt, it, zh, ja, ko (147 claves cada uno), traducidos con los nombres localizados del juego cuando existen («Straßen von Avalon», «Routes d'Avalon», 阿瓦隆之路…); nombres de zona y de ciudad se quedan en inglés (así los ve AODP y el mercado).
+3. **Verificación:** suite completa, `tsc`, lint; build de producción local y humo Playwright (`shot/smoke-fase2b.mjs`): `/de/zones/casitos-atinaum` 200 con `<html lang="de">`, 12 `<link rel="alternate" hreflang>`, selector con 11 enlaces, `/en/zones` → 308 `/zones`, `/xx/zones` → 404, `/ja/exits?from=Casitos-Atinaum`, sitemap con 4.400 fichas; capturas revisadas. Vault + hub. Despliegue solo con OK.

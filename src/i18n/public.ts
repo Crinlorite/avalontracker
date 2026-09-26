@@ -1,8 +1,27 @@
-// Textos de las páginas públicas indexables (/zones, /es/zones…). Se
-// renderizan en el servidor en el idioma de la ruta, así que no pasan por
-// el LanguageContext del cliente (que depende del navegador).
+// Textos de las páginas públicas indexables (/zones, /es/zones, /de/zones…).
+// Se renderizan en el servidor en el idioma de la ruta, así que no pasan por
+// el LanguageContext del cliente (que depende del navegador). Once idiomas:
+// los «internacionales» de languages.ts (a grandes rasgos, los del cliente
+// del juego); los regionales/comunitarios siguen solo en la app.
+import { LANGUAGES } from "@/i18n/languages";
+import { de } from "@/i18n/public/de";
+import { fr } from "@/i18n/public/fr";
+import { ru } from "@/i18n/public/ru";
+import { pl } from "@/i18n/public/pl";
+import { pt } from "@/i18n/public/pt";
+import { it } from "@/i18n/public/it";
+import { zh } from "@/i18n/public/zh";
+import { ja } from "@/i18n/public/ja";
+import { ko } from "@/i18n/public/ko";
 
-export type PublicLang = "en" | "es";
+export const PUBLIC_LANGS = ["en", "es", "de", "fr", "ru", "pl", "pt", "it", "zh", "ja", "ko"] as const;
+export type PublicLang = (typeof PUBLIC_LANGS)[number];
+export const isPublicLang = (x: string): x is PublicLang => (PUBLIC_LANGS as readonly string[]).includes(x);
+// Locale BCP 47 por idioma (Intl y og:locale).
+export const PUBLIC_LOCALE: Record<PublicLang, string> = { en: "en-US", es: "es-ES", de: "de-DE", fr: "fr-FR", ru: "ru-RU", pl: "pl-PL", pt: "pt-BR", it: "it-IT", zh: "zh-CN", ja: "ja-JP", ko: "ko-KR" };
+export const publicLangName = (lang: PublicLang): string => LANGUAGES.find((l) => l.code === lang)?.native ?? lang;
+// Traducción no nativa (misma señal «beta» que la app).
+export const isBetaLang = (lang: PublicLang): boolean => lang !== "en" && lang !== "es";
 
 const en = {
   "nav.zones": "Zone lookup",
@@ -10,7 +29,8 @@ const en = {
   "nav.map": "Free map",
   "nav.guilds": "For guilds",
   "nav.signin": "Sign in",
-  "lang.other": "Español",
+  "lang.switch": "Language",
+  "lang.beta": "Community translation (beta): may contain mistakes.",
 
   "zones.title": "Roads of Avalon map checker — all 400 zones",
   "zones.metaTitle": "Avalon Map Checker — every Roads of Avalon zone (Albion Online)",
@@ -154,6 +174,8 @@ const en = {
   "exits.sell.title": "Where to sell",
   "exits.sell.origin": "Avalon zone where you gathered (optional)",
   "exits.sell.hint": "Compares the nearest market with the city that pays best right now.",
+  "footer.legal": "Legal notice",
+  "footer.trademark": "Albion Online is a trademark of Sandbox Interactive GmbH. Avalon Tracker is a fan-made tool with no official affiliation.",
 } as const;
 
 export type PublicKey = keyof typeof en;
@@ -164,7 +186,8 @@ const es: Record<PublicKey, string> = {
   "nav.map": "Mapa gratis",
   "nav.guilds": "Para clanes",
   "nav.signin": "Entrar",
-  "lang.other": "English",
+  "lang.switch": "Idioma",
+  "lang.beta": "Traducción no nativa (beta): puede tener errores.",
 
   "zones.title": "Buscador de mapas de los Caminos de Avalon — las 400 zonas",
   "zones.metaTitle": "Avalon map checker en español — todas las zonas de los Caminos de Avalon",
@@ -308,10 +331,18 @@ const es: Record<PublicKey, string> = {
   "exits.sell.title": "Dónde vender",
   "exits.sell.origin": "Zona de Avalon donde recolectaste (opcional)",
   "exits.sell.hint": "Compara el mercado más cercano con la ciudad que mejor paga ahora mismo.",
+  "footer.legal": "Aviso legal",
+  "footer.trademark": "Albion Online es una marca de Sandbox Interactive GmbH. Avalon Tracker es una herramienta de fans, sin relación oficial.",
 };
 
+const DICTS: Record<PublicLang, Record<PublicKey, string>> = { en, es, de, fr, ru, pl, pt, it, zh, ja, ko };
+
+export function publicDictionaries(): Record<PublicLang, Record<PublicKey, string>> {
+  return DICTS;
+}
+
 export function publicT(lang: PublicLang) {
-  const dict = lang === "es" ? es : en;
+  const dict = DICTS[lang] ?? en;
   return (key: PublicKey, vars?: Record<string, string | number>) => {
     let s: string = dict[key] ?? en[key];
     if (vars) for (const [k, v] of Object.entries(vars)) s = s.replaceAll(`{${k}}`, String(v));
@@ -321,4 +352,5 @@ export function publicT(lang: PublicLang) {
 
 export type PublicT = ReturnType<typeof publicT>;
 
-export const publicPath = (lang: PublicLang, p: string) => (lang === "es" ? `/es${p}` : p);
+// El inglés vive sin prefijo; el resto en /<lang>/…
+export const publicPath = (lang: PublicLang, p: string) => (lang === "en" ? p : `/${lang}${p}`);

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { AVALON_ZONES, zoneSlug, ZONES_SOURCE } from "@/lib/avalon-zones";
+import { PUBLIC_LANGS, publicPath } from "@/i18n/public";
 
 /**
  * Dynamic sitemap.xml generator — Next.js App Router convention.
@@ -12,15 +13,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const base = "https://avalontracker.app";
 
-  // Páginas públicas con versión EN y ES enlazadas entre sí (hreflang).
+  // Páginas públicas en los 11 idiomas, enlazadas entre sí (hreflang); el
+  // inglés vive sin prefijo y es el x-default.
   const dataDate = new Date(ZONES_SOURCE.generatedAt);
-  const bilingual = (path: string, priority: number, lastModified: Date): MetadataRoute.Sitemap =>
-    (["en", "es"] as const).map((lang) => ({
-      url: `${base}${lang === "es" ? "/es" : ""}${path}`,
+  const languages = (path: string) => ({
+    ...Object.fromEntries(PUBLIC_LANGS.map((l) => [l, `${base}${publicPath(l, path)}`])),
+    "x-default": `${base}${path}`,
+  });
+  const multilingual = (path: string, priority: number, lastModified: Date): MetadataRoute.Sitemap =>
+    PUBLIC_LANGS.map((lang) => ({
+      url: `${base}${publicPath(lang, path)}`,
       lastModified,
       changeFrequency: "monthly" as const,
       priority,
-      alternates: { languages: { en: `${base}${path}`, es: `${base}/es${path}` } },
+      alternates: { languages: languages(path) },
     }));
 
   return [
@@ -30,9 +36,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1.0,
     },
-    ...bilingual("/zones", 0.9, dataDate),
-    ...bilingual("/exits", 0.8, dataDate),
-    ...AVALON_ZONES.flatMap((z) => bilingual(`/zones/${zoneSlug(z.name)}`, 0.6, dataDate)),
+    ...multilingual("/zones", 0.9, dataDate),
+    ...multilingual("/exits", 0.8, dataDate),
+    ...AVALON_ZONES.flatMap((z) => multilingual(`/zones/${zoneSlug(z.name)}`, 0.6, dataDate)),
     {
       url: `${base}/legal/aviso-legal`,
       lastModified: now,
