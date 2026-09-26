@@ -1,0 +1,350 @@
+{
+ "GREEN:small:4": [
+  {
+   "category": "gear",
+   "tiers": [
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "category": "fragments",
+   "tiers": []
+  },
+  {
+   "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "fame_books",
+   "tiers": []
+  },
+  {
+   "category": "treasures",
+   "tiers": []
+  },
+  {
+   "category": "tokens",
+   "tiers": []
+  },
+  {
+   "category": "artefacts",
+   "tiers": []
+  }
+ ],
+ "GREEN:small:6": [
+  {
+   "category": "fragments",
+   "tiers": []
+  },
+  {
+   "category": "gear",
+   "tiers": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "fame_books",
+   "tiers": []
+  },
+  {
+   "category": "treasures",
+   "tiers": []
+  },
+  {
+   "category": "tokens",
+   "tiers": []
+  },
+  {
+   "category": "artefacts",
+   "tiers": []
+  }
+ ],
+ "GREEN:small:8": [
+  {
+   "category": "fragments",
+   "tiers": []
+  },
+  {
+   "category": "gear",
+   "tiers": [
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "fame_books",
+   "tiers": []
+  },
+  {
+   "category": "treasures",
+   "tiers": []
+  },
+  {
+   "category": "tokens",
+   "tiers": []
+  },
+  {
+   "category": "artefacts",
+   "tiers": []
+  }
+ ],
+ "BLUE:large:4": [
+  {
+   "category": "gear",
+   "tiers": [
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "category": "fragments",
+   "tiers": []
+  },
+  {
+   "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "fame_books",
+   "tiers": []
+  },
+  {
+   "category": "treasures",
+   "tiers": []
+  },
+  {
+   "category": "tokens",
+   "tiers": []
+  },
+  {
+   "category": "artefacts",
+   "tiers": []
+  }
+ ],
+ "BLUE:large:6": [
+  {
+   "category": "gear",
+   "tiers": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "category": "fragments",
+   "tiers": []
+  },
+  {
+   "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "fame_books",
+   "tiers": []
+  },
+  {
+   "category": "treasures",
+   "tiers": []
+  },
+  {
+   "category": "tokens",
+   "tiers": []
+  },
+  {
+   "category": "artefacts",
+   "tiers": []
+  }
+ ],
+ "BLUE:large:8": [
+  {
+   "category": "fragments",
+   "tiers": []
+  },
+  {
+   "category": "gear",
+   "tiers": [
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "fame_books",
+   "tiers": []
+  },
+  {
+   "category": "treasures",
+   "tiers": []
+  },
+  {
+   "category": "tokens",
+   "tiers": []
+  },
+  {
+   "category": "artefacts",
+   "tiers": []
+  }
+ ],
+ "GOLD:small:6": [
+  {
+   "category": "fragments",
+   "tiers": []
+  },
+  {
+   "category": "gear",
+   "tiers": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "fame_books",
+   "tiers": []
+  },
+  {
+   "category": "treasures",
+   "tiers": []
+  },
+  {
+   "category": "tokens",
+   "tiers": []
+  },
+  {
+   "category": "artefacts",
+   "tiers": []
+  }
+ ],
+ "GOLD:small:8": [
+  {
+   "category": "fragments",
+   "tiers": []
+  },
+  {
+   "category": "gear",
+   "tiers": [
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "fame_books",
+   "tiers": []
+  },
+  {
+   "category": "treasures",
+   "tiers": []
+  },
+  {
+   "category": "tokens",
+   "tiers": []
+  },
+  {
+   "category": "artefacts",
+   "tiers": []
+  }
+ ],
+ "GOLD:large:6": [
+  {
+   "category": "gear",
+   "tiers": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "category": "fragments",
+   "tiers": []
+  },
+  {
+   "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "fame_books",
+   "tiers": []
+  },
+  {
+   "category": "treasures",
+   "tiers": []
+  },
+  {
+   "category": "tokens",
+   "tiers": []
+  },
+  {
+   "category": "artefacts",
+   "tiers": []
+  }
+ ],
+ "GOLD:large:8": [
+  {
+   "category": "gear",
+   "tiers": [
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "category": "fragments",
+   "tiers": []
+  },
+  {
+   "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "fame_books",
+   "tiers": []
+  },
+  {
+   "category": "treasures",
+   "tiers": []
+  },
+  {
+   "category": "tokens",
+   "tiers": []
+  },
+  {
+   "category": "artefacts",
+   "tiers": []
+  }
+ ]
+}

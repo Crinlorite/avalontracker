@@ -1,6 +1,8 @@
 import zonesJson from "@/data/avalon-zones.json";
 import source from "@/data/avalon-zones.source.json";
+import chestLoot from "@/data/chest-loot.json";
 import type { ZoneMob } from "@/lib/mobs";
+import type { LootCategory } from "@/lib/loot-categories";
 
 // Datos públicos de las 400 zonas de los Caminos de Avalon (ver
 // src/data/README.md). Solo lectura: lo consumen /zones y /zones/<zona>.
@@ -18,14 +20,15 @@ export type AvalonZone = {
   zoneClass: string;
   hasHideout: boolean;
   resources: { type: ResourceType; size: Size; count: number }[];
-  chests: { type: ChestType; size: Size; count: number }[];
+  // El tier del cofre es el del punto de aparición (T4/T6/T8), no el de la zona.
+  chests: { type: ChestType; size: Size; tier: number; count: number }[];
   dungeons: { type: DungeonType; size: Size; count: number }[];
   nodes: { type: ResourceType; tier: number; count: number }[];
   mobs: ZoneMob[];
   map: {
     min: [number, number];
     max: [number, number];
-    markers: { kind: "resource" | "chest" | "dungeon"; type: string; size: Size; x: number; y: number }[];
+    markers: { kind: "resource" | "chest" | "dungeon"; type: string; size: Size; tier?: number; x: number; y: number }[];
   };
 };
 
@@ -55,6 +58,14 @@ export const CHEST_TYPES: ChestType[] = ["GOLD", "BLUE", "GREEN"];
 export const DUNGEON_TYPES: DungeonType[] = ["DUNGEON_ELITE", "DUNGEON_GROUP", "DUNGEON_SOLO"];
 
 const sum = (xs: { count: number }[]) => xs.reduce((a, x) => a + x.count, 0);
+
+// Categorías de botín del cofre (tipo, tamaño, tier real del punto de
+// aparición), generadas por scripts/extract-chest-loot.ts. Combinación sin
+// tabla → [] y la ficha no inventa nada.
+export function chestLootCategories(type: ChestType, size: Size, tier: number): { category: LootCategory; tiers: number[] }[] {
+  const table = chestLoot as Record<string, { category: LootCategory; tiers: number[] }[]>;
+  return table[`${type}:${size}:${tier}`] ?? [];
+}
 
 export function chestCount(z: AvalonZone, type?: ChestType): number {
   return sum(type ? z.chests.filter((c) => c.type === type) : z.chests);
