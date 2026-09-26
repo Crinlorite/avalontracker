@@ -277,6 +277,14 @@ Every authenticated endpoint validates the clan role through `requireRole`. **Th
 - `GET|POST /api/v1/maps/:id/shares` · `DELETE /api/v1/maps/:id/shares/:shareId` · `GET /api/v1/shares/:token` · `POST /api/v1/shares/:token/join`
 - `POST /api/v1/import` (app share code, format v1)
 
+### Public zones API — no account, read-only, open CORS, 60 requests/min per IP
+
+- `GET /api/v1/zones` — index of all 400 zones (name, slug, tier, family, resources, chests, dungeons). `ETag`; cached 1 h.
+- `GET /api/v1/zones/{name|slug}` — full zone: resources with node tiers, chests with loot categories (no percentages), dungeons, mobs, schematic mini-map.
+- `GET /api/v1/zones/{name|slug}/prices?server=europe&enchant=0` — prices for the zone's resources in Lymhurst, Martlock, Thetford, Bridgewatch, Fort Sterling, Caerleon and Brecilien, from the hourly [AODP](https://www.albion-online-data.com/) cache (`sellMin` = lowest sell order, `buyMax` = best buy order; `null` = no data; `fetchedAt` = last download). Servers: `west`, `europe`, `east`.
+
+Game data © Sandbox Interactive via `ao-data/ao-bin-dumps`; prices from the Albion Online Data Project. If you build on this API, credit it.
+
 ### Session / user
 - `GET /api/me` — own profile
 - `GET /api/me/clans` — clans you belong to
