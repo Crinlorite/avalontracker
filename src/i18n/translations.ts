@@ -27,6 +27,15 @@ function withFallback(partial: Dict, base: Dict): Dict {
 
 // — Inglés (referencia base) —
 const en: Dict = {
+  // Mapa compartido (/m/<token>)
+  "share.title": "Shared map",
+  "share.readonly": "Read-only view. Timers update every 30 seconds.",
+  "share.role.VIEWER": "view link",
+  "share.role.EDITOR": "edit link",
+  "share.join.edit": "Edit this map",
+  "share.join.save": "Keep it in my account",
+  "share.join.hint": "No account needed: a guest account is created on this browser.",
+  "share.empty": "This map has no active routes yet.",
   // Vincular la app (/link/app)
   "link.title": "Link the app to your account",
   "link.needDiscord": "Sign in with Discord on this page; the app will pick up the link automatically.",
@@ -230,6 +239,15 @@ const en: Dict = {
 
 // — Español (referencia base) —
 const es: Dict = {
+  // Mapa compartido (/m/<token>)
+  "share.title": "Mapa compartido",
+  "share.readonly": "Solo lectura. Los tiempos se actualizan cada 30 segundos.",
+  "share.role.VIEWER": "enlace de ver",
+  "share.role.EDITOR": "enlace de editar",
+  "share.join.edit": "Editar este mapa",
+  "share.join.save": "Guardarlo en mi cuenta",
+  "share.join.hint": "Sin cuenta: se crea una de invitado en este navegador.",
+  "share.empty": "Este mapa aún no tiene rutas activas.",
   // Vincular la app (/link/app)
   "link.title": "Vincular la app a tu cuenta",
   "link.needDiscord": "Entra con Discord en esta página; la app recogerá el vínculo sola.",
