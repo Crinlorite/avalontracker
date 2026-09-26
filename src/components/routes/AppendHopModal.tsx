@@ -5,7 +5,7 @@ import { mutate as globalMutate } from "swr";
 import { ZoneAutocomplete } from "@/components/zones/ZoneAutocomplete";
 import type { RouteView } from "@/hooks/useClanRoutes";
 
-type PortalSize = 7 | 20 | 40;
+type PortalSize = 7 | 20;
 
 export function AppendHopModal({
   clanId, route, onClose, onAdded, defaultFromZone,
@@ -134,7 +134,6 @@ export function AppendHopModal({
             >
               <option value={7}>7p</option>
               <option value={20}>20p</option>
-              <option value={40}>Tentáculo</option>
             </select>
           </label>
 
