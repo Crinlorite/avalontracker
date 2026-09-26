@@ -1,10 +1,12 @@
 import { prisma } from "@/lib/prisma";
+import type { RouteView } from "@/hooks/useClanRoutes";
 
 // Rutas activas con saltos vivos, en la misma forma que GET /api/clans/{id}/routes
 // (sin los barridos de mantenimiento). Para /m/<token> y la API de enlaces.
-export async function loadActiveRoutes(clanId: string) {
+// Se devuelve ya serializado (fechas como ISO), igual que lo recibe el cliente.
+export async function loadActiveRoutes(clanId: string): Promise<{ routes: RouteView[]; now: string }> {
   const now = new Date();
-  const routes = await prisma.route.findMany({
+  const rows = await prisma.route.findMany({
     where: { clanId, status: "ACTIVE", deletedAt: null },
     include: {
       hops: { where: { deletedAt: null }, orderBy: { order: "asc" }, include: { fromZone: true, toZone: true } },
@@ -13,5 +15,5 @@ export async function loadActiveRoutes(clanId: string) {
     orderBy: { updatedAt: "desc" },
     take: 200,
   });
-  return { routes, now: now.toISOString() };
+  return { routes: JSON.parse(JSON.stringify(rows)) as RouteView[], now: now.toISOString() };
 }
