@@ -97,6 +97,20 @@ model DeviceToken {
   @@index([userId])
 }
 
+// Enlace compartido de un mapa PERSONAL (ver o editar), revocable. Solo el
+// hash SHA-256 del token en BD; la URL lleva el token (spec §5.3).
+model MapShare {
+  id          String    @id @default(cuid())
+  clanId      String
+  role        AppRole
+  tokenHash   String    @unique
+  createdById String
+  createdAt   DateTime  @default(now())
+  revokedAt   DateTime?
+  clan        Clan      @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  @@index([clanId])
+}
+
 // ============ Clan ============
 
 model Clan {
@@ -130,6 +144,7 @@ model Clan {
   createdBy          User               @relation("ClanCreator", fields: [createdById], references: [id])
   anchorZone         Zone?              @relation("ClanAnchor", fields: [anchorZoneId], references: [id])
   members            ClanMember[]
+  shares             MapShare[]
   routes             Route[]
   auditLogs          AuditLog[]
   roleMappings       ClanRoleMapping[]
