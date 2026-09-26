@@ -9,11 +9,15 @@
    ]
   },
   {
-   "category": "fragments",
+   "category": "materials",
    "tiers": []
   },
   {
    "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "shards",
    "tiers": []
   },
   {
@@ -35,7 +39,7 @@
  ],
  "GREEN:small:6": [
   {
-   "category": "fragments",
+   "category": "materials",
    "tiers": []
   },
   {
@@ -50,6 +54,10 @@
   },
   {
    "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "shards",
    "tiers": []
   },
   {
@@ -71,7 +79,7 @@
  ],
  "GREEN:small:8": [
   {
-   "category": "fragments",
+   "category": "materials",
    "tiers": []
   },
   {
@@ -84,6 +92,10 @@
   },
   {
    "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "shards",
    "tiers": []
   },
   {
@@ -113,11 +125,15 @@
    ]
   },
   {
-   "category": "fragments",
+   "category": "materials",
    "tiers": []
   },
   {
    "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "shards",
    "tiers": []
   },
   {
@@ -149,11 +165,15 @@
    ]
   },
   {
-   "category": "fragments",
+   "category": "materials",
    "tiers": []
   },
   {
    "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "shards",
    "tiers": []
   },
   {
@@ -175,7 +195,7 @@
  ],
  "BLUE:large:8": [
   {
-   "category": "fragments",
+   "category": "materials",
    "tiers": []
   },
   {
@@ -188,6 +208,10 @@
   },
   {
    "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "shards",
    "tiers": []
   },
   {
@@ -209,7 +233,7 @@
  ],
  "GOLD:small:6": [
   {
-   "category": "fragments",
+   "category": "materials",
    "tiers": []
   },
   {
@@ -224,6 +248,10 @@
   },
   {
    "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "shards",
    "tiers": []
   },
   {
@@ -245,7 +273,7 @@
  ],
  "GOLD:small:8": [
   {
-   "category": "fragments",
+   "category": "materials",
    "tiers": []
   },
   {
@@ -258,6 +286,10 @@
   },
   {
    "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "shards",
    "tiers": []
   },
   {
@@ -289,11 +321,15 @@
    ]
   },
   {
-   "category": "fragments",
+   "category": "materials",
    "tiers": []
   },
   {
    "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "shards",
    "tiers": []
   },
   {
@@ -323,11 +359,15 @@
    ]
   },
   {
-   "category": "fragments",
+   "category": "materials",
    "tiers": []
   },
   {
    "category": "silver",
+   "tiers": []
+  },
+  {
+   "category": "shards",
    "tiers": []
   },
   {

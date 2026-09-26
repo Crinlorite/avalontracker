@@ -1,6 +1,6 @@
 // Forma pública (JSON) de las zonas para /api/v1/zones. Solo datos del dump.
 import crypto from "node:crypto";
-import { AVALON_ZONES, ZONES_SOURCE, zoneSlug, zoneFamily, zoneSummaries, chestLootCategories, type AvalonZone } from "@/lib/avalon-zones";
+import { ZONES_SOURCE, zoneSlug, zoneFamily, zoneSummaries, chestLootCategories, type AvalonZone } from "@/lib/avalon-zones";
 
 const SITE = "https://avalontracker.app";
 
@@ -29,4 +29,3 @@ export function zoneDetailPayload(z: AvalonZone) {
   };
 }
 
-export const zoneCount = () => AVALON_ZONES.length;

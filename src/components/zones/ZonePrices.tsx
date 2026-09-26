@@ -13,6 +13,14 @@ function whenUtc(iso: string, lang: PublicLang) {
   const d = new Date(iso); const p = (n: number) => String(n).padStart(2, "0");
   return `${d.getUTCDate()} ${MONTHS[lang][d.getUTCMonth()]} ${p(d.getUTCHours())}:${p(d.getUTCMinutes())} UTC`;
 }
+// Antigüedad de un precio respecto a la descarga (ambas fechas vienen en el
+// payload: determinista en servidor y navegador). Menos de una hora → nada.
+function ageOf(at: string | null, fetchedAt: string | null): { label: string; old: boolean } | null {
+  if (!at || !fetchedAt) return null;
+  const h = Math.floor((new Date(fetchedAt).getTime() - new Date(at).getTime()) / 3_600_000);
+  if (h < 1) return null;
+  return { label: h < 48 ? `${h}h` : `${Math.floor(h / 24)}d`, old: h >= 24 };
+}
 
 // Servidor recordado en este navegador, leído como almacén externo: en el
 // servidor no hay nada (coincide con el HTML) y tras hidratar React lo aplica.
@@ -52,8 +60,30 @@ export function ZonePrices({ slug, lang, initial, nearestCity }: { slug: string;
 
   const pick = (s: GameServer) => { setPicked(s); try { localStorage.setItem(STORAGE, s); } catch { /* sin almacenamiento */ } };
   const lines = data?.lines ?? [];
+  const anyCell = lines.some((l) => Object.keys(l.cities).length > 0);
   const cols = nearestCity ? 5 : 4;
-  const num = (v: number | null | undefined) => (v == null ? <span className="text-slate-500">{t("prices.nodata")}</span> : nf.format(v));
+  const fetchedAt = data?.fetchedAt ?? null;
+
+  // Valor con ciudad y antigüedad («2.760 · Lymhurst · 3h»); sin dato → «sin datos».
+  const cell = (value: number | null | undefined, at: string | null | undefined, city?: string) => {
+    if (value == null) return <span className="text-slate-500">{t("prices.nodata")}</span>;
+    const age = ageOf(at ?? null, fetchedAt);
+    return (
+      <>
+        {nf.format(value)}
+        {city && <span className="text-slate-500"> · {city}</span>}
+        {age && <span className={`ml-1 text-xs ${age.old ? "text-amber-300" : "text-slate-500"}`} title={at ? t("prices.age.title", { when: whenUtc(at, lang) }) : undefined}>· {age.label}</span>}
+      </>
+    );
+  };
+
+  const footer = !data
+    ? (failed ? "" : t("prices.loading"))
+    : fetchedAt === null
+      ? t("prices.empty")
+      : lines.length > 0 && !anyCell
+        ? `${t("prices.nodata.server")} ${t("prices.updated", { when: whenUtc(fetchedAt, lang) })}`
+        : t("prices.updated", { when: whenUtc(fetchedAt, lang) });
 
   return (
     <div data-testid="zone-prices" data-server={server}>
@@ -78,13 +108,14 @@ export function ZonePrices({ slug, lang, initial, nearestCity }: { slug: string;
             <tbody className={loading ? "opacity-50" : undefined}>
               {lines.map((l) => {
                 const sell = bestCity(l, "sellMin"); const buy = bestCity(l, "buyMax"); const open = expanded === l.itemId;
+                const near = nearestCity ? l.cities[nearestCity] : undefined;
                 return (
                   <Fragment key={l.itemId}>
                     <tr className="border-t border-slate-800" data-testid="price-line">
                       <td className="py-1.5 pr-3 text-white">{t(`res.${l.resource}` as PublicKey)} T{l.tier}{l.enchant ? `.${l.enchant}` : ""}</td>
-                      {nearestCity && <td className="py-1.5 pr-3 text-slate-300">{num(l.cities[nearestCity]?.sellMin)}</td>}
-                      <td className="py-1.5 pr-3 text-slate-300">{sell ? <>{nf.format(sell.value)} <span className="text-slate-500">· {sell.city}</span></> : num(null)}</td>
-                      <td className="py-1.5 pr-3 text-slate-300">{buy ? <>{nf.format(buy.value)} <span className="text-slate-500">· {buy.city}</span></> : num(null)}</td>
+                      {nearestCity && <td className="py-1.5 pr-3 text-slate-300">{cell(near?.sellMin, near?.sellMinAt)}</td>}
+                      <td className="py-1.5 pr-3 text-slate-300">{sell ? cell(sell.value, l.cities[sell.city]?.sellMinAt, sell.city) : cell(null, null)}</td>
+                      <td className="py-1.5 pr-3 text-slate-300">{buy ? cell(buy.value, l.cities[buy.city]?.buyMaxAt, buy.city) : cell(null, null)}</td>
                       <td className="whitespace-nowrap py-1.5 text-xs">
                         <button type="button" onClick={() => setExpanded(open ? null : l.itemId)} aria-expanded={open} className="text-indigo-300 hover:text-indigo-200">{t("prices.all")}</button>
                         <a href={l.royalForge} target="_blank" rel="noopener noreferrer" className="ml-3 text-indigo-300 hover:text-indigo-200">{t("prices.royalforge")} ↗</a>
@@ -111,9 +142,7 @@ export function ZonePrices({ slug, lang, initial, nearestCity }: { slug: string;
           </table>
         </div>
       )}
-      <p className="mt-3 text-xs text-slate-500">
-        {data?.fetchedAt ? t("prices.updated", { when: whenUtc(data.fetchedAt, lang) }) : data ? t("prices.empty") : failed ? "" : t("prices.loading")} {t("prices.note")}
-      </p>
+      <p className="mt-3 text-xs text-slate-500">{footer} {t("prices.note")}</p>
     </div>
   );
 }

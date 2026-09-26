@@ -16,6 +16,17 @@ describe("GET /api/v1/zones", () => {
     expect(j.zones).toHaveLength(400);
     expect(j.zones.find((z: { name: string }) => z.name === "Casitos-Atinaum")).toMatchObject({ slug: "casitos-atinaum", tier: 6, family: "outlands", resources: ["FIBER"] });
     expect((await GET(req("http://t/api/v1/zones", { "if-none-match": etag }))).status).toBe(304);
+    // Cloudflare debilita el ETag al recomprimir y el navegador reenvía W/"…" (o una lista).
+    expect((await GET(req("http://t/api/v1/zones", { "if-none-match": `W/${etag}` }))).status).toBe(304);
+    expect((await GET(req("http://t/api/v1/zones", { "if-none-match": `"otro", ${etag}` }))).status).toBe(304);
+    expect((await GET(req("http://t/api/v1/zones", { "if-none-match": `"otro"` }))).status).toBe(200);
+  });
+  it("OPTIONS (preflight) responde 204 con CORS", async () => {
+    const { OPTIONS } = await import("@/app/api/v1/zones/route");
+    const r = await OPTIONS();
+    expect(r.status).toBe(204);
+    expect(r.headers.get("access-control-allow-origin")).toBe("*");
+    expect(r.headers.get("access-control-allow-headers")).toContain("if-none-match");
   });
 });
 

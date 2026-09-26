@@ -18,7 +18,8 @@ const ROYAL = new Set(["Lymhurst", "Martlock", "Thetford", "Bridgewatch", "Fort 
 export function ExitFinder({ lang, avalonNames, from }: { lang: PublicLang; avalonNames: string[]; from?: string }) {
   const t = publicT(lang);
   const avalon = useMemo(() => new Set(avalonNames), [avalonNames]);
-  const [origin, setOrigin] = useState<string | null>(from && avalonNames.includes(from) ? from : null);
+  const canonicalFrom = from ? avalonNames.find((n) => n.toLowerCase() === from.toLowerCase()) ?? null : null;
+  const [origin, setOrigin] = useState<string | null>(canonicalFrom);
   const [originQ, setOriginQ] = useState(origin ?? "");
   const worldNames = useMemo(
     () => Object.keys((meta as { pvp: Record<string, string> }).pvp).filter((n) => !/^\d+$/.test(n)).sort(),

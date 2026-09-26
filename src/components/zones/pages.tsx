@@ -10,6 +10,8 @@ import { ZoneChestLoot } from "./ZoneChestLoot";
 import { ZonePrices } from "./ZonePrices";
 import { zonePricesPayload } from "@/lib/zone-prices-db";
 import { DEFAULT_SERVER } from "@/lib/aodp";
+import { withTimeout } from "@/lib/with-timeout";
+import { logger } from "@/lib/logger";
 import {
   AVALON_ZONES, ZONES_SOURCE, zoneBySlug, zoneSlug, zoneSummaries, zoneFamily, similarZones,
   resourceTypes, chestCount, dungeonCount, CHEST_TYPES, DUNGEON_TYPES, type AvalonZone,
@@ -86,9 +88,13 @@ export async function ZonePage({ params, lang }: { params: Promise<{ zone: strin
   const slug = zoneSlug(z.name);
   const family = zoneFamily(z.zoneClass);
   const similar = similarZones(z);
-  // Precios del servidor por defecto para pintar sin esperar; si la BD no
-  // responde, el componente cliente los pide a la API al montar.
-  const initialPrices = await zonePricesPayload(z, DEFAULT_SERVER, 0).catch(() => null);
+  // Precios del servidor por defecto para pintar sin esperar. Si la BD falla
+  // o tarda más de 1,5 s, la ficha sale igual y el componente cliente los
+  // pide a la API al montar.
+  const initialPrices = await withTimeout(zonePricesPayload(z, DEFAULT_SERVER, 0), 1500).catch((err: unknown) => {
+    logger.warn({ err, zone: z.name }, "zone prices unavailable at render");
+    return null;
+  });
 
   const breadcrumb = {
     "@context": "https://schema.org",

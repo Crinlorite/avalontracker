@@ -30,7 +30,7 @@ describe("refreshPrices", () => {
       row("T4_ORE", "Caerleon", 0, "0001-01-01T00:00:00"),
       row("T5_ROCK", "Martlock", 0, "0001-01-01T00:00:00", 70, "2026-09-26T10:00:00"),
     ] : []) });
-    expect(r).toEqual([{ server: "europe", rows: 2 }]);
+    expect(r).toEqual([{ server: "europe", rows: 2, removed: 0 }]);
     const { fetchedAt, prices } = await mp.getPrices("europe", ["T4_ORE", "T5_ROCK"]);
     expect(fetchedAt).toBe(now.toISOString());
     expect(prices.T4_ORE.Lymhurst).toEqual({ sellMin: 100, sellMinAt: "2026-09-26T12:00:00.000Z", buyMax: 84, buyMaxAt: "2026-09-26T11:00:00.000Z" });
@@ -55,6 +55,23 @@ describe("refreshPrices", () => {
   });
 });
 
+describe("refreshPrices: lo que AODP ya no tiene desaparece; fecha de descarga por servidor", () => {
+  it("una celda que pasa de precio a 0/0001-01-01 se borra (no se enseña un precio viejo bajo la fecha de hoy)", async () => {
+    await mp.refreshPrices({ now: new Date("2026-09-26T17:00:00Z"), servers: ["east"], fetchImpl: fetchWith(() => [row("T5_ORE", "Caerleon", 300, "2026-09-26T16:50:00", 250, "2026-09-26T16:50:00")]) });
+    expect((await mp.getPrices("east", ["T5_ORE"])).prices.T5_ORE.Caerleon.sellMin).toBe(300);
+    const r = await mp.refreshPrices({ now: new Date("2026-09-26T18:00:00Z"), servers: ["east"], fetchImpl: fetchWith(() => [row("T5_ORE", "Caerleon", 0, "0001-01-01T00:00:00")]) });
+    expect(r).toEqual([{ server: "east", rows: 0, removed: 1 }]);
+    const { prices } = await mp.getPrices("east", ["T5_ORE"]);
+    expect(prices.T5_ORE).toBeUndefined();
+  });
+
+  it("getPrices da la última descarga del servidor aunque no haya filas para esos ids (≠ «nunca descargado»)", async () => {
+    await mp.refreshPrices({ now: new Date("2026-09-26T19:00:00Z"), servers: ["east"], fetchImpl: fetchWith(() => [row("T4_WOOD", "Lymhurst", 40, "2026-09-26T18:50:00")]) });
+    const r = await mp.getPrices("east", ["T8_ROCK_LEVEL3@3"]);
+    expect(r).toEqual({ fetchedAt: "2026-09-26T19:00:00.000Z", prices: {} });
+  });
+});
+
 describe("GET /api/v1/zones/{name}/prices", () => {
   it("devuelve las líneas de la zona para el servidor pedido y valida server/enchant", async () => {
     const { GET } = await import("@/app/api/v1/zones/[name]/prices/route");
@@ -62,7 +79,7 @@ describe("GET /api/v1/zones/{name}/prices", () => {
     const call = (q: string, name = "casitos-atinaum") => GET(new Request(`http://t/x${q}`, { headers: { "x-forwarded-for": "10.3.3.3" } }), { params: Promise.resolve({ name }) });
     const r = await call("?server=europe");
     expect(r.status).toBe(200);
-    expect(r.headers.get("cache-control")).toContain("s-maxage=3600");
+    expect(r.headers.get("cache-control")).toContain("s-maxage=600"); // precios: 10 min en CDN, cambian cada hora
     const j = await r.json();
     expect(j.server).toBe("europe"); expect(j.enchant).toBe(0); expect(j.fetchedAt).toBe("2026-09-26T16:00:00.000Z");
     expect(j.lines.find((l: { itemId: string }) => l.itemId === "T6_FIBER").cities.Lymhurst.sellMin).toBe(900);
