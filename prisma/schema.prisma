@@ -111,6 +111,20 @@ model MapShare {
   @@index([clanId])
 }
 
+// Precios de AODP cacheados cada hora (spec §7). Una fila por servidor del
+// juego, item y ciudad. Precio sin dato = NULL, nunca 0.
+model MarketPrice {
+  server    String
+  itemId    String
+  city      String
+  sellMin   Int?
+  sellMinAt DateTime?
+  buyMax    Int?
+  buyMaxAt  DateTime?
+  fetchedAt DateTime
+  @@id([server, itemId, city])
+}
+
 // ============ Clan ============
 
 model Clan {
