@@ -31,9 +31,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { XMLParser } from "fast-xml-parser";
 import { RENAMED_ZONES } from "./zone-renames";
-
-const REPO = "ao-data/ao-bin-dumps";
-const ROOT = process.cwd();
+import { REPO, ROOT, latestSha, listTemplates, cached } from "./dump-cache";
+import { classifyMobs, type ZoneMob } from "../src/lib/mobs";
 const OUT = path.join(ROOT, "src/data/avalon-zones.json");
 const OUT_SOURCE = path.join(ROOT, "src/data/avalon-zones.source.json");
 // Lista ligera de nombres para el middleware (404 de zonas inexistentes).
@@ -58,6 +57,7 @@ export type AvalonZoneOut = {
   chests: Counted<ChestType>[];
   dungeons: Counted<DungeonType>[];
   nodes: { type: ResourceType; tier: number; count: number }[];
+  mobs: ZoneMob[];
   map: {
     min: [number, number];
     max: [number, number];
@@ -84,42 +84,6 @@ const parser = new XMLParser({
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);
   return i >= 0 ? process.argv[i + 1] : undefined;
-}
-
-async function latestSha(): Promise<string> {
-  const r = await fetch(`https://api.github.com/repos/${REPO}/commits/master`, {
-    headers: { Accept: "application/vnd.github+json", "User-Agent": "avalon-tracker-extract" },
-  });
-  if (!r.ok) throw new Error(`GitHub API ${r.status}`);
-  return ((await r.json()) as { sha: string }).sha;
-}
-
-async function listTemplates(sha: string): Promise<Map<string, string[]>> {
-  const r = await fetch(`https://api.github.com/repos/${REPO}/git/trees/${sha}?recursive=1`, {
-    headers: { Accept: "application/vnd.github+json", "User-Agent": "avalon-tracker-extract" },
-  });
-  if (!r.ok) throw new Error(`GitHub API ${r.status}`);
-  const tree = ((await r.json()) as { tree: { path: string }[] }).tree;
-  const idx = new Map<string, string[]>();
-  for (const { path: p } of tree) {
-    const m = /^templates\/([^/]+)\/(.+)\.template\.xml$/.exec(p);
-    if (!m) continue;
-    const list = idx.get(m[2]) ?? [];
-    list.push(p);
-    idx.set(m[2], list);
-  }
-  return idx;
-}
-
-async function cached(sha: string, file: string): Promise<string> {
-  const local = path.join(ROOT, ".cache/ao-bin-dumps", sha, file);
-  if (fs.existsSync(local)) return fs.readFileSync(local, "utf8");
-  const r = await fetch(`https://raw.githubusercontent.com/${REPO}/${sha}/${file}`);
-  if (!r.ok) throw new Error(`${file}: HTTP ${r.status}`);
-  const text = await r.text();
-  fs.mkdirSync(path.dirname(local), { recursive: true });
-  fs.writeFileSync(local, text);
-  return text;
 }
 
 async function pool<T, R>(items: T[], n: number, fn: (t: T) => Promise<R>): Promise<R[]> {
@@ -259,6 +223,10 @@ async function main() {
       .map((r) => ({ type: RESOURCE_BY_DIST[r["@name"]], tier: Number(r["@tier"]), count: Number(r["@count"]) }))
       .sort((a, b) => a.type.localeCompare(b.type) || a.tier - b.tier);
 
+    // Bichos: mobcounts de world.json (agrupados por clase, recurso, tier y rango).
+    const rawMobs = ((c["mobcounts"] as { mob?: unknown } | null)?.mob ?? []) as { "@name": string; "@count": string }[];
+    const mobs = classifyMobs(Array.isArray(rawMobs) ? rawMobs : [rawMobs]);
+
     return {
       name,
       clusterId: String(c["@id"]),
@@ -270,6 +238,7 @@ async function main() {
       chests: tally(markers.filter((m) => m.kind === "chest") as { type: ChestType; size: Size }[]),
       dungeons: tally(markers.filter((m) => m.kind === "dungeon") as { type: DungeonType; size: Size }[]),
       nodes,
+      mobs,
       map: {
         min: xy(String(c["@minimapBoundsMin"])),
         max: xy(String(c["@minimapBoundsMax"])),
