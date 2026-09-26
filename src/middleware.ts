@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 import { authConfig } from "@/lib/auth.config";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
+import { parsePublicPath } from "@/lib/public-routing";
 import zoneNames from "@/data/avalon-zone-names.json";
 
 const ZONE_SLUGS = new Set((zoneNames as string[]).map((n) => n.toLowerCase()));
@@ -28,25 +29,33 @@ export default auth((req) => {
   const isAuth = path.startsWith("/clan") || path.startsWith("/profile") || path.startsWith("/dashboard");
   if (isAuth && !session?.user) return Response.redirect(new URL("/", nextUrl));
 
+  // Páginas públicas: el inglés vive sin prefijo; /en/… → 308 a la ruta canónica.
+  const pub = parsePublicPath(path);
+  if (pub.explicitEn) return NextResponse.redirect(new URL(pub.rest + nextUrl.search, nextUrl), 308);
+
   // Fichas de zona: slug desconocido → 404 de verdad (el streaming de la
   // página ya no podría cambiar el código); mayúsculas → URL canónica.
-  const zoneMatch = /^(\/es)?\/zones\/([^/]+)\/?$/.exec(path);
-  if (zoneMatch) {
-    const slug = decodeURIComponent(zoneMatch[2]);
+  const zoneMatch = pub.lang ? /^\/zones\/([^/]+)\/?$/.exec(pub.rest) : null;
+  if (pub.lang && zoneMatch) {
+    const slug = decodeURIComponent(zoneMatch[1]);
     const lower = slug.toLowerCase();
     if (!ZONE_SLUGS.has(lower)) return NextResponse.rewrite(new URL("/_not-found-zone", nextUrl));
-    if (slug !== lower) return NextResponse.redirect(new URL(`${zoneMatch[1] ?? ""}/zones/${lower}`, nextUrl), 308);
+    if (slug !== lower) return NextResponse.redirect(new URL(`${pub.lang === "en" ? "" : `/${pub.lang}`}/zones/${lower}`, nextUrl), 308);
   }
 
-  // Páginas públicas en castellano (/es/...): el layout raíz lee esta
-  // cabecera para servir <html lang="es"> desde el servidor.
-  if (path === "/es" || path.startsWith("/es/")) {
+  // Páginas públicas en otro idioma (/es/…, /de/…): el layout raíz lee esta
+  // cabecera para servir <html lang="…"> desde el servidor.
+  if (pub.lang && pub.lang !== "en") {
     const headers = new Headers(req.headers);
-    headers.set("x-page-lang", "es");
+    headers.set("x-page-lang", pub.lang);
     return NextResponse.next({ request: { headers } });
   }
 });
 
 export const config = {
-  matcher: ["/clan/:path*", "/profile/:path*", "/dashboard/:path*", "/api/auth/callback/:path*", "/es", "/es/:path*", "/zones/:path*"],
+  matcher: [
+    "/clan/:path*", "/profile/:path*", "/dashboard/:path*", "/api/auth/callback/:path*", "/zones/:path*",
+    "/en", "/en/:path*", "/es", "/es/:path*", "/de", "/de/:path*", "/fr", "/fr/:path*", "/ru", "/ru/:path*", "/pl", "/pl/:path*",
+    "/pt", "/pt/:path*", "/it", "/it/:path*", "/zh", "/zh/:path*", "/ja", "/ja/:path*", "/ko", "/ko/:path*",
+  ],
 };

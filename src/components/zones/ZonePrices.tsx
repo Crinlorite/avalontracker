@@ -1,17 +1,31 @@
 "use client";
 import { Fragment, useEffect, useState, useSyncExternalStore } from "react";
-import { publicT, type PublicKey, type PublicLang } from "@/i18n/public";
+import { publicT, PUBLIC_LOCALE, type PublicKey, type PublicLang } from "@/i18n/public";
 import { DEFAULT_SERVER, GAME_SERVERS, type GameServer } from "@/lib/aodp";
 import { ENCHANTS, bestCity, type Enchant, type PriceLine } from "@/lib/zone-prices";
 
 export type PricesPayload = { zone: string; server: GameServer; enchant: Enchant; fetchedAt: string | null; cities: string[]; lines: PriceLine[] };
 
 const STORAGE = "at.server";
-const MONTHS = { en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], es: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"] };
+const MONTHS: Record<PublicLang, string[]> = {
+  en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  es: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
+  de: ["Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."],
+  fr: ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."],
+  ru: ["янв.", "февр.", "мар.", "апр.", "мая", "июн.", "июл.", "авг.", "сент.", "окт.", "нояб.", "дек."],
+  pl: ["sty", "lut", "mar", "kwi", "maj", "cze", "lip", "sie", "wrz", "paź", "lis", "gru"],
+  pt: ["jan.", "fev.", "mar.", "abr.", "mai", "jun.", "jul.", "ago.", "set.", "out.", "nov.", "dez."],
+  it: ["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"],
+  zh: [], ja: [], ko: [],
+};
 // Formato fijo en UTC: el mismo en servidor y navegador (sin desajuste de hidratación).
 function whenUtc(iso: string, lang: PublicLang) {
   const d = new Date(iso); const p = (n: number) => String(n).padStart(2, "0");
-  return `${d.getUTCDate()} ${MONTHS[lang][d.getUTCMonth()]} ${p(d.getUTCHours())}:${p(d.getUTCMinutes())} UTC`;
+  const time = `${p(d.getUTCHours())}:${p(d.getUTCMinutes())} UTC`;
+  const m = d.getUTCMonth() + 1; const day = d.getUTCDate();
+  if (lang === "zh" || lang === "ja") return `${m}月${day}日 ${time}`;
+  if (lang === "ko") return `${m}월 ${day}일 ${time}`;
+  return `${day} ${MONTHS[lang][m - 1]} ${time}`;
 }
 // Antigüedad de un precio respecto a la descarga (ambas fechas vienen en el
 // payload: determinista en servidor y navegador). Menos de una hora → nada.
@@ -41,7 +55,7 @@ export function ZonePrices({ slug, lang, initial, nearestCity }: { slug: string;
   const [data, setData] = useState<PricesPayload | null>(initial);
   const [failedKey, setFailedKey] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
-  const nf = new Intl.NumberFormat(lang === "es" ? "es-ES" : "en-US");
+  const nf = new Intl.NumberFormat(PUBLIC_LOCALE[lang]);
 
   const reqKey = `${slug.toLowerCase()}|${server}|${enchant}`;
   const fresh = !!data && data.zone.toLowerCase() === slug.toLowerCase() && data.server === server && data.enchant === enchant;
