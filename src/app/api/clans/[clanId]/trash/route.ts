@@ -4,8 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { requireRole, PermissionError, permissionErrorMessage } from "@/lib/permissions";
 import { apiError, internalError } from "@/lib/api-error";
 
-// TTL del soft-delete (debe coincidir con el de routes/route.ts).
-const TTL_MS = 2 * 24 * 60 * 60 * 1000;
+import { TRASH_TTL_MS as TTL_MS } from "@/lib/trash";
 
 type RouteParams = { params: Promise<{ clanId: string }> };
 

@@ -49,3 +49,6 @@ next-env.d.ts
 
 # caché de descargas del dump del juego (scripts/extract-avalon-zones.ts)
 /.cache
+
+# workspace de ejecución de planes (scratch)
+/.superpowers
