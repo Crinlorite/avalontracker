@@ -11,7 +11,7 @@ export default function CookiesPage() {
 
 function Spanish() {
   return (
-    <LegalPage title="Política de Cookies" updated="Actualizado: 24/04/2026">
+    <LegalPage title="Política de Cookies" updated="Actualizado: 26/09/2026">
       <h2>🍪 Qué son las cookies</h2>
       <p>
         Una cookie es un pequeño archivo de texto que un sitio web guarda en tu navegador. Las hay
@@ -21,18 +21,29 @@ function Spanish() {
 
       <h2>📋 Qué cookies usa Avalon Tracker</h2>
       <p>
-        <strong>Una sola cookie, técnica, esencial</strong>. Sin analytics. Sin tracking de
+        <strong>Solo cookies técnicas, esenciales</strong>. Sin analytics. Sin tracking de
         publicidad. Sin cookies de terceros.
       </p>
       <ul>
         <li>
-          <code>__Secure-next-auth.session-token</code> — cookie de sesión emitida por{" "}
+          <code>__Secure-authjs.session-token</code> — cookie de sesión emitida por{" "}
           <a href="https://authjs.dev" target="_blank" rel="noopener noreferrer">
             NextAuth
           </a>
           . Contiene un JWT cifrado con tu identidad para mantenerte logueado. Flags{" "}
           <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite=Lax</code>. Caduca en 14 días
-          sin actividad, se renueva cada 24 h si entras.
+          sin actividad, se renueva cada 24 h si entras. También la usa la cuenta de invitado del
+          mapa sin cuenta.
+        </li>
+        <li>
+          Durante el login con Discord, NextAuth pone además cookies de corta vida de CSRF y de URL
+          de retorno.
+        </li>
+        <li>
+          <code>avalon_guest_claim</code> — solo si eres invitado y pulsas «Guardar mis mapas con
+          Discord»: lleva firmado el identificador de tu cuenta de invitado para pasar tus mapas a tu
+          cuenta de Discord. <code>HttpOnly</code>, <code>SameSite=Lax</code>, caduca a los 10
+          minutos y se borra al completar el login.
         </li>
       </ul>
       <p>
@@ -89,7 +100,7 @@ function Spanish() {
 
 function English() {
   return (
-    <LegalPage title="Cookie Policy" updated="Last updated: 2026-04-24">
+    <LegalPage title="Cookie Policy" updated="Last updated: 2026-09-26">
       <h2>🍪 What cookies are</h2>
       <p>
         A cookie is a small text file a website stores in your browser. Some are technical
@@ -99,18 +110,28 @@ function English() {
 
       <h2>📋 What cookies Avalon Tracker uses</h2>
       <p>
-        <strong>One single cookie, technical, essential</strong>. No analytics. No ad tracking. No
+        <strong>Only technical, essential cookies</strong>. No analytics. No ad tracking. No
         third-party cookies.
       </p>
       <ul>
         <li>
-          <code>__Secure-next-auth.session-token</code> — session cookie issued by{" "}
+          <code>__Secure-authjs.session-token</code> — session cookie issued by{" "}
           <a href="https://authjs.dev" target="_blank" rel="noopener noreferrer">
             NextAuth
           </a>
           . Contains an encrypted JWT with your identity to keep you logged in. Flags{" "}
           <code>HttpOnly</code>, <code>Secure</code>, <code>SameSite=Lax</code>. Expires after 14
-          days of inactivity, refreshed every 24 h on active use.
+          days of inactivity, refreshed every 24 h on active use. The guest account of the free map
+          uses it too.
+        </li>
+        <li>
+          <code>avalon_guest_claim</code> — only if you are a guest and press «Keep my maps with
+          Discord»: it carries your signed guest account id so your maps move to your Discord
+          account. <code>HttpOnly</code>, <code>SameSite=Lax</code>, expires after 10 minutes and is
+          deleted when the sign-in completes.
+        </li>
+        <li>
+          During Discord sign-in, NextAuth also sets short-lived CSRF and callback-URL cookies.
         </li>
       </ul>
       <p>
