@@ -11,7 +11,7 @@ export function ZoneMobs({ mobs, t }: { mobs: ZoneMob[]; t: PublicT }) {
         {sortMobs(mobs).map((m) => (
           <li key={mobLabel(m, t)} className="flex items-center gap-2">
             <span
-              className={`inline-block h-2.5 w-2.5 ${m.kind === "critter" ? "rounded-full" : m.kind === "animal" ? "rounded-full bg-slate-500" : "rotate-45 bg-amber-400"}`}
+              className={`inline-block h-2.5 w-2.5 ${m.kind === "critter" ? "rounded-full" : m.kind === "animal" ? "rounded-full bg-slate-500" : m.kind === "other" ? "rounded-[2px] bg-slate-600" : "rotate-45 bg-amber-400"}`}
               style={m.kind === "critter" ? { backgroundColor: RESOURCE_COLOR[m.resource] } : undefined}
             />
             <span className="text-white">{m.count}× {mobLabel(m, t)}</span>

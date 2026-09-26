@@ -1,8 +1,11 @@
 // Qué puede salir de un cofre de Avalon, resuelto desde lootchests.json y
 // loot.json del dump. Solo categorías ordenadas: los pesos del juego no
 // están documentados y no se enseñan (spec §7).
-export type LootCategory = "gear" | "artefacts" | "fragments" | "fame_books" | "treasures" | "tokens" | "silver";
-export const LOOT_CATEGORIES: LootCategory[] = ["gear", "artefacts", "fragments", "fame_books", "treasures", "tokens", "silver"];
+//
+// Verificado en el dump (47e4f5a): `FRAGMENT_LOOT*` contiene T4–T8 RUNE/SOUL/
+// RELIC (runas, almas y reliquias); las esquirlas avalonianas (SHARD_AVALONIAN)
+// solo están en `LOOT_AVALON_FRAGMENTS`. Son dos categorías distintas.
+export type LootCategory = "gear" | "artefacts" | "shards" | "materials" | "fame_books" | "treasures" | "tokens" | "silver";
 type Ref = { "@name": string; "@chance"?: string };
 export type LootList = { Item?: { "@type": string; "@chance": string } | { "@type": string; "@chance": string }[]; LootListReference?: Ref | Ref[] };
 type LootByTier = { "@tier": string; LootListReference?: { "@name": string } | { "@name": string }[] };
@@ -14,7 +17,8 @@ const arr = <T,>(x: T | T[] | undefined): T[] => (x === undefined ? [] : Array.i
 export function categorizeLootRef(ref: string): LootCategory | null {
   if (/^T\d_DIRECTLOOTDROP_/.test(ref)) return "gear";
   if (ref === "LOOT_AVALON_ARTEFACTS") return "artefacts";
-  if (ref === "LOOT_AVALON_FRAGMENTS" || ref.startsWith("FRAGMENT_LOOT")) return "fragments";
+  if (ref === "LOOT_AVALON_FRAGMENTS") return "shards";
+  if (ref.startsWith("FRAGMENT_LOOT")) return "materials";
   if (ref.startsWith("FAME_BOOKS")) return "fame_books";
   if (ref.startsWith("TREASURES_")) return "treasures";
   if (/_LOOT_(EXPEDITION|RD)_TOKEN$/.test(ref)) return "tokens";

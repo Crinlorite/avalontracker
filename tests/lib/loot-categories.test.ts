@@ -6,8 +6,11 @@ describe("categorizeLootRef", () => {
   it("mapea las referencias del dump a categorías", () => {
     expect(categorizeLootRef("T6_DIRECTLOOTDROP_WHITE")).toBe("gear");
     expect(categorizeLootRef("LOOT_AVALON_ARTEFACTS")).toBe("artefacts");
-    expect(categorizeLootRef("LOOT_AVALON_FRAGMENTS")).toBe("fragments");
-    expect(categorizeLootRef("FRAGMENT_LOOT_100X")).toBe("fragments");
+    // Verificado en el dump: FRAGMENT_LOOT* = runas/almas/reliquias; solo
+    // LOOT_AVALON_FRAGMENTS trae esquirlas avalonianas (revisión final, crítico 1).
+    expect(categorizeLootRef("LOOT_AVALON_FRAGMENTS")).toBe("shards");
+    expect(categorizeLootRef("FRAGMENT_LOOT")).toBe("materials");
+    expect(categorizeLootRef("FRAGMENT_LOOT_100X")).toBe("materials");
     expect(categorizeLootRef("FAME_BOOKS_LOOT_CHESTS")).toBe("fame_books");
     expect(categorizeLootRef("TREASURES_ROAD_CHEST_LOOT")).toBe("treasures");
     expect(categorizeLootRef("T6_LOOT_RD_TOKEN")).toBe("tokens");

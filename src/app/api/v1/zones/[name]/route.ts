@@ -1,4 +1,4 @@
-import { publicApiGuard, publicJson, publicNotFound } from "@/lib/public-api";
+import { publicApiGuard, publicJson, publicNotFound, publicOptions } from "@/lib/public-api";
 import { zoneBySlug } from "@/lib/avalon-zones";
 import { zoneDetailPayload } from "@/lib/zone-public";
 
@@ -9,4 +9,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ name: st
   const z = zoneBySlug((await params).name);
   if (!z) return publicNotFound("Zona desconocida");
   return publicJson(zoneDetailPayload(z), { req });
+}
+
+export function OPTIONS() {
+  return publicOptions();
 }

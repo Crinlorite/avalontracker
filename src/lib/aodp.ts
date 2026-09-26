@@ -7,7 +7,6 @@ export type GameServer = "west" | "europe" | "east";
 export const GAME_SERVERS: GameServer[] = ["west", "europe", "east"];
 export const DEFAULT_SERVER: GameServer = "europe";
 export const MARKET_CITIES = ["Lymhurst", "Martlock", "Thetford", "Bridgewatch", "Fort Sterling", "Caerleon", "Brecilien"] as const;
-export type MarketCity = (typeof MARKET_CITIES)[number];
 export const USER_AGENT = "AvalonTracker/2 (+https://avalontracker.app)";
 
 const ITEM_RES: Record<ResourceType, string> = { ORE: "ORE", WOOD: "WOOD", FIBER: "FIBER", HIDE: "HIDE", STONE: "ROCK" };
@@ -56,7 +55,8 @@ export function parsePrices(json: unknown): ParsedPrice[] {
     if (typeof o.item_id !== "string" || typeof o.city !== "string") continue;
     const [sellMin, sellMinAt] = priceAt(o.sell_price_min, o.sell_price_min_date);
     const [buyMax, buyMaxAt] = priceAt(o.buy_price_max, o.buy_price_max_date);
-    if (sellMin === null && buyMax === null) continue;
+    // Una fila con todo a null es AODP diciendo «ya no hay dato»: se devuelve
+    // para que el refresco borre la celda vieja.
     out.push({ itemId: o.item_id, city: o.city, sellMin, sellMinAt, buyMax, buyMaxAt });
   }
   return out;

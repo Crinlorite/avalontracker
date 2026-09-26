@@ -31,7 +31,7 @@ describe("lotes y URL", () => {
 });
 
 describe("parsePrices", () => {
-  it("0001-01-01 y precio 0 = sin dato; fechas UTC; filas sin nada se descartan", () => {
+  it("0001-01-01 y precio 0 = sin dato; fechas UTC; una fila sin nada se devuelve con nulos (AODP dice «ya no hay dato»)", () => {
     const rows = parsePrices([
       { item_id: "T4_ORE", city: "Lymhurst", quality: 1, sell_price_min: 100, sell_price_min_date: "2026-09-26T12:00:00", buy_price_max: 84, buy_price_max_date: "2026-09-26T11:15:00" },
       { item_id: "T4_ORE", city: "Caerleon", quality: 1, sell_price_min: 0, sell_price_min_date: "0001-01-01T00:00:00", buy_price_max: 0, buy_price_max_date: "0001-01-01T00:00:00" },
@@ -39,6 +39,7 @@ describe("parsePrices", () => {
     ]);
     expect(rows).toEqual([
       { itemId: "T4_ORE", city: "Lymhurst", sellMin: 100, sellMinAt: new Date("2026-09-26T12:00:00Z"), buyMax: 84, buyMaxAt: new Date("2026-09-26T11:15:00Z") },
+      { itemId: "T4_ORE", city: "Caerleon", sellMin: null, sellMinAt: null, buyMax: null, buyMaxAt: null },
       { itemId: "T4_ORE", city: "Martlock", sellMin: null, sellMinAt: null, buyMax: 70, buyMaxAt: new Date("2026-09-26T10:00:00Z") },
     ]);
   });
