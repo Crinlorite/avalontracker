@@ -2,6 +2,9 @@ import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 import { authConfig } from "@/lib/auth.config";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
+import zoneNames from "@/data/avalon-zone-names.json";
+
+const ZONE_SLUGS = new Set((zoneNames as string[]).map((n) => n.toLowerCase()));
 
 const { auth } = NextAuth(authConfig);
 
@@ -25,6 +28,16 @@ export default auth((req) => {
   const isAuth = path.startsWith("/clan") || path.startsWith("/profile") || path.startsWith("/dashboard");
   if (isAuth && !session?.user) return Response.redirect(new URL("/", nextUrl));
 
+  // Fichas de zona: slug desconocido → 404 de verdad (el streaming de la
+  // página ya no podría cambiar el código); mayúsculas → URL canónica.
+  const zoneMatch = /^(\/es)?\/zones\/([^/]+)\/?$/.exec(path);
+  if (zoneMatch) {
+    const slug = decodeURIComponent(zoneMatch[2]);
+    const lower = slug.toLowerCase();
+    if (!ZONE_SLUGS.has(lower)) return NextResponse.rewrite(new URL("/_not-found-zone", nextUrl));
+    if (slug !== lower) return NextResponse.redirect(new URL(`${zoneMatch[1] ?? ""}/zones/${lower}`, nextUrl), 308);
+  }
+
   // Páginas públicas en castellano (/es/...): el layout raíz lee esta
   // cabecera para servir <html lang="es"> desde el servidor.
   if (path === "/es" || path.startsWith("/es/")) {
@@ -35,5 +48,5 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/clan/:path*", "/profile/:path*", "/dashboard/:path*", "/api/auth/callback/:path*", "/es", "/es/:path*"],
+  matcher: ["/clan/:path*", "/profile/:path*", "/dashboard/:path*", "/api/auth/callback/:path*", "/es", "/es/:path*", "/zones/:path*"],
 };

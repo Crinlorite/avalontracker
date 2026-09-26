@@ -43,8 +43,10 @@ export async function GET(_req: Request, { params }: RouteParams) {
   const payload = members.map((m) => {
     const { user, ...rest } = m;
     const { discordId, discordAvatar, ...userSafe } = user;
-    const defaultIdx = Number((BigInt(discordId) >> BigInt(22)) % BigInt(6));
-    const avatarUrl = discordAvatar
+    // Invitados: discordId sintético → avatar por defecto 0.
+    const isDiscord = /^\d{17,20}$/.test(discordId);
+    const defaultIdx = isDiscord ? Number((BigInt(discordId) >> BigInt(22)) % BigInt(6)) : 0;
+    const avatarUrl = discordAvatar && isDiscord
       ? `https://cdn.discordapp.com/avatars/${discordId}/${discordAvatar}.png?size=64`
       : `https://cdn.discordapp.com/embed/avatars/${defaultIdx}.png`;
     return { ...rest, user: { ...userSafe, avatarUrl } };

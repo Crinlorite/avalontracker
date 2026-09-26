@@ -1,7 +1,7 @@
 {
   "source": "https://github.com/ao-data/ao-bin-dumps",
   "commit": "47e4f5aca4d30b7495afa5a625ce0d5795e32050",
-  "generatedAt": "2026-09-26T08:07:48.414Z",
+  "generatedAt": "2026-09-26T08:35:26.258Z",
   "zones": 400,
   "note": "Game data extracted by the community from Albion Online's client files (© Sandbox Interactive). Regenerate with scripts/extract-avalon-zones.ts."
 }

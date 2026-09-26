@@ -22,9 +22,9 @@ export async function GET(request: Request) {
   try { await prisma.$queryRaw`SELECT 1`; dbOk = true; } catch {}
   let botOk = false;
   try {
-    const guild = await prisma.clan.findFirst({ select: { discordGuildId: true } });
+    const guild = await prisma.clan.findFirst({ where: { discordGuildId: { not: null } }, select: { discordGuildId: true } });
     if (guild) {
-      const h = await fetchGuildHealth(guild.discordGuildId);
+      const h = await fetchGuildHealth(guild.discordGuildId!);
       botOk = h.installed;
     } else {
       botOk = true;

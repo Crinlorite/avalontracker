@@ -11,7 +11,7 @@ export async function GET() {
     include: { members: { where: { userId: session.user.id }, select: { appRole: true } } },
   });
   return NextResponse.json(clans.map((c) => ({
-    id: c.id, name: c.name, discordGuildId: c.discordGuildId, discordGuildName: c.discordGuildName, discordGuildIcon: c.discordGuildIcon,
+    id: c.id, name: c.name, kind: c.kind, discordGuildId: c.discordGuildId, discordGuildName: c.discordGuildName, discordGuildIcon: c.discordGuildIcon,
     myRole: c.members[0]?.appRole ?? null,
   })));
 }

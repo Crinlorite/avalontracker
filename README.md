@@ -20,6 +20,17 @@ Herramienta colaborativa para mapear los **Caminos de Avalon** (Roads of Avalon)
 
 ## Funcionalidades principales
 
+### Parte pública (sin cuenta)
+- **`/zones`**: las 400 zonas de los Caminos de Avalon con buscador y filtros (tier, recurso, cofre, mazmorra, clase, hideout). **`/zones/<zona>`**: ficha indexable con minimapa, recursos con el tier de cada nodo, cofres por calidad y tamaño, mazmorras y zonas parecidas. En inglés y en `/es/...`.
+- **`/exits`**: «¿dónde he salido?» → ciudad royal y portales royal más cercanos desde cualquier zona del mundo.
+- Datos sacados de los ficheros del juego: ver [`src/data/README.md`](src/data/README.md).
+
+### Mapas personales (sin Discord)
+- **`/map`** crea un mapa personal en un clic, sin cuenta: se abre una **cuenta de invitado** vinculada al navegador.
+- Al entrar con Discord, los mapas del invitado **pasan a la cuenta real** (cookie firmada de 10 min + fusión en el callback de Discord).
+- Un mapa personal se puede **convertir en mapa de clan** (mismos requisitos que crear un clan: Vigil Bot + owner/admin del servidor). Mismo id, mismas rutas.
+- Invitados sin actividad durante 30 días se borran con sus mapas. Máximo 3 mapas personales por persona.
+
 ### Autenticación Discord-native
 - Login con **Discord OAuth** (scopes mínimos: `identify email`). Sin contraseñas, sin Google.
 - **Vigil Bot** (servicio sibling) actúa como autoridad de roles y emisor de notificaciones. Avalon Tracker no habla directamente con la Discord API — todo va vía el bot.

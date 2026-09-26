@@ -47,6 +47,7 @@ export const authConfig = {
       if (typeof token.discordId === "string") {
         (session.user as unknown as Record<string, unknown>).discordId = token.discordId;
       }
+      session.user.isGuest = token.guest === true;
       return session;
     },
   },

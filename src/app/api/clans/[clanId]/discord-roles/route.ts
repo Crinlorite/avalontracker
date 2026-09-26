@@ -20,6 +20,7 @@ export async function GET(_req: Request, { params }: RouteParams) {
 
   const clan = await prisma.clan.findUnique({ where: { id: clanId }, select: { discordGuildId: true } });
   if (!clan) return apiError("NOT_FOUND", 404, "Clan no encontrado");
+  if (!clan.discordGuildId) return apiError("CONFLICT", 409, "Este mapa personal no está ligado a ningún servidor de Discord");
 
   try {
     const roles = await fetchGuildRoles(clan.discordGuildId);

@@ -61,6 +61,14 @@ export function invalidateRoleCache(userId: string, clanId?: string): void {
   }
 }
 
+// Tras cambios que afectan a todo el clan (p. ej. convertir un mapa
+// personal en clan de Discord) se tira la caché de todos sus miembros.
+export function invalidateClanRoleCache(clanId: string): void {
+  for (const key of roleCache.keys()) {
+    if (key.endsWith(`:${clanId}`)) roleCache.delete(key);
+  }
+}
+
 export async function getUserRoleInClan(
   userId: string,
   clanId: string
@@ -71,17 +79,43 @@ export async function getUserRoleInClan(
 
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: { discordId: true },
+    select: { discordId: true, isGuest: true },
   });
   const clan = await prisma.clan.findUnique({
     where: { id: clanId },
-    select: { discordGuildId: true, createdById: true },
+    select: { kind: true, discordGuildId: true, createdById: true },
   });
   if (!user || !clan) {
     const miss: CachedRole = { appRole: null, stale: false, syncedAt: new Date() };
     roleCache.set(key, miss);
     return miss;
   }
+
+  // Mapa personal: no hay Discord ni Vigil. Su creador es ADMIN; nadie
+  // más tiene acceso salvo una membresía explícita en ClanMember.
+  if (clan.kind === "PERSONAL" || !clan.discordGuildId) {
+    let appRole: AppRole | null = null;
+    if (clan.createdById === userId) appRole = "ADMIN";
+    else {
+      const m = await prisma.clanMember.findUnique({
+        where: { userId_clanId: { userId, clanId } },
+        select: { appRole: true },
+      });
+      appRole = m?.appRole ?? null;
+    }
+    const personal: CachedRole = { appRole, stale: false, syncedAt: new Date() };
+    roleCache.set(key, personal);
+    return personal;
+  }
+
+  // Un invitado no tiene cuenta de Discord: nunca es miembro de un clan
+  // de Discord (y su discordId sintético no se manda al bot).
+  if (user.isGuest) {
+    const none: CachedRole = { appRole: null, stale: false, syncedAt: new Date() };
+    roleCache.set(key, none);
+    return none;
+  }
+  const guildId = clan.discordGuildId;
 
   // El creador del clan siempre es ADMIN — el bot no puede degradarlo
   // aunque sus roles Discord estén mapeados a otra cosa. Evita el caso
@@ -93,7 +127,7 @@ export async function getUserRoleInClan(
     const { fetchUserRoleFromBot } = (await import(
       "@/lib/vigil-bot-client"
     )) as { fetchUserRoleFromBot: typeof FetchUserRoleFromBot };
-    const botResult = await fetchUserRoleFromBot(clan.discordGuildId, user.discordId);
+    const botResult = await fetchUserRoleFromBot(guildId, user.discordId);
 
     // Si el bot devuelve computedAppRole=null (no hay mappings aplicables),
     // NO degradar un appRole existente (p.ej. bootstrap del creador que es

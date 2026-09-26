@@ -9,8 +9,9 @@ import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSidebarToggle } from "@/components/layout/SidebarToggleContext";
 import type { AppRole } from "@/generated/prisma/client";
+import { keepMapsWithDiscord } from "@/components/map/guest-actions";
 
-type ClanEntry = { id: string; name: string; discordGuildIcon: string | null; myRole: AppRole | null };
+type ClanEntry = { id: string; name: string; kind: "DISCORD" | "PERSONAL"; discordGuildIcon: string | null; myRole: AppRole | null };
 
 export function Sidebar() {
   const { data: session } = useSession();
@@ -24,7 +25,8 @@ export function Sidebar() {
   const { t } = useLanguage();
 
   const avatar = session?.user?.image;
-  const name = session?.user?.name ?? t("dashboard.greetingFallback");
+  const isGuest = session?.user?.isGuest === true;
+  const name = isGuest ? t("guest.name") : (session?.user?.name ?? t("dashboard.greetingFallback"));
 
   return (
     <>
@@ -59,7 +61,7 @@ export function Sidebar() {
           <Link href="/profile" className={navClass(pathname === "/profile")}>{t("nav.profile")}</Link>
         </nav>
 
-        <div className="mb-2 text-xs uppercase text-slate-500">{t("nav.myClans")}</div>
+        <div className="mb-2 text-xs uppercase text-slate-500">{t("nav.mapsAndClans")}</div>
         <div className="mb-6 flex flex-1 flex-col gap-1 overflow-y-auto">
           {clans.map((c) => {
             const clanBase = `/clan/${c.id}`;
@@ -76,7 +78,9 @@ export function Sidebar() {
                   onClick={() => setOpen(false)}
                 >
                   <span className="truncate">{c.name}</span>
-                  {c.myRole && (
+                  {c.kind === "PERSONAL" ? (
+                    <span className="ml-2 shrink-0 rounded bg-slate-800 px-1.5 py-0.5 text-[10px] text-slate-300">{t("personal.badge")}</span>
+                  ) : c.myRole && (
                     <span className={`ml-2 shrink-0 rounded px-1.5 py-0.5 text-[10px] ${roleBadgeColor(c.myRole)}`}>
                       {roleLabel(c.myRole, t)}
                     </span>
@@ -87,9 +91,11 @@ export function Sidebar() {
                     <SubNavLink href={clanBase} active={pathname === clanBase} onClick={() => setOpen(false)}>
                       {t("nav.routes")}
                     </SubNavLink>
-                    <SubNavLink href={`${clanBase}/members`} active={pathname.startsWith(`${clanBase}/members`)} onClick={() => setOpen(false)}>
-                      {t("nav.members")}
-                    </SubNavLink>
+                    {c.kind !== "PERSONAL" && (
+                      <SubNavLink href={`${clanBase}/members`} active={pathname.startsWith(`${clanBase}/members`)} onClick={() => setOpen(false)}>
+                        {t("nav.members")}
+                      </SubNavLink>
+                    )}
                     <SubNavLink href={`${clanBase}/trash`} active={pathname.startsWith(`${clanBase}/trash`)} onClick={() => setOpen(false)}>
                       {t("nav.trash")}
                     </SubNavLink>
@@ -118,8 +124,18 @@ export function Sidebar() {
           <LanguageSwitcher direction="up" />
         </div>
 
+        {isGuest && (
+          <button
+            onClick={() => keepMapsWithDiscord(pathname)}
+            className="mb-2 rounded-md bg-[#5865F2] px-3 py-2 text-sm font-semibold text-white hover:bg-[#4752c4]"
+          >{t("guest.banner.cta")}</button>
+        )}
         <button
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={() => {
+            // Un invitado que cierra sesión pierde el acceso a sus mapas.
+            if (isGuest && !window.confirm(t("guest.signout.confirm"))) return;
+            signOut({ callbackUrl: "/" });
+          }}
           className="rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-300 hover:bg-slate-800"
         >{t("nav.signOut")}</button>
       </aside>
