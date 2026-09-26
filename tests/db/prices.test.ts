@@ -54,3 +54,21 @@ describe("refreshPrices", () => {
     expect(await mp.getPrices("east", ["T6_FIBER"])).toEqual({ fetchedAt: null, prices: {} });
   });
 });
+
+describe("GET /api/v1/zones/{name}/prices", () => {
+  it("devuelve las líneas de la zona para el servidor pedido y valida server/enchant", async () => {
+    const { GET } = await import("@/app/api/v1/zones/[name]/prices/route");
+    await mp.refreshPrices({ now: new Date("2026-09-26T16:00:00Z"), servers: ["europe"], fetchImpl: fetchWith(() => [row("T6_FIBER", "Lymhurst", 900, "2026-09-26T15:50:00", 700, "2026-09-26T15:50:00")]) });
+    const call = (q: string, name = "casitos-atinaum") => GET(new Request(`http://t/x${q}`, { headers: { "x-forwarded-for": "10.3.3.3" } }), { params: Promise.resolve({ name }) });
+    const r = await call("?server=europe");
+    expect(r.status).toBe(200);
+    expect(r.headers.get("cache-control")).toContain("s-maxage=3600");
+    const j = await r.json();
+    expect(j.server).toBe("europe"); expect(j.enchant).toBe(0); expect(j.fetchedAt).toBe("2026-09-26T16:00:00.000Z");
+    expect(j.lines.find((l: { itemId: string }) => l.itemId === "T6_FIBER").cities.Lymhurst.sellMin).toBe(900);
+    expect((await call("")).status).toBe(200);                 // servidor por defecto: europe
+    expect((await call("?server=mars")).status).toBe(400);
+    expect((await call("?enchant=9")).status).toBe(400);
+    expect((await call("?server=east", "nope")).status).toBe(404);
+  });
+});

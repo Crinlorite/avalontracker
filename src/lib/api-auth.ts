@@ -28,6 +28,4 @@ export function apiRateLimit(me: ApiUser, limiter: Limiter = apiLimiter): NextRe
   return r.ok ? null : apiError("RATE_LIMITED", 429, "Demasiadas peticiones", { retryAfterMs: r.retryAfterMs });
 }
 
-export function clientIp(req: Request): string {
-  return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-}
+export { clientIp } from "@/lib/client-ip";
