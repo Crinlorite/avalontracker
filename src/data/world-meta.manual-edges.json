@@ -1,0 +1,550 @@
+{
+ "note": "Connections present in world-meta.json but absent from its source dump (broderickhyman/ao-bin-dumps, archived 2023-01). They are the manual corrections applied when world-meta.json was built; re-apply them if the file is ever regenerated from a dump. Recovered by diff on 2026-09-26.",
+ "base": "https://github.com/broderickhyman/ao-bin-dumps/blob/master/cluster/world.json",
+ "edges": [
+  [
+   "Aspenwood",
+   "Birchcopse"
+  ],
+  [
+   "Astolat",
+   "Slowtree Plain"
+  ],
+  [
+   "Avalanche Incline",
+   "Highstone Plateau"
+  ],
+  [
+   "Avalanche Ravine",
+   "Highstone Mound"
+  ],
+  [
+   "Battlebrae Flatland",
+   "Parchsand Drought"
+  ],
+  [
+   "Battlebrae Lake",
+   "Dryvein Confluence"
+  ],
+  [
+   "Battlebrae Lake",
+   "Sunfang Approach"
+  ],
+  [
+   "Battlebrae Meadow",
+   "Longfen Veins"
+  ],
+  [
+   "Battlebrae Plain",
+   "Razorrock Bank"
+  ],
+  [
+   "Black Monastery",
+   "Razorrock Passage"
+  ],
+  [
+   "Bleachskull Desert",
+   "Highstone Plains"
+  ],
+  [
+   "Bleachskull Steppe",
+   "Highstone Mound"
+  ],
+  [
+   "Bleachskull Steppe",
+   "Westweald Thicket"
+  ],
+  [
+   "Bowscale Fell",
+   "Eldon Hill"
+  ],
+  [
+   "Braemore Lowland",
+   "Frostseep Ravine"
+  ],
+  [
+   "Braemore Upland",
+   "Widemoor Fen"
+  ],
+  [
+   "Broken Fell",
+   "Carns Hill"
+  ],
+  [
+   "Cairn Drain",
+   "Creag Garr"
+  ],
+  [
+   "Cairn Fidair",
+   "Pen Gent"
+  ],
+  [
+   "Citadel of Ash",
+   "Skysand Ridge"
+  ],
+  [
+   "Creag Dhor",
+   "Creag Meagir"
+  ],
+  [
+   "Creag Garr",
+   "Tharcal Fissure"
+  ],
+  [
+   "Creag Morr",
+   "Domhain Chasm"
+  ],
+  [
+   "Daemonium Keep",
+   "Stonemouth Bay"
+  ],
+  [
+   "Daemonium Keep",
+   "Thirstwater Gully"
+  ],
+  [
+   "Darkbough Snag",
+   "Sunfang Wasteland"
+  ],
+  [
+   "Darkground Swamp",
+   "Willowsigh Marsh"
+  ],
+  [
+   "Deadpine Forest",
+   "Murdergulch Ravine"
+  ],
+  [
+   "Deadvein Gully",
+   "Flimmerair Steppe"
+  ],
+  [
+   "Deathreach Priory",
+   "Greenhollow Vale"
+  ],
+  [
+   "Deathwisp Bog",
+   "Sunfang Cliffs"
+  ],
+  [
+   "Deathwisp Sink",
+   "Murdergulch Trail"
+  ],
+  [
+   "Deepwood Copse",
+   "Deepwood Gorge"
+  ],
+  [
+   "Deepwood Dell",
+   "Iceburn Cliffs"
+  ],
+  [
+   "Deepwood Pines",
+   "Frostpeak Ascent"
+  ],
+  [
+   "Deepwood Pines",
+   "Runnelvein Bog"
+  ],
+  [
+   "Driftwood Hollow",
+   "Razorrock Verge"
+  ],
+  [
+   "Drownfield Course",
+   "Drytop Pillars"
+  ],
+  [
+   "Drownfield Course",
+   "Everwinter Expanse"
+  ],
+  [
+   "Drownfield Rut",
+   "Whitepeak Ascent"
+  ],
+  [
+   "Drownfield Sink",
+   "Murdergulch Gap"
+  ],
+  [
+   "Drybasin Oasis",
+   "Skylake Hinterlands"
+  ],
+  [
+   "Drybasin Riverbed",
+   "Skylake Bridge"
+  ],
+  [
+   "Drybasin Riverbed",
+   "Wetgrave Swale"
+  ],
+  [
+   "Drytop Pillars",
+   "Everwinter Shores"
+  ],
+  [
+   "Dryvein End",
+   "Rivercopse Path"
+  ],
+  [
+   "Dryvein Oasis",
+   "Whitewall Ridge"
+  ],
+  [
+   "Dryvein Plain",
+   "Springsump Wetland"
+  ],
+  [
+   "Dryvein Riverbed",
+   "Sunkenbough Spring"
+  ],
+  [
+   "Dryvein Steppe",
+   "Springsump Basin"
+  ],
+  [
+   "Dusklight Fen",
+   "Nightcreak Marsh"
+  ],
+  [
+   "Eldersleep",
+   "Iceburn Tundra"
+  ],
+  [
+   "Everwinter Crossing",
+   "Meltwater Delta"
+  ],
+  [
+   "Everwinter Passage",
+   "Scuttlesink Marsh"
+  ],
+  [
+   "Everwinter Peak",
+   "Everwinter Plain"
+  ],
+  [
+   "Everwinter Peak",
+   "Shaleheath Steep"
+  ],
+  [
+   "Eye of the Forest",
+   "Skylake Hinterlands"
+  ],
+  [
+   "Farshore Drylands",
+   "Farshore Lagoon"
+  ],
+  [
+   "Farshore Heath",
+   "Farshore Lagoon"
+  ],
+  [
+   "Farshore Heath",
+   "Whitewall Ridge"
+  ],
+  [
+   "Ferndell",
+   "Hornbeam Wood"
+  ],
+  [
+   "Firesink Trench",
+   "Thirstwater Gully"
+  ],
+  [
+   "Flammog Desolation",
+   "Floatshoal Floe"
+  ],
+  [
+   "Flammog Fork",
+   "Giantweald Roots"
+  ],
+  [
+   "Floatshoal Bight",
+   "Timberslope Bridge"
+  ],
+  [
+   "Frostbite Chasm",
+   "Windgrass Coast"
+  ],
+  [
+   "Frostpeak Vista",
+   "Timberslope Dell"
+  ],
+  [
+   "Frostseep Crevasse",
+   "Widemoor Flats"
+  ],
+  [
+   "Frostseep Crevasse",
+   "Widemoor Woods"
+  ],
+  [
+   "Frostspring Passage",
+   "Southgrove Thicket"
+  ],
+  [
+   "Frostspring Volcano",
+   "Springsump Basin"
+  ],
+  [
+   "Garrow Fell",
+   "Gutras Hill"
+  ],
+  [
+   "Giantweald Edge",
+   "Wetgrave Marsh"
+  ],
+  [
+   "Giantweald Glade",
+   "Hightree Pass"
+  ],
+  [
+   "Giantweald Glade",
+   "Thunderrock Rapids"
+  ],
+  [
+   "Glacierfall Canyon",
+   "Glacierfall Pass"
+  ],
+  [
+   "Glacierfall Canyon",
+   "Glacierfall Valley"
+  ],
+  [
+   "Glacierfall Fissure",
+   "Iceburn Firth"
+  ],
+  [
+   "Glacierfall Passage",
+   "Meltwater Channel"
+  ],
+  [
+   "Glacierfall Passage",
+   "Whitebank Wall"
+  ],
+  [
+   "Gravemound Brim",
+   "Mudfoot Mounds"
+  ],
+  [
+   "Gravemound Cliffs",
+   "Redtree Enclave"
+  ],
+  [
+   "Gravemound Hills",
+   "Gravemound Knoll"
+  ],
+  [
+   "Gravemound Slope",
+   "Mudfoot Sump"
+  ],
+  [
+   "Greenshore Peninsula",
+   "Watchwood Lakeside"
+  ],
+  [
+   "Gutras Hill",
+   "Runnel Sink"
+  ],
+  [
+   "Haytor",
+   "Lewsdon Hill"
+  ],
+  [
+   "Highstone Grassland",
+   "Windgrass Terrace"
+  ],
+  [
+   "Highstone Meadow",
+   "Parchsand Cliffs"
+  ],
+  [
+   "Hightree Borderlands",
+   "Rivercopse Curve"
+  ],
+  [
+   "Hightree Enclave",
+   "Whitecliff Peak"
+  ],
+  [
+   "Hightree Hillock",
+   "Hightree Lake"
+  ],
+  [
+   "Hightree Hillock",
+   "Thirstwater Waste"
+  ],
+  [
+   "Hightree Steep",
+   "Munten Rise"
+  ],
+  [
+   "Iceburn Tundra",
+   "Runnelvein Sink"
+  ],
+  [
+   "Kindlegrass Steppe",
+   "Lazygrass Plain"
+  ],
+  [
+   "Longfen Arms",
+   "Longfen Marsh"
+  ],
+  [
+   "Longfen Marsh",
+   "Longfen Veins"
+  ],
+  [
+   "Longmarch Meadow",
+   "Snapshaft Trough"
+  ],
+  [
+   "Meltwater Bog",
+   "Whitebank Wall"
+  ],
+  [
+   "Merlyn's Rest",
+   "Munten Tundra"
+  ],
+  [
+   "Murdergulch Trail",
+   "Willowshade Lake"
+  ],
+  [
+   "Northstrand Beach",
+   "Scuttlesink Mouth"
+  ],
+  [
+   "Owlsong Glen",
+   "Yew Wood"
+  ],
+  [
+   "Razorrock Bank",
+   "Sunfang Dawn"
+  ],
+  [
+   "Razorrock Chasm",
+   "Razorrock Gulch"
+  ],
+  [
+   "Razorrock Edge",
+   "Razorrock Passage"
+  ],
+  [
+   "Razorrock Ravine",
+   "Sunfang Ravine"
+  ],
+  [
+   "Rivercopse Path",
+   "Sunkenbough Woods"
+  ],
+  [
+   "Runnelvein Sink",
+   "Thunderrock Draw"
+  ],
+  [
+   "Sandmount Strand",
+   "Twinchannel Narrows"
+  ],
+  [
+   "Sandrift Dunes",
+   "Stonelake Hillock"
+  ],
+  [
+   "Sandrift Fringe",
+   "Southgrove Copse"
+  ],
+  [
+   "Scuttlesink Marsh",
+   "Shaleheath Steep"
+  ],
+  [
+   "Scuttlesink Pools",
+   "Shaleheath Hills"
+  ],
+  [
+   "Skullmarsh Upper",
+   "Slakesands Canyon"
+  ],
+  [
+   "Skysand Plateau",
+   "Skysand Ridge"
+  ],
+  [
+   "Slakesands Mesa",
+   "Watchwood Lakeside"
+  ],
+  [
+   "Sleetwater Basin",
+   "Windripple Fen"
+  ],
+  [
+   "Slithertail Marsh",
+   "Stumprot Swamp"
+  ],
+  [
+   "Slowtree Plain",
+   "Smoothfloor Cleft"
+  ],
+  [
+   "Stonemouth Bay",
+   "Thirstwater Steppe"
+  ],
+  [
+   "Stonemouth Northbluff",
+   "Stonemouth Southbluff"
+  ],
+  [
+   "Stonemouth Southbluff",
+   "Sunstrand Shoal"
+  ],
+  [
+   "Sunfang Ravine",
+   "Wailing Bulwark"
+  ],
+  [
+   "Swiftsands Basin",
+   "Timberslope Grove"
+  ],
+  [
+   "Thunderrock Ascent",
+   "Wailing Bulwark"
+  ],
+  [
+   "Thunderrock Rapids",
+   "Thunderrock Upland"
+  ],
+  [
+   "Timberscar Copse",
+   "Widemoor Hills"
+  ],
+  [
+   "Timberscar Dell",
+   "Whitepeak Tundra"
+  ],
+  [
+   "Twinchannel Narrows",
+   "Westweald Thicket"
+  ],
+  [
+   "Whitepeak Spring",
+   "Whitepeak Tundra"
+  ],
+  [
+   "Widemoor End",
+   "Willowshade Wetlands"
+  ],
+  [
+   "Willowshade Hills",
+   "Willowshade Pools"
+  ],
+  [
+   "Willowshade Hills",
+   "Willowshade Sink"
+  ],
+  [
+   "Willowshade Icemarsh",
+   "Willowshade Mire"
+  ]
+ ]
+}
