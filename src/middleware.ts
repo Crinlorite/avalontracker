@@ -1,4 +1,5 @@
 import NextAuth from "next-auth";
+import { NextResponse } from "next/server";
 import { authConfig } from "@/lib/auth.config";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
 
@@ -23,8 +24,16 @@ export default auth((req) => {
 
   const isAuth = path.startsWith("/clan") || path.startsWith("/profile") || path.startsWith("/dashboard");
   if (isAuth && !session?.user) return Response.redirect(new URL("/", nextUrl));
+
+  // Páginas públicas en castellano (/es/...): el layout raíz lee esta
+  // cabecera para servir <html lang="es"> desde el servidor.
+  if (path === "/es" || path.startsWith("/es/")) {
+    const headers = new Headers(req.headers);
+    headers.set("x-page-lang", "es");
+    return NextResponse.next({ request: { headers } });
+  }
 });
 
 export const config = {
-  matcher: ["/clan/:path*", "/profile/:path*", "/dashboard/:path*", "/api/auth/callback/:path*"],
+  matcher: ["/clan/:path*", "/profile/:path*", "/dashboard/:path*", "/api/auth/callback/:path*", "/es", "/es/:path*"],
 };

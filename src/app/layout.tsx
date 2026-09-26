@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { Inter } from "next/font/google";
 import SessionProvider from "@/components/providers/SessionProvider";
 import { SWRProvider } from "@/components/providers/SWRProvider";
@@ -48,9 +49,6 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-video-preview": -1,
     },
-  },
-  alternates: {
-    canonical: "/",
   },
   openGraph: {
     type: "website",
@@ -128,13 +126,15 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Idioma servido: EN por defecto; /es/... lo marca el middleware.
+  const pageLang = (await headers()).get("x-page-lang") === "es" ? "es" : undefined;
   return (
-    <html lang="en" className="dark">
+    <html lang={pageLang ?? "en"} className="dark">
       <head>
         <meta name="mobile-web-app-capable" content="yes" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
@@ -144,7 +144,7 @@ export default function RootLayout({
       >
         <SessionProvider>
           <SWRProvider>
-            <LanguageProvider>
+            <LanguageProvider pageLang={pageLang}>
               {children}
               <ToastProvider />
             </LanguageProvider>

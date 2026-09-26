@@ -16,7 +16,7 @@ type Ctx = {
 const LanguageContext = createContext<Ctx | null>(null);
 
 function detectInitial(): Lang {
-  if (typeof window === "undefined") return "es";
+  if (typeof window === "undefined") return "en";
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (stored && SUPPORTED.includes(stored)) return stored;
   // Fallback al lenguaje del navegador. Probamos primero el código
@@ -32,14 +32,15 @@ function detectInitial(): Lang {
   return "en";
 }
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  // SSR-safe: empieza en "es" (servidor no tiene window) y se rectifica
-  // en el primer render.
-  const [lang, setLang] = useState<Lang>("es");
+export function LanguageProvider({ children, pageLang }: { children: ReactNode; pageLang?: Lang }) {
+  // El servidor pinta en inglés (lo que ve Google y quien no tiene
+  // preferencia) y el cliente se rectifica en el primer render. Las
+  // páginas con idioma propio (/es/...) fijan `pageLang` y no se tocan.
+  const [lang, setLang] = useState<Lang>(pageLang ?? "en");
 
   useEffect(() => {
-    setLang(detectInitial());
-  }, []);
+    if (!pageLang) setLang(detectInitial());
+  }, [pageLang]);
 
   // Aplica dir="rtl" al <html> cuando el idioma es RTL (árabe). Otros
   // idiomas resetean a "ltr". Así estilos que dependen de la dirección
