@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { fetchGuildHealth, fetchUserGuildPermissions, GuildOrMemberNotFoundError, BotUnavailableError } from "@/lib/vigil-bot-client";
+import { checkGuildRegistration } from "@/lib/clan-register";
 import { apiError, internalError } from "@/lib/api-error";
 import { logger } from "@/lib/logger";
 import { logAudit } from "@/lib/audit";
@@ -31,6 +31,7 @@ export async function GET() {
     clans.map((c) => ({
       id: c.id,
       name: c.name,
+      kind: c.kind,
       discordGuildName: c.discordGuildName,
       discordGuildIcon: c.discordGuildIcon,
       myRole: c.members[0]?.appRole ?? null,
@@ -52,56 +53,8 @@ export async function POST(request: Request) {
       });
     }
 
-    const health = await fetchGuildHealth(parsed.data.discordGuildId);
-    if (!health.installed) {
-      return apiError("VALIDATION_ERROR", 400,
-        "Vigil Bot no está instalado en este guild. Instálalo antes de crear el clan.");
-    }
-
-    // Verificación de permisos Discord: el user solo puede registrar el clan
-    // si en ese guild es owner o tiene ADMINISTRATOR / MANAGE_GUILD.
-    // Cierra el agujero de squatting de clanes ajenos. Sin bypass — RBAC puro.
-    const requesterUser = await prisma.user.findUnique({
-      where: { id: session.user.id },
-      select: { discordId: true },
-    });
-    if (!requesterUser?.discordId) return apiError("UNAUTHORIZED", 401, "Sesión inválida");
-
-    try {
-      const perms = await fetchUserGuildPermissions(parsed.data.discordGuildId, requesterUser.discordId);
-      if (!perms.canRegisterClan) {
-        return apiError("INSUFFICIENT_ROLE", 403,
-          "No tienes permisos en ese servidor Discord (necesitas ser owner, administrator o manage guild).");
-      }
-    } catch (err) {
-      if (err instanceof GuildOrMemberNotFoundError) {
-        return apiError("VALIDATION_ERROR", 400,
-          "No eres miembro de ese servidor Discord, o el bot no lo ve.");
-      }
-      if (err instanceof BotUnavailableError) {
-        // Fail-closed: si no podemos verificar, rechazamos.
-        return apiError("STALE_DEPENDENCY", 503,
-          "No se pudo verificar permisos Discord ahora mismo. Reintenta en un momento.");
-      }
-      throw err;
-    }
-
-    // Pre-check amigable: ya existe un clan para este guild o con este nombre
-    const existing = await prisma.clan.findFirst({
-      where: {
-        OR: [
-          { discordGuildId: parsed.data.discordGuildId },
-          { name: parsed.data.name },
-        ],
-      },
-      select: { id: true, name: true, discordGuildId: true },
-    });
-    if (existing) {
-      const reason = existing.discordGuildId === parsed.data.discordGuildId
-        ? "Este guild Discord ya tiene un clan registrado."
-        : "Ya existe un clan con ese nombre.";
-      return apiError("VALIDATION_ERROR", 400, reason, { existingClanId: existing.id });
-    }
+    const check = await checkGuildRegistration(session.user.id, parsed.data.discordGuildId, parsed.data.name);
+    if (!check.ok) return apiError(check.code, check.status, check.message, check.extra);
 
     // Transacción: crear clan + asignar creador como ADMIN + audit.
     // Si algún paso falla, ninguno se persiste.

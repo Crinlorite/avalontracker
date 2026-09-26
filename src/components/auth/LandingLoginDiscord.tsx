@@ -91,10 +91,10 @@ export function LandingLoginDiscord() {
         {/* Captura real del producto */}
         <figure className="mt-12 w-full max-w-5xl">
           <Image
-            src="/landing/map-example.png"
+            src="/landing/map-example.jpg"
             alt={t("landing.shot.caption")}
-            width={1600}
-            height={900}
+            width={2356}
+            height={1276}
             className="w-full rounded-xl border border-slate-800 shadow-2xl shadow-indigo-950/50"
           />
           <figcaption className="mt-2 text-center text-xs text-slate-500">{t("landing.shot.caption")}</figcaption>

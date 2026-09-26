@@ -20,6 +20,17 @@ Collaborative tool for mapping the **Roads of Avalon** (Caminos de Avalon) of Al
 
 ## Main features
 
+### Public part (no account)
+- **`/zones`**: all 400 Roads of Avalon zones with search and filters (tier, resource, chest, dungeon, class, hideout). **`/zones/<zone>`**: indexable page with mini-map, resources with node tiers, chests by quality and size, dungeons and similar zones. English, plus Spanish under `/es/...`.
+- **`/exits`**: "where did I come out?" → nearest royal city and royal portals from any world zone.
+- Data extracted from the game files: see [`src/data/README.md`](src/data/README.md).
+
+### Personal maps (no Discord)
+- **`/map`** creates a personal map in one click, with no account: a **guest account** linked to the browser is opened.
+- Signing in with Discord later **moves the guest's maps to the real account** (10-minute signed cookie + merge in the Discord callback).
+- A personal map can be **turned into a guild map** (same requirements as creating a clan: Vigil Bot + owner/admin of the server). Same id, same routes.
+- Guests with no activity for 30 days are deleted with their maps. Up to 3 personal maps per person.
+
 ### Discord-native authentication
 - Login with **Discord OAuth** (minimal scopes: `identify email`). No passwords, no Google.
 - **Vigil Bot** (sibling service) acts as the role authority and notification emitter. Avalon Tracker does not talk to the Discord API directly — everything goes through the bot.

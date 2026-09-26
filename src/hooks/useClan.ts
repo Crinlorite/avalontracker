@@ -15,8 +15,9 @@ export type SecurityLevel = "SAFE" | "CAUTION" | "DANGER";
 export type ClanDetail = {
   id: string;
   name: string;
-  discordGuildId: string;
-  discordGuildName: string;
+  kind: "DISCORD" | "PERSONAL";
+  discordGuildId: string | null;
+  discordGuildName: string | null;
   discordGuildIcon: string | null;
   discordWebhookUrl: string | null;
   anchorZoneId: number | null;
