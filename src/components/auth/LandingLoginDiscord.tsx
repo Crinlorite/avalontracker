@@ -2,6 +2,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import zoneNames from "@/data/avalon-zone-names.json";
+import { ZoneSuggest } from "@/components/zones/ZoneSuggest";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { SIDE_PROJECTS, type SideProject } from "@/data/sideProjects";
@@ -9,6 +13,8 @@ import type { Lang } from "@/i18n/translations";
 
 export function LandingLoginDiscord() {
   const { t, lang } = useLanguage();
+  const router = useRouter();
+  const [zoneQuery, setZoneQuery] = useState("");
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-slate-950">
@@ -59,13 +65,17 @@ export function LandingLoginDiscord() {
             <h2 className="text-lg font-semibold text-white">{t("landing.path.zone.title")}</h2>
             <p className="mt-1 flex-1 text-sm text-slate-400">{t("landing.path.zone.body")}</p>
             <div className="mt-4 flex gap-2">
-              <input
-                name="q"
-                type="search"
-                placeholder={t("landing.path.zone.placeholder")}
-                aria-label={t("landing.path.zone.placeholder")}
-                className="min-w-0 flex-1 rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none"
-              />
+              <div className="min-w-0 flex-1">
+                <ZoneSuggest
+                  name="q"
+                  value={zoneQuery}
+                  onChange={setZoneQuery}
+                  onPick={(zone) => router.push(`/zones/${zone.toLowerCase()}`)}
+                  names={zoneNames as string[]}
+                  placeholder={t("landing.path.zone.placeholder")}
+                  className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none"
+                />
+              </div>
               <button type="submit" className="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-600">
                 {t("landing.path.zone.cta")}
               </button>

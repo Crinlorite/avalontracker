@@ -43,7 +43,7 @@ export function RouteListTable({ routes, myRole }: { routes: RouteView[]; myRole
     let exclusiveCount = 0;
 
     if (isFullRoute) {
-      confirmMsg = "¿Borrar esta ruta? Quedará en papelera 2 días antes del borrado definitivo.";
+      confirmMsg = "¿Borrar esta ruta? Quedará en papelera 7 días antes del borrado definitivo.";
       url = `/api/clans/${clanId}/routes/${pathRoute.id}`;
     } else {
       // Hops únicos de este path (no en ningún hermano).

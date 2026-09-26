@@ -2550,3 +2550,19 @@ Después: pedir a Crinlorite (a) el OK de despliegue, (b) la huella `ANDROID_SIG
 - **Cobertura de la spec, fase 1 (§12.1):** `Route.deletedAt` + 7 días (T1) · tamaños 7/20 (T2) · `DeviceToken` y vínculo (T3, T4, T11) · `MapShare` y enlaces (T7, T8, T11) · API v1 dispositivos/mapas/cambios/enlaces/importación (T4, T6, T7, T9) · `/m`, `/i`, `/link/app` (T5, T8, T9) · AASA y assetlinks (T10) · UI de compartir y dispositivos (T11) · `robots` (T5). Fusión invitado→Discord desde la app (T4). Conversión revoca enlaces (T7).
 - **Review Focus → tests:** 1 → T7 («el dueño no se degrada») · 2 → T6 («dos saltos con la misma clave») · 3 → T4 («el código no se reutiliza») · 4 → T9 («bombas de descompresión») · 5 → T6 («since inválido o futuro»).
 - **Consistencia de nombres:** `getApiUser`/`clientIp` (T3/T4) usados en T6, T7, T9; `createPersonalMap` (T6) usado en T9; `shareLookupLimiter` vive en `src/lib/map-shares.ts` y lo importan T7 y T8; `loadActiveRoutes` (T7) usado en T8; `TRASH_TTL_MS` (T1) usado en trash/rutas.
+
+### Task 13: Autocompletado en el buscador de zonas (≥ 3 caracteres) — añadida por Crinlorite durante la ejecución
+
+**Files:**
+- Create: `src/lib/zone-suggest.ts`, `src/components/zones/ZoneSuggest.tsx`
+- Modify: `src/components/zones/ZoneBrowser.tsx` (el campo de búsqueda), `src/components/auth/LandingLoginDiscord.tsx` (el campo «Consulta una zona»)
+- Test: `tests/lib/zone-suggest.test.ts`
+
+**Interfaces:**
+- Produces: `suggestZones(query: string, names: readonly string[], max = 8): string[]` — vacío con menos de 3 letras (se ignoran guiones, espacios y mayúsculas); primero las que empiezan por el texto, luego las que lo contienen; alfabético dentro de cada grupo; máximo `max`.
+- `ZoneSuggest` (cliente): `{ value, onChange, onPick, names, placeholder, autoFocus? }` — campo + lista desplegable; Enter elige la primera sugerencia; Escape cierra.
+
+- [ ] **Step 1: Test que falla** — `tests/lib/zone-suggest.test.ts` con: menos de 3 letras → `[]`; «cas» → primero las que empiezan por «Cas», luego las que contienen «cas»; «casitosat» encuentra «Casitos-Atinaum» (sin guion); máximo 8; sin coincidencias → `[]`.
+- [ ] **Step 2: Implementación mínima** y GREEN.
+- [ ] **Step 3: Componente y cableado** en `/zones` (elegir una sugerencia abre la ficha) y en la portada (elegir abre la ficha; Enter sin elegir sigue yendo a `/zones?q=`).
+- [ ] **Step 4: tsc + eslint + build; commit** `web: autocompletado de zonas a partir de 3 caracteres`.
