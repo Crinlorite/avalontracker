@@ -27,6 +27,13 @@ function withFallback(partial: Dict, base: Dict): Dict {
 
 // — Inglés (referencia base) —
 const en: Dict = {
+  // Vincular la app (/link/app)
+  "link.title": "Link the app to your account",
+  "link.needDiscord": "Sign in with Discord on this page; the app will pick up the link automatically.",
+  "link.ready": "Almost done. Go back to the app to finish. This code expires in 60 seconds.",
+  "link.open": "Back to the app",
+  "link.copy": "Copy code",
+  "link.guest": "You are signed in as a guest. To link the app to a Discord account, sign in with Discord first.",
   // Mapa personal / invitado
   "map.start.title": "Your free Roads of Avalon map",
   "map.start.body": "Map the portals you open, with their timers and branches. No account: the map stays linked to this browser. Sign in with Discord whenever you want to keep it on every device.",
@@ -223,6 +230,13 @@ const en: Dict = {
 
 // — Español (referencia base) —
 const es: Dict = {
+  // Vincular la app (/link/app)
+  "link.title": "Vincular la app a tu cuenta",
+  "link.needDiscord": "Entra con Discord en esta página; la app recogerá el vínculo sola.",
+  "link.ready": "Casi está. Vuelve a la app para terminar. Este código caduca en 60 segundos.",
+  "link.open": "Volver a la app",
+  "link.copy": "Copiar código",
+  "link.guest": "Estás como invitado. Para vincular la app a una cuenta de Discord, entra antes con Discord.",
   // Mapa personal / invitado
   "map.start.title": "Tu mapa gratis de los Caminos de Avalon",
   "map.start.body": "Apunta los portales que abras, con sus tiempos y ramas. Sin cuenta: el mapa queda vinculado a este navegador. Entra con Discord cuando quieras para tenerlo en todos tus dispositivos.",
