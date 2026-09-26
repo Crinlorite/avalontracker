@@ -7,6 +7,7 @@ import { apiError, internalError } from "@/lib/api-error";
 import { parseIfMatch, VersionMismatchError } from "@/lib/version-check";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
 import { logAudit } from "@/lib/audit";
+import { trashDeadline } from "@/lib/trash";
 
 const patchLim = createLimiter({ windowMs: 60_000, max: 60 });
 
@@ -158,12 +159,12 @@ export async function DELETE(req: Request, { params }: RouteParams) {
   });
   await prisma.route.update({
     where: { id: routeId },
-    data: { version: { increment: 1 } },
+    data: { version: { increment: 1 }, ...(action === "ROUTE_DELETE" ? { deletedAt: now } : {}) },
   });
   await logAudit(clanId, session.user.id, action, routeId, {
     hopIds: targetHopIds,
     softDeletedAt: now.toISOString(),
-    recoverableUntil: new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+    recoverableUntil: trashDeadline(now).toISOString(),
   });
 
   return new NextResponse(null, { status: 204 });

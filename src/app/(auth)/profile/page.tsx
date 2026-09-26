@@ -5,6 +5,7 @@ import { useMe } from "@/hooks/useMe";
 import toast from "react-hot-toast";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { DevicesPanel } from "@/components/profile/DevicesPanel";
 
 export default function ProfilePage() {
   const { me, mutate } = useMe();
@@ -75,6 +76,11 @@ export default function ProfilePage() {
             className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-50"
           >{t("common.save")}</button>
         </div>
+      </section>
+
+      <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
+        <h2 className="mb-2 text-lg font-semibold text-white">{t("devices.title")}</h2>
+        <DevicesPanel />
       </section>
     </div>
   );

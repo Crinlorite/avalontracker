@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { mutate } from "swr";
 import { ZoneAutocomplete } from "@/components/zones/ZoneAutocomplete";
 
-type HopInput = { fromZone: string; toZone: string; portalSize: 7 | 20 | 40; hours: number; minutes: number };
+type HopInput = { fromZone: string; toZone: string; portalSize: 7 | 20; hours: number; minutes: number };
 
 const newHop = (from = ""): HopInput => ({ fromZone: from, toZone: "", portalSize: 7, hours: 2, minutes: 0 });
 
@@ -99,11 +99,10 @@ export function CreateRouteModal({
               </div>
               <div className="col-span-2 flex flex-col">
                 <div className="text-xs text-slate-400">Tamaño</div>
-                <select value={h.portalSize} onChange={(e) => setHop(i, { portalSize: Number(e.target.value) as 7 | 20 | 40 })}
+                <select value={h.portalSize} onChange={(e) => setHop(i, { portalSize: Number(e.target.value) as 7 | 20 })}
                   className="rounded border border-slate-700 bg-slate-950 px-2 py-2 text-white">
                   <option value={7}>7p</option>
                   <option value={20}>20p</option>
-                  <option value={40}>Tentáculo</option>
                 </select>
               </div>
               <div className="col-span-12 flex flex-wrap items-end gap-2">

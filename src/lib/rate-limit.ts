@@ -21,6 +21,12 @@ export function createLimiter(config: LimiterConfig): Limiter {
   };
 }
 
+// ¿Está la clave agotada ahora mismo? No consume nada.
+export function peekBlocked(limiter: Limiter, key: string): boolean {
+  const entry = limiter.cache.get(key);
+  return !!entry && entry.resetAt > Date.now() && entry.count >= limiter.config.max;
+}
+
 export function consumeToken(limiter: Limiter, key: string): ConsumeResult {
   const now = Date.now();
   const entry = limiter.cache.get(key);

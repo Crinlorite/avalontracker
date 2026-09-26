@@ -84,6 +84,7 @@ export async function POST(req: Request, { params }: RouteParams) {
       where: { id: routeId },
       data: {
         version: { increment: 1 },
+        deletedAt: null,
         ...(shouldReactivate ? { status: "ACTIVE" } : {}),
       },
     }),

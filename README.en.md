@@ -270,6 +270,13 @@ avalon-tracker/
 
 Every authenticated endpoint validates the clan role through `requireRole`. **There is no bypass** — the model is strictly per-clan.
 
+### API v1 (mobile app and links) — web session or `Authorization: Bearer <device token>`
+- `POST /api/v1/devices/link` (session) · `POST /api/v1/devices/claim` · `GET /api/v1/devices` · `DELETE /api/v1/devices/:id`
+- `POST /api/v1/guest` · `GET /api/v1/me` · `POST /api/v1/me/merge`
+- `GET|POST /api/v1/maps` · `GET /api/v1/maps/:id` · `GET|POST /api/v1/maps/:id/changes` (sync: the server wins)
+- `GET|POST /api/v1/maps/:id/shares` · `DELETE /api/v1/maps/:id/shares/:shareId` · `GET /api/v1/shares/:token` · `POST /api/v1/shares/:token/join`
+- `POST /api/v1/import` (app share code, format v1)
+
 ### Session / user
 - `GET /api/me` — own profile
 - `GET /api/me/clans` — clans you belong to

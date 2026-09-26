@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { portalSizeSchema } from "@/lib/portal-size";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { requireRole, PermissionError, permissionErrorMessage } from "@/lib/permissions";
@@ -12,7 +13,7 @@ const hopLimiter = createLimiter({ windowMs: 60_000, max: 30 });
 const appendSchema = z.object({
   fromZone: z.string().min(1).max(100),
   toZone: z.string().min(1).max(100),
-  portalSize: z.union([z.literal(7), z.literal(20), z.literal(40)]),
+  portalSize: portalSizeSchema,
   expiresAt: z.string().datetime(),
   allowBrokenChain: z.boolean().optional(),
 });

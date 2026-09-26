@@ -74,12 +74,41 @@ model User {
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 
+  deviceTokens     DeviceToken[]
   clansCreated     Clan[]       @relation("ClanCreator")
   clanMembers      ClanMember[]
   routesCreated    Route[]      @relation("RouteCreator")
   routesDisabled   Route[]      @relation("RouteDisabler")
   hopStatusSet     RouteHop[]   @relation("HopStatusSetter")
   auditLogs        AuditLog[]
+}
+
+// Token de dispositivo: autentica SOLO /api/v1 (app móvil). Se guarda el
+// hash SHA-256; el token se enseña una vez al crearlo (spec §5.2).
+model DeviceToken {
+  id         String    @id @default(cuid())
+  userId     String
+  name       String
+  tokenHash  String    @unique
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+}
+
+// Enlace compartido de un mapa PERSONAL (ver o editar), revocable. Solo el
+// hash SHA-256 del token en BD; la URL lleva el token (spec §5.3).
+model MapShare {
+  id          String    @id @default(cuid())
+  clanId      String
+  role        AppRole
+  tokenHash   String    @unique
+  createdById String
+  createdAt   DateTime  @default(now())
+  revokedAt   DateTime?
+  clan        Clan      @relation(fields: [clanId], references: [id], onDelete: Cascade)
+  @@index([clanId])
 }
 
 // ============ Clan ============
@@ -115,6 +144,7 @@ model Clan {
   createdBy          User               @relation("ClanCreator", fields: [createdById], references: [id])
   anchorZone         Zone?              @relation("ClanAnchor", fields: [anchorZoneId], references: [id])
   members            ClanMember[]
+  shares             MapShare[]
   routes             Route[]
   auditLogs          AuditLog[]
   roleMappings       ClanRoleMapping[]
@@ -217,6 +247,10 @@ model Route {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   disabledAt    DateTime?
+  // Papelera: fecha de borrado de la ruta ENTERA (borrar solo algunos
+  // saltos deja esto a null y marca deletedAt en los saltos). Se
+  // sincroniza con la app como un hecho más (spec §6.4).
+  deletedAt     DateTime?
   status        RouteStatus   @default(ACTIVE)
   notes         String?
   version       Int           @default(1)
@@ -228,6 +262,7 @@ model Route {
 
   @@index([clanId, status])
   @@index([updatedAt])
+  @@index([deletedAt])
 }
 
 model RouteHop {
