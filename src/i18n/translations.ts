@@ -27,6 +27,15 @@ function withFallback(partial: Dict, base: Dict): Dict {
 
 // — Inglés (referencia base) —
 const en: Dict = {
+  // Importar ruta (/i/<código>)
+  "import.title": "Route shared with you",
+  "import.expiresIn": "closes in {time}",
+  "import.expired": "closed",
+  "import.openApp": "Open in the app",
+  "import.add": "Add to my map",
+  "import.hint": "No account needed: a guest account is created on this browser. Sign in with Discord later to keep it everywhere.",
+  "import.invalid": "This code is not valid.",
+  "import.newer": "This code comes from a newer version of the app.",
   // Mapa compartido (/m/<token>)
   "share.title": "Shared map",
   "share.readonly": "Read-only view. Timers update every 30 seconds.",
@@ -239,6 +248,15 @@ const en: Dict = {
 
 // — Español (referencia base) —
 const es: Dict = {
+  // Importar ruta (/i/<código>)
+  "import.title": "Ruta compartida contigo",
+  "import.expiresIn": "cierra en {time}",
+  "import.expired": "cerrado",
+  "import.openApp": "Abrir en la app",
+  "import.add": "Añadir a mi mapa",
+  "import.hint": "Sin cuenta: se crea una de invitado en este navegador. Entra con Discord más tarde para tenerla en todas partes.",
+  "import.invalid": "Este código no es válido.",
+  "import.newer": "Este código viene de una versión más nueva de la app.",
   // Mapa compartido (/m/<token>)
   "share.title": "Mapa compartido",
   "share.readonly": "Solo lectura. Los tiempos se actualizan cada 30 segundos.",
