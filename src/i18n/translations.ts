@@ -161,7 +161,7 @@ const en: Dict = {
 
   // Trash
   "trash.title": "Trash",
-  "trash.subtitle": "Routes and paths deleted (manually or by chain expiry). They are permanently removed after 2 days. Until then, you can restore them.",
+  "trash.subtitle": "Routes and paths deleted (manually or by chain expiry). They are permanently removed after 7 days. Until then, you can restore them.",
   "trash.empty": "Trash is empty 🗑️",
   "trash.deletedAt": "Deleted",
   "trash.recover": "↩ Restore",
@@ -351,7 +351,7 @@ const es: Dict = {
   "anchorStatus.placeholderEmpty": "Sin notas. Click 'Actualizar' para reportar gankers, equipos vistos, actividad.",
 
   "trash.title": "Papelera",
-  "trash.subtitle": "Rutas y caminos borrados (manual o por caducidad de toda la chain). Se eliminan definitivamente tras 2 días desde el borrado. Antes de eso, puedes restaurarlos.",
+  "trash.subtitle": "Rutas y caminos borrados (manual o por caducidad de toda la chain). Se eliminan definitivamente tras 7 días desde el borrado. Antes de eso, puedes restaurarlos.",
   "trash.empty": "Papelera vacía 🗑️",
   "trash.deletedAt": "Borrada",
   "trash.recover": "↩ Restaurar",

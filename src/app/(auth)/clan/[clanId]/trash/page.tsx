@@ -108,7 +108,7 @@ export default function TrashPage() {
         <h1 className="text-2xl font-bold text-white">Papelera</h1>
         <p className="text-sm text-slate-400">
           Rutas y caminos borrados (manual o por caducidad de toda la chain). Se eliminan
-          definitivamente tras 2 días desde el borrado. Antes de eso, puedes restaurarlos.
+          definitivamente tras 7 días desde el borrado. Antes de eso, puedes restaurarlos.
         </p>
       </PageHeader>
 

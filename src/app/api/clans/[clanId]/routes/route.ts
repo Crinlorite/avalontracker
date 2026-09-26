@@ -6,6 +6,7 @@ import { requireRole, PermissionError, permissionErrorMessage } from "@/lib/perm
 import { apiError, internalError } from "@/lib/api-error";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
 import { logAudit } from "@/lib/audit";
+import { TRASH_TTL_MS } from "@/lib/trash";
 
 const createLim = createLimiter({ windowMs: 60_000, max: 20 });
 
@@ -59,7 +60,7 @@ export async function GET(request: Request, { params }: RouteParams) {
   // 2 días: una ruta de Avalon dura horas, así que 48h es ventana
   // sobrada para revertir un borrado por error. Pasado ese tiempo, la
   // ruta de todas formas habría caducado por sí misma.
-  const ttlMs = 2 * 24 * 60 * 60 * 1000;
+  const ttlMs = TRASH_TTL_MS;
   const ttlAgo = new Date(now.getTime() - ttlMs);
 
   // 1) Transición a EXPIRED + soft-delete de hops cuando la chain
@@ -86,7 +87,7 @@ export async function GET(request: Request, { params }: RouteParams) {
     await prisma.$transaction([
       prisma.route.updateMany({
         where: { id: { in: expiringIds } },
-        data: { status: "EXPIRED" },
+        data: { status: "EXPIRED", deletedAt: now },
       }),
       prisma.routeHop.updateMany({
         where: { routeId: { in: expiringIds }, deletedAt: null },
@@ -102,6 +103,9 @@ export async function GET(request: Request, { params }: RouteParams) {
       deletedAt: { lt: ttlAgo },
     },
   });
+
+  // 2b) Hard-delete de rutas enteras en papelera más de TRASH_TTL_MS.
+  await prisma.route.deleteMany({ where: { clanId, deletedAt: { lt: ttlAgo } } });
 
   // 3) Hard-delete de Routes que ya no tienen ningún hop (ni vivo ni
   // soft-deleted) — el paso 2 puede haber dejado huérfanas.

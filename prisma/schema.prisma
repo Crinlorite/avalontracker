@@ -217,6 +217,10 @@ model Route {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   disabledAt    DateTime?
+  // Papelera: fecha de borrado de la ruta ENTERA (borrar solo algunos
+  // saltos deja esto a null y marca deletedAt en los saltos). Se
+  // sincroniza con la app como un hecho más (spec §6.4).
+  deletedAt     DateTime?
   status        RouteStatus   @default(ACTIVE)
   notes         String?
   version       Int           @default(1)
@@ -228,6 +232,7 @@ model Route {
 
   @@index([clanId, status])
   @@index([updatedAt])
+  @@index([deletedAt])
 }
 
 model RouteHop {
