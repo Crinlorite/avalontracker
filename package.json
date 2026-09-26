@@ -7,7 +7,6 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "start:prod": "node server.js",
-    "seed": "npx prisma db seed",
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -41,6 +40,8 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@electric-sql/pglite-socket": "^0.2.11",
     "@tailwindcss/postcss": "^4",
     "@types/express": "^5.0.6",
     "@types/node": "^20",
@@ -49,6 +50,7 @@
     "@vitest/ui": "^3.2.4",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "fast-xml-parser": "^5.11.1",
     "prisma": "^7.4.2",
     "tailwindcss": "^4",
     "typescript": "^5",

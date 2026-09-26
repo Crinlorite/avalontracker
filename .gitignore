@@ -46,3 +46,6 @@ next-env.d.ts
 
 # Render-script font cache (fetched on demand by scripts/render-og.mjs)
 /scripts/.fonts/
+
+# caché de descargas del dump del juego (scripts/extract-avalon-zones.ts)
+/.cache
