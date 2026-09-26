@@ -91,7 +91,7 @@ Reutiliza la rama «mapa personal» de `getUserRoleInClan` (creador = ADMIN; el 
 - `GET /api/v1/maps/{id}/changes?since=<ISO del servidor>` → `{ routes: [...], hops: [...], serverTime }` con todo lo cambiado desde `since`, incluidos borrados (`deletedAt`) y desactivados. Sin `since` devuelve todo. Si hay más de 500 filas, la respuesta lleva `hasMore: true` y `next` (el `updatedAt` de la última fila entregada) para pedir el resto con `since=next`.
 - `POST /api/v1/maps/{id}/changes { routes: [...], hops: [...] }` → aplica el lote y responde `{ applied: [...], rejected: [{ key, reason: "stale", server: {...} }], serverTime }`.
   - Ruta: `{ id, notes, status, disabledAt, deletedAt, baseUpdatedAt }`.
-  - Salto: `{ routeId, fromZone, toZone, order, portalSize, expiresAt, status, statusNote, deletedAt, baseUpdatedAt }`. `portalSize ∈ {2, 7, 20, 40}`: hoy la app Flutter ofrece 2 y 7 y la web 7, 20 y 40; la API admite la unión, las interfaces nuevas (web y KMP) ofrecen **2, 7 y 20**, y 40 se conserva solo para las filas ya existentes (ver §14.5).
+  - Salto: `{ routeId, fromZone, toZone, order, portalSize, expiresAt, status, statusNote, deletedAt, baseUpdatedAt }`. **Tamaño de portal, estándar del juego actual: 7 (azul) o 20 (amarillo).** La API acepta `portalSize ∈ {7, 20}` al crear o modificar; los valores heredados 2 (app Flutter) y 40 (web antigua) se conservan en las filas existentes y se muestran tal cual, pero no se ofrecen ni se aceptan en escritura (decisión de Crinlorite, 26-sep; fuentes: guía oficial y Albion Roads Mapper).
   - `baseUpdatedAt` = el `updatedAt` del servidor que el cliente vio por última vez (ausente en filas nuevas).
 - **Regla de conflicto: el servidor manda.** Si `updatedAt` en servidor ≠ `baseUpdatedAt`, la fila se rechaza como `stale` y el cliente sustituye su copia por `server`. No se usa el reloj del cliente.
 - Idempotente: reenviar un lote no duplica (creates por id/clave natural; updates comparan base).
@@ -147,7 +147,7 @@ Modelos y estados · BD SQLDelight (rutas, saltos, mapas, ajustes, cola de cambi
 | Función (app Flutter 1.1) | KMP |
 |---|---|
 | Lista de rutas con filtro por estado y cuenta atrás en vivo | ✓ |
-| Nueva ruta: hasta 12 saltos encadenados, autocompletado, tamaño de portal (2/7; pasa a 2/7/20), tiempo restante | ✓ |
+| Nueva ruta: hasta 12 saltos encadenados, autocompletado, tamaño de portal (la app ofrecía 2/7; pasa al estándar **7/20**), tiempo restante | ✓ |
 | Estados de salto: activo, caducado, desactivado, colapsado, vigilado; nota | ✓ |
 | Ampliar tiempo, borrar salto, borrar ruta, notas de ruta | ✓ |
 | Avisos locales 1 h / 15 min / caducidad | ✓ |
@@ -194,4 +194,4 @@ Captura automática de cualquier clase; mapa vivo compartido por todos; servicio
 2. Ruta de la BD drift de la app Flutter en iOS y Android (para la migración).
 3. Orientación del minimapa respecto al del juego (hoy «esquemático»).
 4. Política de uso de AODP (cabecera `User-Agent` identificativa y frecuencia aceptada).
-5. Tamaños de portal que existen hoy en el juego (2, 7 y 20 según la comunidad; el 40 de la web no se ha confirmado). Si 40 no existe, la web deja de ofrecerlo y la API lo acepta solo en lectura.
+5. ~~Tamaños de portal~~ Resuelto el 26-sep: estándar 7/20 (§6.2); la fase 1 quita el 40 del selector web y de los esquemas de escritura.
