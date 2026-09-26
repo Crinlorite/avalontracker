@@ -43,13 +43,15 @@ export type ChangeKey = { kind: "route"; id: string } | { kind: "hop"; routeId: 
 export type RouteRow = { id: string; notes: string | null; status: string; disabledAt: string | null; deletedAt: string | null; createdAt: string; updatedAt: string };
 export type HopRow = { id: number; routeId: string; fromZone: string; toZone: string; order: number; portalSize: number; expiresAt: string; status: string; statusNote: string | null; deletedAt: string | null; updatedAt: string };
 export type PullResult = { routes: RouteRow[]; hops: HopRow[]; serverTime: string; hasMore: boolean; next: string | null };
-export type PushResult = { applied: ChangeKey[]; rejected: { key: ChangeKey; reason: "stale" | "not_in_map"; server?: RouteRow | HopRow }[]; serverTime: string };
+export type PushResult = { applied: { key: ChangeKey; server: RouteRow | HopRow }[]; rejected: { key: ChangeKey; reason: "stale" | "not_in_map"; server?: RouteRow | HopRow }[]; serverTime: string };
 
 export class UnknownZoneError extends Error {
   constructor(public zone: string) { super(`Zona desconocida: ${zone}`); }
 }
 
 const iso = (d: Date | null) => (d ? d.toISOString() : null);
+// Compara instantes, no cadenas: el cliente puede reserializar (sin ms, con offset).
+const sameInstant = (a: Date, b: string) => a.getTime() === new Date(b).getTime();
 const routeRow = (r: { id: string; notes: string | null; status: string; disabledAt: Date | null; deletedAt: Date | null; createdAt: Date; updatedAt: Date }): RouteRow =>
   ({ id: r.id, notes: r.notes, status: r.status, disabledAt: iso(r.disabledAt), deletedAt: iso(r.deletedAt), createdAt: r.createdAt.toISOString(), updatedAt: r.updatedAt.toISOString() });
 const hopRow = (h: { id: number; routeId: string; order: number; portalSize: number; expiresAt: Date; status: string; statusNote: string | null; deletedAt: Date | null; updatedAt: Date; fromZone: { name: string }; toZone: { name: string } }): HopRow =>
@@ -100,7 +102,7 @@ export async function pullChanges(clanId: string, since: Date | null, limit = PU
 }
 
 export async function applyChanges(clanId: string, userId: string, batch: PushBatch): Promise<PushResult> {
-  const applied: ChangeKey[] = [];
+  const applied: PushResult["applied"] = [];
   const rejected: PushResult["rejected"] = [];
 
   // Zonas por nombre → id (400 si alguna no existe).
@@ -124,30 +126,39 @@ export async function applyChanges(clanId: string, userId: string, batch: PushBa
         data: { id: r.id, clanId, createdById: userId, notes: r.notes ?? null, status: r.status ?? "ACTIVE", deletedAt: r.deletedAt ? new Date(r.deletedAt) : null },
       });
       await logAudit(clanId, userId, "ROUTE_CREATE", created.id, { via: "sync" });
-      applied.push(key);
+      applied.push({ key, server: routeRow(created) });
       continue;
     }
-    if (!r.baseUpdatedAt || existing.updatedAt.toISOString() !== r.baseUpdatedAt) {
+    if (!r.baseUpdatedAt || !sameInstant(existing.updatedAt, r.baseUpdatedAt)) {
       rejected.push({ key, reason: "stale", server: routeRow(existing) });
       continue;
     }
-    await prisma.route.update({
+    const nextDeleted = r.deletedAt === undefined ? undefined : r.deletedAt ? new Date(r.deletedAt) : null;
+    const updated = await prisma.route.update({
       where: { id: r.id },
       data: {
         notes: r.notes === undefined ? undefined : r.notes,
         status: r.status,
         disabledAt: r.status === "DISABLED" ? (existing.disabledAt ?? new Date()) : r.status === "ACTIVE" ? null : undefined,
-        deletedAt: r.deletedAt === undefined ? undefined : r.deletedAt ? new Date(r.deletedAt) : null,
+        deletedAt: nextDeleted,
         version: { increment: 1 },
       },
     });
+    // Borrar/restaurar la ruta entera es un hecho de ruta: se propaga a los
+    // saltos como hace la web (papelera por hop). Restaurar devuelve los
+    // saltos que cayeron con la ruta (mismo instante), no los borrados aparte.
+    if (nextDeleted && !existing.deletedAt) {
+      await prisma.routeHop.updateMany({ where: { routeId: r.id, deletedAt: null }, data: { deletedAt: nextDeleted } });
+    } else if (nextDeleted === null && existing.deletedAt) {
+      await prisma.routeHop.updateMany({ where: { routeId: r.id, deletedAt: existing.deletedAt }, data: { deletedAt: null } });
+    }
     touchedRoutes.add(r.id);
-    applied.push(key);
+    applied.push({ key, server: routeRow(updated) });
   }
 
   for (const h of hopsByKey.values()) {
     const key: ChangeKey = { kind: "hop", routeId: h.routeId, fromZone: h.fromZone, toZone: h.toZone };
-    const route = await prisma.route.findUnique({ where: { id: h.routeId }, select: { clanId: true } });
+    const route = await prisma.route.findUnique({ where: { id: h.routeId }, select: { clanId: true, deletedAt: true } });
     if (!route || route.clanId !== clanId) { rejected.push({ key, reason: "not_in_map" }); continue; }
     const natural = { routeId: h.routeId, fromZoneId: zoneId.get(h.fromZone)!, toZoneId: zoneId.get(h.toZone)! };
     const existing = await prisma.routeHop.findUnique({
@@ -156,25 +167,27 @@ export async function applyChanges(clanId: string, userId: string, batch: PushBa
     });
     const data = {
       order: h.order, portalSize: h.portalSize, expiresAt: new Date(h.expiresAt),
-      status: h.status ?? "ACTIVE", statusNote: h.statusNote ?? null, deletedAt: h.deletedAt ? new Date(h.deletedAt) : null,
+      status: h.status ?? "ACTIVE", statusNote: h.statusNote ?? null,
+      deletedAt: h.deletedAt ? new Date(h.deletedAt) : h.deletedAt === undefined && route.deletedAt ? route.deletedAt : null,
     };
     if (!existing) {
-      await prisma.routeHop.create({ data: { ...natural, ...data } });
+      const createdHop = await prisma.routeHop.create({ data: { ...natural, ...data }, include: { fromZone: { select: { name: true } }, toZone: { select: { name: true } } } });
       touchedRoutes.add(h.routeId);
-      applied.push(key);
+      applied.push({ key, server: hopRow(createdHop) });
       continue;
     }
-    if (!h.baseUpdatedAt || existing.updatedAt.toISOString() !== h.baseUpdatedAt) {
+    if (!h.baseUpdatedAt || !sameInstant(existing.updatedAt, h.baseUpdatedAt)) {
       rejected.push({ key, reason: "stale", server: hopRow(existing) });
       continue;
     }
     const statusChanged = h.status !== undefined && h.status !== existing.status;
-    await prisma.routeHop.update({
+    const updatedHop = await prisma.routeHop.update({
       where: { id: existing.id },
       data: { ...data, statusSetById: statusChanged ? userId : undefined, statusSetAt: statusChanged ? new Date() : undefined },
+      include: { fromZone: { select: { name: true } }, toZone: { select: { name: true } } },
     });
     touchedRoutes.add(h.routeId);
-    applied.push(key);
+    applied.push({ key, server: hopRow(updatedHop) });
   }
 
   for (const routeId of touchedRoutes) await logAudit(clanId, userId, "ROUTE_UPDATE", routeId, { via: "sync" });

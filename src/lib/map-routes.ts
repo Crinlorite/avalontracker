@@ -15,5 +15,11 @@ export async function loadActiveRoutes(clanId: string): Promise<{ routes: RouteV
     orderBy: { updatedAt: "desc" },
     take: 200,
   });
-  return { routes: JSON.parse(JSON.stringify(rows)) as RouteView[], now: now.toISOString() };
+  // Un enlace de ver no debe identificar a los editores: solo el nombre
+  // visible que cada uno eligió; nada de usuario, apodo ni avatar de Discord.
+  const routes = (JSON.parse(JSON.stringify(rows)) as RouteView[]).map((r) => ({
+    ...r,
+    createdBy: { id: "", discordUsername: "", displayName: r.createdBy.displayName, globalNickname: null, discordAvatar: null },
+  }));
+  return { routes, now: now.toISOString() };
 }

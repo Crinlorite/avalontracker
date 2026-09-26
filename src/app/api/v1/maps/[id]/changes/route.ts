@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getApiUser } from "@/lib/api-auth";
+import { apiRateLimit, getApiUser } from "@/lib/api-auth";
 import { apiError, internalError } from "@/lib/api-error";
 import { requireRole, PermissionError, permissionErrorMessage } from "@/lib/permissions";
 import { pullChanges, applyChanges, pushSchema, UnknownZoneError, PULL_LIMIT } from "@/lib/sync";
@@ -10,6 +10,8 @@ type Ctx = { params: Promise<{ id: string }> };
 export async function GET(req: Request, { params }: Ctx) {
   const me = await getApiUser(req);
   if (!me) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
+  const rl = apiRateLimit(me);
+  if (rl) return rl;
   const { id } = await params;
   const url = new URL(req.url);
   let since: Date | null = null;
@@ -33,6 +35,8 @@ export async function GET(req: Request, { params }: Ctx) {
 export async function POST(req: Request, { params }: Ctx) {
   const me = await getApiUser(req);
   if (!me) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
+  const rl = apiRateLimit(me);
+  if (rl) return rl;
   const { id } = await params;
   const parsed = pushSchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Lote inválido", { issues: parsed.error.issues });
