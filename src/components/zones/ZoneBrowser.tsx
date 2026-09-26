@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ZoneSuggest } from "./ZoneSuggest";
 import type { ZoneSummary, ZoneFamily, ResourceType, ChestType, DungeonType } from "@/lib/avalon-zones";
 import { publicT, publicPath, type PublicLang, type PublicKey } from "@/i18n/public";
 import { RESOURCE_COLOR, CHEST_COLOR, DUNGEON_COLOR } from "./ZoneMiniMap";
@@ -23,6 +24,8 @@ export function ZoneBrowser({ zones, lang }: { zones: ZoneSummary[]; lang: Publi
   // Los filtros viven en la URL (?q=&tier=…) para poder compartirlos; el
   // servidor ya pinta la lista filtrada.
   const sp = useSearchParams();
+  const router = useRouter();
+  const names = useMemo(() => zones.map((z) => z.n), [zones]);
   const [f, setF] = useState<Filters>(() => ({
     ...EMPTY,
     q: sp.get("q") ?? "", tier: sp.get("tier") ?? "", res: sp.get("res") ?? "", chest: sp.get("chest") ?? "",
@@ -62,14 +65,13 @@ export function ZoneBrowser({ zones, lang }: { zones: ZoneSummary[]; lang: Publi
   return (
     <div>
       <div className="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-4">
-        <input
-          type="search"
+        <ZoneSuggest
           value={f.q}
-          onChange={(e) => set({ q: e.target.value })}
+          onChange={(q) => set({ q })}
+          onPick={(zone) => router.push(publicPath(lang, `/zones/${zone.toLowerCase()}`))}
+          names={names}
           placeholder={t("zones.search")}
-          aria-label={t("zones.search")}
           autoFocus
-          className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-base text-white placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none"
         />
         <div className="flex flex-wrap items-center gap-2">
           <label className="flex items-center gap-1.5 text-xs text-slate-400">{t("zones.filter.tier")}
