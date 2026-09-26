@@ -236,13 +236,13 @@ export function exitsMetadata(lang: PublicLang): Metadata {
   };
 }
 
-export function ExitsPage({ lang }: { lang: PublicLang }) {
+export function ExitsPage({ lang, from }: { lang: PublicLang; from?: string }) {
   const t = publicT(lang);
   return (
     <PublicShell lang={lang} altHref={lang === "es" ? "/exits" : "/es/exits"}>
       <h1 className="text-3xl font-bold tracking-tight text-white md:text-4xl">{t("exits.title")}</h1>
       <p className="mt-3 max-w-3xl text-slate-400">{t("exits.intro")}</p>
-      <div className="mt-6"><ExitFinder lang={lang} avalonNames={AVALON_ZONES.map((z) => z.name)} /></div>
+      <div className="mt-6"><ExitFinder lang={lang} avalonNames={AVALON_ZONES.map((z) => z.name)} from={from} /></div>
       <p className="mt-6 text-xs text-slate-500">{t("exits.note")}</p>
     </PublicShell>
   );
