@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { getApiUser } from "@/lib/api-auth";
+import { apiRateLimit, getApiUser } from "@/lib/api-auth";
 import { apiError, internalError } from "@/lib/api-error";
 import { createPersonalMap, MAX_PERSONAL_MAPS } from "@/lib/personal-maps";
 
 export async function GET(req: Request) {
   const me = await getApiUser(req);
   if (!me) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
+  const rl = apiRateLimit(me);
+  if (rl) return rl;
   const clans = await prisma.clan.findMany({
     where: { members: { some: { userId: me.userId, appRole: { not: null } } } },
     include: { members: { where: { userId: me.userId }, select: { appRole: true } } },
@@ -21,6 +23,8 @@ const createSchema = z.object({ anchorZone: z.string().min(2).max(60).optional()
 export async function POST(req: Request) {
   const me = await getApiUser(req);
   if (!me) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
+  const rl = apiRateLimit(me);
+  if (rl) return rl;
   const parsed = createSchema.safeParse(await req.json().catch(() => ({})));
   if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Datos inválidos", { issues: parsed.error.issues });
   try {

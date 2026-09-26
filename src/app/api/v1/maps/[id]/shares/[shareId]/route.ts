@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getApiUser } from "@/lib/api-auth";
+import { apiRateLimit, getApiUser } from "@/lib/api-auth";
 import { apiError, internalError } from "@/lib/api-error";
 import { requireRole, PermissionError, permissionErrorMessage } from "@/lib/permissions";
 import { revokeShare } from "@/lib/map-shares";
@@ -8,6 +8,8 @@ import { logAudit } from "@/lib/audit";
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string; shareId: string }> }) {
   const me = await getApiUser(req);
   if (!me) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
+  const rl = apiRateLimit(me);
+  if (rl) return rl;
   const { id, shareId } = await params;
   try {
     await requireRole(me.userId, id, "ADMIN", "WRITE");

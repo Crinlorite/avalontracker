@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { verifyShare, shareLookupLimiter } from "@/lib/map-shares";
 import { loadActiveRoutes } from "@/lib/map-routes";
-import { consumeToken } from "@/lib/rate-limit";
+import { consumeToken, peekBlocked } from "@/lib/rate-limit";
 import { SharedMap } from "@/components/share/SharedMap";
 
 type Props = { params: Promise<{ token: string }> };
@@ -21,9 +21,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SharedMapPage({ params }: Props) {
   const { token } = await params;
   const ip = (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (!consumeToken(shareLookupLimiter, ip).ok) notFound();
+  if (peekBlocked(shareLookupLimiter, ip)) notFound();
   const share = await verifyShare(token);
-  if (!share) notFound();
+  if (!share) { consumeToken(shareLookupLimiter, ip); notFound(); }
   const clan = await prisma.clan.findUniqueOrThrow({
     where: { id: share.clanId },
     include: { anchorZone: { select: { id: true, name: true, type: true, tier: true, hasHideout: true, isRest: true, isCapital: true } } },

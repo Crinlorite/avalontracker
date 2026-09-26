@@ -120,7 +120,8 @@ export async function GET(request: Request, { params }: RouteParams) {
     where: { clanId, status: "EXPIRED", updatedAt: { lt: ttlAgo } },
   });
 
-  const where: Record<string, unknown> = { clanId };
+  // Las rutas en papelera (Route.deletedAt, p. ej. borradas desde la app) no se listan.
+  const where: Record<string, unknown> = { clanId, deletedAt: null };
   if (status && status !== "ALL") where.status = status;
   else if (!status) where.status = "ACTIVE";
   if (since) where.updatedAt = { gt: new Date(since) };

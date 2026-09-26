@@ -89,9 +89,9 @@ Reutiliza la rama «mapa personal» de `getUserRoleInClan` (creador = ADMIN; el 
 - `GET /api/v1/maps` → mapas donde el usuario es miembro (`id, name, kind, myRole, updatedAt`).
 - `POST /api/v1/maps { anchorZone? }` → mapa personal (mismo límite que la web: 3 por usuario).
 - `GET /api/v1/maps/{id}/changes?since=<ISO del servidor>` → `{ routes: [...], hops: [...], serverTime }` con todo lo cambiado desde `since`, incluidos borrados (`deletedAt`) y desactivados. Sin `since` devuelve todo. Si hay más de 500 filas, la respuesta lleva `hasMore: true` y `next` (el `updatedAt` de la última fila entregada) para pedir el resto con `since=next`.
-- `POST /api/v1/maps/{id}/changes { routes: [...], hops: [...] }` → aplica el lote y responde `{ applied: [...], rejected: [{ key, reason: "stale", server: {...} }], serverTime }`.
+- `POST /api/v1/maps/{id}/changes { routes: [...], hops: [...] }` → aplica el lote y responde `{ applied: [{ key, server }], rejected: [{ key, reason: "stale" | "not_in_map", server? }], serverTime }`. **`applied` devuelve la fila resultante** (con su `updatedAt` nuevo) para que el cliente adopte la base correcta sin esperar a la siguiente bajada.
   - Ruta: `{ id, notes, status, disabledAt, deletedAt, baseUpdatedAt }`.
-  - Salto: `{ routeId, fromZone, toZone, order, portalSize, expiresAt, status, statusNote, deletedAt, baseUpdatedAt }`. **Tamaño de portal, estándar del juego actual: 7 (azul) o 20 (amarillo).** La API acepta `portalSize ∈ {7, 20}` al crear o modificar; los valores heredados 2 (app Flutter) y 40 (web antigua) se conservan en las filas existentes y se muestran tal cual, pero no se ofrecen ni se aceptan en escritura (decisión de Crinlorite, 26-sep; fuentes: guía oficial y Albion Roads Mapper).
+  - Salto: `{ routeId, fromZone, toZone, order, portalSize, expiresAt, status, statusNote, deletedAt, baseUpdatedAt }`. **Excepción de `changes`:** el lote de sincronización acepta `portalSize ∈ {2, 7, 20, 40}` porque es un espejo de datos (la app migra saltos antiguos con 2); las interfaces y los endpoints de creación manual solo admiten 7 y 20. **Tamaño de portal, estándar del juego actual: 7 (azul) o 20 (amarillo).** La API acepta `portalSize ∈ {7, 20}` al crear o modificar; los valores heredados 2 (app Flutter) y 40 (web antigua) se conservan en las filas existentes y se muestran tal cual, pero no se ofrecen ni se aceptan en escritura (decisión de Crinlorite, 26-sep; fuentes: guía oficial y Albion Roads Mapper).
   - `baseUpdatedAt` = el `updatedAt` del servidor que el cliente vio por última vez (ausente en filas nuevas).
 - **Regla de conflicto: el servidor manda.** Si `updatedAt` en servidor ≠ `baseUpdatedAt`, la fila se rechaza como `stale` y el cliente sustituye su copia por `server`. No se usa el reloj del cliente.
 - Idempotente: reenviar un lote no duplica (creates por id/clave natural; updates comparan base).
@@ -162,8 +162,9 @@ Modelos y estados · BD SQLDelight (rutas, saltos, mapas, ajustes, cola de cambi
 
 ## 10. Seguridad (🔴 con tests adversariales)
 
-- Enlaces: token 128 bits, hash en BD, 429 por IP; revocar borra membresías `share:<id>`; EDITOR nunca escala a ADMIN; mapas DISCORD no se comparten por enlace; enlace revocado → 404.
-- Tokens de dispositivo: hash en BD; uno por dispositivo; revocables; solo `/api/v1`; límite por token (600/h) y por IP en `guest`/`claim`.
+- Enlaces: token 128 bits, hash en BD; 429 por IP contando **solo consultas fallidas** (un enlace válido nunca se bloquea a sí mismo); máximo 20 enlaces activos por mapa; revocar borra membresías `share:<id>`; EDITOR nunca escala a ADMIN; mapas DISCORD no se comparten por enlace; enlace revocado → 404.
+- Tokens de dispositivo: hash en BD; uno por dispositivo; revocables; solo `/api/v1`; límite por token (600/h, `apiRateLimit`) o por usuario con sesión, y por IP en `guest`/`claim`; importación 20/min por usuario.
+- Enlace de ver: la respuesta pública no identifica a los editores (solo el nombre visible elegido; sin usuario, apodo ni avatar de Discord).
 - Sincronización: solo mapas donde eres miembro; `routeId` validado contra el mapa (no se cuela un salto en otro mapa); formato estricto de ids; nombres de zona validados; lotes ≤ 200.
 - Fusión invitado → Discord: exige dos tokens válidos; nunca absorbe una cuenta real ni otro invitado (ya probado en la web).
 - API pública de zonas: solo lectura, caché, CORS, límite por IP.

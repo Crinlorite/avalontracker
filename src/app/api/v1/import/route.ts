@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { getApiUser } from "@/lib/api-auth";
+import { apiRateLimit, getApiUser } from "@/lib/api-auth";
 import { apiError, internalError } from "@/lib/api-error";
 import { decodeRouteCode } from "@/lib/route-codec";
 import { createPersonalMap, MAX_PERSONAL_MAPS } from "@/lib/personal-maps";
 import { logAudit } from "@/lib/audit";
 import { touchGuest } from "@/lib/guest";
+import { createLimiter, consumeToken } from "@/lib/rate-limit";
+
+// Como la creación de rutas en la web: 20 importaciones por minuto y usuario.
+const importLimiter = createLimiter({ windowMs: 60_000, max: 20 });
 
 const schema = z.object({ code: z.string().min(8).max(8000) }).strict();
 
@@ -16,6 +20,9 @@ const schema = z.object({ code: z.string().min(8).max(8000) }).strict();
 export async function POST(req: Request) {
   const me = await getApiUser(req);
   if (!me) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
+  const rl = apiRateLimit(me);
+  if (rl) return rl;
+  if (!consumeToken(importLimiter, me.userId).ok) return apiError("RATE_LIMITED", 429, "Demasiadas importaciones");
   const parsed = schema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Datos inválidos", { issues: parsed.error.issues });
   const decoded = decodeRouteCode(parsed.data.code);

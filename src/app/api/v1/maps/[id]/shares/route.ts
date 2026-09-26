@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getApiUser } from "@/lib/api-auth";
+import { apiRateLimit, getApiUser } from "@/lib/api-auth";
 import { apiError, internalError } from "@/lib/api-error";
 import { requireRole, PermissionError, permissionErrorMessage } from "@/lib/permissions";
 import { createShare, listShares, ShareError } from "@/lib/map-shares";
@@ -12,6 +12,8 @@ const schema = z.object({ role: z.enum(["VIEWER", "EDITOR"]) }).strict();
 export async function GET(req: Request, { params }: Ctx) {
   const me = await getApiUser(req);
   if (!me) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
+  const rl = apiRateLimit(me);
+  if (rl) return rl;
   const { id } = await params;
   try {
     await requireRole(me.userId, id, "ADMIN", "GET");
@@ -25,6 +27,8 @@ export async function GET(req: Request, { params }: Ctx) {
 export async function POST(req: Request, { params }: Ctx) {
   const me = await getApiUser(req);
   if (!me) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
+  const rl = apiRateLimit(me);
+  if (rl) return rl;
   const { id } = await params;
   const parsed = schema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Datos inválidos", { issues: parsed.error.issues });
@@ -35,7 +39,7 @@ export async function POST(req: Request, { params }: Ctx) {
     return NextResponse.json(share, { status: 201 });
   } catch (e) {
     if (e instanceof PermissionError) return apiError(e.code, e.status, permissionErrorMessage(e), e.extra);
-    if (e instanceof ShareError) return apiError(e.code === "NOT_FOUND" ? "NOT_FOUND" : "INSUFFICIENT_ROLE", e.status, e.message);
+    if (e instanceof ShareError) return apiError(e.code === "NOT_FOUND" ? "NOT_FOUND" : e.code === "LIMIT" ? "VALIDATION_ERROR" : "INSUFFICIENT_ROLE", e.status, e.message);
     return internalError(e);
   }
 }

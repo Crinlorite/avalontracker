@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { getApiUser } from "@/lib/api-auth";
+import { apiRateLimit, getApiUser } from "@/lib/api-auth";
 import { apiError, internalError } from "@/lib/api-error";
 import { verifyDeviceToken } from "@/lib/device-tokens";
 import { mergeGuestInto } from "@/lib/guest";
@@ -13,6 +13,8 @@ const schema = z.object({ guestToken: z.string().min(10).max(200) }).strict();
 export async function POST(req: Request) {
   const me = await getApiUser(req);
   if (!me || me.via !== "device") return apiError("UNAUTHORIZED", 401, "Hace falta el token de dispositivo de la cuenta Discord");
+  const rl = apiRateLimit(me);
+  if (rl) return rl;
   const parsed = schema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Datos inválidos", { issues: parsed.error.issues });
   try {
