@@ -1,6 +1,30 @@
 // Bichos por zona de Avalon desde mobcounts del dump (plan fase 2, Tarea 1).
 import { describe, it, expect } from "vitest";
-import { classifyMob, classifyMobs } from "@/lib/mobs";
+import { classifyMob, classifyMobs, mobLabel, sortMobs } from "@/lib/mobs";
+import { publicT } from "@/i18n/public";
+
+describe("mobLabel / sortMobs", () => {
+  it("etiquetas en inglés y en castellano", () => {
+    const en = publicT("en"); const es = publicT("es");
+    expect(mobLabel({ kind: "critter", resource: "ORE", tier: 5, rank: "veteran", count: 1 }, en)).toBe("T5 Ore critters (veteran)");
+    expect(mobLabel({ kind: "critter", resource: "ORE", tier: 5, rank: "veteran", count: 1 }, es)).toBe("Bichos de Mineral T5 (veteranos)");
+    expect(mobLabel({ kind: "guardian", name: "ent", tier: 8, count: 1 }, en)).toBe("Ent guardian T8");
+    expect(mobLabel({ kind: "animal", name: "bear", tier: null, count: 2 }, en)).toBe("Bear");
+    expect(mobLabel({ kind: "animal", name: "direboar", tier: 7, count: 2 }, en)).toBe("Direboar T7");
+    expect(mobLabel({ kind: "other", name: "T9_MOB_X", count: 1 }, en)).toBe("T9_MOB_X");
+  });
+  it("orden: critters (recurso, tier alto primero), guardianes, miniguardianes, animales, otros", () => {
+    const out = sortMobs([
+      { kind: "animal", name: "bear", tier: null, count: 1 },
+      { kind: "critter", resource: "WOOD", tier: 5, rank: "elite", count: 1 },
+      { kind: "miniguardian", name: "ent", tier: 6, count: 1 },
+      { kind: "critter", resource: "ORE", tier: 7, rank: "veteran", count: 1 },
+      { kind: "critter", resource: "ORE", tier: 5, rank: "veteran", count: 1 },
+      { kind: "guardian", name: "dryad", tier: 8, count: 1 },
+    ]);
+    expect(out.map((m) => (m.kind === "critter" ? `${m.resource}${m.tier}` : m.kind))).toEqual(["ORE7", "ORE5", "WOOD5", "guardian", "miniguardian", "animal"]);
+  });
+});
 
 describe("classifyMob", () => {
   it("critters de recolección: recurso, tier y rango", () => {

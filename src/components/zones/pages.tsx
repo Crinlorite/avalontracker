@@ -5,6 +5,11 @@ import { PublicShell } from "@/components/public/PublicShell";
 import { ZoneBrowser } from "./ZoneBrowser";
 import { ZoneMiniMap, MiniMapLegend, RESOURCE_COLOR, CHEST_COLOR, DUNGEON_COLOR } from "./ZoneMiniMap";
 import { ExitFinder } from "./ExitFinder";
+import { ZoneMobs } from "./ZoneMobs";
+import { ZoneChestLoot } from "./ZoneChestLoot";
+import { ZonePrices } from "./ZonePrices";
+import { zonePricesPayload } from "@/lib/zone-prices-db";
+import { DEFAULT_SERVER } from "@/lib/aodp";
 import {
   AVALON_ZONES, ZONES_SOURCE, zoneBySlug, zoneSlug, zoneSummaries, zoneFamily, similarZones,
   resourceTypes, chestCount, dungeonCount, CHEST_TYPES, DUNGEON_TYPES, type AvalonZone,
@@ -81,6 +86,9 @@ export async function ZonePage({ params, lang }: { params: Promise<{ zone: strin
   const slug = zoneSlug(z.name);
   const family = zoneFamily(z.zoneClass);
   const similar = similarZones(z);
+  // Precios del servidor por defecto para pintar sin esperar; si la BD no
+  // responde, el componente cliente los pide a la API al montar.
+  const initialPrices = await zonePricesPayload(z, DEFAULT_SERVER, 0).catch(() => null);
 
   const breadcrumb = {
     "@context": "https://schema.org",
@@ -162,8 +170,19 @@ export async function ZonePage({ params, lang }: { params: Promise<{ zone: strin
               </ul>
             )}
           </Card>
+
+          <Card title={t("zone.mobs")}>
+            <ZoneMobs mobs={z.mobs} t={t} />
+          </Card>
         </div>
       </div>
+
+      <ZoneChestLoot zone={z} t={t} />
+
+      <section id="prices" className="mt-6 rounded-xl border border-slate-800 bg-slate-900/50 p-4">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">{t("zone.prices")}</h2>
+        <ZonePrices slug={slug} lang={lang} initial={initialPrices} />
+      </section>
 
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         <section className="rounded-xl border border-indigo-800/60 bg-indigo-950/30 p-5">
@@ -176,7 +195,7 @@ export async function ZonePage({ params, lang }: { params: Promise<{ zone: strin
         <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
           <h2 className="text-lg font-semibold text-white">{t("zone.exits.title")}</h2>
           <p className="mt-2 text-sm text-slate-400">{t("zone.exits.body")}</p>
-          <Link href={publicPath(lang, "/exits")} className="mt-4 inline-block text-sm font-semibold text-indigo-300 hover:text-indigo-200">{t("nav.exits")} →</Link>
+          <Link href={publicPath(lang, `/exits?from=${encodeURIComponent(z.name)}`)} className="mt-4 inline-block text-sm font-semibold text-indigo-300 hover:text-indigo-200">{t("nav.exits")} →</Link>
           <h2 className="mt-5 text-base font-semibold text-white">{t("zone.guild.title")}</h2>
           <p className="mt-1 text-sm text-slate-400">{t("zone.guild.body")}</p>
           <Link href="/#guilds" className="mt-2 inline-block text-sm font-semibold text-indigo-300 hover:text-indigo-200">{t("zone.guild.button")} →</Link>

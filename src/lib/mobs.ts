@@ -1,5 +1,6 @@
 // Bichos de una zona de Avalon, a partir de `mobcounts` de world.json.
 import type { ResourceType } from "@/lib/avalon-zones";
+import type { PublicKey, PublicT } from "@/i18n/public";
 
 export type ZoneMob =
   | { kind: "critter"; resource: ResourceType; tier: number; rank: "veteran" | "elite"; count: number }
@@ -23,6 +24,27 @@ export function classifyMob(name: string, count: number): ZoneMob {
   m = /^(?:T(\d)_)?MOB_(?:HIDE_(?:MISTS|FOREST)_)?([A-Z]+?)(?:_SMALL)?$/.exec(name);
   if (m && ANIMALS[m[2]]) return { kind: "animal", name: ANIMALS[m[2]], tier: m[1] ? Number(m[1]) : null, count };
   return { kind: "other", name, count };
+}
+
+const KIND_ORDER: Record<ZoneMob["kind"], number> = { critter: 0, guardian: 1, miniguardian: 2, animal: 3, other: 4 };
+const RES_ORDER = ["ORE", "WOOD", "FIBER", "HIDE", "STONE"];
+
+// Etiqueta de un bicho en el idioma de la página pública.
+export function mobLabel(m: ZoneMob, t: PublicT): string {
+  switch (m.kind) {
+    case "critter": return t("mob.critter", { tier: m.tier, res: t(`res.${m.resource}` as PublicKey), rank: t(`mob.rank.${m.rank}` as PublicKey) });
+    case "animal": { const n = t(`mob.animal.${m.name}` as PublicKey); return m.tier ? `${n} T${m.tier}` : n; }
+    case "guardian": return t("mob.guardian", { name: t(`mob.guardian.${m.name}` as PublicKey), tier: m.tier });
+    case "miniguardian": return t("mob.miniguardian", { name: t(`mob.guardian.${m.name}` as PublicKey), tier: m.tier });
+    default: return m.name;
+  }
+}
+
+// Critters (por recurso, tier alto primero), guardianes, miniguardianes,
+// animales y, al final, lo desconocido.
+export function sortMobs(mobs: ZoneMob[]): ZoneMob[] {
+  const key = (m: ZoneMob) => m.kind === "critter" ? [RES_ORDER.indexOf(m.resource), 9 - m.tier, m.rank] : "name" in m ? [0, 0, m.name] : [0, 0, ""];
+  return [...mobs].sort((a, b) => KIND_ORDER[a.kind] - KIND_ORDER[b.kind] || String(key(a)).localeCompare(String(key(b))));
 }
 
 // Agrupa las entradas repetidas de mobcounts (mismo bicho en varios puntos)
