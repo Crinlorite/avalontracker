@@ -27,6 +27,25 @@ function withFallback(partial: Dict, base: Dict): Dict {
 
 // — Inglés (referencia base) —
 const en: Dict = {
+  // Enlaces compartidos y dispositivos (ajustes / perfil)
+  "shareLinks.title": "Share by link",
+  "shareLinks.help": "A view link shows the map read-only to anyone who has it. An edit link lets them add and change routes. Revoke a link to cut access for everyone who used it.",
+  "shareLinks.newView": "New view link",
+  "shareLinks.newEdit": "New edit link",
+  "shareLinks.copied": "Link copied",
+  "shareLinks.once": "Copy it now: for safety the link is only shown once.",
+  "shareLinks.revoke": "Revoke",
+  "shareLinks.empty": "No links yet.",
+  "shareLinks.created": "Created {date}",
+  "devices.title": "Devices",
+  "devices.help": "Devices linked to this account can sync your maps. Revoke one if you lose it.",
+  "devices.link": "Link a device",
+  "devices.scan": "Scan this code with the app within 60 seconds.",
+  "devices.newCode": "New code",
+  "devices.revoke": "Revoke",
+  "devices.empty": "No linked devices.",
+  "devices.lastUsed": "last used {date}",
+  "devices.never": "never used",
   // Importar ruta (/i/<código>)
   "import.title": "Route shared with you",
   "import.expiresIn": "closes in {time}",
@@ -248,6 +267,25 @@ const en: Dict = {
 
 // — Español (referencia base) —
 const es: Dict = {
+  // Enlaces compartidos y dispositivos (ajustes / perfil)
+  "shareLinks.title": "Compartir por enlace",
+  "shareLinks.help": "Un enlace de ver enseña el mapa en solo lectura a quien lo tenga. Uno de editar permite añadir y cambiar rutas. Revocar un enlace corta el acceso a todos los que entraron con él.",
+  "shareLinks.newView": "Nuevo enlace de ver",
+  "shareLinks.newEdit": "Nuevo enlace de editar",
+  "shareLinks.copied": "Enlace copiado",
+  "shareLinks.once": "Cópialo ahora: por seguridad el enlace solo se enseña una vez.",
+  "shareLinks.revoke": "Revocar",
+  "shareLinks.empty": "Aún no hay enlaces.",
+  "shareLinks.created": "Creado el {date}",
+  "devices.title": "Dispositivos",
+  "devices.help": "Los dispositivos vinculados a esta cuenta sincronizan tus mapas. Revoca uno si lo pierdes.",
+  "devices.link": "Vincular un dispositivo",
+  "devices.scan": "Escanea este código con la app antes de 60 segundos.",
+  "devices.newCode": "Nuevo código",
+  "devices.revoke": "Revocar",
+  "devices.empty": "Sin dispositivos vinculados.",
+  "devices.lastUsed": "último uso {date}",
+  "devices.never": "sin usar",
   // Importar ruta (/i/<código>)
   "import.title": "Ruta compartida contigo",
   "import.expiresIn": "cierra en {time}",
