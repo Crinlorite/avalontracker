@@ -7,9 +7,11 @@ import toast from "react-hot-toast";
 import { useClan, type ClanAnchorZone } from "@/hooks/useClan";
 import { useMe } from "@/hooks/useMe";
 import { RoleMappingEditor } from "@/components/clan/RoleMappingEditor";
+import { ConvertToClan } from "@/components/clan/ConvertToClan";
 import { ZoneAutocomplete } from "@/components/zones/ZoneAutocomplete";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { canAdmin } from "@/lib/role-ui";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { AppRole } from "@/generated/prisma/client";
 
 type MemberRow = { userId: string; appRole: AppRole | null };
@@ -106,13 +108,13 @@ export default function SettingsPage() {
               <button disabled={!name || saving} onClick={() => save({ name })} className="rounded bg-indigo-600 px-3 py-2 text-sm text-white disabled:opacity-50">Guardar</button>
             </div>
           </label>
-          <div>
+          {clan.kind !== "PERSONAL" && <div>
             <span className="text-sm text-slate-300">Guild Discord</span>
             <div className="mt-1 rounded border border-slate-700 bg-slate-950 px-3 py-2">
               <div className="text-white">{clan.discordGuildName}</div>
               <div className="font-mono text-xs text-slate-500">{clan.discordGuildId}</div>
             </div>
-          </div>
+          </div>}
         </div>
       </section>
 
@@ -137,10 +139,17 @@ export default function SettingsPage() {
         <AnchorPicker clanId={clanId} currentAnchor={clan.anchorZone ?? null} onUpdated={() => mutate()} />
       </section>
 
-      <section>
-        <h2 className="mb-4 text-lg font-semibold text-white">Mapeo de roles Discord</h2>
-        <RoleMappingEditor clanId={clanId} />
-      </section>
+      {clan.kind === "PERSONAL" ? (
+        <section className="rounded-xl border border-indigo-800/60 bg-indigo-950/30 p-6">
+          <ConvertHeading />
+          <ConvertToClan clanId={clanId} isGuest={me.isGuest} onDone={() => { mutate(); router.refresh(); }} />
+        </section>
+      ) : (
+        <section>
+          <h2 className="mb-4 text-lg font-semibold text-white">Mapeo de roles Discord</h2>
+          <RoleMappingEditor clanId={clanId} />
+        </section>
+      )}
 
       <section className="rounded-xl border border-red-900/50 bg-red-950/30 p-6">
         <h2 className="mb-2 text-lg font-semibold text-red-200">Zona peligrosa</h2>
@@ -245,4 +254,9 @@ function AnchorPicker({
       </div>
     </div>
   );
+}
+
+function ConvertHeading() {
+  const { t } = useLanguage();
+  return <h2 className="mb-3 text-lg font-semibold text-white">{t("convert.title")}</h2>;
 }

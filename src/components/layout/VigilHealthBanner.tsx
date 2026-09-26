@@ -40,8 +40,12 @@ export function VigilHealthBanner() {
     shouldRetryOnError: false,
   });
 
+  // Con solo mapas personales, Vigil no afecta en nada: no se avisa.
+  const { data: clans } = useSWR<{ kind: "DISCORD" | "PERSONAL" }[]>("/api/me/clans");
+  const usesDiscord = clans?.some((c) => c.kind !== "PERSONAL") ?? false;
+
   if (!data) return null;
-  if (data.db && data.vigilBot) return null;
+  if (data.db && (data.vigilBot || !usesDiscord)) return null;
 
   const dbDown = !data.db;
   const message = dbDown

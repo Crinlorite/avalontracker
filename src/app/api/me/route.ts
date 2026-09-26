@@ -17,6 +17,7 @@ export async function GET() {
     globalNickname: user.globalNickname,
     displayName: user.displayName,
     image: user.image,
+    isGuest: user.isGuest,
   });
 }
 

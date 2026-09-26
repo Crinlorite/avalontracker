@@ -40,45 +40,19 @@ enum SecurityLevel {
   DANGER   // rojo: gankers activos, no entrar sin equipo
 }
 
+// DISCORD: clan ligado a un servidor de Discord (roles vía Vigil Bot).
+// PERSONAL: mapa de una sola persona, sin Discord ni Vigil. Se puede
+// convertir en DISCORD más adelante (mismo id, mismas rutas).
+enum ClanKind {
+  DISCORD
+  PERSONAL
+}
+
 enum AppRole {
   VIEWER
   CONTRIBUTOR
   EDITOR
   ADMIN
-}
-
-// ============ Auth (NextAuth) ============
-
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
-  @@unique([identifier, token])
 }
 
 // ============ User ============
@@ -92,11 +66,14 @@ model User {
   email            String       @unique
   displayName      String?
   image            String?
+  // Invitado: cuenta creada sin Discord para usar un mapa personal. Su
+  // discordId/email son sintéticos («guest_…»), nunca se mandan a Vigil.
+  // Al entrar con Discord se fusiona en la cuenta real (ver lib/guest.ts).
+  isGuest          Boolean      @default(false)
+  lastSeenAt       DateTime?
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 
-  accounts         Account[]
-  sessions         Session[]
   clansCreated     Clan[]       @relation("ClanCreator")
   clanMembers      ClanMember[]
   routesCreated    Route[]      @relation("RouteCreator")
@@ -110,8 +87,10 @@ model User {
 model Clan {
   id                 String             @id @default(cuid())
   name               String             @unique
-  discordGuildId     String             @unique
-  discordGuildName   String
+  kind               ClanKind           @default(DISCORD)
+  // Solo en clanes DISCORD. Nulo en mapas personales.
+  discordGuildId     String?            @unique
+  discordGuildName   String?
   discordGuildIcon   String?
   discordWebhookUrl  String?
   anchorZoneId       Int?

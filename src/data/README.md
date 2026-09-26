@@ -7,7 +7,7 @@ Todo lo que hay aquí sale de los ficheros del cliente de Albion Online (© Sand
 | `avalon-zones.json` | las 400 zonas de los Caminos de Avalon: tier, clase, recursos, cofres, mazmorras, nodos por tier y marcadores del minimapa | `scripts/extract-avalon-zones.ts` sobre el dump vivo; commit exacto en `avalon-zones.source.json` |
 | `world-meta.json` | tipo de PvP y adyacencias del mundo (salidas, royal/portal más cercano) | dump archivado `broderickhyman/ao-bin-dumps` (ene-2023) **+ correcciones a mano** |
 | `world-meta.manual-edges.json` | las 136 conexiones corregidas a mano en `world-meta.json` | recuperadas por diferencia con el dump de origen (26-sep-2026) |
-| `world-graph.json` | grafo con ciudad segura más cercana (vista de mapa) | dump, mar-2026 |
+| `world-graph.json` | grafo con ciudad segura más cercana; solo lo lee `scripts/import-world-graph.ts`, que hoy no importa nada (espera una clave `connections` que el fichero no tiene) | dump, mar-2026 |
 | `world-zones.json` | nombres de zonas del mundo para el autocompletado | dump, mar-2026 |
 
 ## Regenerar las zonas de Avalon tras un parche

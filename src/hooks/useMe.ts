@@ -2,7 +2,7 @@ import useSWR from "swr";
 
 export type Me = {
   id: string; discordId: string; discordUsername: string; globalNickname: string | null;
-  displayName: string | null; image: string | null;
+  displayName: string | null; image: string | null; isGuest: boolean;
 };
 
 export function useMe() {

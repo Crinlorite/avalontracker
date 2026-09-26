@@ -9,6 +9,7 @@ export type AuditAction =
   | "ANCHOR_STATUS_UPDATE"
   | "HOP_STATUS_CHANGED" | "HOP_EXTENDED" | "HOP_DELETE"
   | "SETTINGS_CHANGE" | "ROLE_MAPPING_CHANGE" | "WEBHOOK_UPDATE"
+  | "MAP_CONVERTED_TO_CLAN"
   | "DISCORD_LOGIN_FIRST";
 
 type TxClient = Omit<PrismaClient, "$connect" | "$disconnect" | "$on" | "$transaction" | "$extends" | "$use">;

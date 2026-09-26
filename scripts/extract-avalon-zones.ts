@@ -5,6 +5,7 @@
  *   src/data/avalon-zones.json         — una entrada por zona (lo consume
  *                                        el seed, la parte pública y la app)
  *   src/data/avalon-zones.source.json  — commit exacto del dump y fecha
+ *   src/data/avalon-zone-names.json    — solo los nombres (middleware)
  *
  * De dónde sale cada dato:
  *   - nombre, id, clase (`@type`) y distribución de nodos por tier:
@@ -35,6 +36,8 @@ const REPO = "ao-data/ao-bin-dumps";
 const ROOT = process.cwd();
 const OUT = path.join(ROOT, "src/data/avalon-zones.json");
 const OUT_SOURCE = path.join(ROOT, "src/data/avalon-zones.source.json");
+// Lista ligera de nombres para el middleware (404 de zonas inexistentes).
+const OUT_NAMES = path.join(ROOT, "src/data/avalon-zone-names.json");
 
 
 type Size = "small" | "large";
@@ -294,6 +297,7 @@ async function main() {
   }
 
   fs.writeFileSync(OUT, JSON.stringify(zones, null, 1) + "\n");
+  fs.writeFileSync(OUT_NAMES, JSON.stringify(zones.map((z) => z.name)) + "\n");
   fs.writeFileSync(OUT_SOURCE, JSON.stringify({
     source: `https://github.com/${REPO}`,
     commit: sha,
