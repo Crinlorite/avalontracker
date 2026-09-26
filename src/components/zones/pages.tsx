@@ -140,10 +140,10 @@ export async function ZonePage({ params, lang }: { params: Promise<{ zone: strin
             {z.chests.length === 0 ? <p className="text-sm text-slate-400">{t("zone.chests.none")}</p> : (
               <ul className="space-y-1.5 text-sm">
                 {CHEST_TYPES.flatMap((c) => z.chests.filter((x) => x.type === c)).map((c) => (
-                  <li key={`${c.type}-${c.size}`} className="flex items-center gap-2">
+                  <li key={`${c.type}-${c.size}-${c.tier}`} className="flex items-center gap-2">
                     <span className="inline-block h-2.5 w-2.5 rounded-[2px]" style={{ backgroundColor: CHEST_COLOR[c.type] }} />
                     <span className="text-white">{c.count}× {t(`chest.${c.type}` as PublicKey)}</span>
-                    <span className="text-slate-400">({t(`size.${c.size}` as PublicKey)})</span>
+                    <span className="text-slate-400">({t(`size.${c.size}` as PublicKey)} · T{c.tier})</span>
                   </li>
                 ))}
               </ul>

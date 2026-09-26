@@ -40,7 +40,7 @@ const OUT_NAMES = path.join(ROOT, "src/data/avalon-zone-names.json");
 
 
 type Size = "small" | "large";
-type Counted<T extends string> = { type: T; size: Size; count: number };
+type Counted<T extends string> = { type: T; size: Size; tier?: number; count: number };
 type ResourceType = "ORE" | "WOOD" | "FIBER" | "HIDE" | "STONE";
 type ChestType = "GREEN" | "BLUE" | "GOLD";
 type DungeonType = "DUNGEON_SOLO" | "DUNGEON_GROUP" | "DUNGEON_ELITE";
@@ -54,14 +54,14 @@ export type AvalonZoneOut = {
   zoneClass: string;
   hasHideout: boolean;
   resources: Counted<ResourceType>[];
-  chests: Counted<ChestType>[];
+  chests: (Counted<ChestType> & { tier: number })[];
   dungeons: Counted<DungeonType>[];
   nodes: { type: ResourceType; tier: number; count: number }[];
   mobs: ZoneMob[];
   map: {
     min: [number, number];
     max: [number, number];
-    markers: { kind: MarkerKind; type: string; size: Size; x: number; y: number }[];
+    markers: { kind: MarkerKind; type: string; size: Size; tier?: number; x: number; y: number }[];
   };
 };
 
@@ -130,22 +130,24 @@ function activeTiles(doc: TemplateDoc, active: Set<string>, tier: number): Tile[
   return out;
 }
 
-function chestOf(name: string): { type: ChestType; size: Size } | null {
-  const m = /^SpawnPoint_LOOTCHEST_(SMALL|MEDIUM)_AVALON_ROAD_(?:(VETERAN|ELITE)_)?T\d$/.exec(name);
+// El tier del cofre va en el nombre del punto de aparición (T4/T6/T8) y no
+// depende del tier de la zona; casa con las tablas de lootchests.json.
+function chestOf(name: string): { type: ChestType; size: Size; tier: number } | null {
+  const m = /^SpawnPoint_LOOTCHEST_(SMALL|MEDIUM)_AVALON_ROAD_(?:(VETERAN|ELITE)_)?T(\d)$/.exec(name);
   if (!m) return null;
   const type: ChestType = m[2] === "ELITE" ? "GOLD" : m[2] === "VETERAN" ? "BLUE" : "GREEN";
-  return { type, size: m[1] === "SMALL" ? "small" : "large" };
+  return { type, size: m[1] === "SMALL" ? "small" : "large", tier: Number(m[3]) };
 }
 
-function tally<T extends string>(items: { type: T; size: Size }[]): Counted<T>[] {
+function tally<T extends string>(items: { type: T; size: Size; tier?: number }[]): Counted<T>[] {
   const m = new Map<string, Counted<T>>();
   for (const it of items) {
-    const k = `${it.type}|${it.size}`;
+    const k = `${it.type}|${it.size}|${it.tier ?? ""}`;
     const e = m.get(k);
     if (e) e.count++;
-    else m.set(k, { type: it.type, size: it.size, count: 1 });
+    else m.set(k, { type: it.type, size: it.size, ...(it.tier === undefined ? {} : { tier: it.tier }), count: 1 });
   }
-  return [...m.values()].sort((a, b) => a.type.localeCompare(b.type) || a.size.localeCompare(b.size));
+  return [...m.values()].sort((a, b) => a.type.localeCompare(b.type) || a.size.localeCompare(b.size) || (a.tier ?? 0) - (b.tier ?? 0));
 }
 
 async function main() {
@@ -203,7 +205,7 @@ async function main() {
           else if (dng) markers.push({ kind: "dungeon", type: dng, size, x, y });
         }
         const chest = t.name ? chestOf(t.name) : null;
-        if (chest) markers.push({ kind: "chest", type: chest.type, size: chest.size, x, y });
+        if (chest) markers.push({ kind: "chest", type: chest.type, size: chest.size, tier: chest.tier, x, y });
       }
     }
 
@@ -235,7 +237,7 @@ async function main() {
       zoneClass,
       hasHideout: zoneClass.startsWith("TUNNEL_HIDEOUT") || hideoutTemplate,
       resources: tally(markers.filter((m) => m.kind === "resource") as { type: ResourceType; size: Size }[]),
-      chests: tally(markers.filter((m) => m.kind === "chest") as { type: ChestType; size: Size }[]),
+      chests: tally(markers.filter((m) => m.kind === "chest") as { type: ChestType; size: Size; tier: number }[]) as (Counted<ChestType> & { tier: number })[],
       dungeons: tally(markers.filter((m) => m.kind === "dungeon") as { type: DungeonType; size: Size }[]),
       nodes,
       mobs,
