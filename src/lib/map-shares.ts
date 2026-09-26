@@ -11,8 +11,10 @@ const TOKEN_RE = /^[A-Za-z0-9_-]{22}$/; // 16 bytes en base64url = 128 bits
 // Consultas públicas de enlaces (endpoint y página /m): 20 por minuto e IP.
 export const shareLookupLimiter = createLimiter({ windowMs: 60_000, max: 20 });
 
+export const MAX_ACTIVE_SHARES = 20;
+
 export class ShareError extends Error {
-  constructor(public code: "NOT_PERSONAL" | "NOT_FOUND", public status: number, message: string) { super(message); }
+  constructor(public code: "NOT_PERSONAL" | "NOT_FOUND" | "LIMIT", public status: number, message: string) { super(message); }
 }
 
 const hash = (t: string) => crypto.createHash("sha256").update(t).digest("hex");
@@ -24,6 +26,8 @@ export async function createShare(clanId: string, role: ShareRole, createdById: 
   const clan = await prisma.clan.findUnique({ where: { id: clanId }, select: { kind: true } });
   if (!clan) throw new ShareError("NOT_FOUND", 404, "Mapa no encontrado");
   if (clan.kind !== "PERSONAL") throw new ShareError("NOT_PERSONAL", 403, "Los clanes de Discord no se comparten por enlace");
+  const active = await prisma.mapShare.count({ where: { clanId, revokedAt: null } });
+  if (active >= MAX_ACTIVE_SHARES) throw new ShareError("LIMIT", 400, `Máximo ${MAX_ACTIVE_SHARES} enlaces activos por mapa; revoca alguno`);
   const token = crypto.randomBytes(16).toString("base64url");
   const row = await prisma.mapShare.create({ data: { clanId, role, tokenHash: hash(token), createdById }, select: { id: true, role: true, createdAt: true } });
   return { id: row.id, role: row.role as ShareRole, token, url: shareUrl(token), createdAt: row.createdAt.toISOString() };
