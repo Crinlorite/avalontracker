@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import meta from "@/data/world-meta.json";
 import { nearestRoyalCity, nearestRoyalPortals, getZonePvp, borderColorForPvp } from "@/lib/world-meta";
 import { publicT, publicPath, type PublicLang } from "@/i18n/public";
+import { ZoneSuggest } from "./ZoneSuggest";
+import { ZonePrices } from "./ZonePrices";
 
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z]/g, "");
 const ROYAL = new Set(["Lymhurst", "Martlock", "Thetford", "Bridgewatch", "Fort Sterling"]);
@@ -11,9 +13,13 @@ const ROYAL = new Set(["Lymhurst", "Martlock", "Thetford", "Bridgewatch", "Fort 
 // Buscador «¿dónde he salido?»: nombre de zona del mundo → ciudad royal y
 // portales royal más cercanos (BFS sobre world-meta.json, que conserva las
 // correcciones hechas a mano).
-export function ExitFinder({ lang, avalonNames }: { lang: PublicLang; avalonNames: string[] }) {
+// `from` (?from= en la URL) preselecciona la zona de Avalon de origen para
+// «dónde vender» (spec §7): precios de sus recursos en la ciudad más cercana.
+export function ExitFinder({ lang, avalonNames, from }: { lang: PublicLang; avalonNames: string[]; from?: string }) {
   const t = publicT(lang);
   const avalon = useMemo(() => new Set(avalonNames), [avalonNames]);
+  const [origin, setOrigin] = useState<string | null>(from && avalonNames.includes(from) ? from : null);
+  const [originQ, setOriginQ] = useState(origin ?? "");
   const worldNames = useMemo(
     () => Object.keys((meta as { pvp: Record<string, string> }).pvp).filter((n) => !/^\d+$/.test(n)).sort(),
     [],
@@ -59,12 +65,24 @@ export function ExitFinder({ lang, avalonNames }: { lang: PublicLang; avalonName
         )}
       </div>
 
-      {zone && <ExitResult zone={zone} isAvalon={avalon.has(zone)} lang={lang} />}
+      <div className="mt-3">
+        <ZoneSuggest
+          value={originQ}
+          onChange={(v) => { setOriginQ(v); if (origin && v !== origin) setOrigin(null); }}
+          onPick={(n) => { setOrigin(n); setOriginQ(n); }}
+          names={avalonNames}
+          placeholder={t("exits.sell.origin")}
+          name="from"
+          className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none"
+        />
+      </div>
+
+      {zone && <ExitResult zone={zone} isAvalon={avalon.has(zone)} lang={lang} origin={origin} />}
     </div>
   );
 }
 
-function ExitResult({ zone, isAvalon, lang }: { zone: string; isAvalon: boolean; lang: PublicLang }) {
+function ExitResult({ zone, isAvalon, lang, origin }: { zone: string; isAvalon: boolean; lang: PublicLang; origin: string | null }) {
   const t = publicT(lang);
   if (isAvalon) {
     return (
@@ -79,6 +97,9 @@ function ExitResult({ zone, isAvalon, lang }: { zone: string; isAvalon: boolean;
   }
   const city = nearestRoyalCity(zone);
   const portals = getZonePvp(zone) === "black" ? nearestRoyalPortals(zone, 2) : [];
+  // Mercado más cercano: la ciudad royal o, desde zona negra, la ciudad del
+  // portal más cercano («Bridgewatch Portal» → Bridgewatch).
+  const market = city?.name ?? (portals[0] ? portals[0].name.replace(/ Portal$/, "") : null);
   if (!city && portals.length === 0) {
     return <p className="mt-6 rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-sm text-slate-400">{t("exits.unknown")}</p>;
   }
@@ -102,6 +123,13 @@ function ExitResult({ zone, isAvalon, lang }: { zone: string; isAvalon: boolean;
           <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500">{t("exits.city")}</h2>
           <p className="mt-2 text-lg font-semibold text-white">{city.name}</p>
           <p className="text-sm text-slate-400">{t("exits.hops", { n: city.hops })}</p>
+        </section>
+      )}
+      {origin && market && (
+        <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-5 sm:col-span-2" data-testid="where-to-sell">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500">{t("exits.sell.title")} · {origin}</h2>
+          <p className="mt-1 text-xs text-slate-500">{t("exits.sell.hint")}</p>
+          <div className="mt-3"><ZonePrices slug={origin.toLowerCase()} lang={lang} initial={null} nearestCity={market} /></div>
         </section>
       )}
     </div>
