@@ -15,7 +15,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/dashboard/", "/clan/"],
+        disallow: ["/api/", "/dashboard/", "/clan/", "/link/", "/m/", "/i/"],
       },
       // Block known AI training crawlers. Keep search crawlers untouched.
       { userAgent: "GPTBot", disallow: "/" },
