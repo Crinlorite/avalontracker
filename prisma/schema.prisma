@@ -74,12 +74,27 @@ model User {
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 
+  deviceTokens     DeviceToken[]
   clansCreated     Clan[]       @relation("ClanCreator")
   clanMembers      ClanMember[]
   routesCreated    Route[]      @relation("RouteCreator")
   routesDisabled   Route[]      @relation("RouteDisabler")
   hopStatusSet     RouteHop[]   @relation("HopStatusSetter")
   auditLogs        AuditLog[]
+}
+
+// Token de dispositivo: autentica SOLO /api/v1 (app móvil). Se guarda el
+// hash SHA-256; el token se enseña una vez al crearlo (spec §5.2).
+model DeviceToken {
+  id         String    @id @default(cuid())
+  userId     String
+  name       String
+  tokenHash  String    @unique
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
 }
 
 // ============ Clan ============
