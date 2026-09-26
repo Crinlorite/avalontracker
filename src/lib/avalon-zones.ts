@@ -1,5 +1,6 @@
 import zonesJson from "@/data/avalon-zones.json";
 import source from "@/data/avalon-zones.source.json";
+import type { ZoneMob } from "@/lib/mobs";
 
 // Datos públicos de las 400 zonas de los Caminos de Avalon (ver
 // src/data/README.md). Solo lectura: lo consumen /zones y /zones/<zona>.
@@ -20,6 +21,7 @@ export type AvalonZone = {
   chests: { type: ChestType; size: Size; count: number }[];
   dungeons: { type: DungeonType; size: Size; count: number }[];
   nodes: { type: ResourceType; tier: number; count: number }[];
+  mobs: ZoneMob[];
   map: {
     min: [number, number];
     max: [number, number];
