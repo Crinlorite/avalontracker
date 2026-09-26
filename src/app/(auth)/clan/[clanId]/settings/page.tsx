@@ -8,6 +8,7 @@ import { useClan, type ClanAnchorZone } from "@/hooks/useClan";
 import { useMe } from "@/hooks/useMe";
 import { RoleMappingEditor } from "@/components/clan/RoleMappingEditor";
 import { ConvertToClan } from "@/components/clan/ConvertToClan";
+import { ShareLinksPanel } from "@/components/clan/ShareLinksPanel";
 import { ZoneAutocomplete } from "@/components/zones/ZoneAutocomplete";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { canAdmin } from "@/lib/role-ui";
@@ -140,10 +141,16 @@ export default function SettingsPage() {
       </section>
 
       {clan.kind === "PERSONAL" ? (
-        <section className="rounded-xl border border-indigo-800/60 bg-indigo-950/30 p-6">
-          <ConvertHeading />
-          <ConvertToClan clanId={clanId} isGuest={me.isGuest} onDone={() => { mutate(); router.refresh(); }} />
-        </section>
+        <>
+          <section className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
+            <ShareLinksHeading />
+            <ShareLinksPanel clanId={clanId} />
+          </section>
+          <section className="rounded-xl border border-indigo-800/60 bg-indigo-950/30 p-6">
+            <ConvertHeading />
+            <ConvertToClan clanId={clanId} isGuest={me.isGuest} onDone={() => { mutate(); router.refresh(); }} />
+          </section>
+        </>
       ) : (
         <section>
           <h2 className="mb-4 text-lg font-semibold text-white">Mapeo de roles Discord</h2>
@@ -254,6 +261,11 @@ function AnchorPicker({
       </div>
     </div>
   );
+}
+
+function ShareLinksHeading() {
+  const { t } = useLanguage();
+  return <h2 className="mb-3 text-lg font-semibold text-white">{t("shareLinks.title")}</h2>;
 }
 
 function ConvertHeading() {
