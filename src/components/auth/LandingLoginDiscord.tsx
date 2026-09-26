@@ -1,4 +1,6 @@
 "use client";
+import Link from "next/link";
+import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
@@ -28,56 +30,115 @@ export function LandingLoginDiscord() {
           quede por encima del contenido principal — que también es
           relative z-10. Sin esto, el contenido pintaba encima por
           orden de DOM y tapaba el menú. */}
-      <header className="relative z-50 mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+      <header className="relative z-50 mx-auto flex max-w-6xl items-center justify-between px-4 py-5">
         <div className="flex items-center gap-2 text-slate-300">
           <span className="text-2xl">🌀</span>
           <span className="font-semibold tracking-tight">Avalon Tracker</span>
         </div>
-        <LanguageSwitcher />
+        <nav className="flex items-center gap-4 text-sm">
+          <Link href="/zones" className="hidden text-slate-300 hover:text-white sm:inline">Zones</Link>
+          <Link href="/exits" className="hidden text-slate-300 hover:text-white sm:inline">Exits</Link>
+          <LanguageSwitcher />
+        </nav>
       </header>
 
       {/* Contenido principal */}
-      <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center px-6 py-10 md:py-20">
-        <h1 className="text-center text-5xl font-extrabold tracking-tight text-white md:text-7xl">
+      <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center px-4 py-10 md:py-16">
+        <h1 className="text-center text-4xl font-extrabold tracking-tight text-white md:text-6xl">
           <span className="bg-gradient-to-r from-indigo-300 via-white to-indigo-300 bg-clip-text text-transparent">
             {t("landing.title")}
           </span>
         </h1>
-        <p className="mt-6 max-w-2xl text-center text-lg leading-relaxed text-slate-300 md:text-xl">
+        <p className="mt-5 max-w-2xl text-center text-lg leading-relaxed text-slate-300">
           {t("landing.subtitle")}
         </p>
 
-        {/* CTA */}
-        <div className="mt-10 flex flex-col items-center gap-3">
-          <button
-            onClick={() => signIn("discord", { callbackUrl: "/dashboard" })}
-            className="group relative inline-flex items-center gap-3 rounded-xl bg-[#5865F2] px-8 py-4 font-semibold text-white shadow-[0_8px_30px_rgba(88,101,242,0.45)] transition-all hover:scale-[1.02] hover:bg-[#4752c4] hover:shadow-[0_12px_40px_rgba(88,101,242,0.6)] active:scale-100"
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-              <path d="M20.317 4.37a19.8 19.8 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.099.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
-            </svg>
-            {t("landing.cta.signin")}
-          </button>
-          <p className="text-xs text-slate-500">{t("landing.privacy")}</p>
-        </div>
+        {/* Tres caminos: consultar (sin cuenta), mapa personal (sin cuenta), clan (Discord) */}
+        <section className="mt-10 grid w-full max-w-5xl grid-cols-1 gap-4 md:grid-cols-3">
+          <form action="/zones" method="get" className="flex flex-col rounded-xl border border-slate-800/80 bg-slate-900/60 p-5">
+            <h2 className="text-lg font-semibold text-white">{t("landing.path.zone.title")}</h2>
+            <p className="mt-1 flex-1 text-sm text-slate-400">{t("landing.path.zone.body")}</p>
+            <div className="mt-4 flex gap-2">
+              <input
+                name="q"
+                type="search"
+                placeholder={t("landing.path.zone.placeholder")}
+                aria-label={t("landing.path.zone.placeholder")}
+                className="min-w-0 flex-1 rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none"
+              />
+              <button type="submit" className="rounded-lg bg-slate-700 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-600">
+                {t("landing.path.zone.cta")}
+              </button>
+            </div>
+          </form>
+          <div className="flex flex-col rounded-xl border border-indigo-700/60 bg-indigo-950/40 p-5">
+            <h2 className="text-lg font-semibold text-white">{t("landing.path.map.title")}</h2>
+            <p className="mt-1 flex-1 text-sm text-slate-300">{t("landing.path.map.body")}</p>
+            <Link href="/map" className="mt-4 rounded-lg bg-indigo-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-500">
+              {t("landing.path.map.cta")}
+            </Link>
+          </div>
+          <div className="flex flex-col rounded-xl border border-slate-800/80 bg-slate-900/60 p-5">
+            <h2 className="text-lg font-semibold text-white">{t("landing.path.guild.title")}</h2>
+            <p className="mt-1 flex-1 text-sm text-slate-400">{t("landing.path.guild.body")}</p>
+            <a href="#guilds" className="mt-4 rounded-lg border border-[#5865F2]/70 px-4 py-2 text-center text-sm font-semibold text-indigo-200 hover:bg-[#5865F2]/20">
+              {t("landing.path.guild.cta")}
+            </a>
+          </div>
+        </section>
+        <Link href="/exits" className="mt-5 text-sm text-indigo-300 hover:text-indigo-200">{t("landing.exits")}</Link>
+
+        {/* Captura real del producto */}
+        <figure className="mt-12 w-full max-w-5xl">
+          <Image
+            src="/landing/map-example.png"
+            alt={t("landing.shot.caption")}
+            width={1600}
+            height={900}
+            className="w-full rounded-xl border border-slate-800 shadow-2xl shadow-indigo-950/50"
+          />
+          <figcaption className="mt-2 text-center text-xs text-slate-500">{t("landing.shot.caption")}</figcaption>
+        </figure>
+
+        {/* Por qué entrar + requisitos, ANTES del botón de login */}
+        <section id="guilds" className="mt-16 grid w-full max-w-5xl scroll-mt-8 grid-cols-1 gap-6 md:grid-cols-2">
+          <div>
+            <h2 className="text-2xl font-bold text-white">{t("landing.guilds.title")}</h2>
+            <p className="mt-2 text-sm text-slate-400">{t("landing.guilds.intro")}</p>
+            <ul className="mt-4 space-y-3 text-sm text-slate-300">
+              {["b1", "b2", "b3", "b4"].map((k) => (
+                <li key={k} className="flex gap-2"><span aria-hidden className="text-indigo-400">✓</span>{t(`landing.guilds.${k}`)}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-xl border border-slate-800/80 bg-slate-900/60 p-5">
+            <h3 className="text-lg font-semibold text-white">{t("landing.req.title")}</h3>
+            <ol className="mt-3 space-y-2 text-sm text-slate-300">
+              <li className="flex gap-2"><span className="font-semibold text-indigo-300">1.</span><span>{withVigil(t("landing.req.1"))}</span></li>
+              <li className="flex gap-2"><span className="font-semibold text-indigo-300">2.</span><span>{t("landing.req.2")}</span></li>
+              <li className="flex gap-2"><span className="font-semibold text-indigo-300">3.</span><span>{t("landing.req.3")}</span></li>
+            </ol>
+            <div className="mt-5 flex flex-col items-start gap-2">
+              <button
+                onClick={() => signIn("discord", { callbackUrl: "/dashboard" })}
+                className="inline-flex items-center gap-3 rounded-xl bg-[#5865F2] px-6 py-3 font-semibold text-white shadow-[0_8px_30px_rgba(88,101,242,0.35)] transition-all hover:bg-[#4752c4]"
+              >
+                <DiscordLogo />
+                {t("landing.cta.signin")}
+              </button>
+              <p className="text-xs text-slate-500">{t("landing.privacy")}</p>
+            </div>
+            <p className="mt-4 border-t border-slate-800 pt-3 text-sm text-slate-400">
+              <Link href="/map" className="text-indigo-300 hover:text-indigo-200">{t("landing.req.personal")}</Link>
+            </p>
+          </div>
+        </section>
 
         {/* Features */}
-        <section className="mt-20 grid w-full max-w-5xl grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
-          <Feature
-            icon="⚡"
-            title={t("landing.feature.realtime.title")}
-            body={t("landing.feature.realtime.body")}
-          />
-          <Feature
-            icon="🕸"
-            title={t("landing.feature.graph.title")}
-            body={t("landing.feature.graph.body")}
-          />
-          <Feature
-            icon="🤖"
-            title={t("landing.feature.discord.title")}
-            body={t("landing.feature.discord.body")}
-          />
+        <section className="mt-16 grid w-full max-w-5xl grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+          <Feature icon="⚡" title={t("landing.feature.realtime.title")} body={t("landing.feature.realtime.body")} />
+          <Feature icon="🕸" title={t("landing.feature.graph.title")} body={t("landing.feature.graph.body")} />
+          <Feature icon="🤖" title={t("landing.feature.discord.title")} body={t("landing.feature.discord.body")} />
         </section>
 
         {/* Related tools — reciprocidad de ecosistema Crintech */}
@@ -97,41 +158,42 @@ export function LandingLoginDiscord() {
           </div>
         </section>
 
-        {/* Requisito Vigil Bot */}
-        <p className="mt-12 max-w-xl text-center text-sm text-slate-400">
-          {(() => {
-            const text = t("landing.requirement");
-            const parts = text.split("{vigil}");
-            return (
-              <>
-                {parts[0]}
-                <a
-                  href="https://vigilbot.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-indigo-400 underline-offset-2 hover:underline"
-                >
-                  Vigil Bot
-                </a>
-                {parts[1]}
-              </>
-            );
-          })()}
-        </p>
-
         {/* Footer con legal */}
         <footer className="mt-16 flex flex-col items-center gap-3 text-xs text-slate-600">
           <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-            <a href="/legal/privacy" className="hover:text-slate-400">{t("landing.footer.privacy")}</a>
+            <Link href="/legal/privacy" className="hover:text-slate-400">{t("landing.footer.privacy")}</Link>
             <span aria-hidden="true" className="text-slate-800">·</span>
-            <a href="/legal/cookies" className="hover:text-slate-400">{t("landing.footer.cookies")}</a>
+            <Link href="/legal/cookies" className="hover:text-slate-400">{t("landing.footer.cookies")}</Link>
             <span aria-hidden="true" className="text-slate-800">·</span>
-            <a href="/legal/aviso-legal" className="hover:text-slate-400">{t("landing.footer.legal")}</a>
+            <Link href="/legal/aviso-legal" className="hover:text-slate-400">{t("landing.footer.legal")}</Link>
+            <span aria-hidden="true" className="text-slate-800">·</span>
+            <a href="https://github.com/Crinlorite/avalontracker" rel="noopener noreferrer" className="hover:text-slate-400">{t("landing.footer.github")}</a>
           </nav>
           <p>{t("landing.footer")}</p>
         </footer>
       </div>
     </main>
+  );
+}
+
+function withVigil(text: string) {
+  const [a, b] = text.split("{vigil}");
+  return (
+    <>
+      {a}
+      <a href="https://vigilbot.app" target="_blank" rel="noopener noreferrer" className="font-semibold text-indigo-400 underline-offset-2 hover:underline">
+        Vigil Bot
+      </a>
+      {b}
+    </>
+  );
+}
+
+function DiscordLogo() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M20.317 4.37a19.8 19.8 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.099.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+    </svg>
   );
 }
 
