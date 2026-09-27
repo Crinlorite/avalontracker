@@ -11,11 +11,17 @@ import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { SIDE_PROJECTS, type SideProject } from "@/data/sideProjects";
 import type { Lang } from "@/i18n/translations";
 import { BrandMark } from "@/components/brand/BrandMark";
+import { publicT, publicPath, isPublicLang } from "@/i18n/public";
 
 export function LandingLoginDiscord() {
   const { t, lang } = useLanguage();
   const router = useRouter();
   const [zoneQuery, setZoneQuery] = useState("");
+  // Zonas y salidas son páginas públicas en 11 idiomas: se enlaza a la de
+  // tu idioma (o a la inglesa si no la hay) y el menú usa sus textos.
+  const publicLang = isPublicLang(lang) ? lang : "en";
+  const pt = publicT(publicLang);
+  const pp = (path: string) => publicPath(publicLang, path);
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-slate-950">
@@ -43,8 +49,8 @@ export function LandingLoginDiscord() {
           <span className="font-semibold tracking-tight">Avalon Tracker</span>
         </div>
         <nav className="flex items-center gap-4 text-sm">
-          <Link href="/zones" className="hidden text-slate-300 hover:text-white sm:inline">Zones</Link>
-          <Link href="/exits" className="hidden text-slate-300 hover:text-white sm:inline">Exits</Link>
+          <Link href={pp("/zones")} className="hidden text-slate-300 hover:text-white sm:inline">{pt("nav.zones")}</Link>
+          <Link href={pp("/exits")} className="hidden text-slate-300 hover:text-white sm:inline">{pt("nav.exits")}</Link>
           <LanguageSwitcher />
         </nav>
       </header>
@@ -62,7 +68,7 @@ export function LandingLoginDiscord() {
 
         {/* Tres caminos: consultar (sin cuenta), mapa personal (sin cuenta), clan (Discord) */}
         <section className="mt-10 grid w-full max-w-5xl grid-cols-1 gap-4 md:grid-cols-3">
-          <form action="/zones" method="get" className="flex flex-col rounded-xl border border-slate-800/80 bg-slate-900/60 p-5">
+          <form action={pp("/zones")} method="get" className="flex flex-col rounded-xl border border-slate-800/80 bg-slate-900/60 p-5">
             <h2 className="text-lg font-semibold text-white">{t("landing.path.zone.title")}</h2>
             <p className="mt-1 flex-1 text-sm text-slate-400">{t("landing.path.zone.body")}</p>
             <div className="mt-4 flex gap-2">
@@ -71,7 +77,7 @@ export function LandingLoginDiscord() {
                   name="q"
                   value={zoneQuery}
                   onChange={setZoneQuery}
-                  onPick={(zone) => router.push(`/zones/${zone.toLowerCase()}`)}
+                  onPick={(zone) => router.push(pp(`/zones/${zone.toLowerCase()}`))}
                   names={zoneNames as string[]}
                   placeholder={t("landing.path.zone.placeholder")}
                   className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none"
@@ -97,7 +103,7 @@ export function LandingLoginDiscord() {
             </a>
           </div>
         </section>
-        <Link href="/exits" className="mt-5 text-sm text-indigo-300 hover:text-indigo-200">{t("landing.exits")}</Link>
+        <Link href={pp("/exits")} className="mt-5 text-sm text-indigo-300 hover:text-indigo-200">{t("landing.exits")}</Link>
 
         {/* Captura real del producto */}
         <figure className="mt-12 w-full max-w-5xl">
