@@ -33,3 +33,17 @@ it("importa a un mapa personal (lo crea si no hay) y reutiliza el mismo mapa des
   const bad = encodeRouteCode({ hops: [{ fromZone: "Nope-Zone", toZone: "Hiles-Izizaum", portalSize: 7, expiresAt: new Date(Date.now() + 3600e3), status: "ACTIVE" }] });
   expect((await post(bad)).status).toBe(400);
 });
+
+it("tamaño de portal: como la sincronización, solo 2, 7, 20 o 40; otro valor → 400 sin crear nada", async () => {
+  const { POST } = await import("@/app/api/v1/import/route");
+  const { encodeRouteCode } = await import("@/lib/route-codec");
+  const dt = await import("@/lib/device-tokens");
+  const u = await prisma.user.create({ data: { discordId: "800000000000000002", discordUsername: "j", email: "j@x.test" } });
+  const { token } = await dt.createDeviceToken(u.id, "t");
+  const post = (portalSize: number) => POST(new Request("http://t/x", { method: "POST", headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+    body: JSON.stringify({ code: encodeRouteCode({ hops: [{ fromZone: "Casitos-Atinaum", toZone: "Hiles-Izizaum", portalSize, expiresAt: new Date(Date.now() + 3600e3), status: "ACTIVE" }] }) }) }));
+  for (const bad of [1, 3, 10, 100]) expect((await post(bad)).status).toBe(400);
+  expect(await prisma.route.count({ where: { createdById: u.id } })).toBe(0);
+  for (const ok of [2, 7, 20, 40]) expect((await post(ok)).status).toBe(201);
+  expect((await prisma.routeHop.findMany({ where: { route: { createdById: u.id } }, select: { portalSize: true } })).map((h) => h.portalSize).sort((a, b) => a - b)).toEqual([2, 7, 20, 40]);
+});
