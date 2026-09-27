@@ -224,6 +224,7 @@ npm test              # Vitest sobre libs puras
 | `npm run start:prod` | `server.js` (Next.js + timer) |
 | `npm run mock-bot` | Mock de Vigil Bot en :4000 |
 | `npm run seed:zones` | Seed Zone desde JSON |
+| `npx tsx scripts/delete-account.ts <id \| discordId \| usuario> [--apply]` | Borrar una cuenta a petición (`/legal/privacy#borrar-cuenta`). Sin `--apply` solo enseña qué borraría. Dentro del contenedor, con su `DATABASE_URL` |
 
 ---
 

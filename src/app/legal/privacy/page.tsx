@@ -2,7 +2,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LegalPage } from "@/components/legal/LegalPage";
 
-const UPDATED_ISO = "2026-09-26";
+const UPDATED_ISO = "2026-09-27";
 
 export default function PrivacyPolicyPage() {
   const { lang } = useLanguage();
@@ -149,7 +149,7 @@ function Spanish() {
         </li>
         <li>
           <strong>Supresión</strong> (&quot;derecho al olvido&quot;): borrar tu cuenta y datos
-          asociados.
+          asociados (ver <a href="#borrar-cuenta">Borrar tu cuenta</a>).
         </li>
         <li>
           <strong>Portabilidad</strong>: recibir tus datos en formato estructurado (JSON).
@@ -170,6 +170,62 @@ function Spanish() {
           www.aepd.es
         </a>
         ) si consideras que no atendimos correctamente.
+      </p>
+
+      <h2 id="borrar-cuenta" className="scroll-mt-20">🗑️ Borrar tu cuenta</h2>
+      <p>Puedes pedir que borremos tu cuenta de Avalon Tracker (web y app móvil) y sus datos:</p>
+      <ol>
+        <li>
+          Escribe a{" "}
+          <a href="mailto:avalon@crintech.pro?subject=Borrar%20mi%20cuenta">avalon@crintech.pro</a> con
+          el asunto «Borrar mi cuenta».
+        </li>
+        <li>Indica tu usuario de Discord, el que ves en la web o en la app.</li>
+        <li>La borramos y te lo confirmamos en un plazo máximo de 30 días.</li>
+      </ol>
+      <p>
+        Si usas la app como <strong>invitado</strong> no hace falta escribir: en Ajustes → Cuenta y
+        sincronización, pulsa «Desvincular este dispositivo». La cuenta de invitado se borra sola, con
+        sus mapas y rutas, a los 30 días de su último uso.
+      </p>
+      <p>
+        <strong>Qué se borra</strong>: tu cuenta (ID, usuario, avatar y email de Discord, nombre
+        visible), los dispositivos vinculados, tu pertenencia a mapas de clan y tus mapas personales
+        enteros, con sus rutas, notas, enlaces compartidos e historial.
+      </p>
+      <p>
+        <strong>Qué se conserva</strong>: lo que aportaste a mapas de otros (rutas, estados de salto
+        e historial de un mapa de clan) se queda en ese mapa, pero sin tu nombre: pasa a figurar como
+        usuario eliminado y se borra cuando se borre el mapa. Las rutas guardadas solo en tu móvil no
+        las vemos: se borran al desinstalar la app.
+      </p>
+
+      <h2 id="borrar-cuenta" className="scroll-mt-20">🗑️ Delete your account</h2>
+      <p>You can ask us to delete your Avalon Tracker account (web and mobile app) and its data:</p>
+      <ol>
+        <li>
+          Email{" "}
+          <a href="mailto:avalon@crintech.pro?subject=Delete%20my%20account">avalon@crintech.pro</a>{" "}
+          with the subject &quot;Delete my account&quot;.
+        </li>
+        <li>Tell us your Discord username, the one shown on the website or in the app.</li>
+        <li>We delete it and confirm within 30 days at most.</li>
+      </ol>
+      <p>
+        If you use the app as a <strong>guest</strong>, there is no need to email us: in Settings →
+        Account &amp; sync, tap &quot;Unlink this device&quot;. The guest account deletes itself, with
+        its maps and routes, 30 days after it was last used.
+      </p>
+      <p>
+        <strong>What is deleted</strong>: your account (Discord ID, username, avatar and email,
+        display name), your linked devices, your clan map memberships and your personal maps in full,
+        with their routes, notes, share links and history.
+      </p>
+      <p>
+        <strong>What is kept</strong>: what you contributed to other people&apos;s maps (routes, hop
+        statuses and history in a clan map) stays in that map, but without your name: it is shown as
+        a deleted user and is removed when the map is deleted. Routes stored only on your phone never
+        reach us: they are removed when you uninstall the app.
       </p>
 
       <h2>🍪 Cookies</h2>
@@ -336,7 +392,7 @@ function English() {
         </li>
         <li>
           <strong>Erasure</strong> (&quot;right to be forgotten&quot;): delete your account and
-          related data.
+          related data (see <a href="#borrar-cuenta">Delete your account</a>).
         </li>
         <li>
           <strong>Portability</strong>: receive your data in a structured format (JSON).
