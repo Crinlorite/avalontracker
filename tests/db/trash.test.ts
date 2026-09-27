@@ -75,6 +75,20 @@ describe("papelera 7 días", () => {
     expect(await prisma.routeHop.findUnique({ where: { id: route.hops[0].id } })).not.toBeNull();
     expect(await prisma.route.findUnique({ where: { id: route.id } })).not.toBeNull();
   });
+
+  // La app sube las rutas primero y rellena el lote con saltos hasta 200: una
+  // ruta puede quedarse sin saltos entre un lote y el siguiente. Si el barrido
+  // la borra y el lote 2 falla, sus saltos vuelven como not_in_map y la app
+  // borra la ruta del teléfono.
+  it("una ruta recién subida sin saltos sobrevive al barrido; una sin saltos desde hace más de 7 días se elimina", async () => {
+    const { u, clan } = await ownerWithMap();
+    const fresh = await prisma.route.create({ data: { clanId: clan.id, createdById: u.id } });
+    const stale = await prisma.route.create({ data: { clanId: clan.id, createdById: u.id } });
+    await prisma.route.update({ where: { id: stale.id }, data: { updatedAt: new Date(Date.now() - 8 * 864e5) } });
+    await runBackgroundJobs();
+    expect(await prisma.route.findUnique({ where: { id: fresh.id } })).not.toBeNull();
+    expect(await prisma.route.findUnique({ where: { id: stale.id } })).toBeNull();
+  });
 });
 
 // Ejecuta una vez las tareas que instrumentation.ts programa al arrancar el

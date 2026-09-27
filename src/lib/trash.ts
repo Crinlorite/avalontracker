@@ -17,8 +17,12 @@ export async function sweepTrash(now = new Date()): Promise<{ hops: number; rout
   // 2) Rutas enteras en la papelera más allá del TTL.
   const trashed = await prisma.route.deleteMany({ where: { deletedAt: { lt: ttlAgo } } });
   // 3) Rutas que ya no tienen ningún salto (ni vivo ni en la papelera):
-  //    el paso 1 puede haber dejado huérfanas.
-  const empty = await prisma.route.deleteMany({ where: { hops: { none: {} } } });
+  //    el paso 1 puede haber dejado huérfanas. Solo las que llevan más del
+  //    TTL sin tocarse: la app sube las rutas antes que sus saltos (lotes de
+  //    200), y una recién subida cuyo lote de saltos aún no ha llegado no se
+  //    toca; si se borrara, esos saltos volverían como not_in_map y la app
+  //    borraría la ruta del teléfono.
+  const empty = await prisma.route.deleteMany({ where: { hops: { none: {} }, updatedAt: { lt: ttlAgo } } });
   // 4) Legado: EXPIRED viejas de antes de la papelera por salto.
   const legacy = await prisma.route.deleteMany({ where: { status: "EXPIRED", updatedAt: { lt: ttlAgo } } });
   return { hops: hops.count, routes: trashed.count + empty.count + legacy.count };
