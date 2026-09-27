@@ -52,3 +52,6 @@ next-env.d.ts
 
 # workspace de ejecución de planes (scratch)
 /.superpowers
+
+# Worktrees de trabajo en paralelo
+.worktrees/
