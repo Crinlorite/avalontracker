@@ -2,8 +2,9 @@
 // Traefik (Coolify) → Next, y Traefik no confía en cabeceras reenviadas: pisa
 // X-Forwarded-For con la IP del edge de Cloudflare. Cloudflare deja la IP
 // real en CF-Connecting-IP; sin Cloudflare, Traefik pone X-Real-IP. Sin
-// dependencias: lo usan las rutas públicas sin cargar NextAuth.
-export function clientIp(req: Request): string {
+// dependencias: lo usan las rutas públicas sin cargar NextAuth. Acepta una
+// Request o las cabeceras de next/headers (`clientIp({ headers: await headers() })`).
+export function clientIp(req: { headers: Pick<Headers, "get"> }): string {
   const cf = req.headers.get("cf-connecting-ip")?.trim();
   if (cf) return cf;
   const real = req.headers.get("x-real-ip")?.trim();
