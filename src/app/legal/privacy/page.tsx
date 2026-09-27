@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
 
 function Spanish() {
   return (
-    <LegalPage title="Política de Privacidad" updated="Actualizado: 26/09/2026">
+    <LegalPage title="Política de Privacidad" updated="Actualizado: 27/09/2026">
       <h2>👤 Responsable del tratamiento</h2>
       <p>
         Avalon Tracker es un proyecto operado por <strong>Crintech Studios</strong>. Para consultas
@@ -202,7 +202,7 @@ function Spanish() {
 
 function English() {
   return (
-    <LegalPage title="Privacy Policy" updated="Last updated: 2026-09-26">
+    <LegalPage title="Privacy Policy" updated="Last updated: 2026-09-27">
       <h2>👤 Data controller</h2>
       <p>
         Avalon Tracker is operated by <strong>Crintech Studios</strong>. For privacy questions,
