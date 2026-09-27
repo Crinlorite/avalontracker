@@ -18,8 +18,8 @@ type RouteParams = { params: Promise<{ clanId: string }> };
 //
 // El countdown a hard-delete se calcula con la `deletedAt` de cada
 // evento + TTL. Si un hop está fuera de TTL ya, simplemente no
-// aparece — el barrido lazy del GET de rutas lo limpiará en cuanto
-// alguien refresque la lista.
+// aparece — el barrido de fondo (sweepTrash en instrumentation.ts) lo
+// eliminará en su próxima pasada.
 export async function GET(_req: Request, { params }: RouteParams) {
   const session = await auth();
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");

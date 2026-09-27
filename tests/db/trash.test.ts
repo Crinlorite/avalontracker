@@ -54,15 +54,44 @@ describe("papelera 7 días", () => {
     expect((await prisma.route.findUniqueOrThrow({ where: { id: route.id } })).deletedAt).toBeNull();
   });
 
-  it("el barrido conserva a los 6 días y elimina a los 8", async () => {
-    const { GET } = await import("@/app/api/clans/[clanId]/routes/route");
-    const { clan, route } = await ownerWithMap();
+  it("el barrido de fondo (instrumentation) conserva a los 6 días y elimina a los 8, sin que nadie abra la web", async () => {
+    const { route } = await ownerWithMap();
     const at = (days: number) => new Date(Date.now() - days * 864e5);
+    // Como si se hubiera borrado desde la app: el mapa nunca se lista en la web.
     await prisma.route.update({ where: { id: route.id }, data: { deletedAt: at(6), hops: { updateMany: { where: {}, data: { deletedAt: at(6) } } } } });
-    await GET(new Request("http://t/x"), { params: Promise.resolve({ clanId: clan.id }) });
+    await runBackgroundJobs();
     expect(await prisma.route.findUnique({ where: { id: route.id } })).not.toBeNull();
     await prisma.route.update({ where: { id: route.id }, data: { deletedAt: at(8), hops: { updateMany: { where: {}, data: { deletedAt: at(8) } } } } });
-    await GET(new Request("http://t/x"), { params: Promise.resolve({ clanId: clan.id }) });
+    await runBackgroundJobs();
     expect(await prisma.route.findUnique({ where: { id: route.id } })).toBeNull();
+    expect(await prisma.routeHop.count({ where: { routeId: route.id } })).toBe(0);
+  });
+
+  it("un salto suelto en la papelera más de 7 días se elimina; la ruta viva se queda", async () => {
+    const { route } = await ownerWithMap();
+    await prisma.routeHop.update({ where: { id: route.hops[1].id }, data: { deletedAt: new Date(Date.now() - 8 * 864e5) } });
+    await runBackgroundJobs();
+    expect(await prisma.routeHop.findUnique({ where: { id: route.hops[1].id } })).toBeNull();
+    expect(await prisma.routeHop.findUnique({ where: { id: route.hops[0].id } })).not.toBeNull();
+    expect(await prisma.route.findUnique({ where: { id: route.id } })).not.toBeNull();
   });
 });
+
+// Ejecuta una vez las tareas que instrumentation.ts programa al arrancar el
+// servidor (se capturan sus temporizadores en vez de esperar horas).
+async function runBackgroundJobs() {
+  const { register } = await import("@/instrumentation");
+  // Módulos que register() importa: ya cargados, los temporizadores capturados no los frenan.
+  await Promise.all([import("@/lib/guest"), import("@/lib/market-prices"), import("@/lib/logger"), import("@/lib/trash")]);
+  const jobs: (() => unknown)[] = [];
+  const capture = ((fn: () => unknown) => { jobs.push(fn); return { unref() {} }; }) as unknown as typeof setTimeout;
+  const env = { NEXT_RUNTIME: process.env.NEXT_RUNTIME, AODP_DISABLED: process.env.AODP_DISABLED };
+  process.env.NEXT_RUNTIME = "nodejs"; process.env.AODP_DISABLED = "1";
+  const st = vi.spyOn(globalThis, "setTimeout").mockImplementation(capture);
+  const si = vi.spyOn(globalThis, "setInterval").mockImplementation(capture as unknown as typeof setInterval);
+  try { await register(); } finally {
+    st.mockRestore(); si.mockRestore();
+    for (const [k, v] of Object.entries(env)) { if (v === undefined) delete process.env[k]; else process.env[k] = v; }
+  }
+  for (const job of jobs) await job();
+}
