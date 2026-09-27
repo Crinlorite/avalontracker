@@ -44,7 +44,7 @@ export function DevicesPanel() {
       {qr ? (
         <div className="flex flex-col items-center gap-2 rounded border border-slate-800 bg-slate-950 p-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={qr.dataUrl} alt="" width={240} height={240} data-code={qr.code} className="rounded bg-white p-2" />
+          <img src={qr.dataUrl} alt="" width={240} height={240} className="rounded bg-white p-2" />
           <p className="text-sm text-slate-300">{t("devices.scan")} <span className="font-mono text-slate-500">{left}s</span></p>
           <button onClick={link} className="text-xs text-indigo-300 hover:text-indigo-200">{t("devices.newCode")}</button>
         </div>
