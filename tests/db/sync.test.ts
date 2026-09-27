@@ -101,6 +101,27 @@ describe("sincronización", () => {
     expect(await prisma.route.count({ where: { id } })).toBe(1);
   });
 
+  it("dos subidas idénticas a la vez (reintento con la primera en vuelo): las dos 200, sin duplicar", async () => {
+    const { POST } = await import("@/app/api/v1/maps/[id]/changes/route");
+    const { clan, token } = await ownerToken();
+    for (let round = 0; round < 5; round++) {
+      const id = uuid();
+      const batch = { routes: [{ id, notes: "doble" }], hops: [
+        { routeId: id, fromZone: "Casitos-Atinaum", toZone: "Hiles-Izizaum", order: 0, portalSize: 7, expiresAt: inH(1) },
+        { routeId: id, fromZone: "Hiles-Izizaum", toZone: "Coros-Atinaum", order: 1, portalSize: 20, expiresAt: inH(2) },
+      ] };
+      const [a, b] = await Promise.all([POST(req("http://t/x", token, batch), ctx(clan.id)), POST(req("http://t/x", token, batch), ctx(clan.id))]);
+      expect([a.status, b.status]).toEqual([200, 200]);
+      // Cada fila queda aplicada en una y, en la otra, aplicada o rechazada como stale con la fila del servidor.
+      for (const r of [await a.json(), await b.json()]) {
+        expect(r.applied.length + r.rejected.length).toBe(3);
+        for (const x of r.rejected) { expect(x.reason).toBe("stale"); expect(x.server).toBeTruthy(); }
+      }
+      expect(await prisma.route.count({ where: { id } })).toBe(1);
+      expect(await prisma.routeHop.count({ where: { routeId: id } })).toBe(2);
+    }
+  });
+
   it("since inválido o futuro → 400; zona desconocida → 400; paginación con limit", async () => {
     const { GET, POST } = await import("@/app/api/v1/maps/[id]/changes/route");
     const { clan, token } = await ownerToken();

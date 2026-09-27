@@ -4,6 +4,7 @@
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { logAudit } from "@/lib/audit";
+import { Prisma } from "@/generated/prisma/client";
 
 export const PULL_LIMIT = 500;
 export const PUSH_LIMIT = 200;
@@ -50,6 +51,9 @@ export class UnknownZoneError extends Error {
 }
 
 const iso = (d: Date | null) => (d ? d.toISOString() : null);
+// Otra subida en vuelo (p. ej. un reintento de la app) creó la fila entre la
+// lectura y el insert: no es un error, manda la fila del servidor (stale).
+const isUniqueViolation = (e: unknown) => e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002";
 // Compara instantes, no cadenas: el cliente puede reserializar (sin ms, con offset).
 const sameInstant = (a: Date, b: string) => a.getTime() === new Date(b).getTime();
 const routeRow = (r: { id: string; notes: string | null; status: string; disabledAt: Date | null; deletedAt: Date | null; createdAt: Date; updatedAt: Date }): RouteRow =>
@@ -122,9 +126,19 @@ export async function applyChanges(clanId: string, userId: string, batch: PushBa
     const existing = await prisma.route.findUnique({ where: { id: r.id } });
     if (existing && existing.clanId !== clanId) { rejected.push({ key, reason: "not_in_map" }); continue; }
     if (!existing) {
-      const created = await prisma.route.create({
-        data: { id: r.id, clanId, createdById: userId, notes: r.notes ?? null, status: r.status ?? "ACTIVE", deletedAt: r.deletedAt ? new Date(r.deletedAt) : null },
-      });
+      let created;
+      try {
+        created = await prisma.route.create({
+          data: { id: r.id, clanId, createdById: userId, notes: r.notes ?? null, status: r.status ?? "ACTIVE", deletedAt: r.deletedAt ? new Date(r.deletedAt) : null },
+        });
+      } catch (e) {
+        if (!isUniqueViolation(e)) throw e;
+        const winner = await prisma.route.findUnique({ where: { id: r.id } });
+        if (!winner) throw e;
+        if (winner.clanId !== clanId) rejected.push({ key, reason: "not_in_map" });
+        else rejected.push({ key, reason: "stale", server: routeRow(winner) });
+        continue;
+      }
       await logAudit(clanId, userId, "ROUTE_CREATE", created.id, { via: "sync" });
       applied.push({ key, server: routeRow(created) });
       continue;
@@ -171,7 +185,16 @@ export async function applyChanges(clanId: string, userId: string, batch: PushBa
       deletedAt: h.deletedAt ? new Date(h.deletedAt) : h.deletedAt === undefined && route.deletedAt ? route.deletedAt : null,
     };
     if (!existing) {
-      const createdHop = await prisma.routeHop.create({ data: { ...natural, ...data }, include: { fromZone: { select: { name: true } }, toZone: { select: { name: true } } } });
+      let createdHop;
+      try {
+        createdHop = await prisma.routeHop.create({ data: { ...natural, ...data }, include: { fromZone: { select: { name: true } }, toZone: { select: { name: true } } } });
+      } catch (e) {
+        if (!isUniqueViolation(e)) throw e;
+        const winner = await prisma.routeHop.findUnique({ where: { routeId_fromZoneId_toZoneId: natural }, include: { fromZone: { select: { name: true } }, toZone: { select: { name: true } } } });
+        if (!winner) throw e;
+        rejected.push({ key, reason: "stale", server: hopRow(winner) });
+        continue;
+      }
       touchedRoutes.add(h.routeId);
       applied.push({ key, server: hopRow(createdHop) });
       continue;
