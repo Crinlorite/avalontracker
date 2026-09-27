@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { verifyShare, shareLookupLimiter } from "@/lib/map-shares";
 import { loadActiveRoutes } from "@/lib/map-routes";
 import { consumeToken, peekBlocked } from "@/lib/rate-limit";
+import { clientIp } from "@/lib/client-ip";
 import { SharedMap } from "@/components/share/SharedMap";
 
 type Props = { params: Promise<{ token: string }> };
@@ -14,7 +15,7 @@ type Props = { params: Promise<{ token: string }> };
 // El título y la página comparten esta búsqueda: `cache` la memoiza durante
 // la petición, así que se consulta (y se cobra un fallo) una sola vez.
 const lookupShare = cache(async (token: string) => {
-  const ip = (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const ip = clientIp({ headers: await headers() });
   if (peekBlocked(shareLookupLimiter, ip)) return null;
   const share = await verifyShare(token);
   if (!share) { consumeToken(shareLookupLimiter, ip); return null; }
