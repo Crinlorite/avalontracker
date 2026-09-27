@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import { prisma } from "@/lib/prisma";
 import { ROLE_HIERARCHY, invalidateRoleCache, invalidateClanRoleCache } from "@/lib/permissions";
 import { createLimiter } from "@/lib/rate-limit";
-import type { AppRole } from "@/generated/prisma/client";
+import type { AppRole, Prisma } from "@/generated/prisma/client";
 
 export type ShareRole = "VIEWER" | "EDITOR";
 export const SITE_URL = "https://avalontracker.app";
@@ -39,17 +39,18 @@ export async function listShares(clanId: string) {
 }
 
 // Revocar = marcar y BORRAR las membresías que nacieron de ese enlace.
-export async function revokeShare(clanId: string, shareId: string): Promise<boolean> {
-  const r = await prisma.mapShare.updateMany({ where: { id: shareId, clanId, revokedAt: null }, data: { revokedAt: new Date() } });
+// `db` admite una transacción: quien la abre tira la caché tras el commit.
+export async function revokeShare(clanId: string, shareId: string, db: Prisma.TransactionClient = prisma): Promise<boolean> {
+  const r = await db.mapShare.updateMany({ where: { id: shareId, clanId, revokedAt: null }, data: { revokedAt: new Date() } });
   if (r.count === 0) return false;
-  await prisma.clanMember.deleteMany({ where: { clanId, roleSource: `share:${shareId}` } });
+  await db.clanMember.deleteMany({ where: { clanId, roleSource: `share:${shareId}` } });
   invalidateClanRoleCache(clanId);
   return true;
 }
 
-export async function revokeAllShares(clanId: string): Promise<number> {
-  const active = await prisma.mapShare.findMany({ where: { clanId, revokedAt: null }, select: { id: true } });
-  for (const s of active) await revokeShare(clanId, s.id);
+export async function revokeAllShares(clanId: string, db: Prisma.TransactionClient = prisma): Promise<number> {
+  const active = await db.mapShare.findMany({ where: { clanId, revokedAt: null }, select: { id: true } });
+  for (const s of active) await revokeShare(clanId, s.id, db);
   return active.length;
 }
 
