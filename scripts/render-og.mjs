@@ -41,6 +41,8 @@ function fontFace({ weight }, b64) {
 const fontBytes = await Promise.all(FONTS.map(getFont));
 const style = FONTS.map((f, i) => fontFace(f, fontBytes[i].toString('base64'))).join('');
 
+const logoB64 = (await sharp(readFileSync(join(repoRoot, 'public/icon.svg')), { density: 300 }).resize(360, 360).png().toBuffer()).toString('base64');
+
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Avalon Tracker — Caminos de Avalon en vivo para tu clan">
   <defs>
@@ -146,48 +148,28 @@ const svg = `<?xml version="1.0" encoding="UTF-8"?>
     <circle cx="975"  cy="600" r="3" opacity="0.6"/>
   </g>
 
-  <!-- Featured portal mark — the logo, scaled up, placed left of the wordmark.
-       Same visual language as /src/app/icon.svg so the brand is coherent. -->
-  <g transform="translate(180 315)">
-    <circle r="95" fill="none" stroke="#a78bfa" stroke-width="2" stroke-opacity="0.35"/>
-    <circle r="72" fill="none" stroke="#c084fc" stroke-width="2.5" stroke-opacity="0.55"/>
-    <circle r="52" fill="none" stroke="#e9d5ff" stroke-width="1.5" stroke-opacity="0.3"/>
-    <circle r="40" fill="url(#portalGrad)" filter="url(#portalGlow)"/>
-    <circle r="24" fill="url(#portalGrad)"/>
-    <!-- Three hop nodes at 120° intervals on the middle ring -->
-    <g fill="#ddd6fe">
-      <circle cx="0"     cy="-72" r="5.5"/>
-      <circle cx="62.4"  cy="36"  r="5.5"/>
-      <circle cx="-62.4" cy="36"  r="5.5"/>
-    </g>
-  </g>
+  <!-- Logo «el portal» (public/icon.svg) a la izquierda del título -->
+  <image href="data:image/png;base64,${logoB64}" x="52" y="228" width="176" height="176"/>
 
   <!-- Wordmark block -->
   <g font-family="Inter, 'Segoe UI', system-ui, -apple-system, sans-serif">
-    <text x="650" y="253" text-anchor="middle"
+    <text x="692" y="253" text-anchor="middle"
           font-size="21" font-weight="600"
           fill="#a5b4fc" letter-spacing="8" opacity="0.92">
       ALBION ONLINE · CLAN COMPANION
     </text>
 
-    <text x="650" y="362" text-anchor="middle"
+    <text x="692" y="362" text-anchor="middle"
           font-size="118" font-weight="700"
           fill="url(#titleGrad)">
       Avalon Tracker
     </text>
 
-    <text x="650" y="430" text-anchor="middle"
-          font-size="38" font-weight="500"
-          fill="#cbd5e1" letter-spacing="1.2">
+    <text x="692" y="430" text-anchor="middle"
+          font-size="33" font-weight="500"
+          fill="#cbd5e1" letter-spacing="1">
       Caminos de Avalon en vivo · coordinación de clan
     </text>
-  </g>
-
-  <!-- Subtle mirror portal on the right for compositional balance, dimmed -->
-  <g transform="translate(1090 320)" opacity="0.55">
-    <circle r="42" fill="none" stroke="#818cf8" stroke-width="1.2" stroke-opacity="0.35"/>
-    <circle r="28" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-opacity="0.4"/>
-    <circle r="16" fill="url(#portalGrad)" filter="url(#softGlow)" opacity="0.6"/>
   </g>
 
   <!-- Brand footer -->

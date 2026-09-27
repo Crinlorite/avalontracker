@@ -13,7 +13,6 @@
   <clipPath id="open"><path d="M324 862 V520 A188 188 0 0 1 700 520 V862 Z"/></clipPath>
   <clipPath id="rounded"><rect width="1024" height="1024" rx="230"/></clipPath>
 </defs>
-<g clip-path="url(#rounded)">
 <rect width="1024" height="1024" fill="url(#sky)"/>
 <g>
   <circle cx="170" cy="190" r="3.2" fill="#E0E7FF" opacity="0.55"/>
@@ -27,6 +26,7 @@
   <circle cx="940" cy="520" r="1.8" fill="#E0E7FF" opacity="0.25"/>
   <circle cx="85" cy="610" r="1.8" fill="#E0E7FF" opacity="0.25"/>
 </g>
+<g transform="translate(512 512) scale(0.8553) translate(-512 -567)">
 <!-- halo del portal detrás del arco -->
 <ellipse cx="512" cy="600" rx="330" ry="390" fill="#6366F1" opacity=".42" filter="url(#blur40)"/>
 <!-- interior: luz, remolino y destellos -->

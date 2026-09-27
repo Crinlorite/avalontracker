@@ -9,6 +9,7 @@ import type { RouteView } from "@/hooks/useClanRoutes";
 import type { ClanAnchorZone } from "@/hooks/useClan";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { ShareRole } from "@/lib/map-shares";
+import { BrandMark } from "@/components/brand/BrandMark";
 
 type Payload = { map: { id: string; name: string; anchorZone: ClanAnchorZone | null }; role: ShareRole; routes: RouteView[]; now: string };
 
@@ -38,7 +39,7 @@ export function SharedMap({ token, role, map, initial }: { token: string; role: 
   return (
     <div className="flex min-h-screen flex-col bg-slate-950 text-slate-200">
       <header className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-slate-800 px-4 py-3">
-        <Link href="/" className="mr-auto font-semibold text-white">🌀 Avalon Tracker</Link>
+        <Link href="/" className="mr-auto inline-flex items-center gap-2 font-semibold text-white"><BrandMark size={24} /> Avalon Tracker</Link>
         <span className="text-sm text-slate-400">{t("share.title")} · <strong className="text-white">{map.name}</strong> · {t(`share.role.${role}`)}</span>
         <button onClick={join} disabled={busy} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-60">
           {role === "EDITOR" ? t("share.join.edit") : t("share.join.save")}

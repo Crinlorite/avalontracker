@@ -13,7 +13,6 @@
   <clipPath id="open"><path d="M324 862 V520 A188 188 0 0 1 700 520 V862 Z"/></clipPath>
   <clipPath id="rounded"><rect width="1024" height="1024" rx="230"/></clipPath>
 </defs>
-<g clip-path="url(#rounded)">
 <rect width="1024" height="1024" fill="url(#sky)"/>
 <g>
   <circle cx="170" cy="190" r="3.2" fill="#E0E7FF" opacity="0.55"/>
@@ -97,5 +96,4 @@
 <path d="M451.0 220.1 A306 306 0 0 0 573.0 220.1 L546.7 349.5 A174 174 0 0 1 477.3 349.5 Z" fill="url(#gold)" stroke="#1B1D2E" stroke-width="8" stroke-linejoin="round"/>
 <path d="M512 234 L529 268 L512 302 L495 268 Z" fill="#78350F" opacity=".85"/>
 <line x1="512" y1="244" x2="512" y2="292" stroke="#FEF3C7" stroke-width="4" stroke-linecap="round" opacity=".8"/>
-</g>
 </svg>

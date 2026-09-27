@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import type { ReactNode } from "react";
+import { BrandMark } from "@/components/brand/BrandMark";
 
 // Layout compartido por las 3 páginas legales. Subnav pill-style inspirado
 // en crintech-static/politica-*/index.html. Ruta pública (sin auth).
@@ -22,7 +23,7 @@ export default function LegalLayout({ children }: { children: ReactNode }) {
       <nav className="sticky top-0 z-20 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-4 py-3">
           <Link href="/" className="flex items-center gap-2 text-slate-300 hover:text-white">
-            <span className="text-xl">🌀</span>
+            <BrandMark size={28} />
             <span className="font-semibold tracking-tight">Avalon Tracker</span>
           </Link>
           <div className="flex flex-wrap items-center gap-1.5">

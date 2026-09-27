@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 import { forwardRef } from "react";
 import type { RouteView } from "@/hooks/useClanRoutes";
 import { nodeColorForZoneType } from "@/components/graph/graph-colors";
@@ -161,22 +162,13 @@ export const RouteShareCard = forwardRef<HTMLDivElement, { route: RouteView }>(
             marginBottom: 18,
           }}
         >
-          <div
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: 10,
-              background: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 24,
-              boxShadow: "0 4px 12px rgba(99, 102, 241, 0.3)",
-              flexShrink: 0,
-            }}
-          >
-            🗺️
-          </div>
+          <img
+            src="/icon.svg"
+            alt=""
+            width={44}
+            height={44}
+            style={{ width: 44, height: 44, borderRadius: 10, flexShrink: 0, boxShadow: "0 4px 12px rgba(99, 102, 241, 0.3)" }}
+          />
           <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
             <span
               style={{

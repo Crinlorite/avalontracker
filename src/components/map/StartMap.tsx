@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { BrandMark } from "@/components/brand/BrandMark";
 
 // Crea un mapa personal. Sin sesión, primero crea la cuenta de invitado
 // (un clic: los rastreadores no crean cuentas al visitar /map).
@@ -44,7 +45,7 @@ export function StartMap({ signedIn, fromZone }: { signedIn: boolean; fromZone?:
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-950 px-4">
       <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-900/60 p-6 md:p-8">
-        <Link href="/" className="text-sm text-slate-400 hover:text-white">🌀 Avalon Tracker</Link>
+        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white"><BrandMark size={18} /> Avalon Tracker</Link>
         <h1 className="mt-4 text-2xl font-bold text-white md:text-3xl">{t("map.start.title")}</h1>
         <p className="mt-3 text-slate-300">{t("map.start.body")}</p>
         {fromZone && <p className="mt-3 text-sm text-indigo-300">{t("map.start.from", { zone: fromZone })}</p>}
