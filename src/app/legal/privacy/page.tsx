@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LegalPage } from "@/components/legal/LegalPage";
 
@@ -6,6 +7,13 @@ const UPDATED_ISO = "2026-09-27";
 
 export default function PrivacyPolicyPage() {
   const { lang } = useLanguage();
+  // El servidor pinta la versión inglesa; si el idioma cambia al hidratar,
+  // el navegador ya ha hecho el salto a #borrar-cuenta (enlace de Play) y
+  // se pierde. Se repite con el idioma ya pintado.
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (id) document.getElementById(id)?.scrollIntoView();
+  }, [lang]);
   // EN como fallback universal — ver comentario en aviso-legal/page.tsx.
   if (lang === "es") return <Spanish />;
   return <English />;
