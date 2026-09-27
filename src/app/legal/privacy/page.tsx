@@ -172,7 +172,7 @@ function Spanish() {
         ) si consideras que no atendimos correctamente.
       </p>
 
-      <h2 id="borrar-cuenta" className="scroll-mt-20">🗑️ Borrar tu cuenta</h2>
+      <h2 id="borrar-cuenta" className="scroll-mt-36 md:scroll-mt-20">🗑️ Borrar tu cuenta</h2>
       <p>Puedes pedir que borremos tu cuenta de Avalon Tracker (web y app móvil) y sus datos:</p>
       <ol>
         <li>
@@ -198,34 +198,6 @@ function Spanish() {
         e historial de un mapa de clan) se queda en ese mapa, pero sin tu nombre: pasa a figurar como
         usuario eliminado y se borra cuando se borre el mapa. Las rutas guardadas solo en tu móvil no
         las vemos: se borran al desinstalar la app.
-      </p>
-
-      <h2 id="borrar-cuenta" className="scroll-mt-20">🗑️ Delete your account</h2>
-      <p>You can ask us to delete your Avalon Tracker account (web and mobile app) and its data:</p>
-      <ol>
-        <li>
-          Email{" "}
-          <a href="mailto:avalon@crintech.pro?subject=Delete%20my%20account">avalon@crintech.pro</a>{" "}
-          with the subject &quot;Delete my account&quot;.
-        </li>
-        <li>Tell us your Discord username, the one shown on the website or in the app.</li>
-        <li>We delete it and confirm within 30 days at most.</li>
-      </ol>
-      <p>
-        If you use the app as a <strong>guest</strong>, there is no need to email us: in Settings →
-        Account &amp; sync, tap &quot;Unlink this device&quot;. The guest account deletes itself, with
-        its maps and routes, 30 days after it was last used.
-      </p>
-      <p>
-        <strong>What is deleted</strong>: your account (Discord ID, username, avatar and email,
-        display name), your linked devices, your clan map memberships and your personal maps in full,
-        with their routes, notes, share links and history.
-      </p>
-      <p>
-        <strong>What is kept</strong>: what you contributed to other people&apos;s maps (routes, hop
-        statuses and history in a clan map) stays in that map, but without your name: it is shown as
-        a deleted user and is removed when the map is deleted. Routes stored only on your phone never
-        reach us: they are removed when you uninstall the app.
       </p>
 
       <h2>🍪 Cookies</h2>
@@ -413,6 +385,34 @@ function English() {
           www.aepd.es
         </a>
         ) if you believe we haven&apos;t handled your request properly.
+      </p>
+
+      <h2 id="borrar-cuenta" className="scroll-mt-36 md:scroll-mt-20">🗑️ Delete your account</h2>
+      <p>You can ask us to delete your Avalon Tracker account (web and mobile app) and its data:</p>
+      <ol>
+        <li>
+          Email{" "}
+          <a href="mailto:avalon@crintech.pro?subject=Delete%20my%20account">avalon@crintech.pro</a>{" "}
+          with the subject &quot;Delete my account&quot;.
+        </li>
+        <li>Tell us your Discord username, the one shown on the website or in the app.</li>
+        <li>We delete it and confirm within 30 days at most.</li>
+      </ol>
+      <p>
+        If you use the app as a <strong>guest</strong>, there is no need to email us: in Settings →
+        Account &amp; sync, tap &quot;Unlink this device&quot;. The guest account deletes itself, with
+        its maps and routes, 30 days after it was last used.
+      </p>
+      <p>
+        <strong>What is deleted</strong>: your account (Discord ID, username, avatar and email,
+        display name), your linked devices, your clan map memberships and your personal maps in full,
+        with their routes, notes, share links and history.
+      </p>
+      <p>
+        <strong>What is kept</strong>: what you contributed to other people&apos;s maps (routes, hop
+        statuses and history in a clan map) stays in that map, but without your name: it is shown as
+        a deleted user and is removed when the map is deleted. Routes stored only on your phone never
+        reach us: they are removed when you uninstall the app.
       </p>
 
       <h2>🍪 Cookies</h2>
