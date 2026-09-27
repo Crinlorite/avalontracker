@@ -39,6 +39,7 @@ export async function POST(req: Request) {
     let map = await prisma.clan.findFirst({ where: { createdById: me.userId, kind: "PERSONAL" }, orderBy: { updatedAt: "desc" }, select: { id: true } });
     if (!map) {
       const created = await createPersonalMap(me.userId);
+      if ("error" in created && created.error === "NO_USER") return apiError("UNAUTHORIZED", 401, "Inicia sesión");
       if ("error" in created) return apiError("VALIDATION_ERROR", 400, `Máximo ${MAX_PERSONAL_MAPS} mapas personales`);
       map = { id: created.id };
     }

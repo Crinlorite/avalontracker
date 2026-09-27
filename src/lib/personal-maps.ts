@@ -7,17 +7,19 @@ import { Prisma } from "@/generated/prisma/client";
 export const MAX_PERSONAL_MAPS = 3;
 
 // Mapa personal: un «clan» de una sola persona, sin Discord ni Vigil.
-// Lo usan /api/maps (web) y /api/v1/maps (app).
-export async function createPersonalMap(userId: string, anchorZone?: string): Promise<{ id: string; name: string } | { error: "LIMIT" }> {
+// Lo usan /api/maps (web) y /api/v1/maps (app). NO_USER: la sesión apunta a
+// un usuario que ya no existe (cuenta borrada, invitado purgado) → 401.
+export async function createPersonalMap(userId: string, anchorZone?: string): Promise<{ id: string; name: string } | { error: "LIMIT" | "NO_USER" }> {
   const owned = await prisma.clan.count({ where: { createdById: userId, kind: "PERSONAL" } });
   if (owned >= MAX_PERSONAL_MAPS) return { error: "LIMIT" };
   const anchor = anchorZone
     ? await prisma.zone.findFirst({ where: { name: { equals: anchorZone, mode: "insensitive" } }, select: { id: true } })
     : null;
-  const user = await prisma.user.findUniqueOrThrow({
+  const user = await prisma.user.findUnique({
     where: { id: userId },
     select: { displayName: true, globalNickname: true, discordUsername: true, isGuest: true },
   });
+  if (!user) return { error: "NO_USER" };
   const who = user.isGuest ? "My" : `${(user.displayName ?? user.globalNickname ?? user.discordUsername).slice(0, 20)}'s`;
 
   // El nombre de clan es único en toda la app: sufijo aleatorio corto.
