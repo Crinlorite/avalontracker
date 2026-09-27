@@ -93,10 +93,17 @@ export async function pullChanges(clanId: string, since: Date | null, limit = PU
   let next: Date | null = null;
   if (truncated) {
     if (keptRoutes.length + keptHops.length === 0) {
-      // Todas las filas comparten el instante del corte: se entregan hasta
-      // `limit` y se avanza el cursor (caso límite; ver spec §6.2).
-      keptRoutes = routes.slice(0, limit);
-      keptHops = hops.slice(0, limit);
+      // Todas las filas de la página comparten el instante del corte (p. ej.
+      // una caducidad en bloque): se entregan TODAS las de ese instante,
+      // aunque pasen de `limit`, y el cursor avanza a él. Recortarlas las
+      // dejaría detrás de since=next para siempre.
+      [keptRoutes, keptHops] = await Promise.all([
+        prisma.route.findMany({ where: { clanId, updatedAt: cutoff! } }),
+        prisma.routeHop.findMany({
+          where: { route: { clanId }, updatedAt: cutoff! },
+          include: { fromZone: { select: { name: true } }, toZone: { select: { name: true } } },
+        }),
+      ]);
       next = cutoff;
     } else {
       next = new Date(Math.max(...[...keptRoutes, ...keptHops].map((x) => x.updatedAt.getTime())));
