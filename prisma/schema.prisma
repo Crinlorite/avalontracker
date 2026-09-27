@@ -292,8 +292,8 @@ model RouteHop {
   statusSetById  String?
   statusSetAt    DateTime?
   // Soft-delete: cuando el usuario "borra" un hop o un path, se marca
-  // con timestamp aquí en vez de hard-delete. El barrido lazy del GET
-  // routes/route.ts hace hard-delete de hops con deletedAt > 7 días.
+  // con timestamp aquí en vez de hard-delete. El barrido de fondo
+  // (sweepTrash, instrumentation.ts) hace hard-delete de hops con deletedAt > 7 días.
   // En la ventana de 7 días el hop sigue en la tabla y se puede
   // recuperar (set deletedAt = null).
   deletedAt      DateTime?
@@ -308,7 +308,7 @@ model RouteHop {
   // Un edge (from→to) sólo puede aparecer una vez por ruta. Aplica también
   // a hops soft-deleted (deletedAt != null): durante la ventana de TTL
   // (2 días) un edge "tombstoned" bloquea recrearlo en la misma ruta.
-  // Pasado el TTL el sweep en GET routes lo hard-deletea y queda libre.
+  // Pasado el TTL el barrido de fondo (sweepTrash) lo hard-deletea y queda libre.
   // Para el caso operativo (merge de rutas con edge solapado), los
   // handlers capturan P2002 y devuelven 409 con mensaje claro.
   @@unique([routeId, fromZoneId, toZoneId])

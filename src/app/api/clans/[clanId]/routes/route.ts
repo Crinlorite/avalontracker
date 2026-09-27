@@ -7,7 +7,6 @@ import { requireRole, PermissionError, permissionErrorMessage } from "@/lib/perm
 import { apiError, internalError } from "@/lib/api-error";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
 import { logAudit } from "@/lib/audit";
-import { TRASH_TTL_MS } from "@/lib/trash";
 
 const createLim = createLimiter({ windowMs: 60_000, max: 20 });
 
@@ -43,26 +42,13 @@ export async function GET(request: Request, { params }: RouteParams) {
   const since = url.searchParams.get("since");
   const status = url.searchParams.get("status") as "ACTIVE" | "EXPIRED" | "DISABLED" | "ALL" | null;
 
-  // Mantenimiento lazy: antes de leer hacemos varios barridos sin
-  // cron ni scheduler. Se mantienen idempotentes y baratos (queries
-  // con índices).
-  //   1) ACTIVE → EXPIRED si TODOS los hops VIVOS están vencidos.
-  //      Hops con deletedAt no cuentan — ya no son parte funcional de
-  //      la cadena. `none` con la condición invertida + `some` para
-  //      evitar el caso vacuoso de una route sin hops vivos.
-  //   2) Hard-delete de RouteHops con deletedAt > 2 días: ventana de
-  //      recuperación cerrada, fuera del DB.
-  //   3) Hard-delete de Routes que han quedado sin hops vivos NI
-  //      soft-deleted (todo limpiado por el paso 2 o nunca tuvieron).
-  //   4) Hard-delete de Routes EXPIRED con updatedAt > 2 días (legacy
-  //      para EXPIRED automáticas — el ttl real va por deletedAt en
-  //      hops desde este commit).
+  // Mantenimiento lazy antes de leer: ACTIVE → EXPIRED si TODOS los
+  // hops VIVOS están vencidos. Hops con deletedAt no cuentan — ya no son
+  // parte funcional de la cadena. `none` con la condición invertida +
+  // `some` para evitar el caso vacuoso de una route sin hops vivos.
+  // El vaciado de la papelera (hard-delete pasado el TTL) no va aquí:
+  // es la tarea de fondo sweepTrash de instrumentation.ts.
   const now = new Date();
-  // 2 días: una ruta de Avalon dura horas, así que 48h es ventana
-  // sobrada para revertir un borrado por error. Pasado ese tiempo, la
-  // ruta de todas formas habría caducado por sí misma.
-  const ttlMs = TRASH_TTL_MS;
-  const ttlAgo = new Date(now.getTime() - ttlMs);
 
   // 1) Transición a EXPIRED + soft-delete de hops cuando la chain
   //    entera ha caducado. Unificamos con el flujo manual de borrado:
@@ -96,29 +82,6 @@ export async function GET(request: Request, { params }: RouteParams) {
       }),
     ]);
   }
-
-  // 2) Hard-delete de hops soft-borrados hace > 2 días.
-  await prisma.routeHop.deleteMany({
-    where: {
-      route: { clanId },
-      deletedAt: { lt: ttlAgo },
-    },
-  });
-
-  // 2b) Hard-delete de rutas enteras en papelera más de TRASH_TTL_MS.
-  await prisma.route.deleteMany({ where: { clanId, deletedAt: { lt: ttlAgo } } });
-
-  // 3) Hard-delete de Routes que ya no tienen ningún hop (ni vivo ni
-  // soft-deleted) — el paso 2 puede haber dejado huérfanas.
-  await prisma.route.deleteMany({
-    where: { clanId, hops: { none: {} } },
-  });
-
-  // 4) Hard-delete legacy de EXPIRED viejas (para datos previos a
-  // la migración a soft-delete por hop).
-  await prisma.route.deleteMany({
-    where: { clanId, status: "EXPIRED", updatedAt: { lt: ttlAgo } },
-  });
 
   // Las rutas en papelera (Route.deletedAt, p. ej. borradas desde la app) no se listan.
   const where: Record<string, unknown> = { clanId, deletedAt: null };
