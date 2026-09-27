@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { publicT, publicPath, publicLangName, isBetaLang, PUBLIC_LANGS, type PublicLang } from "@/i18n/public";
+import { BrandMark } from "@/components/brand/BrandMark";
 
 export const REPO_URL = "https://github.com/Crinlorite/avalontracker";
 
@@ -15,7 +16,7 @@ export function PublicShell({ lang, path, children }: { lang: PublicLang; path: 
       <header className="border-b border-slate-800/80 bg-slate-950/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-5 gap-y-2 px-4 py-3">
           <Link href="/" className="mr-auto flex items-center gap-2 font-semibold text-white">
-            <span aria-hidden>🌀</span> Avalon Tracker
+            <BrandMark size={26} /> Avalon Tracker
           </Link>
           <nav className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
             <Link href={p("/zones")} className="text-slate-300 hover:text-white">{t("nav.zones")}</Link>

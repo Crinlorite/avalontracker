@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { BrandMark } from "@/components/brand/BrandMark";
 
 type Hop = { fromZone: string; toZone: string; portalSize: number; expiresAt: string; status: string; statusNote?: string };
 
@@ -42,7 +43,7 @@ export function ImportRoute({ code, notes, hops, unsupported }: { code: string; 
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-950 px-4">
       <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-900/60 p-6">
-        <Link href="/" className="text-sm text-slate-400 hover:text-white">🌀 Avalon Tracker</Link>
+        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white"><BrandMark size={18} /> Avalon Tracker</Link>
         <h1 className="mt-3 text-2xl font-bold text-white">{t("import.title")}</h1>
         {unsupported ? <p className="mt-4 text-slate-300">{t("import.newer")}</p> : (<>
           {notes && <p className="mt-2 text-sm text-slate-400">{notes}</p>}

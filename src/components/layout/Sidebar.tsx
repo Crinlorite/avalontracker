@@ -10,6 +10,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useSidebarToggle } from "@/components/layout/SidebarToggleContext";
 import type { AppRole } from "@/generated/prisma/client";
 import { keepMapsWithDiscord } from "@/components/map/guest-actions";
+import { BrandMark } from "@/components/brand/BrandMark";
 
 type ClanEntry = { id: string; name: string; kind: "DISCORD" | "PERSONAL"; discordGuildIcon: string | null; myRole: AppRole | null };
 
@@ -39,7 +40,7 @@ export function Sidebar() {
           transform pero el background no. */}
       <aside className={`${open ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-slate-800 bg-slate-950 p-4 transition-transform md:translate-x-0`}>
         <div className="mb-6 flex items-center gap-2">
-          <span className="text-xl">🌀</span>
+          <BrandMark size={28} />
           <span className="font-bold text-white">Avalon Tracker</span>
         </div>
 

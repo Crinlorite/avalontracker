@@ -10,6 +10,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { SIDE_PROJECTS, type SideProject } from "@/data/sideProjects";
 import type { Lang } from "@/i18n/translations";
+import { BrandMark } from "@/components/brand/BrandMark";
 
 export function LandingLoginDiscord() {
   const { t, lang } = useLanguage();
@@ -38,7 +39,7 @@ export function LandingLoginDiscord() {
           orden de DOM y tapaba el menú. */}
       <header className="relative z-50 mx-auto flex max-w-6xl items-center justify-between px-4 py-5">
         <div className="flex items-center gap-2 text-slate-300">
-          <span className="text-2xl">🌀</span>
+          <BrandMark size={32} />
           <span className="font-semibold tracking-tight">Avalon Tracker</span>
         </div>
         <nav className="flex items-center gap-4 text-sm">
