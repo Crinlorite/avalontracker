@@ -67,7 +67,9 @@ describe("enlaces compartidos", () => {
     const a = await user(); const b = await user();
     expect(await shares.joinByShare(edit.token, a.id)).toEqual({ clanId: map.id, role: "EDITOR" });
     expect(await shares.joinByShare(view.token, b.id)).toEqual({ clanId: map.id, role: "VIEWER" });
-    expect(await shares.joinByShare(view.token, owner.id)).toEqual({ clanId: map.id, role: "VIEWER" });
+    // Se devuelve el rol efectivo, no el del enlace: quien ya tenía más, lo conserva.
+    expect(await shares.joinByShare(view.token, owner.id)).toEqual({ clanId: map.id, role: "ADMIN" });
+    expect(await shares.joinByShare(view.token, a.id)).toEqual({ clanId: map.id, role: "EDITOR" });
     expect((await perms.getUserRoleInClan(a.id, map.id)).appRole).toBe("EDITOR");
     expect((await perms.getUserRoleInClan(b.id, map.id)).appRole).toBe("VIEWER");
     expect((await perms.getUserRoleInClan(owner.id, map.id)).appRole).toBe("ADMIN");
