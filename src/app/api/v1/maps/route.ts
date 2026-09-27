@@ -29,6 +29,7 @@ export async function POST(req: Request) {
   if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Datos inválidos", { issues: parsed.error.issues });
   try {
     const r = await createPersonalMap(me.userId, parsed.data.anchorZone);
+    if ("error" in r && r.error === "NO_USER") return apiError("UNAUTHORIZED", 401, "Inicia sesión");
     if ("error" in r) return apiError("VALIDATION_ERROR", 400, `Máximo ${MAX_PERSONAL_MAPS} mapas personales`, { limit: MAX_PERSONAL_MAPS });
     return NextResponse.json(r, { status: 201 });
   } catch (err) { return internalError(err); }

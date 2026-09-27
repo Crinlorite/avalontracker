@@ -179,6 +179,21 @@ describe("API /api/maps y /api/clans/:id/convert", () => {
     expect((await POST(post({}))).status).toBe(400);
     expect(await prisma.clan.count({ where: { createdById: u.id, kind: "PERSONAL" } })).toBe(3);
   });
+  it("sesión de un usuario que ya no existe (cuenta borrada o invitado purgado) → 401, no 500", async () => {
+    const { POST } = await import("@/app/api/maps/route");
+    const { POST: postV1 } = await import("@/app/api/v1/maps/route");
+    const { POST: importV1 } = await import("@/app/api/v1/import/route");
+    const { encodeRouteCode } = await import("@/lib/route-codec");
+    for (const name of ["Casitos-Atinaum", "Hiles-Izizaum"]) await prisma.zone.upsert({ where: { name }, create: { name, type: "AVALON", tier: 6 }, update: {} });
+    const code = encodeRouteCode({ hops: [{ fromZone: "Casitos-Atinaum", toZone: "Hiles-Izizaum", portalSize: 7, expiresAt: new Date(Date.now() + 3600e3), status: "ACTIVE" }] });
+    const u = await discordUser();
+    await prisma.user.delete({ where: { id: u.id } });
+    session.current = { user: { id: u.id } };
+    expect((await POST(post({}))).status).toBe(401);
+    expect((await postV1(post({}))).status).toBe(401);
+    expect((await importV1(post({ code }))).status).toBe(401);
+    expect(await prisma.clan.count({ where: { createdById: u.id } })).toBe(0);
+  });
   it("rechaza campos extra (no se puede colar kind/discordGuildId)", async () => {
     const { POST } = await import("@/app/api/maps/route");
     const u = await discordUser();
