@@ -139,6 +139,30 @@ describe("sincronización", () => {
     expect(ids).toHaveLength(3);
   });
 
+  it("paginación: más de limit filas en el mismo instante (caducidad en bloque) no se pierden", async () => {
+    const { GET, POST } = await import("@/app/api/v1/maps/[id]/changes/route");
+    const { clan, token } = await ownerToken();
+    const id = uuid();
+    await POST(req("http://t/x", token, { routes: [{ id }], hops: [
+      { routeId: id, fromZone: "Casitos-Atinaum", toZone: "Hiles-Izizaum", order: 0, portalSize: 7, expiresAt: inH(1) },
+      { routeId: id, fromZone: "Hiles-Izizaum", toZone: "Coros-Atinaum", order: 1, portalSize: 7, expiresAt: inH(1) },
+      { routeId: id, fromZone: "Coros-Atinaum", toZone: "Siros-Ofurlos", order: 2, portalSize: 7, expiresAt: inH(1) },
+    ] }), ctx(clan.id));
+    // Como el paso a EXPIRED de la web: un solo updateMany, un solo updatedAt para los tres saltos.
+    const now = new Date();
+    await prisma.routeHop.updateMany({ where: { routeId: id }, data: { deletedAt: now, updatedAt: now } });
+    const hops = new Set<number>();
+    let since: string | null = null;
+    for (let i = 0; i < 10; i++) {
+      const url = `http://t/x?limit=2${since ? `&since=${encodeURIComponent(since)}` : ""}`;
+      const page: { hops: { id: number; deletedAt: string | null }[]; hasMore: boolean; next: string | null } = await (await GET(req(url, token), ctx(clan.id))).json();
+      for (const h of page.hops) { expect(h.deletedAt).toBe(now.toISOString()); hops.add(h.id); }
+      if (!page.hasMore) break;
+      since = page.next;
+    }
+    expect(hops.size).toBe(3);
+  });
+
   it("listar y crear mapas por API", async () => {
     const { GET, POST } = await import("@/app/api/v1/maps/route");
     const { clan, token } = await ownerToken();
