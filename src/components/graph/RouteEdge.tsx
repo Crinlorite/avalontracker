@@ -4,7 +4,7 @@ import { edgeColorForHop, edgeWidthForPortal, edgeDashForHop } from "./graph-col
 import { formatCountdown, secondsLeft } from "@/lib/time";
 import type { HopView } from "@/hooks/useClanRoutes";
 
-type RouteEdgeData = { hop: HopView; routeId: string };
+type RouteEdgeData = { hop: HopView; routeId: string; readOnly?: boolean };
 
 export function RouteEdge(props: EdgeProps) {
   const { sourceX, sourceY, targetX, targetY, data } = props;
@@ -50,10 +50,10 @@ export function RouteEdge(props: EdgeProps) {
       <EdgeLabelRenderer>
         <div
           style={{ position: "absolute", transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`, pointerEvents: "all" }}
-          className="cursor-pointer rounded bg-slate-900/90 px-2 py-0.5 text-[10px] font-mono text-white border border-slate-700 hover:border-slate-500"
-          onClick={emitTimerClick}
-          onContextMenu={emitTimerContextMenu}
-          title="Click: editar tiempo · Click derecho: añadir tiempos rápido"
+          className={`${d.readOnly ? "" : "cursor-pointer hover:border-slate-500 "}rounded bg-slate-900/90 px-2 py-0.5 text-[10px] font-mono text-white border border-slate-700`}
+          onClick={d.readOnly ? undefined : emitTimerClick}
+          onContextMenu={d.readOnly ? undefined : emitTimerContextMenu}
+          title={d.readOnly ? undefined : "Click: editar tiempo · Click derecho: añadir tiempos rápido"}
         >
           <span style={{ color }}>{formatCountdown(secondsLeft(d.hop.expiresAt))}</span>
           <span className="mx-1 text-slate-500">·</span>

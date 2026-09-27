@@ -49,7 +49,7 @@ export function SharedMap({ token, role, map, initial }: { token: string; role: 
       {error && <p role="alert" className="px-4 pt-2 text-sm text-red-300">{error}</p>}
       <div className="m-4 flex h-[70vh] min-h-[420px] flex-1 flex-col overflow-hidden rounded-xl border border-slate-800">
         {routes.length === 0 ? <p className="p-6 text-slate-400">{t("share.empty")}</p> : (
-          <ClanGraph clanId={`share:${token}`} routes={routes} anchor={map.anchorZone} onNodeClick={() => {}} />
+          <ClanGraph clanId={`share:${token}`} routes={routes} anchor={map.anchorZone} onNodeClick={() => {}} readOnly />
         )}
       </div>
     </div>
