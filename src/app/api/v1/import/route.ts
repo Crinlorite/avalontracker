@@ -14,6 +14,10 @@ const importLimiter = createLimiter({ windowMs: 60_000, max: 20 });
 
 const schema = z.object({ code: z.string().min(8).max(8000) }).strict();
 
+// El código admite 1..100; aquí, como en la sincronización (espejo de
+// datos, spec §6.2): tamaños actuales 7 y 20 y heredados 2 y 40.
+const PORTAL_SIZES = new Set([2, 7, 20, 40]);
+
 // Importa una ruta compartida por código v1 al primer mapa personal del
 // usuario (lo crea si no tiene). Los saltos se guardan tal cual, incluidos
 // los caducados: la papelera y los tiempos ya los tratan como en la web.
@@ -29,6 +33,8 @@ export async function POST(req: Request) {
   if (!decoded.ok) {
     return apiError("VALIDATION_ERROR", 400, decoded.reason === "unsupported_version" ? "Este código es de una versión más nueva de la app" : "Código no válido");
   }
+  const badSize = decoded.route.hops.find((h) => !PORTAL_SIZES.has(h.portalSize));
+  if (badSize) return apiError("VALIDATION_ERROR", 400, `Tamaño de portal no válido: ${badSize.portalSize}`, { portalSize: badSize.portalSize });
   try {
     const names = [...new Set(decoded.route.hops.flatMap((h) => [h.fromZone, h.toZone]))];
     const zones = await prisma.zone.findMany({ where: { name: { in: names } }, select: { id: true, name: true } });
