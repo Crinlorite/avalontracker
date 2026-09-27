@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import { prisma } from "@/lib/prisma";
-import { ROLE_HIERARCHY, invalidateRoleCache, invalidateClanRoleCache } from "@/lib/permissions";
+import { ROLE_HIERARCHY, invalidateRoleCache, invalidateClanRoleCache, getUserRoleInClan } from "@/lib/permissions";
 import { createLimiter } from "@/lib/rate-limit";
 import type { AppRole, Prisma } from "@/generated/prisma/client";
 
@@ -79,6 +79,7 @@ export async function joinByShare(token: string, userId: string) {
     });
     invalidateRoleCache(userId, share.clanId);
   }
-  // Se devuelve el rol del enlace; el rol efectivo lo da getUserRoleInClan.
-  return { clanId: share.clanId, role: share.role };
+  // Se devuelve el rol efectivo (el dueño sigue siendo ADMIN), no el del enlace.
+  const { appRole } = await getUserRoleInClan(userId, share.clanId);
+  return { clanId: share.clanId, role: appRole ?? share.role };
 }
