@@ -47,10 +47,10 @@ export async function POST(request: Request, { params }: RouteParams) {
     const check = await checkGuildRegistration(userId, parsed.data.discordGuildId, parsed.data.name, clanId);
     if (!check.ok) return apiError(check.code, check.status, check.message, check.extra);
 
-    // Los enlaces compartidos y sus miembros dejan de valer: los roles pasan a Discord.
-    await revokeAllShares(clanId);
-
     const updated = await prisma.$transaction(async (tx) => {
+      // Los enlaces compartidos y sus miembros dejan de valer: los roles pasan
+      // a Discord. Dentro de la transacción: si la conversión falla, siguen.
+      await revokeAllShares(clanId, tx);
       const c = await tx.clan.update({
         where: { id: clanId, kind: "PERSONAL" },
         data: {

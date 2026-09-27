@@ -106,4 +106,21 @@ describe("enlaces compartidos", () => {
     expect(await shares.listShares(map.id)).toHaveLength(0);
     expect(await prisma.clanMember.findUnique({ where: { userId_clanId: { userId: a.id, clanId: map.id } } })).toBeNull();
   });
+
+  it("si la conversión falla a mitad, los enlaces y sus miembros siguen como estaban", async () => {
+    const { POST: convert } = await import("@/app/api/clans/[clanId]/convert/route");
+    bot.fetchGuildHealth.mockResolvedValue({ installed: true }); bot.fetchUserGuildPermissions.mockResolvedValue({ canRegisterClan: true });
+    const owner = await user(); const map = await personalMap(owner.id);
+    const s = await shares.createShare(map.id, "EDITOR", owner.id);
+    const a = await user(); await shares.joinByShare(s.token, a.id);
+    // Sin su fila de miembro el dueño sigue siendo ADMIN (lo es por crear el
+    // mapa), pero la transacción de conversión falla al actualizarla.
+    await prisma.clanMember.delete({ where: { userId_clanId: { userId: owner.id, clanId: map.id } } });
+    session.current = { user: { id: owner.id } };
+    const r = await convert(new Request("http://t/x", { method: "POST", body: JSON.stringify({ name: `Clan ${seq}`, discordGuildId: `7100000000000000${seq}`.slice(0, 18), discordGuildName: "G" }) }), { params: Promise.resolve({ clanId: map.id }) });
+    expect(r.status).toBe(500);
+    expect((await prisma.clan.findUniqueOrThrow({ where: { id: map.id } })).kind).toBe("PERSONAL");
+    expect((await shares.listShares(map.id)).map((x) => x.id)).toEqual([s.id]);
+    expect(await prisma.clanMember.findUnique({ where: { userId_clanId: { userId: a.id, clanId: map.id } } })).not.toBeNull();
+  });
 });
