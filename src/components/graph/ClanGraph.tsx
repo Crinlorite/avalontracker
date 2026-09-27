@@ -13,8 +13,17 @@ import type { ClanAnchorZone } from "@/hooks/useClan";
 const nodeTypes = { zone: ZoneNode };
 const edgeTypes = { route: RouteEdge };
 
+// Salto que abre el editor de tiempo al pulsar su temporizador; en solo
+// lectura (enlace compartido), ninguno: guardar fallaría con 401/403.
+export function hopToEdit(routes: RouteView[], detail: { routeId: string; hopId: number }, readOnly = false): { hop: HopView; routeId: string } | null {
+  if (readOnly) return null;
+  const route = routes.find((r) => r.id === detail.routeId);
+  const hop = route?.hops.find((h) => h.id === detail.hopId);
+  return route && hop ? { hop, routeId: route.id } : null;
+}
+
 export function ClanGraph({
-  clanId, routes, anchor, anchorSecurityLevel, onNodeClick, onNodeContextMenu, onEdgeContextMenu,
+  clanId, routes, anchor, anchorSecurityLevel, onNodeClick, onNodeContextMenu, onEdgeContextMenu, readOnly = false,
 }: {
   clanId: string;
   routes: RouteView[];
@@ -29,6 +38,9 @@ export function ClanGraph({
   // el timer label tiene su propio handler vía custom event para
   // que su menu contextual no incluya delete).
   onEdgeContextMenu?: (event: React.MouseEvent, hop: HopView, routeId: string) => void;
+  // Solo lectura (vista de un enlace compartido): el temporizador no abre
+  // el editor de tiempo ni se ofrece como editable.
+  readOnly?: boolean;
 }) {
   const computed = useMemo(
     () => computeLayout(routes, anchor, anchorSecurityLevel ?? null),
@@ -75,10 +87,10 @@ export function ClanGraph({
         type: "route",
         source: e.source,
         target: e.target,
-        data: { hop: e.hop, routeId: e.routeId },
+        data: { hop: e.hop, routeId: e.routeId, readOnly },
       })),
     );
-  }, [computed, setNodes, setEdges, getCachedPosition]);
+  }, [computed, setNodes, setEdges, getCachedPosition, readOnly]);
 
   // Persiste la posición cuando el usuario suelta un nodo arrastrado.
   // Así sobrevive a refreshes y a recargas completas del navegador.
@@ -101,13 +113,12 @@ export function ClanGraph({
     function handler(ev: Event) {
       const detail = (ev as CustomEvent<{ routeId: string; hopId: number }>).detail;
       if (!detail) return;
-      const route = routes.find((r) => r.id === detail.routeId);
-      const hop = route?.hops.find((h) => h.id === detail.hopId);
-      if (route && hop) setEditingHop({ hop, routeId: route.id });
+      const target = hopToEdit(routes, detail, readOnly);
+      if (target) setEditingHop(target);
     }
     node.addEventListener("avalon:edit-hop-time", handler);
     return () => node.removeEventListener("avalon:edit-hop-time", handler);
-  }, [routes]);
+  }, [routes, readOnly]);
 
   return (
     <div
