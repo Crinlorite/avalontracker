@@ -10,6 +10,9 @@ export const authConfig = {
       clientId: process.env.DISCORD_CLIENT_ID,
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
       authorization: { params: { scope: "identify email" } },
+      // Discord manda `iss` en la vuelta (RFC 9207) y Auth.js lo compara con este emisor;
+      // sin declararlo usa «https://authjs.dev» y el callback cae con «Server error».
+      issuer: "https://discord.com",
     }),
   ],
   pages: { signIn: "/" },
