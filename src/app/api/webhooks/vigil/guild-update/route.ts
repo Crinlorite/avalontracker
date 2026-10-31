@@ -3,6 +3,7 @@ import { z } from "zod";
 import { verifySignature } from "@/lib/hmac";
 import { prisma } from "@/lib/prisma";
 import { apiError, internalError } from "@/lib/api-error";
+import { clientIp } from "@/lib/client-ip";
 import { createLimiter, consumeToken } from "@/lib/rate-limit";
 import { verifyWebhookFreshness } from "@/lib/webhook-freshness";
 
@@ -17,7 +18,8 @@ const schema = z.object({
 const webhookLimiter = createLimiter({ windowMs: 60_000, max: 100 });
 
 export async function POST(request: Request) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
+  // IP real tras Cloudflare → Traefik; X-Forwarded-For trae el borde, común a muchos clientes.
+  const ip = clientIp(request);
   const rl = consumeToken(webhookLimiter, ip);
   if (!rl.ok) return apiError("RATE_LIMITED", 429, "Demasiadas peticiones", { retryAfterMs: rl.retryAfterMs });
 

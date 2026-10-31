@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { apiError } from "@/lib/api-error";
+import { clientIp } from "@/lib/client-ip";
+import { consumeToken, createLimiter } from "@/lib/rate-limit";
+
+// Sin cuenta y con Turnstile opcional: 5 tickets cada 10 minutos por IP
+// bastan a cualquier persona y frenan a quien quiera llenar el Discord.
+const feedbackLimiter = createLimiter({ windowMs: 10 * 60_000, max: 5 });
 
 // POST /api/feedback
 //
@@ -63,6 +69,11 @@ export async function POST(req: Request) {
     return apiError("INTERNAL", 500, "Feedback no configurado (FEEDBACK_SECRET o VIGIL_BOT_URL)");
   }
 
+  // IP real tras Cloudflare → Traefik (clientIp); X-Forwarded-For trae el borde.
+  const ip = clientIp(req);
+  const rl = consumeToken(feedbackLimiter, ip);
+  if (!rl.ok) return apiError("RATE_LIMITED", 429, "Demasiados tickets; espera unos minutos", { retryAfterMs: rl.retryAfterMs });
+
   const raw = await req.json().catch(() => null);
   const parsed = bodySchema.safeParse(raw);
   if (!parsed.success) return apiError("VALIDATION_ERROR", 400, "Body inválido", { issues: parsed.error.issues });
@@ -92,10 +103,7 @@ export async function POST(req: Request) {
     safeContext = body.context;
   }
 
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
-    || req.headers.get("cf-connecting-ip")
-    || null;
-  const ts = await verifyTurnstile(body.turnstileToken, TURNSTILE_SECRET, ip);
+  const ts = await verifyTurnstile(body.turnstileToken, TURNSTILE_SECRET, ip === "unknown" ? null : ip);
   if (!ts.success) {
     return apiError("VALIDATION_ERROR", 400, "Anti-bot fallido");
   }
