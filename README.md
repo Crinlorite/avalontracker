@@ -174,7 +174,7 @@ docker compose up -d
 El Dockerfile CMD ejecuta:
 
 ```bash
-npx prisma db push --accept-data-loss   # crea tablas si no existen
+npx prisma db push                      # crea tablas si no existen; si un cambio de esquema perdería datos, falla y no arranca
 npx tsx scripts/seed-zones.ts           # idempotente, importa zonas Avalon
 node server.js
 ```
