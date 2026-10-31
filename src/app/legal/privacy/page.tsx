@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LegalPage } from "@/components/legal/LegalPage";
 
@@ -211,7 +212,7 @@ function Spanish() {
       <h2>🍪 Cookies</h2>
       <p>
         Usamos una única cookie técnica de sesión (NextAuth) para mantenerte logueado. Ver detalle en{" "}
-        <a href="/legal/cookies">Política de cookies</a>.
+        <Link href="/legal/cookies">Política de cookies</Link>.
       </p>
 
       <h2>🔒 Seguridad</h2>
@@ -426,7 +427,7 @@ function English() {
       <h2>🍪 Cookies</h2>
       <p>
         We use a single technical session cookie (NextAuth) to keep you logged in. Full detail in the{" "}
-        <a href="/legal/cookies">Cookie Policy</a>.
+        <Link href="/legal/cookies">Cookie Policy</Link>.
       </p>
 
       <h2>🔒 Security</h2>

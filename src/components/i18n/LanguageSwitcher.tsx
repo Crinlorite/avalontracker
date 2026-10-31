@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import { LANGUAGES, findLanguage, type LangGroup, type LanguageDef } from "@/i18n/languages";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -126,8 +127,8 @@ export function LanguageSwitcher({
 
           <p className="mt-5 border-t border-slate-800 pt-3 text-xs text-slate-500">
             {lang === "es"
-              ? <>¿Hablas alguno? <a href="/feedback" className="font-semibold text-indigo-400 underline-offset-2 hover:underline">Ayúdanos a traducir</a>.</>
-              : <>Speak one? <a href="/feedback" className="font-semibold text-indigo-400 underline-offset-2 hover:underline">Help us translate</a>.</>}
+              ? <>¿Hablas alguno? <Link href="/feedback" className="font-semibold text-indigo-400 underline-offset-2 hover:underline">Ayúdanos a traducir</Link>.</>
+              : <>Speak one? <Link href="/feedback" className="font-semibold text-indigo-400 underline-offset-2 hover:underline">Help us translate</Link>.</>}
           </p>
         </div>
       )}

@@ -108,7 +108,7 @@ export function AppendHopModal({
           </p>
           {lastHop && (
             <p className="mt-1 text-xs text-slate-500">
-              Puedes ramificar desde <strong>cualquier zona del grafo</strong> ({graphNodes.size} nodos). El nuevo hop se añadirá como rama desde la zona que elijas en "Desde".
+              Puedes ramificar desde <strong>cualquier zona del grafo</strong> ({graphNodes.size} nodos). El nuevo hop se añadirá como rama desde la zona que elijas en &quot;Desde&quot;.
             </p>
           )}
         </div>
