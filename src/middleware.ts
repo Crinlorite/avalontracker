@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 import { authConfig } from "@/lib/auth.config";
 import { consumeToken, createLimiter } from "@/lib/rate-limit";
+import { clientIp } from "@/lib/client-ip";
 import { parsePublicPath } from "@/lib/public-routing";
 import zoneNames from "@/data/avalon-zone-names.json";
 
@@ -17,8 +18,10 @@ export default auth((req) => {
   const path = nextUrl.pathname;
 
   if (path.startsWith("/api/auth/callback/")) {
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
-    const r = consumeToken(authCallbackLimiter, ip);
+    // IP real tras Cloudflare → Traefik (clientIp); X-Forwarded-For trae el
+    // borde, común a muchos clientes: contar ahí bloqueaba la entrada a toda
+    // una región con diez intentos por minuto.
+    const r = consumeToken(authCallbackLimiter, clientIp(req));
     if (!r.ok) {
       return new Response(JSON.stringify({ error: { code: "RATE_LIMITED", message: "Demasiadas peticiones" } }), {
         status: 429, headers: { "Content-Type": "application/json", "Retry-After": String(Math.ceil(r.retryAfterMs / 1000)) },

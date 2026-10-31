@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { authConfig } from "@/lib/auth.config";
 import { createGuestUser, CLAIM_COOKIE, verifyClaim, mergeGuestInto } from "@/lib/guest";
 import { createLimiter, consumeToken } from "@/lib/rate-limit";
+import { clientIp } from "@/lib/client-ip";
 import { prisma } from "@/lib/prisma";
 import { fetchUserClans } from "@/lib/vigil-bot-client";
 import { logger } from "@/lib/logger";
@@ -22,7 +23,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       name: "Guest",
       credentials: {},
       async authorize(_credentials, request) {
-        const ip = request?.headers?.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+        // IP real tras Cloudflare → Traefik (clientIp); X-Forwarded-For trae
+        // el borde, común a muchos clientes.
+        const ip = request?.headers ? clientIp(request) : "unknown";
         if (!consumeToken(guestLimiter, ip).ok) return null;
         const u = await createGuestUser();
         return { id: u.id, name: u.discordUsername };
