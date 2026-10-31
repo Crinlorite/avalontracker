@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import toast from "react-hot-toast";
+import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const APP_VERSION = "1.0";
@@ -214,12 +215,12 @@ export default function FeedbackPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-12">
       <header className="mb-8">
-        <a
+        <Link
           href="/dashboard"
           className="mb-4 inline-flex items-center gap-1 text-xs text-slate-400 hover:text-white"
         >
           ← {lang === "es" ? "Volver al Dashboard" : "Back to Dashboard"}
-        </a>
+        </Link>
         <h1 className="text-3xl font-bold text-white">
           {lang === "es" ? "Enviar Feedback" : "Send Feedback"}
         </h1>
