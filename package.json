@@ -33,7 +33,7 @@
     "react-dom": "19.2.3",
     "react-hot-toast": "^2.6.0",
     "swr": "^2.4.1",
-    "tsx": "^4.21.0",
+    "tsx": "^4.23.15",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -41,11 +41,11 @@
     "@electric-sql/pglite-socket": "^0.2.11",
     "@tailwindcss/postcss": "^4",
     "@types/express": "^5.0.6",
-    "@types/node": "^20",
+    "@types/node": "^22.20.5",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@vitest/ui": "^3.2.4",
+    "@vitest/ui": "^5.0.5",
     "eslint": "^9",
     "eslint-config-next": "16.4.3",
     "express": "^5.2.1",
@@ -53,6 +53,6 @@
     "prisma": "^7.10.1",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^3.2.4"
+    "vitest": "^5.0.5"
   }
 }
