@@ -24,8 +24,9 @@ export async function GET(_req: Request, { params }: RouteParams) {
   if (!session?.user?.id) return apiError("UNAUTHORIZED", 401, "Inicia sesión");
   const { clanId } = await params;
 
+  let role;
   try {
-    await requireRole(session.user.id, clanId, "VIEWER", "GET");
+    ({ role } = await requireRole(session.user.id, clanId, "VIEWER", "GET"));
   } catch (e) {
     if (e instanceof PermissionError) return apiError(e.code, e.status, permissionErrorMessage(e), e.extra);
     return internalError(e);
@@ -42,7 +43,10 @@ export async function GET(_req: Request, { params }: RouteParams) {
   // defecto al ser campos top-level del Clan model — no hace falta
   // añadirlos al select.
   if (!clan) return apiError("NOT_FOUND", 404, "Clan no encontrado");
-  return NextResponse.json(clan);
+  // La URL del webhook de Discord es un secreto (con ella se publica como el
+  // clan y se puede borrar el webhook): solo la ve ADMIN, que es quien la
+  // edita en Ajustes. Al resto se le devuelve null.
+  return NextResponse.json(role === "ADMIN" ? clan : { ...clan, discordWebhookUrl: null });
 }
 
 export async function PATCH(request: Request, { params }: RouteParams) {
