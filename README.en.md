@@ -85,6 +85,8 @@ Collaborative tool for mapping the **Roads of Avalon** (Caminos de Avalon) of Al
 
 This means **not even the server operator** (you, if you self-host) has cross-clan visibility through the application. You can hit Postgres directly for raw data — but no UI or API helps you do it.
 
+**There is no global administrator:** nobody, not even the server operator, has permissions above each clan's ADMIN.
+
 ---
 
 ## Tech stack

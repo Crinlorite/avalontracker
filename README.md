@@ -85,6 +85,8 @@ Mapeo **many-to-many** desde roles de Discord. El usuario con varios roles mapea
 
 Esto significa que **ni el operador del servidor** (tú, si self-hosteas) tiene visibilidad cross-clan vía aplicación. Para acceso a datos crudos puedes ir a Postgres directamente — pero no hay UI ni API que lo facilite.
 
+**No hay ningún administrador global:** nadie, ni el operador del servidor, tiene permisos por encima del ADMIN de cada clan.
+
 ---
 
 ## Stack técnico
