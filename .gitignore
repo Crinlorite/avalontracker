@@ -51,7 +51,6 @@ next-env.d.ts
 /.cache
 
 # workspace de ejecución de planes (scratch)
-/.notas-locales
 
 # Worktrees de trabajo en paralelo
 .worktrees/
