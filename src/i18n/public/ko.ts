@@ -153,6 +153,7 @@ export const ko: Record<PublicKey, string> = {
   "exits.sell.title": "어디서 팔까",
   "exits.sell.origin": "채집한 아발론 구역 (선택)",
   "exits.sell.hint": "가장 가까운 시장과 지금 가장 비싸게 사 주는 도시를 비교합니다.",
+  "footer.terms": "이용약관",
   "footer.legal": "법적 고지",
   "footer.trademark": "Albion Online은 Sandbox Interactive GmbH의 상표입니다. Avalon Tracker는 팬이 만든 도구로 공식과 무관합니다.",
 };

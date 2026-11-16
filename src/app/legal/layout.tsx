@@ -6,13 +6,14 @@ import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import type { ReactNode } from "react";
 import { BrandMark } from "@/components/brand/BrandMark";
 
-// Layout compartido por las 3 páginas legales. Subnav pill-style inspirado
+// Layout compartido por las 4 páginas legales. Subnav pill-style inspirado
 // en crintech-static/politica-*/index.html. Ruta pública (sin auth).
 export default function LegalLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { lang } = useLanguage();
 
   const tabs = [
+    { href: "/legal/terms", labelEs: "Términos", labelEn: "Terms" },
     { href: "/legal/privacy", labelEs: "Privacidad", labelEn: "Privacy" },
     { href: "/legal/cookies", labelEs: "Cookies", labelEn: "Cookies" },
     { href: "/legal/aviso-legal", labelEs: "Aviso legal", labelEn: "Legal notice" },

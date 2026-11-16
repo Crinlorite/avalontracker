@@ -44,6 +44,7 @@ export function PublicShell({ lang, path, children }: { lang: PublicLang; path: 
       <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
       <footer className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 pb-10 pt-6 text-xs text-slate-500">
         <nav className="flex flex-wrap justify-center gap-x-4 gap-y-1">
+          <Link href="/legal/terms" className="hover:text-slate-300">{t("footer.terms")}</Link>
           <Link href="/legal/privacy" className="hover:text-slate-300">Privacy</Link>
           <Link href="/legal/cookies" className="hover:text-slate-300">Cookies</Link>
           <Link href="/legal/aviso-legal" className="hover:text-slate-300">{t("footer.legal")}</Link>

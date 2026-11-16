@@ -153,6 +153,7 @@ export const zh: Record<PublicKey, string> = {
   "exits.sell.title": "去哪里卖",
   "exits.sell.origin": "你采集所在的阿瓦隆区域（可选）",
   "exits.sell.hint": "比较最近的市场与当前出价最高的城市。",
+  "footer.terms": "服务条款",
   "footer.legal": "法律声明",
   "footer.trademark": "Albion Online 是 Sandbox Interactive GmbH 的商标。Avalon Tracker 是粉丝制作的工具，与官方无关。",
 };

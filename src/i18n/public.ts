@@ -174,6 +174,7 @@ const en = {
   "exits.sell.title": "Where to sell",
   "exits.sell.origin": "Avalon zone where you gathered (optional)",
   "exits.sell.hint": "Compares the nearest market with the city that pays best right now.",
+  "footer.terms": "Terms",
   "footer.legal": "Legal notice",
   "footer.trademark": "Albion Online is a trademark of Sandbox Interactive GmbH. Avalon Tracker is a fan-made tool with no official affiliation.",
 } as const;
@@ -331,6 +332,7 @@ const es: Record<PublicKey, string> = {
   "exits.sell.title": "Dónde vender",
   "exits.sell.origin": "Zona de Avalon donde recolectaste (opcional)",
   "exits.sell.hint": "Compara el mercado más cercano con la ciudad que mejor paga ahora mismo.",
+  "footer.terms": "Términos",
   "footer.legal": "Aviso legal",
   "footer.trademark": "Albion Online es una marca de Sandbox Interactive GmbH. Avalon Tracker es una herramienta de fans, sin relación oficial.",
 };

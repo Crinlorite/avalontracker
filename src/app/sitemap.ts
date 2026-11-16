@@ -40,6 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...multilingual("/exits", 0.8, dataDate),
     ...AVALON_ZONES.flatMap((z) => multilingual(`/zones/${zoneSlug(z.name)}`, 0.6, dataDate)),
     {
+      url: `${base}/legal/terms`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
       url: `${base}/legal/aviso-legal`,
       lastModified: now,
       changeFrequency: "yearly",

@@ -153,6 +153,7 @@ export const ru: Record<PublicKey, string> = {
   "exits.sell.title": "Где продать",
   "exits.sell.origin": "Зона Авалона, где вы добывали (необязательно)",
   "exits.sell.hint": "Сравнивает ближайший рынок с городом, где сейчас платят больше всего.",
+  "footer.terms": "Условия",
   "footer.legal": "Правовая информация",
   "footer.trademark": "Albion Online — товарный знак Sandbox Interactive GmbH. Avalon Tracker — фанатский инструмент без официальной связи с разработчиком.",
 };

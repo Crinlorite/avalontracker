@@ -144,6 +144,11 @@ export function LandingLoginDiscord() {
                 {t("landing.cta.signin")}
               </button>
               <p className="text-xs text-slate-500">{t("landing.privacy")}</p>
+              <p className="text-xs text-slate-500">{(() => {
+                const [pre, rest = ""] = t("landing.accept").split("{terms}");
+                const [mid, post] = rest.split("{privacy}");
+                return <>{pre}<Link href="/legal/terms" className="underline hover:text-slate-300">{t("map.start.termsLink")}</Link>{mid}<Link href="/legal/privacy" className="underline hover:text-slate-300">{t("map.start.privacy")}</Link>{post}</>;
+              })()}</p>
             </div>
             <p className="mt-4 border-t border-slate-800 pt-3 text-sm text-slate-400">
               <Link href="/map" className="text-indigo-300 hover:text-indigo-200">{t("landing.req.personal")}</Link>
@@ -178,6 +183,8 @@ export function LandingLoginDiscord() {
         {/* Footer con legal */}
         <footer className="mt-16 flex flex-col items-center gap-3 text-xs text-slate-600">
           <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            <Link href="/legal/terms" className="hover:text-slate-400">{t("landing.footer.terms")}</Link>
+            <span aria-hidden="true" className="text-slate-800">·</span>
             <Link href="/legal/privacy" className="hover:text-slate-400">{t("landing.footer.privacy")}</Link>
             <span aria-hidden="true" className="text-slate-800">·</span>
             <Link href="/legal/cookies" className="hover:text-slate-400">{t("landing.footer.cookies")}</Link>

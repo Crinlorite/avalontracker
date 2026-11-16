@@ -153,6 +153,7 @@ export const ja: Record<PublicKey, string> = {
   "exits.sell.title": "どこで売る",
   "exits.sell.origin": "採集したアヴァロンのゾーン（任意）",
   "exits.sell.hint": "最寄りの市場と、いま一番高く買ってくれる都市を比べます。",
+  "footer.terms": "利用規約",
   "footer.legal": "法的表示",
   "footer.trademark": "Albion Online は Sandbox Interactive GmbH の商標です。Avalon Tracker はファン製のツールで、公式とは無関係です。",
 };

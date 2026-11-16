@@ -34,6 +34,8 @@ export default async function AuthLayout({
               🛡️ Royal Forge
             </a>
             <span aria-hidden className="text-slate-700">·</span>
+            <Link href="/legal/terms" className="hover:text-slate-300">Términos</Link>
+            <span aria-hidden className="text-slate-700">·</span>
             <Link href="/legal/aviso-legal" className="hover:text-slate-300">Aviso legal</Link>
             <span aria-hidden className="text-slate-700">·</span>
             <Link href="/legal/privacy" className="hover:text-slate-300">Privacidad</Link>

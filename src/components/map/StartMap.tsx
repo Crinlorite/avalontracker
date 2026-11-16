@@ -41,7 +41,8 @@ export function StartMap({ signedIn, fromZone }: { signedIn: boolean; fromZone?:
     }
   }
 
-  const [pre, post] = t("map.start.terms").split("{privacy}");
+  const [pre, rest = ""] = t("map.start.terms").split("{terms}");
+  const [mid, post] = rest.split("{privacy}");
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-950 px-4">
       <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-900/60 p-6 md:p-8">
@@ -58,7 +59,7 @@ export function StartMap({ signedIn, fromZone }: { signedIn: boolean; fromZone?:
         </button>
         {error && <p role="alert" className="mt-3 text-sm text-red-300">{error}</p>}
         <p className="mt-4 text-xs text-slate-500">
-          {pre}<Link href="/legal/privacy" className="underline hover:text-slate-300">{t("map.start.privacy")}</Link>{post}
+          {pre}<Link href="/legal/terms" className="underline hover:text-slate-300">{t("map.start.termsLink")}</Link>{mid}<Link href="/legal/privacy" className="underline hover:text-slate-300">{t("map.start.privacy")}</Link>{post}
         </p>
       </div>
     </main>

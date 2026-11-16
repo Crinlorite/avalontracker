@@ -153,6 +153,7 @@ export const it: Record<PublicKey, string> = {
   "exits.sell.title": "Dove vendere",
   "exits.sell.origin": "Zona di Avalon in cui hai raccolto (facoltativo)",
   "exits.sell.hint": "Confronta il mercato più vicino con la città che paga meglio in questo momento.",
+  "footer.terms": "Termini",
   "footer.legal": "Note legali",
   "footer.trademark": "Albion Online è un marchio di Sandbox Interactive GmbH. Avalon Tracker è uno strumento dei fan senza alcuna affiliazione ufficiale.",
 };
